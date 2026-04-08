@@ -246,6 +246,46 @@ body {
   .hero__footer { margin-top: 3rem; font-size: 9px; }
   .hero__footer .scroll-cue { order: -1; width: 100%; align-items: flex-start; }
 }
+
+.hero__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.85rem;
+  font-family: var(--mono);
+  font-size: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hero__nav a {
+  color: var(--ink-faint);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.hero__nav a:hover,
+.hero__nav a:focus-visible {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+  outline: none;
+}
+.hero__nav span[aria-hidden] {
+  color: var(--rule);
+}
+@media (max-width: 600px) {
+  .hero__nav { gap: 0.4rem 0.6rem; }
+}
+
+/* Scroll anchors offset for the fixed meta-strip */
+.method,
+.reveal,
+.catalog,
+.gallery,
+.colophon {
+  scroll-margin-top: 4rem;
+}
 .hero__footer .scroll-cue {
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
 }
@@ -1421,13 +1461,23 @@ body {
     <div class="scroll-cue">
       <span>continue</span>
     </div>
-    <span>§01 METHOD &nbsp;·&nbsp; §02 ANOMALY &nbsp;·&nbsp; §03 CATALOG</span>
+    <nav class="hero__nav" aria-label="Section navigation">
+      <a href="#method">§01 Method</a>
+      <span aria-hidden="true">·</span>
+      <a href="#anomaly">§02 Anomaly</a>
+      <span aria-hidden="true">·</span>
+      <a href="#catalog">§03 Catalog</a>
+      <span aria-hidden="true">·</span>
+      <a href="#best-of-run">§04 Best of Run</a>
+      <span aria-hidden="true">·</span>
+      <a href="#colophon">§05 Colophon</a>
+    </nav>
   </div>
 
 </section>
 
 <!-- ─── §01 METHOD ─── -->
-<section class="method">
+<section class="method" id="method">
   <aside class="section-marker">
     <span class="num">§01</span>
     <span class="name">Method</span>
@@ -1450,7 +1500,7 @@ body {
 </section>
 
 <!-- ─── §02 ANOMALY (the grey rectangle) ─── -->
-<section class="reveal">
+<section class="reveal" id="anomaly">
 
   <div class="reveal__intro">
     <aside class="section-marker">
