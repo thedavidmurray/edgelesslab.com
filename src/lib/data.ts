@@ -509,7 +509,7 @@ export const experiments = [
     stack: ["HTML", "Python", "marimo", "Boska", "vpype", "Claude · Gemini · Qwen · Cerebras"],
     category: "Editorial",
     status: "Live",
-    href: "/autoresearch/",
+    href: "/pen-plotter/",
     relatedProject: { title: "Pen Plotter Art (Project)", href: "/projects/pen-plotter-art" },
   },
   {
