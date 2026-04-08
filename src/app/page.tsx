@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import {
   HeroSection,
+  RecentActivity,
   FeaturedGrid,
   CapabilitiesGrid,
   StackFlow,
@@ -97,6 +98,29 @@ export default function Home() {
       <main id="main-content">
         {/* Hero */}
         <HeroSection />
+
+        {/* Recent Activity (chronological stream) */}
+        <section className="px-6 py-16 border-t" style={{ borderColor: "var(--border-subtle)" }}>
+          <div className="max-w-[920px] mx-auto">
+            <div className="flex items-baseline justify-between mb-6">
+              <h2
+                className="text-sm font-mono uppercase tracking-[0.15em]"
+                style={{ color: "var(--text-tertiary)" }}
+              >
+                Recent activity
+              </h2>
+              <Link
+                href="/blog"
+                className="text-sm flex items-center gap-1 transition-colors hover:text-white"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                Full feed <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            <RecentActivity />
+          </div>
+        </section>
 
         {/* Featured Projects */}
         <section className="px-6 py-20">

@@ -490,6 +490,29 @@ export const experiments = [
     relatedProject: { title: "Pen Plotter Art (Project)", href: "/projects/pen-plotter-art" },
   },
   {
+    slug: "pen-plotter-autoresearch",
+    title: "Pen Plotter Autoresearch",
+    description:
+      "An editorial field journal for an autonomous loop running on 17 generative art factories. 16,732 specimens, scored by six algorithmic signals and five vision-language judges. Set in Boska, printed on aged paper.",
+    longDescription: [
+      "An autonomous research loop, in the spirit of Karpathy's nanochat experiments, applied to generative pen plotter art. Each cycle audits all factories, identifies the single weakest metric across the catalog, edits the corresponding generator, regenerates a thousand new variants, scores them, and either commits the change or reverts. The loop has been running since the third week of March 2026.",
+      "The most interesting finding is what the algorithms get wrong. A piece that scores 88.3 on six algorithmic signals — top five of 16,732 — can score 1.8 on a vision-language judge that calls it 'a degenerate parameter combination, no discernible composition, focal point, or visual interest.' The algorithm cannot tell the difference between a starburst and a piece of woven fabric. That is what the judges are for.",
+      "The published artifact is a five-section editorial: method, anomaly, catalog, best of run, colophon. It is set in Boska and JetBrains Mono and reads like a real catalog. An addendum page contains every kept specimen — all sixteen thousand seven hundred and thirty-two of them — laid out as a single grid you can scroll through and click into.",
+    ],
+    highlights: [
+      "17 procedural factories · 16,732 scored specimens · top score 89.1",
+      "Six algorithmic signals + five vision-language judges (Claude · Gemini · Qwen · Cerebras)",
+      "Five-section editorial: method · anomaly · catalog · best of run · colophon",
+      "Full addendum page with all 16,732 specimens, click-to-zoom",
+      "Set in Boska + JetBrains Mono, served on warm specimen paper",
+    ],
+    stack: ["HTML", "Python", "marimo", "Boska", "vpype", "Claude · Gemini · Qwen · Cerebras"],
+    category: "Editorial",
+    status: "Live",
+    href: "/autoresearch/",
+    relatedProject: { title: "Pen Plotter Art (Project)", href: "/projects/pen-plotter-art" },
+  },
+  {
     slug: "generative-ascii",
     title: "Generative ASCII",
     description: "Typographic ASCII art generated from particle attractor systems. Each page load produces a unique piece with rarity tiers, like pulling a shiny card.",

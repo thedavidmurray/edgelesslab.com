@@ -51,7 +51,7 @@ export default function BlogPage() {
             Shipping logs from a solo AI studio. Claude Code agents, MCP servers, pen plotter runs, and whatever broke last week.
           </p>
 
-          <div className="flex items-center gap-4 mb-12">
+          <div className="flex items-center gap-4 mb-10">
             <a
               href="/feed.xml"
               className="inline-flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-full border transition-colors hover:text-white"
@@ -59,6 +59,36 @@ export default function BlogPage() {
             >
               <Rss size={11} /> RSS feed <ArrowUpRight size={11} />
             </a>
+          </div>
+
+          {/* Tag counts (Simon Willison-style: count is the proof) */}
+          <div className="mb-12 pb-8 border-b" style={{ borderColor: "var(--border-subtle)" }}>
+            <h2
+              className="text-[10px] font-mono uppercase tracking-[0.14em] mb-4"
+              style={{ color: "var(--text-tertiary)" }}
+            >
+              Topics
+            </h2>
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {Object.entries(
+                posts.reduce<Record<string, number>>((acc, post) => {
+                  for (const tag of post.tags) acc[tag] = (acc[tag] ?? 0) + 1;
+                  return acc;
+                }, {}),
+              )
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 14)
+                .map(([tag, count]) => (
+                  <span
+                    key={tag}
+                    className="text-[13px] font-mono"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    {tag.toLowerCase().replace(/\s+/g, "-")}{" "}
+                    <span style={{ color: "var(--accent)" }}>{count}</span>
+                  </span>
+                ))}
+            </div>
           </div>
 
           <div className="space-y-1">
