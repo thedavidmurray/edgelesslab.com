@@ -27,6 +27,9 @@
   --mono:         "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --margin-x:     clamp(1rem, 4vw, 4rem);
 }
+@media (max-width: 600px) {
+  :root { --margin-x: 0.85rem; }
+}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -126,7 +129,18 @@ body {
   line-height: 1.6;
 }
 .gate__warning strong { color: var(--amber); }
-.gate__warning .row { display: flex; justify-content: space-between; gap: 2rem; padding: 0.4rem 0; }
+.gate__warning .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; padding: 0.4rem 0; }
+@media (max-width: 600px) {
+  .gate { padding: 5rem var(--margin-x) 3rem; }
+  .gate__warning { padding: 1rem 1.2rem; font-size: 11px; }
+  .gate__warning .row { flex-direction: column; gap: 0.2rem; align-items: flex-start; }
+  .gate__btn { width: 100%; text-align: center; }
+  .gate__actions { gap: 0.75rem; }
+  .full__head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .full__grid { grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 1px; }
+  .full-tile:hover { transform: scale(1.6); }
+  .perfmeter { top: 3.5rem; font-size: 9px; padding: 0.4rem 0.6rem; }
+}
 .gate__warning .row + .row { border-top: 1px dashed var(--rule); margin-top: 0.4rem; padding-top: 0.8rem; }
 .gate__actions {
   display: flex;

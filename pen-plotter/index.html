@@ -4,6 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pen Plotter Autoresearch — Edgeless Lab</title>
+<meta name="description" content="An editorial field journal for an autonomous loop running on 17 generative art factories. 16,732 specimens, scored by six algorithmic signals and five vision-language judges. Set in Boska, printed on aged paper.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Pen Plotter Autoresearch">
+<meta property="og:description" content="Sixteen thousand seven hundred and thirty-two specimens of generative line art, scored by an autonomous loop of seventeen procedural factories and five language-model judges. A field journal of what the algorithms loved — and what they got wrong.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://edgelesslab.com/pen-plotter/">
+<meta property="og:image" content="https://edgelesslab.com/pen-plotter/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Edgeless Lab">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pen Plotter Autoresearch">
+<meta name="twitter:description" content="An autonomous loop, 17 factories, 16,732 specimens. A field journal of what the algorithms loved — and what they got wrong.">
+<meta name="twitter:image" content="https://edgelesslab.com/pen-plotter/assets/og-image.png">
 
 <!-- Display: Boska (Fontshare) -->
 <link rel="preconnect" href="https://api.fontshare.com">
@@ -38,7 +55,13 @@
   --mono:   "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* spacing */
-  --margin-x: clamp(2rem, 8vw, 9rem);
+  --margin-x: clamp(1.25rem, 8vw, 9rem);
+}
+
+@media (max-width: 600px) {
+  :root {
+    --margin-x: 1.25rem;
+  }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -107,13 +130,17 @@ body {
   text-transform: uppercase;
   color: var(--ink-faint);
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
   align-items: baseline;
   border-bottom: 1px solid var(--rule);
   padding-bottom: 1rem;
   margin-bottom: 4rem;
   opacity: 0;
   animation: fadeUp 800ms cubic-bezier(0.2, 0.8, 0.2, 1) 200ms forwards;
+}
+@media (max-width: 600px) {
+  .hero__filing { font-size: 10px; gap: 0.6rem 1.25rem; }
 }
 .hero__filing strong { color: var(--ink); font-weight: 500; }
 .hero__filing .amber { color: var(--amber); }
@@ -198,8 +225,10 @@ body {
 .hero__footer {
   margin-top: 6rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 1.25rem;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.08em;
@@ -207,6 +236,10 @@ body {
   color: var(--ink-faint);
   opacity: 0;
   animation: fadeUp 800ms cubic-bezier(0.2, 0.8, 0.2, 1) 1100ms forwards;
+}
+@media (max-width: 600px) {
+  .hero__footer { margin-top: 3rem; font-size: 9px; }
+  .hero__footer .scroll-cue { order: -1; width: 100%; align-items: flex-start; }
 }
 .hero__footer .scroll-cue {
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -311,7 +344,7 @@ body {
   gap: clamp(1rem, 3vw, 3rem);
   align-items: start;
 }
-@media (max-width: 700px) { .reveal__pair { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .reveal__pair { grid-template-columns: 1fr; gap: 4rem; } }
 
 .specimen {
   position: relative;
@@ -393,9 +426,16 @@ body {
   font-family: var(--serif);
   font-size: 2.4rem;
   line-height: 1;
-  color: var(--amber);
+  /* starts at ink, animates to amber when section enters viewport */
+  color: var(--ink);
   font-weight: 400;
   letter-spacing: -0.02em;
+  transition: color 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+.score-block .row.judge.is-recalibrated strong {
+  color: var(--amber);
 }
 .score-block .annotation {
   font-style: italic;
@@ -502,8 +542,13 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
   gap: 6px;
   max-width: 100%;
-  /* slight inset so the grid breathes against the page edges */
   margin: 0 auto;
+}
+@media (max-width: 600px) {
+  .catalog__grid {
+    grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+    gap: 4px;
+  }
 }
 
 .cat-tile {
@@ -538,18 +583,27 @@ body {
   pointer-events: none;
   transition: height 250ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.cat-tile:hover {
-  transform: scale(1.65);
-  z-index: 10;
-  box-shadow:
-    0 1px 0 rgba(12,10,8,0.1),
-    0 14px 30px -10px rgba(12,10,8,0.35),
-    0 30px 60px -20px rgba(194,65,12,0.15);
-  transition-delay: 0s;
-  border-color: var(--ink);
+@media (hover: hover) and (pointer: fine) {
+  .cat-tile:hover {
+    transform: scale(1.65);
+    z-index: 10;
+    box-shadow:
+      0 1px 0 rgba(12,10,8,0.1),
+      0 14px 30px -10px rgba(12,10,8,0.35),
+      0 30px 60px -20px rgba(194,65,12,0.15);
+    transition-delay: 0s;
+    border-color: var(--ink);
+  }
+  .cat-tile:hover::after {
+    height: 3px;
+  }
 }
-.cat-tile:hover::after {
-  height: 3px;
+/* Touch devices: subtle press effect instead */
+@media (hover: none) {
+  .cat-tile:active {
+    transform: scale(0.96);
+    border-color: var(--ink);
+  }
 }
 
 /* hover caption ribbon */
@@ -1155,6 +1209,39 @@ body {
 }
 .colophon__signoff .dot { color: var(--amber); }
 
+/* ────────── MOBILE COMPRESSION ────────── */
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 5rem var(--margin-x) 2rem;
+    min-height: auto;
+  }
+  .hero__main { gap: 2.5rem; }
+  .hero__deck { margin-top: 1.5rem; }
+  .method, .reveal, .catalog, .gallery, .colophon {
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+  }
+  .gallery .spread { margin-bottom: 4.5rem; }
+  .gallery__opening { margin-bottom: 4.5rem; }
+  .reveal__intro { margin-bottom: 3rem; }
+  .reveal__kicker { margin-top: 4rem; margin-bottom: 4rem; }
+  .colophon__inner { padding: 0; }
+  .colophon__table .row { grid-template-columns: 1fr; gap: 0.4rem; padding: 0.8rem 0; }
+  .colophon__table .row dt { font-size: 9px; }
+  .colophon__continue__grid { gap: 0.5rem; }
+  .colophon__link { padding: 1rem 1.2rem; }
+  .colophon__link::after { top: 1.2rem; right: 1.2rem; }
+  /* §04 spreads should breathe more on mobile */
+  .spread--two, .spread--three { gap: 2rem; }
+  /* shrink the lightbox padding so it fits phone screens */
+  .lightbox { padding: 1rem; }
+  .lightbox__inner { gap: 1.5rem; }
+  .lightbox__plate { padding: 0.75rem 0.75rem 1rem; }
+  .lightbox__meta__score { font-size: 4rem; }
+  .lightbox__close { top: 0.75rem; right: 0.75rem; }
+}
+
 </style>
 </head>
 <body>
@@ -1263,15 +1350,15 @@ body {
       <div class="score-block">
         <div class="row algo">
           <span>Algorithmic composite</span>
-          <strong>88.3</strong>
+          <strong class="score-num" data-from="88.3" data-to="88.3">88.3</strong>
         </div>
         <div class="row">
           <span>Rank in catalog</span>
           <span>Top 5 of 16,732</span>
         </div>
-        <div class="row judge">
+        <div class="row judge" data-recalibrate>
           <span>Claude vision judge</span>
-          <strong>1.8</strong>
+          <strong class="score-num score-num--judge" data-from="88.3" data-to="1.8">88.3</strong>
         </div>
         <p class="annotation">
           “Reads as uniform fine dot/grid texture with no discernible
@@ -1293,15 +1380,15 @@ body {
       <div class="score-block">
         <div class="row algo">
           <span>Algorithmic composite</span>
-          <strong>87.0</strong>
+          <strong class="score-num" data-from="87.0" data-to="87.0">87.0</strong>
         </div>
         <div class="row">
           <span>Rank in catalog</span>
           <span>Top 12 of 16,732</span>
         </div>
-        <div class="row judge">
+        <div class="row judge" data-recalibrate>
           <span>Claude vision judge</span>
-          <strong>8.8</strong>
+          <strong class="score-num score-num--judge" data-from="87.0" data-to="8.8">87.0</strong>
         </div>
         <p class="annotation">
           “Multiple radial interference lobes create a striking starburst with
@@ -1370,7 +1457,7 @@ body {
   <!-- ── SPREAD I · full-bleed hero (the gallery champion) ── -->
   <div class="spread spread--full">
     <div class="spread__label"><span class="num">Spread&nbsp;I</span> · the gallery champion</div>
-    <img class="plate-img" src="assets/mediums-all/moire-0062.webp" alt="moire-0062">
+    <img class="plate-img" src="assets/medium/moire-0062.webp" alt="moire-0062">
     <div class="plate-caption">
       <span><strong>Plate&nbsp;IV.</strong> moire&nbsp;·&nbsp;variant&nbsp;0062</span>
       <span>composite <strong>87.0</strong> &nbsp;/&nbsp; <span class="amber">claude 8.8</span></span>
@@ -1384,7 +1471,7 @@ body {
     </div>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/heerich-0983.webp" alt="heerich-0983">
+        <img src="assets/medium/heerich-0983.webp" alt="heerich-0983">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate V.</strong> heerich · variant 0983</span>
@@ -1393,7 +1480,7 @@ body {
     </figure>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/opart-0748.webp" alt="opart-0748">
+        <img src="assets/medium/opart-0748.webp" alt="opart-0748">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate VI.</strong> opart · variant 0748</span>
@@ -1406,7 +1493,7 @@ body {
   <div class="spread spread--singleton">
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/lewitt-0111.webp" alt="lewitt-0111">
+        <img src="assets/medium/lewitt-0111.webp" alt="lewitt-0111">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate VII.</strong> lewitt · variant 0111</span>
@@ -1429,7 +1516,7 @@ body {
     </div>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/topo-0970.webp" alt="topo-0970">
+        <img src="assets/medium/topo-0970.webp" alt="topo-0970">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate VIII.</strong> topo · 0970</span>
@@ -1438,7 +1525,7 @@ body {
     </figure>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/ridgeline-0214.webp" alt="ridgeline-0214">
+        <img src="assets/medium/ridgeline-0214.webp" alt="ridgeline-0214">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate IX.</strong> ridgeline · 0214</span>
@@ -1447,7 +1534,7 @@ body {
     </figure>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/hatching-0789.webp" alt="hatching-0789">
+        <img src="assets/medium/hatching-0789.webp" alt="hatching-0789">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate X.</strong> hatching · 0789</span>
@@ -1459,7 +1546,7 @@ body {
   <!-- ── SPREAD V · second full-bleed hero ── -->
   <div class="spread spread--full">
     <div class="spread__label"><span class="num">Spread&nbsp;IV</span> · gestural</div>
-    <img class="plate-img" src="assets/mediums-all/squiggle-0581.webp" alt="squiggle-0581">
+    <img class="plate-img" src="assets/medium/squiggle-0581.webp" alt="squiggle-0581">
     <div class="plate-caption">
       <span><strong>Plate XI.</strong> squiggle · variant 0581</span>
       <span>composite <strong>83.6</strong></span>
@@ -1473,7 +1560,7 @@ body {
     </div>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/science-0550.webp" alt="science-0550">
+        <img src="assets/medium/science-0550.webp" alt="science-0550">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate XII.</strong> science · variant 0550</span>
@@ -1482,7 +1569,7 @@ body {
     </figure>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/guilloche-0530.webp" alt="guilloche-0530">
+        <img src="assets/medium/guilloche-0530.webp" alt="guilloche-0530">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate XIII.</strong> guilloche · variant 0530</span>
@@ -1498,7 +1585,7 @@ body {
     </div>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/molnar-0844.webp" alt="molnar-0844">
+        <img src="assets/medium/molnar-0844.webp" alt="molnar-0844">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate XIV.</strong> molnar · variant 0844</span>
@@ -1507,7 +1594,7 @@ body {
     </figure>
     <figure class="plate">
       <div class="plate__img-wrap">
-        <img src="assets/mediums-all/flowfield-0370.webp" alt="flowfield-0370">
+        <img src="assets/medium/flowfield-0370.webp" alt="flowfield-0370">
       </div>
       <figcaption class="plate__caption">
         <span><strong>Plate XV.</strong> flowfield · variant 0370</span>
@@ -1654,6 +1741,63 @@ body {
     }
   }, { passive: true });
   update();
+})();
+
+// ── §02 score recalibration animation ──────────────────────
+// When the .row.judge rows enter the viewport, tween their numbers
+// from data-from to data-to, and add .is-recalibrated to flip color.
+// Honors prefers-reduced-motion.
+(function () {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const judgeRows = document.querySelectorAll('.row.judge[data-recalibrate]');
+  if (!judgeRows.length) return;
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function tweenNumber(el, from, to, duration) {
+    if (reduceMotion) {
+      el.textContent = to.toFixed(1);
+      return;
+    }
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const v = from + (to - from) * easeOutCubic(t);
+      el.textContent = v.toFixed(1);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function animateRow(row) {
+    if (row.dataset.animated === '1') return;
+    row.dataset.animated = '1';
+    const numEl = row.querySelector('.score-num');
+    if (!numEl) return;
+    const from = parseFloat(numEl.dataset.from);
+    const to = parseFloat(numEl.dataset.to);
+    if (Number.isNaN(from) || Number.isNaN(to)) return;
+    // small delay so the user catches the original number first
+    setTimeout(() => {
+      row.classList.add('is-recalibrated');
+      tweenNumber(numEl, from, to, 900);
+    }, 350);
+  }
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateRow(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.55 });
+    judgeRows.forEach(row => observer.observe(row));
+  } else {
+    // fallback: animate immediately
+    judgeRows.forEach(animateRow);
+  }
 })();
 </script>
 <script>
