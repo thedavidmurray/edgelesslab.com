@@ -478,6 +478,16 @@ function ProductCard({
         >
           Coming soon
         </span>
+      ) : product.slug ? (
+        <a
+          href={`/products/${product.slug}`}
+          className="flex items-center gap-1 text-sm font-medium hover:text-white transition-colors mt-auto pt-2"
+          style={{ color: "var(--text-secondary)" }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {`View details \u2014 ${product.price}`}
+          <ArrowUpRight size={14} />
+        </a>
       ) : (
         <a
           href={product.href}

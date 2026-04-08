@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
-import { projects, experiments } from '@/lib/data';
+import { projects, experiments, products } from '@/lib/data';
 import { posts } from '@/lib/blog';
+import { productContent } from '@/lib/product-content';
 
 export const dynamic = 'force-static';
 
@@ -77,5 +78,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...projectPages, ...experimentPages, ...blogPages];
+  const productPages: MetadataRoute.Sitemap = products
+    .filter((p) => p.slug && !p.comingSoon && productContent[p.slug])
+    .map((product) => ({
+      url: `https://edgelesslab.com/products/${product.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    }));
+
+  return [...staticPages, ...projectPages, ...experimentPages, ...blogPages, ...productPages];
 }

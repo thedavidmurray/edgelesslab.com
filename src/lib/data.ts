@@ -7,6 +7,12 @@ export interface Product {
   badge: string | null;
   repoUrl?: string;
   comingSoon?: boolean;
+  /**
+   * URL slug for the local product landing page at /products/[slug].
+   * Only set for products with long-form content available in product-content.ts.
+   * Products without a slug link directly to Gumroad from the products grid.
+   */
+  slug?: string;
 }
 
 const UTM = "utm_source=edgelesslab&utm_medium=website&utm_campaign=products";
@@ -26,6 +32,7 @@ export const products: Product[] = [
     href: `https://edgelessai.gumroad.com/l/multi-agent-blueprint?${UTM}`,
     badge: "New",
     comingSoon: false,
+    slug: "multi-agent-blueprint",
   },
   {
     name: "The Agent Cookbook",
@@ -83,6 +90,7 @@ export const products: Product[] = [
     href: `https://edgelessai.gumroad.com/l/gen-art-starter?${UTM}`,
     badge: "New",
     comingSoon: false,
+    slug: "gen-art-starter",
   },
   {
     name: "Production MCP Server Kit",
@@ -98,6 +106,7 @@ export const products: Product[] = [
     href: `https://edgelessai.gumroad.com/l/production-mcp-kit?${UTM}`,
     badge: "New",
     comingSoon: false,
+    slug: "production-mcp-kit",
   },
   {
     name: "AI Code Review Playbook",
@@ -127,6 +136,7 @@ export const products: Product[] = [
     href: `https://edgelessai.gumroad.com/l/launch-toolkit?${UTM}`,
     badge: "New",
     comingSoon: false,
+    slug: "launch-toolkit",
   },
   {
     name: "n8n AI Workflow Templates",
@@ -142,6 +152,7 @@ export const products: Product[] = [
     href: `https://edgelessai.gumroad.com/l/n8n-ai-workflows?${UTM}`,
     badge: "New",
     comingSoon: false,
+    slug: "n8n-ai-workflows",
   },
   {
     name: "MCP Server Starter Kit",
@@ -199,6 +210,7 @@ export const products: Product[] = [
     href: `https://edgelessai.gumroad.com/l/agent-safety-patterns?${UTM}`,
     badge: "New",
     comingSoon: false,
+    slug: "agent-safety-patterns",
   },
   {
     name: "Claude Code Hooks Deep Dive",
@@ -214,6 +226,7 @@ export const products: Product[] = [
     href: `https://edgelessai.gumroad.com/l/hooks-deep-dive?${UTM}`,
     badge: "New",
     comingSoon: false,
+    slug: "hooks-deep-dive",
   },
   {
     name: "CLAUDE.md Template Pack",
