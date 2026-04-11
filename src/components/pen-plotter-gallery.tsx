@@ -8,8 +8,8 @@ import { useState } from "react";
  * Shows 9 hero pieces (one per factory) from the pen-plotter autoresearch
  * catalog. Click any tile to open a lightbox with the full image.
  *
- * The lab page would otherwise be a wall of text describing visual art —
- * this fixes the credibility miss the audit caught.
+ * The lab page would otherwise be a wall of text describing visual art.
+ * This fixes the credibility miss the audit caught.
  */
 
 type Plate = {
