@@ -770,6 +770,79 @@ body {
 
 /* ────────── §06 COLOPHON ────────── */
 
+/* ── Studio CTA ── */
+.studio-cta {
+  display: block;
+  max-width: 680px;
+  margin: 3rem auto 0;
+  padding: 0;
+  text-decoration: none;
+  color: var(--paper);
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.studio-cta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px -16px rgba(12,10,8,0.4),
+              0 40px 80px -30px rgba(26,86,50,0.2);
+}
+.studio-cta__inner {
+  background: var(--ink);
+  padding: 2.5rem 2.5rem 2rem;
+  position: relative;
+}
+.studio-cta__marker {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(243,237,221,0.55);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+.studio-cta__hed {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: var(--paper);
+  margin-bottom: 1rem;
+}
+.studio-cta__desc {
+  font-family: var(--serif);
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  line-height: 1.6;
+  color: rgba(243,237,221,0.7);
+  max-width: 520px;
+}
+.studio-cta__foot {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(243,237,221,0.12);
+}
+.studio-cta__arrow {
+  font-size: 14px;
+  transition: transform 200ms ease;
+}
+.studio-cta:hover .studio-cta__arrow {
+  transform: translateX(6px);
+}
+@media (max-width: 600px) {
+  .studio-cta__inner { padding: 1.75rem 1.5rem 1.5rem; }
+}
+
 .colophon {
   padding: 4rem var(--margin-x);
   border-top: 1px solid var(--rule);
@@ -878,7 +951,7 @@ body {
         The second constraint is notation. A tartan is defined by its thread count: <code>R/4 G/24 B/4 K/16</code>. Each letter maps to a color from the traditional palette. Each number is a thread count. The notation is compact, unambiguous, and sufficient to reproduce the pattern on any loom. The notation <em>is</em> the tartan.
       </p>
       <p>
-        The third constraint is registration. A tartan becomes official when entered in the Scottish Register of Tartans, maintained by the National Records of Scotland. Before that, no matter how precise the sett or how faithful the colors, the pattern is plaid.
+        The third constraint is registration. A tartan becomes official when entered in the Scottish Register of Tartans, maintained by the National Records of Scotland. Without registration, no matter how precise the sett or how faithful the colors, the pattern is just plaid.
       </p>
     </div>
   </div>
@@ -991,16 +1064,33 @@ body {
     </div>
     <div class="section__body">
       <p>
-        <strong>A generated tartan can be physically woven.</strong> The sett notation maps directly to a warp plan. Thread counts become yarn requirements: meters of each color, calculated from the target dimensions and the yarn weight (worsted, sport, DK). The weave structure translates to a WIF file, the interchange format understood by computerized looms and desktop weaving software.
+        <strong>A generated tartan can be physically woven.</strong> The sett notation maps directly to a warp plan. Thread counts become yarn requirements: meters of each color, calculated from the target dimensions and the yarn weight. The weave structure translates to a WIF file, the interchange format understood by computerized looms and desktop weaving software.
       </p>
       <p>
-        The full Tartanism app includes a yarn calculator, WIF export, and production preview. Every tartan on this page can travel from algorithm to textile without ambiguity.
-      </p>
-      <p>
-        <a href="https://djmclaudeassistant-web.github.io/tartanism/" style="color: var(--green); border-bottom: 1px solid var(--rule);">Open the Tartanism app</a> for the complete production workflow.
+        Every tartan on this page can travel from algorithm to textile without ambiguity. The studio is where that journey starts.
       </p>
     </div>
   </div>
+
+  <!-- BIG CTA: Open the Studio -->
+  <a href="https://djmclaudeassistant-web.github.io/tartanism/" class="studio-cta" target="_blank" rel="noopener">
+    <div class="studio-cta__inner">
+      <div class="studio-cta__marker">
+        <span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block;"></span>
+        <span>Tartanism Studio</span>
+      </div>
+      <div class="studio-cta__hed">
+        Generate. Preview. Export to loom.
+      </div>
+      <div class="studio-cta__desc">
+        The full generative tartan toolkit. Six weave structures, 48 traditional colors, yarn calculator, WIF export for loom software, production planning. Generate as many tartans as you want. Click into each for detail. Adjust weave, tiling, scale. Export when you find the one.
+      </div>
+      <div class="studio-cta__foot">
+        <span>Open the studio</span>
+        <span class="studio-cta__arrow">→</span>
+      </div>
+    </div>
+  </a>
 </section>
 
 <!-- ▸ §06 COLOPHON ──────────────────────────────────────── -->
@@ -1279,11 +1369,10 @@ body {
     const threadCount = threads.length;
     if (threadCount === 0) return;
 
-    // Determine pixels per thread
-    const ppt = Math.max(1, Math.floor(size / threadCount));
-    const actualSize = ppt * threadCount;
-    canvas.width = actualSize;
-    canvas.height = actualSize;
+    // Fixed canvas size, scale threads to fit exactly
+    canvas.width = size;
+    canvas.height = size;
+    const ppt = size / threadCount;
 
     const ctx = canvas.getContext('2d');
     const imageData = ctx.createImageData(actualSize, actualSize);
@@ -1299,15 +1388,15 @@ body {
       ];
     });
 
-    for (let py = 0; py < actualSize; py++) {
-      const weftIdx = Math.floor(py / ppt);
-      const weftRGB = threadRGB[weftIdx % threadCount];
-      for (let px = 0; px < actualSize; px++) {
-        const warpIdx = Math.floor(px / ppt);
-        const warpRGB = threadRGB[warpIdx % threadCount];
+    for (let py = 0; py < size; py++) {
+      const weftIdx = Math.floor(py / ppt) % threadCount;
+      const weftRGB = threadRGB[weftIdx];
+      for (let px = 0; px < size; px++) {
+        const warpIdx = Math.floor(px / ppt) % threadCount;
+        const warpRGB = threadRGB[warpIdx];
         const onTop = isWarpOnTop(weave, warpIdx, weftIdx);
         const rgb = onTop ? warpRGB : weftRGB;
-        const idx = (py * actualSize + px) * 4;
+        const idx = (py * size + px) * 4;
         data[idx]     = rgb[0];
         data[idx + 1] = rgb[1];
         data[idx + 2] = rgb[2];
@@ -1352,24 +1441,23 @@ body {
     const threads = expandSettAsym(tartan.stripes);
     const threadCount = threads.length;
     if (threadCount === 0) return;
-    const ppt = Math.max(1, Math.floor(size / threadCount));
-    const actualSize = ppt * threadCount;
-    canvas.width = actualSize;
-    canvas.height = actualSize;
+    canvas.width = size;
+    canvas.height = size;
+    const ppt = size / threadCount;
     const ctx = canvas.getContext('2d');
-    const imageData = ctx.createImageData(actualSize, actualSize);
+    const imageData = ctx.createImageData(size, size);
     const data = imageData.data;
     const threadRGB = threads.map(code => {
       const hex = COLORS[code] || '#888888';
       return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
     });
-    for (let py = 0; py < actualSize; py++) {
-      const weftIdx = Math.floor(py / ppt);
-      for (let px = 0; px < actualSize; px++) {
-        const warpIdx = Math.floor(px / ppt);
+    for (let py = 0; py < size; py++) {
+      const weftIdx = Math.floor(py / ppt) % threadCount;
+      for (let px = 0; px < size; px++) {
+        const warpIdx = Math.floor(px / ppt) % threadCount;
         const onTop = isWarpOnTop(weave, warpIdx, weftIdx);
-        const rgb = onTop ? threadRGB[warpIdx % threadCount] : threadRGB[weftIdx % threadCount];
-        const idx = (py * actualSize + px) * 4;
+        const rgb = onTop ? threadRGB[warpIdx] : threadRGB[weftIdx];
+        const idx = (py * size + px) * 4;
         data[idx] = rgb[0]; data[idx+1] = rgb[1]; data[idx+2] = rgb[2]; data[idx+3] = 255;
       }
     }
