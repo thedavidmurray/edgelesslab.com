@@ -50,12 +50,13 @@ class FluidEngine extends Plugin {
 
   initGraphics() {
     const c = this.config;
-    
+    const mode = c.engine.colorMode === 'HSB' ? HSB : RGB;
+
     // Create trail layer
     if (c.trails.enabled) {
       this.trailLayer = createGraphics(width, height);
       this.trailLayer.colorMode(
-        c.engine.colorMode,
+        mode,
         c.engine.colorRanges.h,
         c.engine.colorRanges.s,
         c.engine.colorRanges.b,
@@ -63,10 +64,10 @@ class FluidEngine extends Plugin {
       );
       this.applyBackground(this.trailLayer);
     }
-    
+
     // Set main canvas color mode
     colorMode(
-      c.engine.colorMode,
+      mode,
       c.engine.colorRanges.h,
       c.engine.colorRanges.s,
       c.engine.colorRanges.b,
