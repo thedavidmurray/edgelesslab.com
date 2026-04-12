@@ -374,6 +374,26 @@ export const projects = [
 
 export const experiments = [
   {
+    slug: "flow-viz",
+    title: "Flow Viz",
+    description: "Modular flow visualization engine. Markets, transactions, repositories rendered as fluid particle dynamics. Live data from Bitcoin mempool, GitHub, and Polymarket.",
+    longDescription: [
+      "Any dynamic system maps to the same visual pattern: containers that accumulate, particles that flow between them, and urgency that drives color and velocity. Flow Viz exploits this by normalizing wildly different data sources into a single fluid simulation.",
+      "The engine core uses p5.js with a plugin architecture. An EventBus decouples data, rendering, and interaction. DataSourceAdapters normalize each API (mempool.space, GitHub REST, Polymarket CLOB) into a common shape: containers with volume, probability, and category. The FluidEngine places containers via Poisson-disk sampling, spawns particles at each, and steers them through a Perlin noise flow field toward neighboring containers. Trails fade on an offscreen buffer.",
+      "Three adapters ship live. Bitcoin Mempool maps fee-rate buckets to containers and block discovery to drain events. GitHub maps repositories to containers, with stars and forks as volume and language as category. Polymarket maps prediction markets directly, with probability driving color warmth and 24h volume driving container radius.",
+    ],
+    highlights: [
+      "Plugin architecture: event bus, adapter pattern, dependency-injected orchestrator",
+      "Live data: Bitcoin mempool (mempool.space), GitHub (REST API), Polymarket (CLOB + CORS proxy)",
+      "Poisson-disk market placement, Perlin noise flow fields, trail rendering on offscreen buffer",
+      "60fps at 2000 particles, keyboard switching between data sources, PNG export",
+    ],
+    stack: ["JavaScript", "p5.js", "Canvas", "Cloudflare Workers"],
+    category: "Data",
+    status: "Live",
+    href: "/flow-viz/",
+  },
+  {
     slug: "strange-attractors",
     title: "Strange Attractors",
     description: "Lorenz, Rossler, and Chen attractor systems rendered as SVG paths for pen plotting. Part of the broader pen-plotter autoresearch loop.",
