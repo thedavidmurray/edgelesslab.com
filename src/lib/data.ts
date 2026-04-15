@@ -400,13 +400,13 @@ export const experiments = [
     longDescription: [
       "The three classical strange attractors, Lorenz (sigma=10, rho=28, beta=8/3), Rossler, and Chen, are solved numerically using a 4th-order Runge-Kutta integrator. The solver runs with configurable dt and num_steps, producing X/Y/Z coordinate traces that are then projected into 2D and serialized as SVG path data.",
       "Output is optimized for physical pen plotting on an iDraw. This means path ordering matters: the generator clusters nearby strokes to minimize pen-up travel, and outputs a single continuous path where possible to avoid unnecessary lifts. Line width is modulated by the local velocity of the attractor trajectory, giving the strokes a natural weight variation.",
-      "The attractor generators feed into the larger pen-plotter autoresearch corpus alongside flow fields, op-art, and constructivist studies. The full scored catalog with 16,832 specimens is browsable in the field journal.",
+      "The attractor generators feed into the larger pen-plotter autoresearch corpus alongside flow fields, op-art, and constructivist studies. The full scored catalog with 21,770 specimens is browsable in the field journal.",
     ],
     highlights: [
       "4th-order Runge-Kutta solver with configurable dt and step count",
       "SVG path output optimized for pen plotting: minimal pen lifts, velocity-weighted stroke width",
       "All three classical attractors: Lorenz, Rossler, Chen",
-      "Outputs feed the pen plotter autoresearch catalog alongside 17 other factories",
+      "Outputs feed the pen plotter autoresearch catalog alongside 21 other factories",
     ],
     stack: ["Python", "NumPy", "SVG", "matplotlib", "iDraw"],
     category: "Generative",
@@ -469,7 +469,7 @@ export const experiments = [
     stack: ["JavaScript", "Canvas API", "SVG", "CSS"],
     category: "Generative",
     status: "Live",
-    href: "https://djmclaudeassistant-web.github.io/tartanism/",
+    href: "/tartanism/app/",
   },
   {
     slug: "mastra-dashboard",
@@ -494,15 +494,15 @@ export const experiments = [
   {
     slug: "pen-plotter-pipeline",
     title: "Pen Plotter Pipeline",
-    description: "Generative SVG art pipeline with AI scoring. 18 procedural factories producing work across moire interference, op-art, voxel sculpture, hatching, ridgelines, calligraphic gestures, and more.",
+    description: "Generative SVG art pipeline with AI scoring. 22 procedural factories producing work across moire interference, op-art, voxel sculpture, halftone, pointillism, circle packing, hatching, ridgelines, calligraphic gestures, and more.",
     longDescription: [
-      "A Python pipeline that runs 18 independent factory generators, feeds each output through a scoring engine combining six algorithmic signals and five vision-language judges, and routes high-scoring pieces to the physical plotter. Factories span the full visual range: moire interference (highest avg), op-art warps, isometric voxel sculpture, density hatching, topographic line work, ridgeline waveforms, calligraphic gestures, generative grids, L-systems, stippling, wireframes, and more.",
+      "A Python pipeline that runs 22 independent factory generators, feeds each output through a scoring engine combining six algorithmic signals and five vision-language judges, and routes high-scoring pieces to the physical plotter. Factories span the full visual range: moire interference (highest avg), op-art warps, isometric voxel sculpture, density hatching, topographic line work, ridgeline waveforms, calligraphic gestures, generative grids, L-systems, stippling, wireframes, and more.",
       "The scoring stack: ink coverage, line complexity, composition (rule-of-thirds focal density), entropy (edge + local variance), uniqueness (perceptual hash), and feasibility (estimated plot time). On top of those, five vision-language judges score the top pieces: Claude via subagents, Gemini twice (aesthetic + adversarial), Qwen via OpenRouter, and Cerebras. The full composite is 55% algorithmic + 45% judge.",
       "Physical output goes through iDraw 2.0 with archival-quality pigment ink on A3 cotton paper. Pen speed, acceleration, and lift height are tuned per factory. Path optimization via vpype reduces pen-up travel by 93 to 96% before every plot.",
-      "16,832 specimens have been scored to date. The full editorial field journal, including the discovery that 26% of the algorithmic top-50 are 'grey rectangles' the algorithms loved but Claude rated 1.8/10, is published as a separate artifact.",
+      "21,770 specimens have been scored to date. The full editorial field journal, including the discovery that 26% of the algorithmic top-50 are 'grey rectangles' the algorithms loved but Claude rated 1.8/10, is published as a separate artifact.",
     ],
     highlights: [
-      "18 procedural factories · 16,832 scored specimens · top score 89.1",
+      "22 procedural factories · 21,770 scored specimens · top score 89.1",
       "10-signal scoring: 6 algorithmic + 5 vision-language judges (Claude, Gemini, Qwen, Cerebras)",
       "iDraw 2.0 output with pigment ink on A3 cotton, vpype path optimization",
       "Best pieces visible in the gallery below; the full field journal is one click away",
@@ -517,17 +517,17 @@ export const experiments = [
     slug: "pen-plotter-autoresearch",
     title: "Pen Plotter Autoresearch",
     description:
-      "An editorial field journal for an autonomous loop running on 18 generative art factories. 16,832 specimens, scored by six algorithmic signals and five vision-language judges. Set in Boska, printed on aged paper.",
+      "An editorial field journal for an autonomous loop running on 22 generative art factories. 21,770 specimens, scored by six algorithmic signals and five vision-language judges. Set in Boska, printed on aged paper.",
     longDescription: [
       "An autonomous research loop, in the spirit of Karpathy's nanochat experiments, applied to generative pen plotter art. Each cycle audits all factories, identifies the single weakest metric across the catalog, edits the corresponding generator, regenerates a thousand new variants, scores them, and either commits the change or reverts. The loop has been running since the third week of March 2026.",
-      "The most interesting finding is what the algorithms get wrong. A piece that scores 88.3 on six algorithmic signals, top five of 16,832, can score 1.8 on a vision-language judge that calls it 'a degenerate parameter combination, no discernible composition, focal point, or visual interest.' The algorithm cannot tell the difference between a starburst and a piece of woven fabric. That is what the judges are for.",
-      "The published artifact is a five-section editorial: method, anomaly, catalog, best of run, colophon. It is set in Boska and JetBrains Mono and reads like a real catalog. An addendum page contains every kept specimen, all sixteen thousand eight hundred and thirty-two of them, laid out as a single grid you can scroll through and click into.",
+      "The most interesting finding is what the algorithms get wrong. A piece that scores 88.3 on six algorithmic signals, top five of 20,845, can score 1.8 on a vision-language judge that calls it 'a degenerate parameter combination, no discernible composition, focal point, or visual interest.' The algorithm cannot tell the difference between a starburst and a piece of woven fabric. That is what the judges are for.",
+      "The published artifact is a five-section editorial: method, anomaly, catalog, best of run, colophon. It is set in Boska and JetBrains Mono and reads like a real catalog. An addendum page contains every kept specimen, all twenty thousand eight hundred and forty-five of them, laid out as a single grid you can scroll through and click into.",
     ],
     highlights: [
-      "18 procedural factories · 16,832 scored specimens · top score 89.1",
+      "22 procedural factories · 21,770 scored specimens · top score 89.1",
       "Six algorithmic signals + five vision-language judges (Claude · Gemini · Qwen · Cerebras)",
       "Five-section editorial: method · anomaly · catalog · best of run · colophon",
-      "Full addendum page with all 16,832 specimens, click-to-zoom",
+      "Full addendum page with all 20,845 specimens, click-to-zoom",
       "Set in Boska + JetBrains Mono, served on warm specimen paper",
     ],
     stack: ["HTML", "Python", "marimo", "Boska", "vpype", "Claude · Gemini · Qwen · Cerebras"],
