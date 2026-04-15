@@ -36,19 +36,19 @@ export async function generateMetadata({
   const content = productContent[slug];
   if (!product || !content) return {};
 
-  const fullTitle = `${product.name} (${product.price}) | Edgeless Labs`;
+  const fullTitle = `${product.name} (${product.price}) | Edgeless Lab`;
   const url = `${SITE}/products/${slug}`;
   const image = `${SITE}/product-covers/${slug}.png`;
 
   return {
     title: { absolute: fullTitle },
     description: content.shortDescription,
-    keywords: [product.name, "Edgeless Labs", "Claude Code", "AI agents", slug.replace(/-/g, " ")],
+    keywords: [product.name, "Edgeless Lab", "Claude Code", "AI agents", slug.replace(/-/g, " ")],
     alternates: { canonical: url },
     openGraph: {
       type: "website",
       url,
-      siteName: "Edgeless Labs",
+      siteName: "Edgeless Lab",
       title: fullTitle,
       description: content.shortDescription,
       images: [{ url: image, width: 1280, height: 1280, alt: product.name }],
@@ -86,7 +86,7 @@ export default async function ProductDetailPage({
           name: product.name,
           description: content.shortDescription,
           image: `${SITE}/product-covers/${slug}.png`,
-          brand: { "@type": "Brand", name: "Edgeless Labs" },
+          brand: { "@type": "Brand", name: "Edgeless Lab" },
           url: `${SITE}/products/${slug}`,
           offers: {
             "@type": "Offer",
@@ -94,7 +94,7 @@ export default async function ProductDetailPage({
             priceCurrency: "USD",
             price: priceNumber,
             availability: "https://schema.org/InStock",
-            seller: { "@type": "Organization", name: "Edgeless Labs", url: SITE },
+            seller: { "@type": "Organization", name: "Edgeless Lab", url: SITE },
           },
         }}
       />
@@ -117,7 +117,7 @@ export default async function ProductDetailPage({
                   className="text-xs font-mono uppercase tracking-[0.12em] px-2.5 py-1 rounded-md"
                   style={{ background: "var(--accent-muted)", color: "var(--accent)" }}
                 >
-                  {product.badge ?? "Edgeless Labs"}
+                  {product.badge ?? "Edgeless Lab"}
                 </span>
                 <span
                   className="text-xs font-mono"

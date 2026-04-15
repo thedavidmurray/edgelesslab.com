@@ -6,7 +6,7 @@ import { ProjectDetail } from "./project-detail";
 
 const NOT_FOUND_METADATA: Metadata = {
   title: {
-    absolute: "Not Found | Edgeless Labs",
+    absolute: "Not Found | Edgeless Lab",
   },
 };
 
@@ -27,7 +27,7 @@ export async function generateMetadata({
     title: project.title,
     description: project.description,
     path: `/projects/${project.slug}`,
-    keywords: [...project.tags, project.category, "Edgeless Labs"],
+    keywords: [...project.tags, project.category, "Edgeless Lab"],
   });
 }
 

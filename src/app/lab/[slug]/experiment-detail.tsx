@@ -32,7 +32,7 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
           description: experiment.description,
           creator: {
             "@type": "Organization",
-            name: "Edgeless Labs",
+            name: "Edgeless Lab",
             url: "https://edgelesslab.com",
           },
           genre: experiment.category,

@@ -49,7 +49,7 @@ export function AboutHeader() {
       </div>
       <Image
         src="/og-image.png"
-        alt="Edgeless Labs"
+        alt="Edgeless Lab"
         width={0}
         height={0}
         className="sr-only"

@@ -130,7 +130,7 @@ Whatever shows up next in that repo, I'll approach it the same way: read it, ste
     tags: ["Solo Dev", "Products", "Process"],
     readTime: "6 min",
     content: `
-One week ago, Edgeless Labs had 11 products on Gumroad. Today it has 18. Each product has a companion blog post. Each was built from existing infrastructure, not invented from scratch. This is the process.
+One week ago, Edgeless Lab had 11 products on Gumroad. Today it has 18. Each product has a companion blog post. Each was built from existing infrastructure, not invented from scratch. This is the process.
 
 ## The Pipeline
 
@@ -820,7 +820,7 @@ The key insight in both cases: **the protocol is the product**. Not any single t
 
 ## What This Looks Like in Practice
 
-The [agent infrastructure at Edgeless Labs](/blog/building-ai-agent-infrastructure-solo) runs several MCP servers. Each one does one thing:
+The [agent infrastructure at Edgeless Lab](/blog/building-ai-agent-infrastructure-solo) runs several MCP servers. Each one does one thing:
 
 **ChromaDB search server**: semantic search across a knowledge base of 7,000+ documents. Takes a query string, returns ranked results with similarity scores. That's the whole API.
 

@@ -41,7 +41,7 @@ export async function GET(): Promise<Response> {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Edgeless Labs Blog</title>
+    <title>Edgeless Lab Blog</title>
     <link>${SITE_URL}/blog</link>
     <description>Agent experiments, developer tools, and creative coding from a solo lab.</description>
     <language>en-us</language>

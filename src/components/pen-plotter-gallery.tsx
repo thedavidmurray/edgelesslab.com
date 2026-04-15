@@ -71,7 +71,7 @@ export function PenPlotterGallery() {
       </div>
 
       <p className="text-[12px] font-mono uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
-        9 of 16,732 specimens · top piece per factory ·{" "}
+        9 of 21,770 specimens · top piece per factory ·{" "}
         <a
           href="/pen-plotter/"
           className="underline hover:no-underline"

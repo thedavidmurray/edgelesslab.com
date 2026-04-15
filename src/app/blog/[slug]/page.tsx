@@ -20,7 +20,7 @@ export async function generateMetadata({
   const post = posts.find((p) => p.slug === slug);
   if (!post) return {};
 
-  const fullTitle = `${post.title} | Edgeless Labs`;
+  const fullTitle = `${post.title} | Edgeless Lab`;
 
   return {
     title: {
@@ -33,7 +33,7 @@ export async function generateMetadata({
       description: post.description,
       type: "article",
       publishedTime: post.date,
-      siteName: "Edgeless Labs",
+      siteName: "Edgeless Lab",
       url: `https://edgelesslab.com/blog/${post.slug}`,
       images: [{
         url: "/og-image.png",
@@ -80,7 +80,7 @@ export default async function BlogPostPage({
           },
           publisher: {
             "@type": "Organization",
-            name: "Edgeless Labs",
+            name: "Edgeless Lab",
             url: "https://edgelesslab.com",
           },
           url: `https://edgelesslab.com/blog/${post.slug}`,

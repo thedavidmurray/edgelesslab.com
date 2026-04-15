@@ -371,7 +371,7 @@ The 8-stage pipeline: Ideate, Validate, Build, Package, List, Price, Launch, Mon
 The validation scorecard: 6 weighted criteria with a launch threshold. Where to validate (search volume, forums, competitor analysis). Kill criteria for bad ideas.
 
 **Chapter 3: Content Creation by Tier**
-The 6-tier pricing system ($9 / $14 / $19 / $24 / $29 / $39) with word count targets, file counts, and a real shipped Edgeless Labs product named at every tier as the reference point. The "Battle Scars" differentiator, why buyers pay for curation over information.
+The 6-tier pricing system ($9 / $14 / $19 / $24 / $29 / $39) with word count targets, file counts, and a real shipped Edgeless Lab product named at every tier as the reference point. The "Battle Scars" differentiator, why buyers pay for curation over information.
 
 **Chapter 4: Packaging and Covers**
 ZIP structure, quality gates, and automated cover image generation. The template that makes every cover consistent.
@@ -392,7 +392,7 @@ How every product generates blog posts, and every blog post drives product sales
 The 6 mistakes that kill launches, building before validating, pricing based on effort, overloading v1, dead links, no cross-selling, invisible launches.
 
 **Chapter 10: Shipped Catalog and Measuring Your Own Numbers**
-The real Edgeless Labs catalog, organized into three launch waves, each with its own narrative thread. Per-product notes on what worked and what did not. Plus the five metrics that actually matter (conversion, refund rate, AOV, bundle lift, cross-sell CTR), their formulas, and exactly where to find each one inside Gumroad analytics.
+The real Edgeless Lab catalog, organized into three launch waves, each with its own narrative thread. Per-product notes on what worked and what did not. Plus the five metrics that actually matter (conversion, refund rate, AOV, bundle lift, cross-sell CTR), their formulas, and exactly where to find each one inside Gumroad analytics.
 
 **Chapter 11: Scaling to 50 Products**
 The repeatable system, pipeline maintenance, when to bundle, and a direct comparison of what makes this different from the free launch advice you can already find (weighted scorecard, narrative wave rule, inter-stage quality gates).
@@ -402,7 +402,7 @@ The repeatable system, pipeline maintenance, when to bundle, and a direct compar
 - Gumroad listing copy template (copy-paste ready)
 - 3 printable checklists: pre-build, pre-package, launch day
 - URL verification script (check your listings are live before updating your site)
-- **Appendix C: The 17 Products**, the complete Edgeless Labs catalog as a ground-truth product index, tiered by price
+- **Appendix C: The 17 Products**, the complete Edgeless Lab catalog as a ground-truth product index, tiered by price
 - **Appendix D: Sample Filled-In Product Brief**, the actual brief used to greenlight CLAUDE.md Template Pack, with the validation math shown explicitly
 
 **Who this is for:**

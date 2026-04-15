@@ -16,7 +16,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         "name": project.title,
         "description": project.longDescription,
         "applicationCategory": "DeveloperApplication",
-        "author": { "@type": "Organization", "name": "Edgeless Labs", "url": "https://edgelesslab.com" },
+        "author": { "@type": "Organization", "name": "Edgeless Lab", "url": "https://edgelesslab.com" },
         "url": `https://edgelesslab.com/projects/${project.slug}`,
       }} />
       <Nav />

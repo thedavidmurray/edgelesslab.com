@@ -158,7 +158,7 @@ export function Footer() {
             className="text-xs font-mono"
             style={{ color: "var(--text-tertiary)" }}
           >
-            &copy; 2026 Edgeless Labs
+            &copy; 2026 Edgeless Lab
           </span>
           <div className="flex items-center gap-2">
             <span

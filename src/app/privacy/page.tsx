@@ -6,9 +6,9 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata = createPageMetadata({
   title: "Privacy Policy",
   description:
-    "Privacy policy for Edgeless Labs -- website analytics, digital products, and the Edgeless iOS app.",
+    "Privacy policy for Edgeless Lab -- website analytics, digital products, and the Edgeless iOS app.",
   path: "/privacy",
-  keywords: ["Edgeless Labs privacy policy", "privacy", "data policy"],
+  keywords: ["Edgeless Lab privacy policy", "privacy", "data policy"],
 });
 
 export default function PrivacyPolicy() {
@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
             className="inline-block text-[13px] mb-8 transition-colors"
             style={{ color: "var(--text-tertiary)" }}
           >
-            &larr; Edgeless Labs
+            &larr; Edgeless Lab
           </Link>
 
           <h1

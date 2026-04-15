@@ -6,9 +6,9 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata = createPageMetadata({
   title: "Terms of Service",
   description:
-    "Terms of service for Edgeless Labs -- digital products, website, and the Edgeless iOS app.",
+    "Terms of service for Edgeless Lab -- digital products, website, and the Edgeless iOS app.",
   path: "/terms",
-  keywords: ["Edgeless Labs terms of service", "terms", "legal"],
+  keywords: ["Edgeless Lab terms of service", "terms", "legal"],
 });
 
 export default function TermsOfService() {
@@ -23,7 +23,7 @@ export default function TermsOfService() {
             className="inline-block text-[13px] mb-8 transition-colors"
             style={{ color: "var(--text-tertiary)" }}
           >
-            &larr; Edgeless Labs
+            &larr; Edgeless Lab
           </Link>
 
           <h1
@@ -45,7 +45,7 @@ export default function TermsOfService() {
 
             <Section title="Agreement">
               <p>
-                By using any Edgeless Labs product or service, you agree to
+                By using any Edgeless Lab product or service, you agree to
                 these terms. If you don&apos;t agree, don&apos;t use them.
               </p>
             </Section>
@@ -118,7 +118,7 @@ export default function TermsOfService() {
 
             <Section title="Acceptable Use">
               <p>
-                Don&apos;t use Edgeless Labs products to create misleading
+                Don&apos;t use Edgeless Lab products to create misleading
                 content intended to deceive or harm others. Don&apos;t use
                 purchased templates or guides to build competing products
                 that resell the same materials.
@@ -127,7 +127,7 @@ export default function TermsOfService() {
 
             <Section title="Limitation of Liability">
               <p>
-                To the maximum extent permitted by law, Edgeless Labs and its
+                To the maximum extent permitted by law, Edgeless Lab and its
                 developer are not liable for any damages arising from your use
                 of our products, website, or app.
               </p>

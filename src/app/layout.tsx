@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://edgelesslab.com',
-    siteName: 'Edgeless Labs',
+    siteName: 'Edgeless Lab',
     title: 'Edgeless Lab - AI Agents, Generative Art, Developer Tools',
     description: 'One person shipping autonomous agents, generative art, and developer tools. Built in production, released in the open.',
     images: [{
@@ -84,7 +84,7 @@ export default function RootLayout({
         <JsonLd data={{
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "Edgeless Labs",
+          "name": "Edgeless Lab",
           "url": "https://edgelesslab.com",
           "description": "Creative technology lab building AI agents, MCP servers, generative art pipelines, and developer tools",
           "founder": {

@@ -14,7 +14,7 @@ export const metadata = createPageMetadata({
   title: "About the Studio",
   description: "One-person creative technology studio building agents, pipelines, and tools that run in production.",
   path: "/about",
-  keywords: ["about Edgeless Labs", "David Murray", "creative technology studio", "AI-native developer tools"],
+  keywords: ["about Edgeless Lab", "David Murray", "creative technology studio", "AI-native developer tools"],
 });
 
 const stats = [
@@ -27,7 +27,7 @@ const stats = [
 const timeline = [
   {
     period: "2026",
-    title: "Edgeless Labs",
+    title: "Edgeless Lab",
     description:
       "Formalized the lab. Launched the Prompt Engineering OS, MCP server toolkit, and multi-agent orchestration layer. Mastra-based routing across Claude, Gemini, and local models.",
   },

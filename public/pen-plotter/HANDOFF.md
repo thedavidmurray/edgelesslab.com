@@ -12,7 +12,7 @@
 |------|-------|
 | URL | https://edgelesslab.com/pen-plotter/ |
 | Sections | §01 Hero · §02 Method · §03 Catalog (1296) · §04 Best of Run (7 spreads) · §05 Colophon |
-| Addendum | ~15,833 specimens, 40px mass grid |
+| Addendum | ~20,845 specimens, 40px mass grid |
 | Host | GitHub Pages (`edgeless-ai/edgelesslab.com`, `main` branch) |
 | Type stack | Boska (Fontshare) + JetBrains Mono (Google Fonts) |
 | Palette | `#f3eddd` paper · `#0c0a08` ink · `#c2410c` sodium amber |
@@ -31,7 +31,7 @@ editorial/
 └── assets/
     ├── og-image.png
     ├── manifest.json           # curated 1296 entries {id,factory,score,thumb,medium}
-    ├── manifest-full.json      # ~15,833 entries for addendum
+    ├── manifest-full.json      # ~20,845 entries for addendum
     ├── thumbs/                 # 80px webp (curated §03)
     ├── thumbs-full/            # 40px webp (addendum)
     ├── medium/                 # 720px webp (lightbox)
@@ -49,7 +49,7 @@ cd /Users/djm/claude-projects/pen-plotter-art/editorial
 
 # 2. Regenerate catalog if specimens changed
 python3.11 make_catalog.py              # curated (1296)
-python3.11 make_catalog.py --addendum   # full (~15,833)
+python3.11 make_catalog.py --addendum   # full (~20,845)
 
 # 3. Local preview
 python3.11 -m http.server 8924
@@ -101,7 +101,7 @@ Propagation: 1–3 minutes after the GitHub Pages action turns green.
 
 - [ ] Real-device mobile testing (tested in Chrome devtools responsive only)
 - [ ] Print stylesheet pass — currently renders okay but hasn't been tuned
-- [ ] Addendum page: virtualized grid for browsers that stutter on 15K DOM nodes (currently CSS-grid only)
+- [ ] Addendum page: virtualized grid for browsers that stutter on 20K DOM nodes (currently CSS-grid only)
 - [ ] Accessibility audit — alt text on thumbs is generic (`specimen {id}`), could embed factory + score
 - [ ] Scrollytelling upgrade for §04 spreads (currently static)
 
@@ -109,7 +109,7 @@ Propagation: 1–3 minutes after the GitHub Pages action turns green.
 
 - [x] Score recalibration animation in §02 (IntersectionObserver, 900ms tween, ink→amber color flip) — stagger timing is final
 - [x] 36×36 grid (1296) catalog with lightbox
-- [x] Addendum page with full 15,833 specimens
+- [x] Addendum page with full 20,845 specimens
 - [x] 7 editorial spreads in §04 with magazine pacing
 - [x] Colophon §05 with type stack + credits
 - [x] OG card + Twitter card meta

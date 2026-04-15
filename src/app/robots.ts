@@ -4,7 +4,7 @@ export const dynamic = 'force-static';
 
 /**
  * robots.txt: open to everything by default, with explicit allows for the AI
- * search crawlers we actively want indexing the site (Edgeless Labs content
+ * search crawlers we actively want indexing the site (Edgeless Lab content
  * is technical and benefits from being cited inside AI answers).
  */
 export default function robots(): MetadataRoute.Robots {
