@@ -11,6 +11,8 @@ export interface BlogPost {
   isLaunch?: boolean;
   /** Two-column layout with sticky TOC sidebar. For longer, narrative posts. */
   editorial?: boolean;
+  /** One-line hook for the companion product CTA. Pain-point framing, not generic. */
+  ctaHook?: string;
 }
 
 export const posts: BlogPost[] = [
@@ -23,6 +25,7 @@ export const posts: BlogPost[] = [
     tags: ["Generative Art", "Creative Coding", "Textiles", "SVG"],
     readTime: "7 min",
     productSlug: "gen-art-starter",
+    ctaHook: "10 generators, parameter guides, and the scoring rubric from 105+ experiments.",
     content: `
 A tartan is thirty characters of notation and three centuries of someone wearing it. The notation is the part a machine can learn. The wearing is not.
 
@@ -88,6 +91,7 @@ At what point does generated plaid become tartan? I do not have an answer. But t
     tags: ["Generative Art", "Creative Coding", "Pen Plotters", "Algorithms"],
     readTime: "8 min",
     productSlug: "gen-art-starter",
+    ctaHook: "The 10 best generators from this catalog, ready to run with parameter guides.",
     content: `
 Total Serialism started as a homework assignment: implement every algorithmic art family I could find, each as a self-contained interactive sketch with real-time parameter controls and SVG export. The constraint was physical output. Every algorithm had to produce something a pen plotter could draw on paper.
 
@@ -157,6 +161,7 @@ If you are starting from zero, begin with the flow field. It is the most forgivi
     readTime: "8 min",
     editorial: true,
     productSlug: "prompt-engineering-os",
+    ctaHook: "The lint rules, banned phrases, and production prompt templates behind this post.",
     content: `
 Someone leaked Meta AI's production system prompt. It showed up in a GitHub repo called CL4R1T4S, which collects and dates leaked prompts from frontier labs. I was looking through it for jailbreak fodder and instead found the most disciplined writing-voice guide I've seen inside a system prompt.
 
@@ -264,6 +269,7 @@ Whatever shows up next in that repo, I'll approach it the same way: read it, ste
   {
     slug: "shipped-7-products-in-7-days",
     productSlug: "launch-toolkit",
+    ctaHook: "The exact templates, pricing model, and launch checklist from this 7-day sprint.",
     isLaunch: true,
     editorial: true,
     title: "I Shipped 7 Digital Products in 7 Days. Here's Exactly How.",
@@ -326,6 +332,7 @@ Everything on the [products page](/products).
   {
     slug: "generative-art-algorithms-that-work",
     productSlug: "gen-art-starter",
+    ctaHook: "Working generators for every algorithm in this post, plus SVG optimization scripts.",
     isLaunch: true,
     title: "I Built 75 Generative Art Algorithms. Here Are the 10 That Actually Look Good.",
     description: "Most generative art looks like noise. After 105+ experiments with pen plotters and AI scoring, these are the algorithms that consistently produce work worth framing.",
@@ -381,6 +388,7 @@ The best generative art doesn't look generative. It looks like someone made a de
   {
     slug: "agents-that-talk-to-each-other",
     productSlug: "multi-agent-blueprint",
+    ctaHook: "The dispatch pattern, bus protocol, and 3 reference implementations from this architecture.",
     isLaunch: true,
     editorial: true,
     title: "How I Run 5 AI Agents That Talk to Each Other",
@@ -449,6 +457,7 @@ The value isn't in the architecture diagram. It's in knowing which shortcuts wor
   {
     slug: "n8n-workflows-ai-business",
     productSlug: "n8n-ai-workflows",
+    ctaHook: "Importable JSON workflows, env configs, and setup guides for all 5 automations.",
     isLaunch: true,
     editorial: true,
     title: "5 n8n Workflows That Run My AI Business",
@@ -520,6 +529,7 @@ The full workflow JSON files, setup guides, and customization instructions are i
   {
     slug: "mcp-servers-break-in-production",
     productSlug: "production-mcp-kit",
+    ctaHook: "Auth middleware, rate limiting, health checks, and Docker configs that survived production.",
     isLaunch: true,
     editorial: true,
     title: "Most MCP Servers Break in Production. Here's Why.",
@@ -578,6 +588,7 @@ The gap between "works in a demo" and "runs unattended at 3am" is where most MCP
   {
     slug: "agent-lost-252-dollars",
     productSlug: "agent-safety-patterns",
+    ctaHook: "10 anti-patterns, scope containment hooks, and the financial verification protocol from this incident.",
     isLaunch: true,
     title: "I Let an AI Agent Move My Money. It Lost $252.",
     description: "An autonomous agent exceeded its scope, moved funds without verification, and then lied about recovery. The full post-mortem, and the 3 guardrails that would have prevented it.",
@@ -631,6 +642,7 @@ Your job isn't to trust the agent. It's to make the wrong path impossible.
   {
     slug: "the-hook-that-saved-my-codebase",
     productSlug: "hooks-deep-dive",
+    ctaHook: "10 production hooks, composition patterns, and the damage-control system from this post.",
     isLaunch: true,
     title: "The Hook That Saved My Codebase",
     description: "A single Claude Code hook prevented a cascading rm -rf from wiping source files. Here's how damage-control hooks work, and 3 you can steal today.",
@@ -764,6 +776,7 @@ Every technique on this site is built from those six functions. The [source is o
     tags: ["Prompt Engineering", "AI", "Production"],
     readTime: "5 min",
     productSlug: "prompt-engineering-os",
+    ctaHook: "Production prompt templates, lint rules, and the full system behind this approach.",
     content: `
 Demo prompts work great in demos. "Summarize this article" returns a clean summary. "Extract the key entities" returns a nice list. Ship that to production and watch it break on the first malformed input.
 
@@ -853,6 +866,7 @@ The [Prompt Engineering OS](/products) covers 30 chapters of patterns like these
     tags: ["Claude Code", "Productivity", "Memory"],
     readTime: "4 min",
     productSlug: "claude-memory-kit",
+    ctaHook: "The CLAUDE.md template, memory taxonomy, and session initializer from this setup.",
     content: `
 Every session, I used to start the same way. "We're using TypeScript, not JavaScript." "Don't use default exports." "The API is in \`src/api/\`, not root." "We already tried Redis here and it didn't work."
 
@@ -955,6 +969,7 @@ Read the longer technical version in [How Claude Code Memory Actually Works](/bl
     tags: ["MCP", "Architecture", "Developer Tools"],
     readTime: "5 min",
     productSlug: "lixicg",
+    ctaHook: "Production MCP server templates with auth, rate limiting, and Docker deployment.",
     content: `
 In 1978, Doug McIlroy wrote the Unix philosophy in three sentences. The one that matters: "Write programs that do one thing and do it well. Write programs to work together."
 
@@ -1034,6 +1049,7 @@ See the [lab experiments page](/lab) for the MCP servers running in this system,
     tags: ["Generative Art", "Creative Coding", "Pen Plotters"],
     readTime: "7 min",
     productSlug: "gen-art-starter",
+    ctaHook: "10 plotter-ready generators with SVG optimization and AI scoring rubrics.",
     content: `
 When you generate art for a screen, mistakes are invisible. A triangle with a slight gap renders fine; the display fills it in. Lines can overlap arbitrarily. Color can be sampled per-pixel.
 
@@ -1125,6 +1141,7 @@ If you want to go deeper into the scoring and iteration pipeline, the [pen plott
     tags: ["Agents", "MCP", "Infrastructure"],
     readTime: "8 min",
     productSlug: "plbzo",
+    ctaHook: "The full agent cookbook: dispatch patterns, bus protocol, and production deployment configs.",
     content: `
 When people hear "multi-agent system," they picture a team of engineers, months of planning, and enterprise infrastructure. I built one by myself, and it runs on a single $15/month VPS.
 
@@ -1208,6 +1225,7 @@ The goal isn't to build the most complex system. It's to build the most useful o
     tags: ["Claude Code", "Memory", "Developer Tools"],
     readTime: "6 min",
     productSlug: "claude-memory-kit",
+    ctaHook: "CLAUDE.md template, 4-type memory taxonomy, and the session initializer script.",
     content: `
 Every Claude Code session starts the same way: a blank slate. No memory of yesterday's architecture decisions. No recall of your coding conventions. No idea that you spent three hours debugging that OAuth flow last week.
 

@@ -178,7 +178,7 @@ export default async function BlogPostPage({
                       className="text-xs"
                       style={{ color: "var(--text-tertiary)", lineHeight: 1.5 }}
                     >
-                      Full implementation, code, and templates.
+                      {post.ctaHook || "Full implementation, code, and templates."}
                     </p>
                   </a>
                 );
@@ -211,7 +211,7 @@ export default async function BlogPostPage({
                   </div>
                 </div>
                 <p className="text-sm" style={{ color: "var(--text-secondary)", lineHeight: 1.6 }}>
-                  This post is adapted from {product.name}. Get the full implementation, code, and templates.
+                  {post.ctaHook || `This post is adapted from ${product.name}. Get the full implementation, code, and templates.`}
                 </p>
               </a>
             );
