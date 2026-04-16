@@ -7,9 +7,9 @@
  */
 const STATS = {
   run:        16,
-  factories:  23,
-  pieces:     21770,
-  kept:       20845,
+  factories:  17,
+  pieces:     12741,
+  kept:       12629,
   curated:    1296,
   best:       89.1,
 };
@@ -17,10 +17,10 @@ STATS.withheld = STATS.kept - STATS.curated;
 
 const fmt = n => n.toLocaleString("en-US");
 const WORDS = {
-  pieces:    "twenty‑one thousand seven hundred and seventy",
-  kept:      "twenty thousand eight hundred and forty‑five",
-  withheld:  "nineteen thousand five hundred and forty‑nine",
-  factories: "twenty‑three",
+  pieces:    "twelve thousand seven hundred and forty‑one",
+  kept:      "twelve thousand six hundred and twenty‑nine",
+  withheld:  "eleven thousand three hundred and thirty‑three",
+  factories: "seventeen",
   curated:   "one thousand two hundred and ninety‑six",
 };
 
