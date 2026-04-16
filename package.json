@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "./scripts/preserve-standalone.sh save",
     "build": "next build",
+    "postbuild": "./scripts/preserve-standalone.sh restore",
     "start": "next start",
     "lint": "eslint && node scripts/lint-experiments.mjs && npm run lint:voice",
     "lint:experiments": "node scripts/lint-experiments.mjs",

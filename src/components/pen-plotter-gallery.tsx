@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PLOTTER } from "@/lib/plotter-stats";
 
 /**
  * Embedded gallery for the pen-plotter-pipeline lab experiment.
@@ -71,7 +72,7 @@ export function PenPlotterGallery() {
       </div>
 
       <p className="text-[12px] font-mono uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
-        9 of 21,770 specimens · top piece per factory ·{" "}
+        9 of {PLOTTER.pieces} specimens · top piece per factory ·{" "}
         <a
           href="/pen-plotter/"
           className="underline hover:no-underline"
