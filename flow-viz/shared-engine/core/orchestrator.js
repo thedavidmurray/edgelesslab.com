@@ -78,19 +78,23 @@ class Orchestrator {
   loadConfig(userConfig) {
     // Deep clone default config
     const config = JSON.parse(JSON.stringify(CONFIG));
-    
+
+    // Restore methods lost during JSON clone
+    if (typeof CONFIG.loadEnvironment === 'function') config.loadEnvironment = CONFIG.loadEnvironment.bind(config);
+    if (typeof CONFIG.validate === 'function') config.validate = CONFIG.validate.bind(config);
+
     // Apply user overrides
     if (userConfig) {
       this.deepMerge(config, userConfig);
     }
-    
+
     // Load environment (URL params)
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && typeof config.loadEnvironment === 'function') {
       config.loadEnvironment();
     }
-    
+
     // Validate
-    config.validate();
+    if (typeof config.validate === 'function') config.validate();
     
     // Resolve seed
     if (config.engine.seed === null) {
@@ -186,11 +190,14 @@ class Orchestrator {
   }
 
   handleResize() {
-    resizeCanvas(windowWidth, windowHeight);
-    Events.emit('ENGINE_RESIZE', { width, height });
+    if (typeof resizeCanvas === 'function') {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+    Events.emit('ENGINE_RESIZE', { width: windowWidth, height: windowHeight });
   }
 
   handleKeyPress(key) {
+    if (!this.config || !this.config.interaction) return;
     const cfg = this.config.interaction.keyboard;
     
     if (key === cfg.saveKey) {
