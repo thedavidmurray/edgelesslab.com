@@ -78,23 +78,19 @@ class Orchestrator {
   loadConfig(userConfig) {
     // Deep clone default config
     const config = JSON.parse(JSON.stringify(CONFIG));
-
-    // Restore methods lost during JSON clone
-    if (typeof CONFIG.loadEnvironment === 'function') config.loadEnvironment = CONFIG.loadEnvironment.bind(config);
-    if (typeof CONFIG.validate === 'function') config.validate = CONFIG.validate.bind(config);
-
+    
     // Apply user overrides
     if (userConfig) {
       this.deepMerge(config, userConfig);
     }
-
+    
     // Load environment (URL params)
-    if (typeof window !== 'undefined' && typeof config.loadEnvironment === 'function') {
+    if (typeof window !== 'undefined') {
       config.loadEnvironment();
     }
-
+    
     // Validate
-    if (typeof config.validate === 'function') config.validate();
+    config.validate();
     
     // Resolve seed
     if (config.engine.seed === null) {
@@ -135,9 +131,9 @@ class Orchestrator {
       if (sourceParam) {
         overrides.dataSource = { type: sourceParam };
       }
-      this.config = this.loadConfig(overrides);
+      this.loadConfig(overrides);
     }
-
+    
     const c = this.config.engine;
     
     // Apply p5 settings
@@ -190,14 +186,11 @@ class Orchestrator {
   }
 
   handleResize() {
-    if (typeof resizeCanvas === 'function') {
-      resizeCanvas(windowWidth, windowHeight);
-    }
-    Events.emit('ENGINE_RESIZE', { width: windowWidth, height: windowHeight });
+    resizeCanvas(windowWidth, windowHeight);
+    Events.emit('ENGINE_RESIZE', { width, height });
   }
 
   handleKeyPress(key) {
-    if (!this.config || !this.config.interaction) return;
     const cfg = this.config.interaction.keyboard;
     
     if (key === cfg.saveKey) {
@@ -255,41 +248,47 @@ class Orchestrator {
 
     // Randomize aesthetic parameters
     const r = () => Math.random();
-    const rRange = (min, max) => min + r() * (max - min);
+    const rr = (min, max) => min + r() * (max - min);
 
     // Background hue shift (keep dark, vary the tone)
-    this.config.colors.background.h = Math.floor(rRange(0, 360));
-    this.config.colors.background.s = Math.floor(rRange(15, 50));
-    this.config.colors.background.b = Math.floor(rRange(3, 10));
+    this.config.colors.background.h = Math.floor(rr(0, 360));
+    this.config.colors.background.s = Math.floor(rr(15, 50));
+    this.config.colors.background.b = Math.floor(rr(3, 10));
 
     // Particle flow aesthetics
-    this.config.particles.flow.noiseScale = rRange(0.001, 0.008);
-    this.config.particles.flow.speed = rRange(0.3, 1.5);
-    this.config.particles.flow.attractionStrength = rRange(0.1, 0.6);
-    this.config.particles.flow.damping = rRange(0.94, 0.99);
+    this.config.particles.flow.noiseScale = rr(0.001, 0.008);
+    this.config.particles.flow.speed = rr(0.3, 1.5);
+    this.config.particles.flow.attractionStrength = rr(0.1, 0.6);
+    this.config.particles.flow.damping = rr(0.94, 0.99);
 
     // Particle visuals
-    this.config.particles.size.min = Math.floor(rRange(1, 3));
-    this.config.particles.size.max = Math.floor(rRange(3, 8));
-    this.config.particles.visual.opacity = rRange(0.15, 0.5);
+    this.config.particles.size.min = Math.floor(rr(1, 3));
+    this.config.particles.size.max = Math.floor(rr(3, 8));
+    this.config.particles.visual.opacity = rr(0.15, 0.5);
 
     // Trails
-    this.config.trails.fadeRate = Math.floor(rRange(1, 8));
-    this.config.trails.opacity = Math.floor(rRange(5, 30));
+    this.config.trails.fadeRate = Math.floor(rr(1, 8));
+    this.config.trails.opacity = Math.floor(rr(5, 30));
 
     // Market visuals
-    this.config.markets.visual.pulseSpeed = rRange(0.01, 0.05);
-    this.config.markets.visual.glowLayers = Math.floor(rRange(2, 6));
-    this.config.markets.visual.glowSpread = Math.floor(rRange(10, 40));
+    this.config.markets.visual.pulseSpeed = rr(0.01, 0.05);
+    this.config.markets.visual.glowLayers = Math.floor(rr(2, 6));
+    this.config.markets.visual.glowSpread = Math.floor(rr(10, 40));
 
     // Connections
-    this.config.connections.visual.strokeWeight = rRange(0.5, 3);
-    this.config.connections.visual.maxAlpha = Math.floor(rRange(15, 60));
+    this.config.connections.visual.strokeWeight = rr(0.5, 3);
+    this.config.connections.visual.maxAlpha = Math.floor(rr(15, 60));
 
-    // Placement (re-scatter the markets)
-    this.config.markets.placement.minDistance = Math.floor(rRange(60, 180));
+    // Placement (re-scatter)
+    this.config.markets.placement.minDistance = Math.floor(rr(60, 180));
 
+    // Propagate config changes to the engine and its entities
     if (this.engine) {
+      this.engine.config = this.config;
+      // Update existing markets with new config
+      if (this.engine.markets) {
+        this.engine.markets.forEach(m => { m.config = this.config; });
+      }
       this.engine.regenerate();
     }
 

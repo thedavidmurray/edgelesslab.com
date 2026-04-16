@@ -490,9 +490,23 @@ class Market {
     if (cfg.showMetrics) {
       textSize(cfg.metricSize);
       fill(0, 0, 100, 60);
-      const price = Math.round((this.data.yesPrice || 0.5) * 100);
-      const vol = ((this.data.volume24h || 0) / 1000000).toFixed(1);
-      text(`${price}% | $${vol}M`, this.x, this.y + this.radius + 15);
+      const m = this.data.metadata || {};
+      let metricStr;
+      if (m.stars !== undefined) {
+        // GitHub: show stars + language
+        metricStr = `★ ${m.stars}${m.language ? '  ' + m.language : ''}`;
+      } else if (m.avgFee !== undefined) {
+        // Bitcoin mempool: show fee rate + vsize
+        metricStr = `${m.avgFee.toFixed(1)} sat/vB`;
+      } else if (this.data.yesPrice !== undefined && this.data.yesPrice !== null) {
+        // Polymarket: show probability + volume
+        const price = Math.round(this.data.yesPrice * 100);
+        const vol = ((this.data.volume24h || 0) / 1000000).toFixed(1);
+        metricStr = `${price}%${vol > 0 ? ' | $' + vol + 'M' : ''}`;
+      } else {
+        metricStr = '';
+      }
+      if (metricStr) text(metricStr, this.x, this.y + this.radius + 15);
     }
   }
 
