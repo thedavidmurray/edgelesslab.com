@@ -29,6 +29,7 @@ STASH_DIR="$PROJECT_DIR/.standalone-stash"
 STANDALONE_DIRS=(
   "pen-plotter"
   "tartanism"
+  "total-serialism"
   "flow-viz"
 )
 

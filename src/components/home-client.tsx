@@ -208,7 +208,7 @@ export function RecentActivity() {
   return (
     <ul className="divide-y" style={{ borderColor: "var(--border-subtle)" }}>
       {recent.map((post, i) => {
-        const isLaunch = Boolean(post.productSlug);
+        const isLaunch = Boolean(post.isLaunch);
         return (
           <li
             key={post.slug}
@@ -473,6 +473,9 @@ interface Experiment {
   category: string;
   href: string;
   external?: boolean;
+  description?: string;
+  stack?: string[];
+  status?: string;
 }
 
 export function ExperimentsGrid({ experiments }: { experiments: Experiment[] }) {
@@ -483,25 +486,62 @@ export function ExperimentsGrid({ experiments }: { experiments: Experiment[] }) 
           key={exp.title}
           href={exp.href}
           {...(exp.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          className="group relative rounded-xl border p-5 transition-all hover:scale-[1.02]"
+          className="group relative rounded-xl border p-5 transition-all hover:scale-[1.02] flex flex-col"
           style={{
             background: "var(--bg-surface)",
             borderColor: "var(--border-subtle)",
             animation: `fadeInUp 0.4s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s both`,
           }}
         >
+          <div className="flex items-center justify-between mb-3">
+            <span
+              className="text-xs font-mono uppercase tracking-[0.12em]"
+              style={{ color: "var(--accent)" }}
+            >
+              {exp.category}
+            </span>
+            {exp.status && (
+              <span
+                className="text-[10px] font-mono uppercase tracking-[0.1em] px-1.5 py-0.5 rounded"
+                style={{
+                  background: exp.status === "Live" ? "var(--green-muted)" : "var(--accent-muted)",
+                  color: exp.status === "Live" ? "var(--green)" : "var(--accent)",
+                }}
+              >
+                {exp.status}
+              </span>
+            )}
+          </div>
           <span
-            className="text-xs font-mono uppercase tracking-[0.12em] block mb-3"
-            style={{ color: "var(--accent)" }}
-          >
-            {exp.category}
-          </span>
-          <span
-            className="text-sm font-medium block"
+            className="text-sm font-medium block mb-2"
             style={{ color: "var(--text-primary)" }}
           >
             {exp.title}
           </span>
+          {exp.description && (
+            <p
+              className="text-xs line-clamp-2 mb-3 flex-1"
+              style={{ color: "var(--text-tertiary)", lineHeight: 1.6 }}
+            >
+              {exp.description}
+            </p>
+          )}
+          {exp.stack && exp.stack.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-auto">
+              {exp.stack.map((tech) => (
+                <span
+                  key={tech}
+                  className="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    color: "var(--text-tertiary)",
+                  }}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          )}
           <div
             className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity"
             style={{ color: "var(--text-tertiary)" }}
@@ -517,9 +557,10 @@ export function ExperimentsGrid({ experiments }: { experiments: Experiment[] }) 
 /* ── Product Highlight (single featured product card) ──────── */
 
 export function ProductHighlight() {
-  // Show top 3 paid products + the free kit
-  const featured = products.filter((p) => p.price !== "Free").slice(0, 3);
+  // Show top 6 paid products + the free kit with a "more" link
+  const featured = products.filter((p) => p.price !== "Free").slice(0, 6);
   const free = products.find((p) => p.price === "Free");
+  const remaining = products.length - featured.length - (free ? 1 : 0);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -597,7 +638,7 @@ export function ProductHighlight() {
             className="text-xs font-medium flex items-center gap-1"
             style={{ color: "var(--accent)" }}
           >
-            +{products.length - 4} more products <ArrowRight size={12} />
+            +{remaining} more products <ArrowRight size={12} />
           </span>
         </a>
       )}

@@ -452,7 +452,7 @@ export const experiments = [
     stack: ["JavaScript", "p5.js", "Canvas", "SVG"],
     category: "Generative",
     status: "Live",
-    href: "https://djmclaudeassistant-web.github.io/total-serialism/",
+    href: "/total-serialism/app/",
   },
   {
     slug: "tartanism",
