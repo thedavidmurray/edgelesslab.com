@@ -7,17 +7,17 @@
     <language>en-us</language>
     <atom:link href="https://edgelesslab.com/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Claude Code Hooks: The Harness Engineering That Actually Matters</title>
+      <link>https://edgelesslab.com/blog/claude-code-hooks-harness-engineering</link>
+      <description>Everyone&apos;s optimizing their prompts. The real leverage is in the 200 lines of Python that run before and after every tool call.</description>
+      <pubDate>Wed, 29 Apr 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/claude-code-hooks-harness-engineering</guid>
+    </item>
+    <item>
       <title>I Run a $12/Week AI Operations Team. Here&apos;s the Cost Breakdown.</title>
       <link>https://edgelesslab.com/blog/12-dollar-ai-operations-team</link>
       <description>Enterprise AI ops costs $50K+/month. I run 5 agents, 24/7, for $12/week. The architecture, the model routing, and why cheap doesn&apos;t mean fragile.</description>
       <pubDate>Sun, 19 Apr 2026 12:00:00 GMT</pubDate>
-      <guid isPermaLink="true">https://edgelesslab.com/blog/12-dollar-ai-operations-team</guid>
-    </item>
-    <item>
-      <title>The $12/Week AI Operations Team</title>
-      <link>https://edgelesslab.com/blog/12-dollar-ai-operations-team</link>
-      <description>How I replaced a $200K enterprise stack with multi-agent orchestration. The architecture, the economics, and the 10 agents that actually run my business.</description>
-      <pubDate>Fri, 17 Apr 2026 12:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://edgelesslab.com/blog/12-dollar-ai-operations-team</guid>
     </item>
     <item>

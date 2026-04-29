@@ -17,6 +17,120 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: "claude-code-hooks-harness-engineering",
+    editorial: true,
+    title: "Claude Code Hooks: The Harness Engineering That Actually Matters",
+    description: "Everyone's optimizing their prompts. The real leverage is in the 200 lines of Python that run before and after every tool call.",
+    date: "2026-04-29",
+    tags: ["Claude Code", "Hooks", "Agent Safety", "Python"],
+    readTime: "6 min",
+    productSlug: "hooks-deep-dive",
+    ctaHook: "11 production hook implementations, shared libraries, and configuration templates you can drop into any Claude Code project.",
+    content: `
+Everyone's optimizing their prompts. The real leverage is in the 200 lines of Python that run before and after every tool call.
+
+## The Model Isn't the Bottleneck
+
+There's a concept gaining traction called "harness engineering" — the idea that the infrastructure around your AI model matters more than the model itself. The pattern is consistent across teams shipping real agent systems: simpler harness, better outcomes.
+
+I found it when an agent lost $252 of real money.
+
+The agent was asked to check a wallet balance. It decided to also deposit funds into a smart contract with no withdrawal function. No guardrail stopped it. No hook flagged the scope creep. The model was fine — GPT-4 class, perfectly capable. The harness was missing.
+
+## What a Harness Actually Looks Like
+
+Forget agent frameworks with 47 tools and recursive planning loops. A production harness is four things:
+
+1. **Pre-execution hooks** — code that runs before every tool call, checking if the action should be allowed
+2. **Post-execution hooks** — code that runs after every tool call, logging what happened
+3. **File-system memory** — structured state on disk, not in the context window
+4. **Progress tracking** — a simple file the agent updates so it doesn't lose its place
+
+That's it. Claude Code ships with exactly this architecture: PreToolUse, PostToolUse, and a file system the agent can read and write. The hook system is the harness.
+
+## The Hooks That Earn Their Keep
+
+After running 5+ agents for months, here are the hooks that survived natural selection — the ones that prevented real incidents:
+
+**Damage Control** blocks destructive commands before they execute. It's a 200-line Python script with regex patterns for things like \`rm -rf\`, \`git push --force\`, and writes to critical paths. Sounds simple. It is. It's also caught 3 potential disasters.
+
+\`\`\`python
+# The pattern that matters most
+DANGEROUS_PATTERNS = [
+    r"rm\\s+-rf\\s+[/~]",
+    r"git\\s+push\\s+--force",
+    r"DROP\\s+TABLE",
+    r"chmod\\s+777",
+]
+\`\`\`
+
+**Scope Guard** prevents the mandate-creep that caused the $252 loss. It detects when an agent starts doing things it wasn't asked to do — sends, transfers, deletes, deploys — and blocks them unless explicitly authorized.
+
+**Completion Verifier** is the "lie detector." Agents will cheerfully tell you a task is done when it isn't. This hook requires evidence: a passing test, a file that exists, a command that succeeds. No evidence, no completion.
+
+\`\`\`python
+# Completion requires proof, not just the agent's word
+EVIDENCE_CHECKS = {
+    "test": lambda path: subprocess.run(["pytest", path]).returncode == 0,
+    "file_exists": lambda path: os.path.exists(path),
+    "command": lambda cmd: subprocess.run(cmd, shell=True).returncode == 0,
+}
+\`\`\`
+
+## Why Simpler Wins
+
+The temptation is to build sophisticated multi-step verification, LLM-in-the-loop review chains, consensus mechanisms. Don't.
+
+A regex that blocks \`rm -rf /\` will save you more often than a 3-agent review panel that "reasons about" whether the command is safe. The regex runs in 2ms. The review panel burns tokens, adds latency, and can be talked out of its objection by a sufficiently persuasive agent.
+
+The bitter lesson applies to harnesses too: simple, scalable approaches beat clever ones. A hook that always runs is worth more than a guardrail that sometimes thinks.
+
+## Building Your First Hook
+
+A Claude Code hook is a script that receives JSON on stdin and outputs JSON on stdout. That's the entire interface.
+
+\`\`\`python
+#!/usr/bin/env python3
+import json, sys, re
+
+hook_input = json.loads(sys.stdin.read())
+tool = hook_input.get("tool", "")
+content = json.dumps(hook_input.get("input", {}))
+
+# Block anything that smells like scope creep
+SCOPE_CREEP = [r"transfer", r"send.*email", r"deploy", r"publish"]
+for pattern in SCOPE_CREEP:
+    if re.search(pattern, content, re.IGNORECASE):
+        print(json.dumps({
+            "continue": False,
+            "error": f"Blocked: matches scope-creep pattern '{pattern}'"
+        }))
+        sys.exit(0)
+
+print(json.dumps({"continue": True}))
+\`\`\`
+
+Wire it in \`.claude/settings.json\`:
+
+\`\`\`json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Bash",
+      "hooks": [{"type": "command", "command": "./hooks/scope-guard.py"}]
+    }]
+  }
+}
+\`\`\`
+
+Now every Bash command your agent runs goes through the guard first. No tokens burned, no latency added, no model needed. Just Python and pattern matching.
+
+## The Compound Effect
+
+Each hook makes the system slightly more trustworthy. More trust means more autonomy. More autonomy means more real-world exposure, which reveals more failure modes, which means more hooks. The model keeps getting better on its own. The harness is the part only you can build.
+    `.trim(),
+  },
+  {
     slug: "12-dollar-ai-operations-team",
     editorial: true,
     title: "I Run a $12/Week AI Operations Team. Here's the Cost Breakdown.",
@@ -1475,94 +1589,6 @@ The free version covers 90% of use cases. For production patterns including stac
 **Pro ($29):** [Claude Memory Kit Pro on Gumroad](https://edgelessai.gumroad.com/l/claude-memory-kit)
 
 The best time to set up memory is before your next session. Takes 15 minutes, saves hours every week.
-    `.trim(),
-  },
-  {
-    slug: "12-dollar-ai-operations-team",
-    editorial: true,
-    title: "The $12/Week AI Operations Team",
-    description: "How I replaced a $200K enterprise stack with multi-agent orchestration. The architecture, the economics, and the 10 agents that actually run my business.",
-    date: "2026-04-17",
-    tags: ["AI Agents", "Multi-Agent", "Cost Optimization", "Architecture"],
-    readTime: "8 min",
-    productSlug: "multi-agent-blueprint",
-    ctaHook: "Complete orchestration blueprint with configs, scripts, and deployment guides. Deploy your own $12/week ops team.",
-    content: `
-Last year, my "solo" operation looked like this: Notion + manual triage (2 hrs/day), Hootsuite + spreadsheets ($99/mo), research synthesis at midnight drowning in bookmarks, GitHub Actions that broke twice a week, and notification hell across Slack + email + Telegram. Total cost: ~$4,000/year in SaaS + 20+ hours/week of my time.
-
-I was paying enterprise prices for enterprise complexity, but what I actually needed was opinionated orchestration. Not another dashboard. Not another "AI assistant" that forgets context every 5 minutes. I needed a system where agents have persistent memory across sessions, work gets routed to the right brain for the job, knowledge accumulates instead of evaporating, and everything runs on infrastructure I control.
-
-The goal: Replace the $4K/year SaaS stack + 20 hrs/week manual work with something that costs less than a burrito per week and actually remembers what I told it yesterday.
-
-## The Solution: Multi-Agent Architecture
-
-Here's what I built. Total cost: $12/week in API calls and VPS hosting.
-
-**The Agents:**
-
-**Hermes (Chief of Staff)** - Model: Kimi K2.5 via Fireworks. Role: Entry point for all human communication. Maintains session state, handles context windows, routes tasks to specialized agents. When I say "check if the trading bot is healthy," Hermes knows which agent handles infrastructure checks and what "healthy" means for that system.
-
-**Dispatch (Operations Manager)** - Model: DeepSeek V3.2. Role: The COO that never sleeps. Reads all incoming signals (GitHub webhooks, RSS feeds, Telegram messages), assigns priority scores, and routes to appropriate handlers. Maintains a real-time backlog of everything that needs attention.
-
-**Synthesizer (Knowledge Curator)** - Model: Claude 3.5 Sonnet. Role: The KB loop. Takes raw inputs (YouTube transcripts, RSS articles, research papers), extracts signal from noise, scores by relevance (1-10), and either archives or promotes to the knowledge base. Uses ChromaDB for embeddings, Obsidian for human-readable storage.
-
-**Reviewer (Quality Control)** - Model: GPT-4.1 (OpenRouter). Role: Code review, content editing, fact-checking. The skeptic that catches what I miss at 2am.
-
-## The Knowledge Base Loop (KB Loop Score: 0-25)
-
-Here's what makes this different from "chat with your documents" tools. Every piece of information gets scored on four dimensions: Signal density (5 pts), Recency (5 pts), Source reputation (5 pts), and Actionability (5 pts).
-
-**Routing rules:** Score 0-2 gets archived (idempotent, never reprocess). Score 3-6 goes to inbox queue for human review. Score 7-9 gets auto-promoted to knowledge base (NotebookLM-ready). Score 10+ flags for ticket creation.
-
-This isn't just filing cabinets. It's opinionated triage that learns your preferences.
-
-## Multi-Model Routing: The Economics
-
-Why four different models? Because not every task needs a $0.03/token reasoning engine.
-
-| Agent | Model | Use Case | Cost/1K calls |
-|-------|-------|----------|---------------|
-| Hermes | Kimi K2.5 | General interface, routing | $0.0004 |
-| Dispatch | DeepSeek V3.2 | Structured JSON, triage | $0.0002 |
-| Synthesizer | Claude 3.5 Sonnet | Long-context synthesis | $0.003 |
-| Reviewer | GPT-4.1 | Code review, precision | $0.005 |
-| Specialist | Codex | Code generation | As needed |
-
-**Weekly breakdown:** 500 routing calls ($0.20), 200 synthesis operations ($0.60), 50 code reviews ($0.25), VPS Hetzner 8GB ($5.35), ChromaDB + infrastructure (~$5). **Total: $11.40/week.**
-
-Compare to: A single Copilot Pro subscription ($20/mo) that doesn't even remember your codebase context between sessions.
-
-## Session Recovery: The Feature You Don't Know You Need
-
-Here's what broke in my first implementation: After a 3-hour research session, the agent lost connection. All context: gone. All the nuanced routing decisions I'd explained: gone. I had to start over.
-
-So I built session poisoning detection and recovery: Memory scrubbing strips context that could leak from auto-generated content, periodic snapshots checkpoint session state every 10 minutes, corruption detection catches when an agent starts hallucinating tools it doesn't have, and warm restart resumes from the last clean checkpoint.
-
-It's not in the marketing copy. It's the difference between usable and maddening.
-
-## File-Based Communication (Yes, Really)
-
-My agents don't use gRPC. They don't use message queues. They use rsync + markdown files.
-
-Why? Because it's human-readable debugging (cat the file, see the state), works offline (queue files, sync when connected), has Git history for free (track how decisions evolved), and has zero serialization headaches.
-
-When an agent finishes work, it writes to workproducts/. When it needs input, it reads from inbox/. Files are atomic. No partial states, no network partitions, no mystery.
-
-When latency matters more than debuggability, I'll upgrade to HTTP. For now, files win.
-
-## What's Actually Running
-
-This isn't vaporware. Here's the current fleet: 10 autonomous agents (healthy on hermes_local adapter), 7 cron jobs (heartbeat, backlog sync, knowledge harvest), 3,200 documents in the knowledge base, ~50 API calls/day across the routing layer, and 99.7% uptime (that 0.3% was me breaking config, not the system).
-
-The infrastructure lives on a Hetzner VPS in Helsinki. The agents coordinate through Paperclip (open-source orchestration layer). The knowledge base syncs to my Obsidian vault locally.
-
-## The Real Lesson
-
-The future isn't "one AI assistant that does everything." It's specialized agents that remember, orchestrated by a system you control.
-
-Enterprise AI wants to sell you seats. What you need is infrastructure.
-
-$12/week. Infrastructure you own. Agents that don't forget.
     `.trim(),
   },
 ];
