@@ -153,6 +153,22 @@ export const products: Product[] = [
     slug: "gen-art-starter",
   },
   {
+    name: "Always-On Agent Deployment Kit",
+    price: "$29",
+    description:
+      "Deploy an AI agent that runs 24/7 on a $5 VPS. Cron scheduling, grounding packets, memory contracts, Telegram alerting, and the recovery patterns from 3 months of unattended operation.",
+    features: [
+      "VPS setup guide: Hetzner, systemd, PM2, environment hardening",
+      "Cron job architecture: health checks, email triage, knowledge consolidation",
+      "Grounding stack: verification layers, evidence-based completion, session packets",
+      "Communication patterns: Telegram bot, inbox dispatch, API access",
+    ],
+    href: `https://edgelessai.gumroad.com/l/always-on-agent?${UTM}`,
+    badge: "New",
+    comingSoon: true,
+    slug: "always-on-agent",
+  },
+  {
     name: "Production MCP Server Kit",
     price: "$29",
     description:

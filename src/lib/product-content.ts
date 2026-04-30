@@ -418,6 +418,60 @@ No dependencies. Templates are Markdown. Script is Bash.`,
     callToAction: "Stop winging launches. Ship them like a system.",
   },
 
+  "always-on-agent": {
+    longTitle: "Always-On Agent Deployment Kit: Run AI Agents 24/7 on a $5 VPS",
+    shortDescription:
+      "The complete deployment guide for an AI agent that never sleeps. From a system that has run unattended for 3+ months on a Hetzner VPS in Helsinki.",
+    body: `Most AI agents die when you close the laptop. This kit shows you how to build one that doesn't.
+
+Hermes has run 24/7 on a $5/month VPS for three months without a manual restart. It processes email, triages knowledge, monitors system health, and only interrupts when something actually needs attention. This kit is the complete deployment pattern extracted from that system.
+
+## What's inside
+
+**Chapter 1: VPS Setup and Hardening**
+From zero to a running agent host. Hetzner provisioning, SSH hardening, systemd service configuration, PM2 process management, and environment variable isolation. The goal: a box you can forget about.
+
+**Chapter 2: The Cron Architecture**
+Eight cron job patterns that cover the full agent lifecycle: health monitoring (every 6h), email triage (every 4h), newsletter digestion (daily), and dream consolidation (twice weekly). Each pattern includes the scheduling config, the prompt template, and the error handling.
+
+**Chapter 3: The Grounding Stack**
+Agents confabulate. They claim files exist that don't. They report tasks complete that aren't. Four verification layers that prevent this: independent claim verification, evidence-based completion, grounding packets loaded at session start, and self-message loop guards.
+
+**Chapter 4: The Memory Contract**
+Four memory layers with different trust levels: episodic ledger (high, append-only), semantic index (medium, may be stale), curated vault (high, human-reviewed), and agent memory (low, may contain confabulations). How to query each and when to trust the results.
+
+**Chapter 5: Communication Patterns**
+Three channels for different interaction modes: Telegram (quick questions, conversational), Direct API (programmatic access, structured responses), and Inbox Dispatch (real work, full toolset, async). Includes the Telegram bot setup and the inbox file protocol.
+
+**Chapter 6: Recovery and Incident Response**
+What breaks and how to fix it. Confabulation detection, provider routing confusion, inbox self-messaging loops. Each failure mode documented with the specific guard that prevents recurrence.
+
+**Chapter 7: The SOUL.md Pattern**
+The personality file that makes an agent useful instead of annoying. Behavioral rules, noise filtering (only alert on failures), decision trees, and tool priority ordering.
+
+## What you get
+
+- 7-chapter guide (6,000+ words)
+- systemd service file template
+- Cron job configuration templates (8 patterns)
+- Telegram bot setup script
+- SOUL.md template with behavioral rules
+- Grounding packet generator script
+- Memory contract reference card
+
+## Who this is for
+
+- Developers who want an AI agent running while they sleep
+- Teams building internal AI operations infrastructure
+- Anyone tired of re-explaining context to their AI assistant every morning
+
+## Who this is NOT for
+
+- If you just want a chatbot, this is overkill
+- If you don't have a VPS or cloud server, start there first
+- This is deployment architecture, not model training`,
+    callToAction: "Stop re-explaining context every morning. Deploy an agent that remembers, monitors, and works while you don't.",
+  },
   "claude-code-cheat-sheet": {
     longTitle: "Claude Code Cheat Sheet: Essential Commands & Patterns at a Glance",
     shortDescription:
