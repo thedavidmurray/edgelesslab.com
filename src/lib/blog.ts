@@ -402,17 +402,22 @@ This is the complete cost breakdown and the specific technical decisions that ma
 
 ## The Weekly Cost Stack
 
-| Component | Provider | Weekly Cost | Role |
-|-----------|----------|-------------|------|
-| Agent inference (dispatch + 4 workers) | Fireworks AI | $4.20 | Model routing, task execution |
-| ChromaDB embedding storage | Self-hosted (Hetzner) | $2.80 | Vector storage, 47K documents |
-| Paperclip orchestration | Self-hosted (local) | $0.00 | Agent coordination, backlog management |
-| File sync between agents | rsync over SSH | $0.00 | Async inbox, state machine |
-| Telegram notifications | Bot API | $0.00 | Human escalation, status reports |
-| **Total** | | **$7.00** | Core operations |
-| **+ Knowledge synthesis** | Fireworks AI | $3.50 | KB loop, embeddings, nightly batch |
-| **+ Dev/test cycles** | Fireworks AI | $1.50 | Development, debugging |
-| **Grand total** | | **$12.00** | Full 5-agent system |
+:::metric
+$12 | Weekly total
+5 | Active agents
+8,000+ | Tasks processed
+$0 | Orchestration cost
+:::
+
+:::bar-chart Weekly Cost Breakdown
+Agent inference | $4.20
+ChromaDB storage | $2.80
+KB synthesis | $3.50
+Dev/test cycles | $1.50
+Orchestration | $0.00
+File sync | $0.00
+Telegram | $0.00
+:::
 
 The $50K enterprise equivalent runs managed vector DB (Pinecone Pro: $2,400/mo), orchestration platform (LangSmith Teams: $1,500/mo), API costs at volume (OpenAI Enterprise: ~$3,000/mo), and the engineering time to wire it together (0.5 FTE: $8,000/mo).
 
@@ -421,6 +426,12 @@ The difference isn't just provider choice. It's architecture decisions that elim
 ## The Agent Topology
 
 Five agents run in a dispatch/worker topology. This isn't decorative. It's the simplest structure that solves the actual production problems.
+
+:::flow Agent Topology
+Human -> Hermes (CoS) -> Dispatch (COO) -> Builder
+Dispatch (COO) -> Researcher
+Dispatch (COO) -> Verifier
+:::
 
 **Hermes (Chief of Staff)** — My primary session agent. Receives all human requests, decides whether to execute directly or delegate. Runs on Kimi K2.5 via Fireworks. Context window management is the constraint: it sees the full project state and delegates to specialists when the task requires specific tools or extended processing.
 
@@ -444,12 +455,19 @@ The topology solves three specific failure modes I've hit with single-agent appr
 
 The routing isn't random. Each model has a specific operational profile:
 
-| Model | Use Case | Input Cost | Output Cost | Weekly Tasks |
-|-------|----------|------------|-------------|--------------|
-| Kimi K2.5 | General reasoning, long context | $0.50/M | $2.00/M | ~180 |
-| DeepSeek V3.2 | Fast execution, low complexity | $0.27/M | $1.10/M | ~340 |
-| Claude Opus 4 | Code review, security analysis | $15.00/M | $75.00/M | ~25 |
-| Codex (GPT-5.4) | Code generation, refactoring | $3.00/M | $12.00/M | ~40 |
+:::bar-chart Weekly Task Volume by Model
+DeepSeek V3.2 | 340 tasks
+Kimi K2.5 | 180 tasks
+Codex (GPT-5.4) | 40 tasks
+Claude Opus 4 | 25 tasks
+:::
+
+:::bar-chart Cost per Million Tokens (Output)
+Claude Opus 4 | $75.00
+Codex (GPT-5.4) | $12.00
+Kimi K2.5 | $2.00
+DeepSeek V3.2 | $1.10
+:::
 
 Kimi K2.5 handles 70% of tasks because it's the cheapest generalist that doesn't hallucinate tools. DeepSeek takes the high-volume, low-cognitive-load work (formatting, simple transformations, status checks). Claude Opus is reserved for security-sensitive reviews—it's expensive but catches issues the cheaper models miss. Codex handles bulk code generation where context length matters more than nuance.
 
@@ -460,6 +478,10 @@ This routing alone cuts costs 10x versus using a single model for everything.
 ## The Knowledge Base Loop
 
 Every agent operation feeds a knowledge base. Not as an afterthought—as a core system function.
+
+:::flow Knowledge Base Loop
+Capture -> Synthesize -> Verify -> Inject -> Agents -> Capture
+:::
 
 The loop works like this:
 
@@ -803,6 +825,17 @@ An adversarial scoring process narrowed 70 ideas to a ranked list of 50. Five si
 
 The top 7 became the week's shipping list. One product per day, each with a blog post that teaches 20% of the product's value.
 
+:::flow Daily Shipping Pipeline
+Ideation (70) -> Scoring (50) -> Top 7 -> Build -> Blog Post -> Deploy -> Gumroad
+:::
+
+:::metric
+70 | Ideas generated
+50 | Scored & ranked
+7 | Shipped in 7 days
+18 | Total products live
+:::
+
 ## The Daily Rhythm
 
 Morning: build the product. Every product in this batch is a digital download, not software. Guides, templates, frameworks, reference materials. The content exists in my head and my infrastructure already. The build step is extracting, organizing, and packaging it.
@@ -819,7 +852,16 @@ Evening: update the website, deploy, push to Gumroad. The website is a Next.js s
 
 **Blog as distribution.** No paid advertising. No social media campaigns. Each blog post targets a specific search query: "MCP server production," "multi-agent orchestration," "generative art pen plotter." The posts are genuinely useful independent of the product, which means people share them. Shared content outperforms ads for developer tools every time.
 
-**Pricing by complexity.** $9 for reference materials. $14 for starter templates. $19 for deep dives. $24 for workflow kits. $29 for comprehensive guides. $39 for flagship blueprints. Each tier has a clear value proposition. Customers self-select into the tier that matches their need.
+:::bar-chart Pricing Tiers
+Flagship blueprints | $39
+Comprehensive guides | $29
+Workflow kits | $24
+Deep dives | $19
+Starter templates | $14
+Reference materials | $9
+:::
+
+**Pricing by complexity.** Each tier has a clear value proposition. Customers self-select into the tier that matches their need.
 
 ## What I'd Change
 
@@ -849,6 +891,7 @@ Everything on the [products page](/products).
     productSlug: "gen-art-starter",
     ctaHook: "Working generators for every algorithm in this post, plus SVG optimization scripts.",
     isLaunch: true,
+    editorial: true,
     title: "I Built 75 Generative Art Algorithms. These 10 Actually Look Good.",
     description: "Most generative art looks like noise. After 105+ experiments with pen plotters and AI scoring, these are the algorithms that consistently produce work worth framing.",
     date: "2026-04-08",
@@ -926,6 +969,13 @@ The fix isn't a smarter agent. It's more agents with clear boundaries.
 
 ## The Dispatch/Worker Topology
 
+:::flow Dispatch/Worker Architecture
+Human -> Dispatch -> Code Worker
+Dispatch -> Research Worker
+Dispatch -> Monitor Worker
+Dispatch -> Content Worker
+:::
+
 One agent dispatches. The rest execute. The dispatch agent has a complete view of what needs to happen. Worker agents have narrow focus and specific tool sets.
 
 The dispatch agent doesn't write code. It doesn't browse the web. It doesn't manage infrastructure. It receives requests, breaks them into tasks, routes tasks to appropriate workers, and tracks completion. Its only tools are: send message, check status, read results.
@@ -945,6 +995,11 @@ The bus is fire-and-forget from the sender's perspective. You send a message, th
 Why two channels? The bus handles real-time coordination: "stop what you're doing, this is urgent." Inboxes handle batch work: "here are 5 articles to analyze, results by tomorrow." Using one channel for both creates priority inversion. The urgent message sits behind 50 batch tasks.
 
 ## State Machine Per Task
+
+:::flow Task State Machine
+Queued -> Acked -> Running -> Done
+Running -> Failed -> Retry -> Queued
+:::
 
 Every task follows a state machine: \`queued -> acked -> running -> done | failed\`. Dispatch creates tasks in \`queued\`. Workers acknowledge with \`acked\` (proving they received it). Work begins at \`running\`. Terminal states are \`done\` (with results) or \`failed\` (with error context).
 
@@ -986,6 +1041,10 @@ I run an AI tool business solo. That means every recurring task either gets auto
 n8n fills the gap. It's a self-hosted visual workflow builder. You connect nodes, wire data between them, and deploy. When something breaks, you see exactly which node failed and what data it received. No log archaeology.
 
 Here are five workflows that actually run my business.
+
+:::flow Core Automation Stack
+RSS/YouTube -> n8n Workflows -> Claude Analysis -> Telegram/Email/GitHub
+:::
 
 ## 1. YouTube Channel Monitor
 
@@ -1057,6 +1116,18 @@ There are over 400 MCP servers listed in public directories. I've tried dozens. 
 
 After running 4+ MCP servers continuously for months, here are the five failure modes that actually matter.
 
+:::bar-chart Failure Mode Severity (Production Impact)
+Transport Timeouts | 9
+No Rate Limiting | 8
+Auth Missing | 7
+Useless Errors | 6
+No Health Checks | 5
+:::
+
+:::flow Production MCP Stack
+Request -> Auth Middleware -> Rate Limiter -> Tool Handler -> Structured Error -> Health Check
+:::
+
 ## 1. Transport Timeouts Kill Silent
 
 The MCP spec supports stdio and HTTP transports. Stdio is simple: launch a process, pipe JSON. HTTP is flexible: connect to a running server. Both have the same problem: no standard timeout handling.
@@ -1105,6 +1176,7 @@ The gap between "works in a demo" and "runs unattended at 3am" is where most MCP
     productSlug: "agent-safety-patterns",
     ctaHook: "10 anti-patterns, scope containment hooks, and the financial verification protocol from this incident.",
     isLaunch: true,
+    editorial: true,
     title: "I Let an AI Agent Move My Money. It Lost $252.",
     description: "An autonomous agent exceeded its scope, moved funds without verification, and then lied about recovery. The full post-mortem, and the 3 guardrails that would have prevented it.",
     date: "2026-04-04",
@@ -1125,6 +1197,10 @@ But it had the capability. The wallet SDK was in its tool set for checking balan
 
 The staging wallet address was wrong. The agent had hallucinated a plausible-looking address from context in a previous conversation. The funds went to an address nobody controls.
 
+:::flow The Incident Chain
+Agent reads balance -> Decides to consolidate -> Calls transfer() -> Hallucinated address -> Funds lost
+:::
+
 ## The Three Failures
 
 **1. Scope was implicit, not enforced.** The agent's instructions said "manage prediction market positions." It interpreted "manage" to include fund transfers. Instructions are suggestions. Tool-level permissions are enforcement. The agent should never have had access to transfer functions.
@@ -1136,6 +1212,10 @@ The staging wallet address was wrong. The agent had hallucinated a plausible-loo
 ## The Guardrails That Would Have Prevented It
 
 After this incident, three patterns went into production immediately:
+
+:::flow Prevention Stack
+Allowlist tools -> Verify before execute -> Report raw outcomes
+:::
 
 **Allowlist, don't denylist.** Don't give agents tools and then try to restrict how they use them. Give agents exactly the tools they need and nothing else. The agent needed \`read_balance\` and \`place_trade\`. It didn't need \`transfer\`. Removing the transfer capability from the tool set is a one-line change that makes this entire class of failure impossible.
 
@@ -1159,6 +1239,7 @@ Your job isn't to trust the agent. It's to make the wrong path impossible.
     productSlug: "hooks-deep-dive",
     ctaHook: "10 production hooks, composition patterns, and the damage-control system from this post.",
     isLaunch: true,
+    editorial: true,
     title: "The Hook That Saved My Codebase",
     description: "A single Claude Code hook prevented a cascading rm -rf from wiping source files. The damage-control pattern, and 3 hooks you can steal today.",
     date: "2026-04-03",

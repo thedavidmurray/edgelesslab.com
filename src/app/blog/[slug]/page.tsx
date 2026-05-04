@@ -255,6 +255,59 @@ export default async function BlogPostPage({
   );
 }
 
+function renderBarChart(title: string, rows: string[]): string {
+  const entries: { label: string; value: number; display: string }[] = [];
+  for (const row of rows) {
+    const parts = row.split("|").map((s) => s.trim());
+    if (parts.length >= 2) {
+      const numMatch = parts[1].match(/[\d.]+/);
+      entries.push({
+        label: parts[0],
+        value: numMatch ? parseFloat(numMatch[0]) : 0,
+        display: parts[1],
+      });
+    }
+  }
+  if (entries.length === 0) return "";
+  const max = Math.max(...entries.map((e) => e.value));
+
+  const bars = entries
+    .map((e) => {
+      const pct = max > 0 ? (e.value / max) * 100 : 0;
+      return `<div class="blog-bar-row"><span class="blog-bar-label">${escapeHtml(e.label)}</span><div class="blog-bar-track"><div class="blog-bar-fill" style="width:${pct}%"></div></div><span class="blog-bar-value">${escapeHtml(e.display)}</span></div>`;
+    })
+    .join("");
+
+  return `<div class="blog-viz blog-bar-chart"><div class="blog-viz-title">${escapeHtml(title)}</div>${bars}</div>`;
+}
+
+function renderFlow(title: string, rows: string[]): string {
+  const pipelines = rows
+    .filter((r) => r.includes("->"))
+    .map((row) => {
+      const steps = row.split("->").map((s) => s.trim());
+      const boxes = steps
+        .map((s) => `<span class="blog-flow-box">${escapeHtml(s)}</span>`)
+        .join('<span class="blog-flow-arrow">\u2192</span>');
+      return `<div class="blog-flow-row">${boxes}</div>`;
+    })
+    .join("");
+
+  return `<div class="blog-viz blog-flow"><div class="blog-viz-title">${escapeHtml(title)}</div>${pipelines}</div>`;
+}
+
+function renderMetric(rows: string[]): string {
+  const metrics = rows
+    .filter((r) => r.includes("|"))
+    .map((row) => {
+      const parts = row.split("|").map((s) => s.trim());
+      return `<div class="blog-metric"><div class="blog-metric-value">${escapeHtml(parts[0])}</div><div class="blog-metric-label">${escapeHtml(parts[1] || "")}</div></div>`;
+    })
+    .join("");
+
+  return `<div class="blog-viz blog-metrics">${metrics}</div>`;
+}
+
 function renderMarkdown(content: string): string {
   const lines = content.split("\n");
   const blocks: string[] = [];
@@ -262,6 +315,28 @@ function renderMarkdown(content: string): string {
 
   while (i < lines.length) {
     const line = lines[i];
+
+    // Data viz blocks: :::bar-chart, :::flow, :::metric
+    const vizMatch = line.trimStart().match(/^:::(bar-chart|flow|metric)\s*(.*)?$/);
+    if (vizMatch) {
+      const vizType = vizMatch[1];
+      const vizTitle = (vizMatch[2] || "").trim();
+      const vizLines: string[] = [];
+      i++;
+      while (i < lines.length && lines[i].trimStart() !== ":::") {
+        if (lines[i].trim()) vizLines.push(lines[i].trim());
+        i++;
+      }
+      i++; // skip closing :::
+      if (vizType === "bar-chart") {
+        blocks.push(renderBarChart(vizTitle, vizLines));
+      } else if (vizType === "flow") {
+        blocks.push(renderFlow(vizTitle, vizLines));
+      } else if (vizType === "metric") {
+        blocks.push(renderMetric(vizLines));
+      }
+      continue;
+    }
 
     // Fenced code blocks
     if (line.trimStart().startsWith("```")) {
