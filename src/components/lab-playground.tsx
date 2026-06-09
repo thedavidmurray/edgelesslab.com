@@ -26,21 +26,21 @@ export function LabPlayground() {
     decay: 0.99,
   });
 
-  // Flow field function
-  const getFlowAngle = (x: number, y: number, time: number) => {
-    const scale = params.flowScale;
-    return (
-      Math.sin(x * scale + time * 0.0005) * Math.cos(y * scale) * Math.PI * 2 +
-      Math.sin((x + y) * scale * 0.5 + time * 0.0003) * Math.PI
-    );
-  };
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Flow field function
+    const getFlowAngle = (x: number, y: number, time: number) => {
+      const scale = params.flowScale;
+      return (
+        Math.sin(x * scale + time * 0.0005) * Math.cos(y * scale) * Math.PI * 2 +
+        Math.sin((x + y) * scale * 0.5 + time * 0.0003) * Math.PI
+      );
+    };
 
     // Set canvas size
     const resize = () => {

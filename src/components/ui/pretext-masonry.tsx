@@ -8,6 +8,7 @@ import {
   type ReactNode,
   type CSSProperties,
 } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 
 interface MasonryItem {
   key: string;
@@ -60,11 +61,7 @@ export function PreTextMasonry({
 }: PreTextMasonryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  const hydrated = useHydrated();
 
   useEffect(() => {
     if (!containerRef.current) return;

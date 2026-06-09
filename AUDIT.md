@@ -3,6 +3,22 @@
 Date: 2026-06-09
 Scope: full repository — build/deploy pipeline, repo health, source code, tooling.
 
+## Status (updated on this branch)
+
+Fixed in this PR: §P0-1 (deploy race — workflow is manual-only), §P0-2 (PostHog
+env wiring; set the `NEXT_PUBLIC_POSTHOG_KEY` repo variable to activate),
+§P0-3 (lint works on fresh clones), §P0-4 (AGENTS.md created), stale `out/`
+untracked, unreferenced `data/` CSVs removed, junk favicon files deleted, and
+**all** §P2 code findings (setState-in-effect refactors, ref-during-render
+bug, dead state/imports, playwright → devDependencies, scoped ESLint).
+`npm run lint` and `tsc --noEmit` are clean; `set-state-in-effect` is enforced
+at error severity again.
+
+Still open (requires owner action): the R2 asset migration (needs a
+Cloudflare account — follow `scripts/r2-migration-steps.md`), deleting root
+build output after single-sourcing deployment, and the git history rewrite
+(§P1 step 4 below — needs a coordinated force-push to `main`).
+
 Verification performed: fresh `npm ci`, `tsc --noEmit` (clean), `eslint`, full
 `next build` (succeeds), GitHub Actions run history, and inspection of both the
 committed build output and a freshly built `out/`.
@@ -109,7 +125,25 @@ is already at the wire, and `git status` noise that spawned the
 3. Once the deployment is single-sourced via Actions, delete all root-level
    build output.
 4. Optionally rewrite history with `git-filter-repo` to actually reclaim the
-   1 GB pack (force-push; coordinate with any clones).
+   1 GB pack. This must be run by the repo owner — it force-pushes `main` and
+   invalidates every existing clone. After the R2 migration is live:
+
+   ```bash
+   pip install git-filter-repo
+   git clone --no-local /path/to/edgelesslab.com edgelesslab-rewrite
+   cd edgelesslab-rewrite
+   # Drop the heavyweight paths from all history:
+   git filter-repo \
+     --path pen-plotter/assets --path data --path out \
+     --invert-paths
+   git remote add origin git@github.com:thedavidmurray/edgelesslab.com.git
+   git push --force -u origin main
+   ```
+
+   Then have any other machines/agents re-clone (do not pull over an old
+   clone). Open PRs based on the old history must be recreated. GitHub may
+   need a support request (or repo re-create) to garbage-collect the old
+   pack on their side.
 
 ### 5. `preserve-standalone.sh` copies 1.2 GB twice per build
 

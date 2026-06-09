@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Play, Pause, RefreshCw, Download } from "lucide-react";
+import { RefreshCw, Download } from "lucide-react";
 
 interface Point {
   x: number;
@@ -27,12 +27,8 @@ const ATTRACTOR_PRESETS = {
 
 export function AttractorPlayground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [preset, setPreset] = useState<keyof typeof ATTRACTOR_PRESETS>("lorenz");
   const [params, setParams] = useState<AttractorParams>(ATTRACTOR_PRESETS.lorenz);
-  const [isGenerating, setIsGenerating] = useState(false);
 
   const drawAttractor = useCallback(() => {
     const canvas = canvasRef.current;
@@ -44,9 +40,6 @@ export function AttractorPlayground() {
     // Clear with fade
     ctx.fillStyle = "rgba(10, 10, 15, 1)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    setIsGenerating(true);
-    setProgress(0);
 
     let x = 0.1;
     let y = 0;
@@ -96,10 +89,6 @@ export function AttractorPlayground() {
       if (i > 100 && px > 0 && px < canvas.width && py > 0 && py < canvas.height) {
         points.push({ x: px, y: py });
       }
-
-      if (i % 100 === 0) {
-        setProgress(Math.round((i / params.iterations) * 100));
-      }
     }
 
     // Draw points with trail effect
@@ -115,9 +104,6 @@ export function AttractorPlayground() {
       ctx.strokeStyle = params.color + Math.round(alpha * 255).toString(16).padStart(2, "0");
       ctx.stroke();
     }
-
-    setProgress(100);
-    setIsGenerating(false);
   }, [params, preset]);
 
   useEffect(() => {
@@ -139,7 +125,6 @@ export function AttractorPlayground() {
 
     return () => {
       window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animationRef.current);
     };
   }, [drawAttractor]);
 
@@ -175,12 +160,11 @@ export function AttractorPlayground() {
         <div className="flex items-center gap-2">
           <button
             onClick={drawAttractor}
-            disabled={isGenerating}
             className="p-2 rounded-lg transition-colors hover:bg-white/5 disabled:opacity-50"
             style={{ color: "var(--text-secondary)" }}
             aria-label="Regenerate"
           >
-            <RefreshCw size={16} className={isGenerating ? "animate-spin" : ""} />
+            <RefreshCw size={16} />
           </button>
           <button
             onClick={handleDownload}
@@ -200,21 +184,6 @@ export function AttractorPlayground() {
           className="w-full block"
           style={{ minHeight: "300px" }}
         />
-        {isGenerating && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-            <div className="text-center">
-              <div className="text-sm font-mono" style={{ color: "var(--accent)" }}>
-                Generating... {progress}%
-              </div>
-              <div className="mt-2 w-32 h-1 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full rounded-full transition-all"
-                  style={{ width: `${progress}%`, background: "var(--accent)" }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Controls */}

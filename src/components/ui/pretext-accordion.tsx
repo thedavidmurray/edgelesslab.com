@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, type CSSProperties } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { usePreText } from "@/hooks/use-pretext";
 
 interface PreTextAccordionProps {
@@ -45,10 +45,11 @@ export function PreTextAccordion({
   children,
 }: PreTextAccordionProps) {
   const { ready, prepare, layout } = usePreText("Geist");
-  const [expandedHeight, setExpandedHeight] = useState(0);
 
-  const measure = useCallback(() => {
-    if (!ready || !prepare || !layout || containerWidth <= 0) return;
+  // Pre-calculated during render: PreText measures text without the DOM, so
+  // there is no measure-effect/setState round-trip.
+  const expandedHeight = useMemo(() => {
+    if (!ready || !prepare || !layout || containerWidth <= 0) return 0;
 
     let totalHeight = paddingY * 2;
     for (let i = 0; i < items.length; i++) {
@@ -59,12 +60,8 @@ export function PreTextAccordion({
       if (i < items.length - 1) totalHeight += itemGap;
     }
 
-    setExpandedHeight(totalHeight);
+    return totalHeight;
   }, [ready, prepare, layout, items, font, lineHeight, containerWidth, paddingY, itemGap]);
-
-  useEffect(() => {
-    measure();
-  }, [measure]);
 
   return (
     <div

@@ -213,17 +213,21 @@ function generatePiece(seed: number): AsciiPiece {
 }
 
 export function GenerativeAscii() {
-  const { ready } = usePreText("Geist Mono");
+  usePreText("Geist Mono"); // preloads the mono font + PreText module
   const [piece, setPiece] = useState<AsciiPiece | null>(null);
   const [isRevealed, setIsRevealed] = useState(false);
   const [revealProgress, setRevealProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
 
-  // Generate on mount
+  // Generate on mount. Client-only on purpose (random per visit), scheduled
+  // in a frame callback so the mount render commits first.
   useEffect(() => {
-    const seed = Date.now() ^ (Math.random() * 0xffffffff);
-    setPiece(generatePiece(seed));
+    const raf = requestAnimationFrame(() => {
+      const seed = Date.now() ^ (Math.random() * 0xffffffff);
+      setPiece(generatePiece(seed));
+    });
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   // Reveal animation

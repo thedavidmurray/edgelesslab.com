@@ -1,10 +1,36 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 
 interface TocItem {
   id: string;
   text: string;
+}
+
+/**
+ * Derive the table of contents from the raw HTML string during render
+ * (works on the server too, so the sidebar is in the prerendered page).
+ * Ids follow the same scheme the DOM effect below assigns to id-less h2s.
+ */
+function extractToc(html: string): TocItem[] {
+  const items: TocItem[] = [];
+  const h2Re = /<h2([^>]*)>([\s\S]*?)<\/h2>/gi;
+  let match: RegExpExecArray | null;
+  let i = 0;
+  while ((match = h2Re.exec(html))) {
+    const idMatch = /\bid=["']([^"']+)["']/.exec(match[1]);
+    const text = match[2]
+      .replace(/<[^>]*>/g, "")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .trim();
+    items.push({ id: idMatch ? idMatch[1] : `section-${i}`, text });
+    i++;
+  }
+  return items;
 }
 
 interface BlogArticleProps {
@@ -101,26 +127,12 @@ function useScrollReveal(containerRef: React.RefObject<HTMLDivElement | null>) {
 }
 
 export function BlogArticle({ html, editorial, sidebar }: BlogArticleProps) {
-  const [toc, setToc] = useState<TocItem[]>([]);
+  const toc = useMemo(() => extractToc(html), [html]);
   const [activeId, setActiveId] = useState<string>("");
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Scroll reveal animation
   useScrollReveal(contentRef);
-
-  // Extract TOC from rendered HTML headings
-  useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-    const headings = el.querySelectorAll("h2");
-    const items: TocItem[] = [];
-    headings.forEach((h, i) => {
-      const id = h.id || `section-${i}`;
-      if (!h.id) h.id = id;
-      items.push({ id, text: h.textContent || "" });
-    });
-    setToc(items);
-  }, [html]);
 
   // Track active heading via IntersectionObserver
   useEffect(() => {
@@ -129,6 +141,11 @@ export function BlogArticle({ html, editorial, sidebar }: BlogArticleProps) {
     if (!el) return;
 
     const headings = el.querySelectorAll("h2");
+    // Assign the ids extractToc() derived for id-less headings, so anchor
+    // links and the observer below resolve.
+    headings.forEach((h, i) => {
+      if (!h.id) h.id = `section-${i}`;
+    });
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

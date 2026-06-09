@@ -106,12 +106,6 @@ export function ProductsGrid({ products }: { products: Product[] }) {
         const dropY = ds.currentY - containerRect.top + containerRef.current.scrollTop;
         const colWidth = (containerWidth - gap * (columns - 1)) / columns;
 
-        // Find which column the drop landed in
-        const dropCol = Math.min(
-          columns - 1,
-          Math.max(0, Math.floor(dropX / (colWidth + gap)))
-        );
-
         // Find insertion point based on Y position within the masonry
         const draggedKey = ds.key;
         const otherKeys = cardOrder.filter((k) => k !== draggedKey);

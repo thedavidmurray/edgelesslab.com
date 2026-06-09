@@ -128,11 +128,10 @@ export function PreTextBlock({
     layoutNextLine,
   ]);
 
-  useEffect(() => {
-    doLayout();
-  }, [doLayout]);
-
-  // ResizeObserver -- no `ready` guard needed, doLayout checks it internally
+  // ResizeObserver -- no `ready` guard needed, doLayout checks it internally.
+  // observe() also delivers an initial callback with the current size, which
+  // covers the first layout (and re-layout whenever doLayout's inputs change,
+  // since that re-runs this effect).
   useEffect(() => {
     if (!containerRef.current) return;
     const observer = new ResizeObserver(() => doLayout());

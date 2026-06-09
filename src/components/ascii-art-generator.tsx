@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { Download, RefreshCw, Upload, Type, Grid3X3, Shapes } from "lucide-react";
 
 interface ASCIISettings {
@@ -19,12 +19,114 @@ const DENSITY_CHARS = {
   edges: " |/\\-",
 };
 
+interface GrayImage {
+  gray: number[];
+  width: number;
+  height: number;
+  naturalWidth: number;
+  naturalHeight: number;
+}
+
+// Sample an uploaded image to a grayscale grid once, so the ASCII rendering
+// below can be a pure function of (grid, settings).
+function readGrayImage(img: HTMLImageElement): GrayImage | null {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  // Scale down for ASCII resolution
+  const maxWidth = 100;
+  const scale = maxWidth / img.width;
+  canvas.width = maxWidth;
+  canvas.height = img.height * scale;
+
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  const gray: number[] = new Array(canvas.width * canvas.height);
+  for (let i = 0; i < gray.length; i++) {
+    gray[i] = 0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2];
+  }
+  return {
+    gray,
+    width: canvas.width,
+    height: canvas.height,
+    naturalWidth: img.naturalWidth,
+    naturalHeight: img.naturalHeight,
+  };
+}
+
+function grayImageToAscii(img: GrayImage, settings: ASCIISettings): string {
+  const chars = DENSITY_CHARS[settings.density as keyof typeof DENSITY_CHARS] || DENSITY_CHARS.detailed;
+  let result = "";
+
+  for (let y = 0; y < img.height; y += 2) { // Skip every other row for aspect ratio
+    let row = "";
+    for (let x = 0; x < img.width; x++) {
+      let value = img.gray[y * img.width + x] / 255;
+
+      if (settings.invert) value = 1 - value;
+
+      const charIndex = Math.floor(value * (chars.length - 1));
+      row += chars[Math.max(0, Math.min(charIndex, chars.length - 1))];
+    }
+    result += row + "\n";
+  }
+
+  return result;
+}
+
+function demoPattern(settings: ASCIISettings, seed: number): string {
+  const width = 80;
+  const height = 40;
+  const chars = DENSITY_CHARS[settings.density as keyof typeof DENSITY_CHARS] || DENSITY_CHARS.detailed;
+  let result = "";
+
+  for (let y = 0; y < height; y++) {
+    let row = "";
+    for (let x = 0; x < width; x++) {
+      // Generate patterns based on mode
+      let value = 0;
+      const nx = x / width;
+      const ny = y / height;
+
+      switch (settings.mode) {
+        case "text":
+          // Wave interference pattern
+          value = Math.sin(nx * 10 + seed) * Math.cos(ny * 8) * 0.5 + 0.5;
+          break;
+        case "shapes":
+          // Circle pattern
+          const cx = nx - 0.5;
+          const cy = ny - 0.5;
+          const dist = Math.sqrt(cx * cx + cy * cy);
+          value = Math.sin(dist * 20) * 0.5 + 0.5;
+          break;
+        case "mixed":
+          // Combined pattern
+          const wave = Math.sin(nx * 15) * Math.cos(ny * 12);
+          const circle = Math.sin(Math.sqrt((nx-0.5)**2 + (ny-0.5)**2) * 25);
+          value = (wave + circle) * 0.25 + 0.5;
+          break;
+      }
+
+      // Apply invert
+      if (settings.invert) value = 1 - value;
+
+      // Map to character
+      const charIndex = Math.floor(value * (chars.length - 1));
+      row += chars[Math.max(0, Math.min(charIndex, chars.length - 1))];
+    }
+    result += row + "\n";
+  }
+
+  return result;
+}
+
 export function ASCIIArtGenerator() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [ascii, setAscii] = useState<string>("");
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [image, setImage] = useState<GrayImage | null>(null);
+  const [demoSeed, setDemoSeed] = useState(0);
   const [settings, setSettings] = useState<ASCIISettings>({
     density: "detailed",
     fontSize: 8,
@@ -33,94 +135,12 @@ export function ASCIIArtGenerator() {
     mode: "text",
   });
 
-  const generateDemoPattern = useCallback(() => {
-    const width = 80;
-    const height = 40;
-    const chars = DENSITY_CHARS[settings.density as keyof typeof DENSITY_CHARS] || DENSITY_CHARS.detailed;
-    let result = "";
-    
-    for (let y = 0; y < height; y++) {
-      let row = "";
-      for (let x = 0; x < width; x++) {
-        // Generate patterns based on mode
-        let value = 0;
-        const nx = x / width;
-        const ny = y / height;
-        
-        switch (settings.mode) {
-          case "text":
-            // Wave interference pattern
-            value = Math.sin(nx * 10 + Date.now() * 0.001) * Math.cos(ny * 8) * 0.5 + 0.5;
-            break;
-          case "shapes":
-            // Circle pattern
-            const cx = nx - 0.5;
-            const cy = ny - 0.5;
-            const dist = Math.sqrt(cx * cx + cy * cy);
-            value = Math.sin(dist * 20) * 0.5 + 0.5;
-            break;
-          case "mixed":
-            // Combined pattern
-            const wave = Math.sin(nx * 15) * Math.cos(ny * 12);
-            const circle = Math.sin(Math.sqrt((nx-0.5)**2 + (ny-0.5)**2) * 25);
-            value = (wave + circle) * 0.25 + 0.5;
-            break;
-        }
-        
-        // Apply invert
-        if (settings.invert) value = 1 - value;
-        
-        // Map to character
-        const charIndex = Math.floor(value * (chars.length - 1));
-        row += chars[Math.max(0, Math.min(charIndex, chars.length - 1))];
-      }
-      result += row + "\n";
-    }
-    
-    setAscii(result);
-  }, [settings]);
-
-  const imageToASCII = useCallback((img: HTMLImageElement) => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Scale down for ASCII resolution
-    const maxWidth = 100;
-    const scale = maxWidth / img.width;
-    canvas.width = maxWidth;
-    canvas.height = img.height * scale;
-
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    
-    const chars = DENSITY_CHARS[settings.density as keyof typeof DENSITY_CHARS] || DENSITY_CHARS.detailed;
-    let result = "";
-    
-    for (let y = 0; y < canvas.height; y += 2) { // Skip every other row for aspect ratio
-      let row = "";
-      for (let x = 0; x < canvas.width; x++) {
-        const i = (y * canvas.width + x) * 4;
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        
-        // Convert to grayscale
-        const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-        let value = gray / 255;
-        
-        if (settings.invert) value = 1 - value;
-        
-        const charIndex = Math.floor(value * (chars.length - 1));
-        row += chars[Math.max(0, Math.min(charIndex, chars.length - 1))];
-      }
-      result += row + "\n";
-    }
-    
-    setAscii(result);
-  }, [settings]);
+  // Derived during render: pure function of the grayscale grid (or demo
+  // pattern) and settings — no effect/setState round-trip needed.
+  const ascii = useMemo(
+    () => (image ? grayImageToAscii(image, settings) : demoPattern(settings, demoSeed)),
+    [image, settings, demoSeed],
+  );
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -130,8 +150,8 @@ export function ASCIIArtGenerator() {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        setImage(img);
-        imageToASCII(img);
+        const grayImg = readGrayImage(img);
+        if (grayImg) setImage(grayImg);
       };
       img.src = event.target?.result as string;
     };
@@ -153,15 +173,6 @@ export function ASCIIArtGenerator() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(ascii);
   };
-
-  // Generate demo pattern on mount and when settings change
-  useEffect(() => {
-    if (!image) {
-      generateDemoPattern();
-    } else {
-      imageToASCII(image);
-    }
-  }, [settings, image, generateDemoPattern, imageToASCII]);
 
   return (
     <div className="space-y-4">
@@ -271,7 +282,7 @@ export function ASCIIArtGenerator() {
           
           {image && (
             <button
-              onClick={() => { setImage(null); generateDemoPattern(); }}
+              onClick={() => { setImage(null); setDemoSeed((s) => s + 1); }}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text-default)] transition-colors"
             >
               <RefreshCw size={12} />

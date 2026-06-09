@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useMemo } from "react";
 import { usePreText } from "@/hooks/use-pretext";
 
 /**
@@ -11,6 +11,9 @@ import { usePreText } from "@/hooks/use-pretext";
  * is a perfectly balanced paragraph with no wasted trailing whitespace.
  *
  * CSS text-wrap: balance is a heuristic. This is mathematically exact.
+ *
+ * Pure PreText math (no DOM reads), so it is computed during render via
+ * useMemo rather than an effect + setState round-trip.
  */
 export function useShrinkWrap(
   text: string,
@@ -20,10 +23,8 @@ export function useShrinkWrap(
 ): number | null {
   const { ready, prepare, layout, prepareWithSegments, walkLineRanges } =
     usePreText("Geist");
-  const [balancedWidth, setBalancedWidth] = useState<number | null>(null);
-  const prevInputRef = useRef("");
 
-  const calculate = useCallback(() => {
+  return useMemo(() => {
     if (
       !ready ||
       !prepare ||
@@ -32,31 +33,26 @@ export function useShrinkWrap(
       !walkLineRanges ||
       maxWidth <= 0
     )
-      return;
-
-    const inputKey = `${text}::${font}::${lineHeight}::${maxWidth}`;
-    if (inputKey === prevInputRef.current) return;
-    prevInputRef.current = inputKey;
+      return null;
 
     // Get baseline line count at full width
     const prepared = prepare(text, font);
-    if (!prepared) return;
+    if (!prepared) return null;
     const baseline = layout(prepared, maxWidth, lineHeight);
     if (!baseline || baseline.lineCount <= 1) {
       // Single line: shrink-wrap to actual text width
       const segmented = prepareWithSegments(text, font);
-      if (!segmented) return;
+      if (!segmented) return null;
       let maxLineWidth = 0;
       walkLineRanges(segmented, maxWidth, (line) => {
         if (line.width > maxLineWidth) maxLineWidth = line.width;
       });
-      setBalancedWidth(Math.ceil(maxLineWidth));
-      return;
+      return Math.ceil(maxLineWidth);
     }
 
     // Multi-line: find the widest line
     const segmented = prepareWithSegments(text, font);
-    if (!segmented) return;
+    if (!segmented) return null;
     let maxLineWidth = 0;
     walkLineRanges(segmented, maxWidth, (line) => {
       if (line.width > maxLineWidth) maxLineWidth = line.width;
@@ -76,7 +72,7 @@ export function useShrinkWrap(
       }
     }
 
-    setBalancedWidth(candidate);
+    return candidate;
   }, [
     ready,
     text,
@@ -88,10 +84,4 @@ export function useShrinkWrap(
     prepareWithSegments,
     walkLineRanges,
   ]);
-
-  useEffect(() => {
-    calculate();
-  }, [calculate]);
-
-  return balancedWidth;
 }

@@ -34,14 +34,6 @@ const eslintConfig = defineConfig([
     "docs/**",
     "public/**",
   ]),
-  {
-    rules: {
-      // Perf advisory, not a correctness bug. The 11 remaining hits are
-      // measure-then-set patterns in animation components that need real
-      // refactors (see AUDIT.md §P2) — keep them visible without failing CI.
-      "react-hooks/set-state-in-effect": "warn",
-    },
-  },
 ]);
 
 export default eslintConfig;

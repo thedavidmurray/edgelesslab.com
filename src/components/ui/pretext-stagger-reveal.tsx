@@ -8,6 +8,7 @@ import {
   type CSSProperties,
 } from "react";
 import { usePreText } from "@/hooks/use-pretext";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface StaggerRevealProps {
   text: string;
@@ -49,17 +50,8 @@ export function StaggerReveal({
   const { ready, prepareWithSegments, layoutWithLines } = usePreText("Geist");
   const [lines, setLines] = useState<MeasuredLine[] | null>(null);
   const [revealed, setRevealed] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const reducedMotion = useReducedMotion();
   const hasTriggered = useRef(false);
-
-  // Detect reduced motion preference
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
 
   // Measure lines
   const measure = useCallback(() => {
