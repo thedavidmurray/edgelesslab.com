@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "eslint && node scripts/lint-experiments.mjs && npm run lint:voice",
     "lint:experiments": "node scripts/lint-experiments.mjs",
-    "lint:voice": "../scripts/lint-voice.sh src/lib/data.ts && ../scripts/lint-voice.sh src/lib/product-content.ts && ../scripts/lint-voice.sh src/lib/blog.ts"
+    "lint:voice": "./scripts/lint-voice.sh src/lib/data.ts && ./scripts/lint-voice.sh src/lib/product-content.ts && ./scripts/lint-voice.sh src/lib/blog.ts"
   },
   "dependencies": {
     "@chenglou/pretext": "^0.0.3",
@@ -18,7 +18,6 @@
     "framer-motion": "^12.38.0",
     "lucide-react": "^0.577.0",
     "next": "16.2.0",
-    "playwright": "^1.59.1",
     "posthog-js": "^1.363.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -31,6 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.0",
+    "playwright": "^1.59.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

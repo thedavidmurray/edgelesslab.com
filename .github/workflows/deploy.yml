@@ -1,8 +1,13 @@
 name: Deploy to GitHub Pages
 
+# NOTE: manual-trigger only. GitHub Pages currently serves the repo root via
+# the branch-based "pages build and deployment" pipeline; running this workflow
+# on push made two deployments race on every commit, and this one's artifact
+# lacks pen-plotter/assets/ (gitignored under public/), breaking those pages
+# whenever it won. Re-enable the push trigger only after moving assets off the
+# branch (R2 migration, see scripts/r2-migration-steps.md) and switching the
+# Pages source to "GitHub Actions".
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -26,7 +31,12 @@ jobs:
           cache: npm
 
       - run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
       - run: npm run build
+        env:
+          NEXT_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY }}
+          NEXT_PUBLIC_POSTHOG_HOST: ${{ vars.NEXT_PUBLIC_POSTHOG_HOST }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

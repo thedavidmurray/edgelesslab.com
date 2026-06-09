@@ -57,7 +57,9 @@ export function ProductsGrid({ products }: { products: Product[] }) {
     offsetY: number;
   } | null>(null);
   const dragRef = useRef(dragState);
-  dragRef.current = dragState;
+  useEffect(() => {
+    dragRef.current = dragState;
+  }, [dragState]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -123,7 +125,7 @@ export function ProductsGrid({ products }: { products: Product[] }) {
         for (const key of cardOrder) {
           const product = products.find((p) => p.name === key);
           if (!product) continue;
-          let h = estimateHeight(product, ready, prepare, layout, textWidth, expandedCards.has(key));
+          const h = estimateHeight(product, ready, prepare, layout, textWidth, expandedCards.has(key));
           heights.set(key, h);
         }
 
