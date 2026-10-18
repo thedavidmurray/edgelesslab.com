@@ -1,0 +1,116 @@
+{
+  "provider": "openrouter/google/gemini-2.5-flash",
+  "n": 10,
+  "results": [
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 40,
+      "plottability": 9,
+      "uniqueness": 6,
+      "overall": 6.8,
+      "notes": "The dominant forms are intriguing and well-executed, creating a sense of organic growth or flow. The 'stem' at the bottom feels a bit disconnected and pulls from the overall composition. The complexity is good without being overwhelming, suggesting clear lines for plotting. The ink coverage is within a good range, offering visual interest without over-saturating. While the individual elements are unique, the overall pattern of repeating feather-like forms is somewhat common in generative art.",
+      "file": "examples/png/flow_field_1.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 45,
+      "plottability": 9,
+      "uniqueness": 5,
+      "overall": 7.2,
+      "notes": "This piece is a fractal tree. The composition places the main branching structure slightly off-center and extending upwards, creating a sense of growth. Its complexity comes from the recursive branching, especially the finer details at the ends of the branches. While it's coherent from a fractal generation perspective, as an art piece, it feels a bit visually sparse in the lower half and could benefit from more development there to balance the composition. Ink coverage is moderate due to many fine lines. It should plot very well given its clean lines and simple structure. However, the exact fractal nature or specific algorithm used isn't immediately unique without further context.",
+      "file": "examples/png/l_system_fern_79.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 8,
+      "ink_coverage_pct": 15,
+      "plottability": 9,
+      "uniqueness": 6,
+      "overall": 7.2,
+      "notes": "This is a classic Voronoi diagram (or similar cellular pattern), which is inherently coherent and has a nice organic feel due to the varying cell sizes and shapes. The composition is well-balanced, filling the frame dynamically. Complexity is moderate with many lines but no overlapping, which is good for plotting. Ink coverage is low, making it suitable for delicate pen work. It is highly plottable. While a common generative art technique, the specific distribution of cells gives it some uniqueness.",
+      "file": "examples/png/voronoi_1.png"
+    },
+    {
+      "composition": 8,
+      "complexity": 7,
+      "coherence": 8,
+      "ink_coverage_pct": 40,
+      "plottability": 9,
+      "uniqueness": 6,
+      "overall": 7.5,
+      "notes": "This is a classic spirograph-style pattern. The composition is strong due to its inherent symmetry. Complexity is moderate; while many lines, they follow a clear mathematical rule. Coherence is excellent for the same reason. Ink coverage is well within the target range, offering a good balance of detail and white space. Plottability is very high as it consists of continuous, smooth curves. Uniqueness is lower because this type of pattern is quite common in generative art.",
+      "file": "examples/png/spiral_hypotrochoid_7.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 45,
+      "plottability": 9,
+      "uniqueness": 5,
+      "overall": 7.2,
+      "notes": "The patterns are interesting and have a biological, organic feel. The composition is unbalanced, with a large empty space on the right, which could be intentional but limits its appeal. The coherence is moderate; while the texture is consistent, the overall shape feels fragmented. Plottability is very high due to clear, continuous lines. Uniqueness is average, as similar organic contour maps are common in generative art.",
+      "file": "examples/png/reaction_diffusion_worms_4.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 45,
+      "plottability": 9,
+      "uniqueness": 5,
+      "overall": 7.2,
+      "notes": "This appears to be a Hilbert curve or a similar space-filling curve. If it's a single continuous line, it will plot beautifully. The composition is a solid, dense block, which can be striking. The coherence is moderately high due to the repetitive, fractal nature. Ink coverage estimation is for a standard pen line weight; it would increase with thicker lines. It's a classic example of this type of generative art, so uniqueness is moderate.",
+      "file": "examples/png/space_filling_hilbert_1.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 45,
+      "plottability": 9,
+      "uniqueness": 5,
+      "overall": 7.2,
+      "notes": "This piece uses a cellular automaton, likely rule 30 or similar, within a triangular boundary. The composition is interesting due to the emergent patterns and the overall triangular shape. Complexity is high due to the sheer number of elements and their intricate arrangement. Coherence is moderate; while generated by a clear rule, the patterns can appear somewhat chaotic at first glance, though repeating structures emerge with closer inspection. The ink coverage is estimated around 45% based on the ratio of black to white pixels, which is within the target range. Plottability is excellent as it's composed of simple lines and connected squares, making it straightforward for a pen plotter (assuming the lines are vectorized correctly). Uniqueness is average for cellular automata; while the specific instance is unique, the style is recognizable within the genre. The small white triangles are an interesting detail that breaks up the dense pattern.",
+      "file": "examples/png/cellular_automata_rule30.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 45,
+      "plottability": 9,
+      "uniqueness": 5,
+      "overall": 7.2,
+      "notes": "This piece features a grid of varying rectangular and triangular shapes, many of which contain smaller, nested rectangles or 'X' marks. The composition is dynamic due to the varied sizes and internal patterns within the grid, creating visual interest. The complexity is moderately high due to the sheer number of lines and the different types of internal patterns (nested rectangles, Xs, and simple void spaces). Coherence is somewhat low, as the internal patterns within the grid elements seem to be placed haphazardly without a clear unifying design principle, making it feel a little chaotic. The ink coverage is estimated at 45% based on the density of lines across the entire area. Plottability is high as it consists entirely of straight lines and well-defined geometric shapes, which plotters excel at. Uniqueness is moderate; while the specific arrangement of shapes is unique, the style of using a grid with internal variations is a common generative art trope. The overall score reflects a piece that is visually engaging and technically plot-ready, but could benefit from a stronger underlying conceptual coherence for its internal elements.",
+      "file": "examples/png/subdivision_11.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 45,
+      "plottability": 9,
+      "uniqueness": 5,
+      "overall": 7.2,
+      "notes": "The composition is a classic donut shape, centrally placed, which is well-balanced but not particularly dynamic. The complexity comes from the dense hatching and the subtle irregularities around the edges of the form, which suggest an organic or imperfect rendering. Coherence is decent; the hatching consistently defines the shape, but the slightly ragged edges detract a little. Ink coverage is moderate and within the target range, which is good for pen plotting. Plottability is high as it consists primarily of straight lines, which are generally easy for a plotter to execute. Uniqueness is average for this type of hatched geometric form.",
+      "file": "examples/png/hatching_parallel_33.png"
+    },
+    {
+      "composition": 7,
+      "complexity": 8,
+      "coherence": 6,
+      "ink_coverage_pct": 45,
+      "plottability": 9,
+      "uniqueness": 5,
+      "overall": 7.2,
+      "notes": "This generative art piece presents a contour map-like design. The composition is balanced but somewhat uniform, lacking a clear focal point, hence a 7. Its complexity is high due to the numerous intricate and interlocking lines, earning an 8. Coherence is moderate (6) as the pattern is consistent without offering much in the way of deliberate structure or narrative. The estimated ink coverage is around 45%, which is within the target range. Plottability is excellent (9) as the design consists solely of clean, closed-loop lines without fills or excessive overlaps, making it ideal for a pen plotter. Uniqueness is average (5); while the specific arrangement is unique, the style is a common derivative of topographic maps or noise-based generative art.",
+      "file": "examples/png/topographic_5.png"
+    }
+  ]
+}

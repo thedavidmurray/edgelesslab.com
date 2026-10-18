@@ -1,0 +1,23 @@
+{
+  "name": "stateful-hub-mcp-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Durable, lease/ack message hub MCP server (Bun + SQLite WAL).",
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "start": "bun run src/index.ts",
+    "dev:node": "node --import tsx src/index.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.12.1"
+  },
+  "devDependencies": {
+    "@types/bun": "1.1.14",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
+  }
+}

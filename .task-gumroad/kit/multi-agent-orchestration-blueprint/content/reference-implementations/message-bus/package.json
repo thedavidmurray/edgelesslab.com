@@ -1,0 +1,10 @@
+{
+  "name": "agent-bus-hub",
+  "version": "1.0.0",
+  "description": "SQLite-backed message router for multi-agent coordination",
+  "scripts": {
+    "start": "bun run hub.ts",
+    "dev": "bun --watch run hub.ts"
+  },
+  "dependencies": {}
+}

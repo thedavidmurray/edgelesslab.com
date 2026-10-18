@@ -1,0 +1,36 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "status": 200,
+    "ctaCount": 1,
+    "href": "https://edgelessai.gumroad.com/l/edgeless-free-kit?wanted=true&price=0&utm_source=edgelesslab&utm_medium=website&utm_campaign=free_kit&utm_content=products_hero",
+    "cspViolations": [],
+    "cspConsole": [],
+    "pageErrors": [],
+    "fits": true,
+    "checkoutProviderCspWarningCount": 4,
+    "checkoutTotal": "US$0",
+    "emailRequired": true,
+    "submission": "No email entered; no claim or payment submitted; purchase POSTs blocked."
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "status": 200,
+    "ctaCount": 1,
+    "href": "https://edgelessai.gumroad.com/l/edgeless-free-kit?wanted=true&price=0&utm_source=edgelesslab&utm_medium=website&utm_campaign=free_kit&utm_content=products_hero",
+    "cspViolations": [],
+    "cspConsole": [],
+    "pageErrors": [],
+    "fits": true,
+    "checkoutProviderCspWarningCount": 2,
+    "checkoutTotal": "US$0",
+    "emailRequired": true,
+    "submission": "No email entered; no claim or payment submitted; purchase POSTs blocked."
+  }
+]

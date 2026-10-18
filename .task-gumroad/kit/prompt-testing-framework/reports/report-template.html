@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Test Report</title>
+<!--
+  report-template.html — HTML report template for prompt test results
+  Copyright 2026 Edgeless Labs LLC — MIT License
+
+  Usage:
+    python framework/evaluate.py results/run.json --report reports/output.html
+
+  This template is used by evaluate.py to generate reports programmatically.
+  It can also be opened directly as a static file with embedded data.
+
+  To use as a standalone template, replace the JavaScript DATA block below
+  with actual results JSON, or load it dynamically via fetch().
+-->
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-tertiary: #21262d;
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --green: #3fb950;
+    --green-dim: rgba(63, 185, 80, 0.15);
+    --red: #f85149;
+    --red-dim: rgba(248, 81, 73, 0.10);
+    --yellow: #d29922;
+    --yellow-dim: rgba(210, 153, 34, 0.15);
+    --blue: #58a6ff;
+    --blue-dim: rgba(88, 166, 255, 0.15);
+    --purple: #bc8cff;
+    --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-left h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .header-meta span::before {
+    margin-right: 0.3rem;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .badge-pass { background: var(--green-dim); color: var(--green); }
+  .badge-fail { background: var(--red-dim); color: var(--red); }
+  .badge-warn { background: var(--yellow-dim); color: var(--yellow); }
+  .badge-info { background: var(--blue-dim); color: var(--blue); }
+
+  /* ── Summary cards ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1rem;
+  }
+
+  .summary-card .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .summary-card .value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .value-green { color: var(--green); }
+  .value-red   { color: var(--red); }
+  .value-blue  { color: var(--blue); }
+  .value-yellow { color: var(--yellow); }
+
+  /* ── Progress bar ── */
+  .progress-section { margin-bottom: 2rem; }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .progress-bar {
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease;
+  }
+
+  /* ── Filters ── */
+  .filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 0.35rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--blue);
+  }
+
+  /* ── Results table ── */
+  .results-table-wrap {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  thead th {
+    padding: 0.65rem 1rem;
+    text-align: left;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--bg-tertiary);
+    vertical-align: top;
+    font-size: 0.85rem;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  tbody tr.row-fail { background: rgba(248, 81, 73, 0.04); }
+  tbody tr:hover { background: var(--bg-tertiary); }
+
+  /* ── Status badge ── */
+  .status-col { width: 70px; }
+
+  /* ── Test name ── */
+  .test-name { font-weight: 500; color: var(--text-primary); }
+
+  /* ── Assertions ── */
+  .assertions-col { max-width: 320px; }
+
+  .assertion-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+  }
+
+  .chip-pass { background: var(--green-dim); color: var(--green); }
+  .chip-fail { background: var(--red-dim); color: var(--red); }
+  .chip-deferred { background: var(--yellow-dim); color: var(--yellow); }
+
+  .fail-reason {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--red);
+    font-family: var(--font-mono);
+    word-break: break-word;
+  }
+
+  /* ── Latency ── */
+  .latency-col { width: 90px; white-space: nowrap; }
+  .latency { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8rem; }
+  .latency-slow { color: var(--yellow); }
+
+  /* ── Output preview ── */
+  .output-col { max-width: 400px; }
+
+  .output-preview {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    word-break: break-all;
+    white-space: pre-wrap;
+    max-height: 80px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .output-preview.expandable::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(transparent, var(--bg-secondary));
+  }
+
+  .expand-btn {
+    font-size: 0.7rem;
+    color: var(--blue);
+    cursor: pointer;
+    margin-top: 4px;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  /* ── Error message ── */
+  .error-msg {
+    color: var(--red);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  /* ── No results ── */
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .output-col { display: none; }
+    .latency-col { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1 id="suite-name">Prompt Test Report</h1>
+      <div class="header-meta">
+        <span id="meta-model">Model: —</span>
+        <span id="meta-timestamp">—</span>
+        <span id="meta-spec">—</span>
+        <span id="meta-judge" style="display:none">Judge: —</span>
+      </div>
+    </div>
+    <div>
+      <span class="badge badge-info" id="header-badge">Loading...</span>
+    </div>
+  </header>
+
+  <!-- Summary cards -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="label">Pass Rate</div>
+      <div class="value" id="stat-rate">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Passed</div>
+      <div class="value value-green" id="stat-passed">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Failed</div>
+      <div class="value value-red" id="stat-failed">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Total Tests</div>
+      <div class="value value-blue" id="stat-total">—</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Avg Latency</div>
+      <div class="value value-yellow" id="stat-latency">—</div>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-section">
+    <div class="progress-label">
+      <span>Pass Rate</span>
+      <span id="progress-label-pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all" onclick="filterTests('all', this)">All</button>
+    <button class="filter-btn" data-filter="pass" onclick="filterTests('pass', this)">Passing</button>
+    <button class="filter-btn" data-filter="fail" onclick="filterTests('fail', this)">Failing</button>
+  </div>
+
+  <!-- Results table -->
+  <div class="results-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="status-col">Status</th>
+          <th>Test Name</th>
+          <th class="assertions-col">Assertions</th>
+          <th class="latency-col">Latency</th>
+          <th class="output-col">Output Preview</th>
+        </tr>
+      </thead>
+      <tbody id="results-body">
+        <tr><td colspan="5" class="no-results">Loading results...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Generated by <strong>Prompt Testing Framework</strong> &mdash; Edgeless Labs LLC
+  </footer>
+
+</div>
+
+<script>
+// ── Data ─────────────────────────────────────────────────────────────────────
+// Replace this with actual results data, or load via fetch().
+// evaluate.py replaces this block when generating reports programmatically.
+const RESULTS_DATA = window.__PTF_RESULTS__ || null;
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderReport(data) {
+  if (!data) {
+    document.getElementById('results-body').innerHTML =
+      '<tr><td colspan="5" class="no-results">No results data. Pass a results JSON file to evaluate.py --report.</td></tr>';
+    return;
+  }
+
+  const summary = data.summary || {};
+  const tests = data.tests || [];
+  const passRate = (summary.pass_rate || 0) * 100;
+
+  // Header
+  document.getElementById('suite-name').textContent = data.suite || 'Prompt Test Report';
+  document.getElementById('meta-model').textContent = 'Model: ' + (data.model || '—');
+  document.getElementById('meta-timestamp').textContent = (data.timestamp || '').replace('T', ' ').replace('Z', ' UTC');
+  document.getElementById('meta-spec').textContent = data.spec_file ? 'Spec: ' + data.spec_file : '';
+
+  if (summary.judge_model) {
+    const judgeEl = document.getElementById('meta-judge');
+    judgeEl.textContent = 'Judge: ' + summary.judge_model;
+    judgeEl.style.display = '';
+  }
+
+  const badge = document.getElementById('header-badge');
+  badge.textContent = passRate.toFixed(1) + '% pass rate';
+  badge.className = 'badge ' + (passRate >= 80 ? 'badge-pass' : 'badge-fail');
+
+  // Stats
+  document.getElementById('stat-rate').textContent = passRate.toFixed(1) + '%';
+  document.getElementById('stat-rate').className = 'value ' + (passRate >= 80 ? 'value-green' : 'value-red');
+  document.getElementById('stat-passed').textContent = summary.passed || 0;
+  document.getElementById('stat-failed').textContent = summary.failed || 0;
+  document.getElementById('stat-total').textContent = summary.total || 0;
+
+  const latencies = tests.map(t => t.latency_ms).filter(Boolean);
+  const avgLatency = latencies.length ? Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length) : null;
+  document.getElementById('stat-latency').textContent = avgLatency ? avgLatency + 'ms' : '—';
+
+  // Progress bar
+  const fill = document.getElementById('progress-fill');
+  fill.style.width = passRate + '%';
+  fill.style.background = passRate >= 80 ? '#3fb950' : (passRate >= 50 ? '#d29922' : '#f85149');
+  document.getElementById('progress-label-pct').textContent = passRate.toFixed(1) + '%';
+
+  // Rows
+  renderRows(tests);
+}
+
+function renderRows(tests) {
+  const tbody = document.getElementById('results-body');
+  if (!tests.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="no-results">No tests found.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = tests.map((test, idx) => {
+    const hasFailed = (test.failed || 0) > 0;
+    const hasError = !!test.error;
+    const failed = hasFailed || hasError;
+
+    const statusBadge = failed
+      ? '<span class="badge badge-fail">FAIL</span>'
+      : '<span class="badge badge-pass">PASS</span>';
+
+    // Assertion chips
+    const chips = (test.assertions || []).map(a => {
+      const cls = a.status === 'pass' ? 'chip-pass' : (a.status === 'deferred' ? 'chip-deferred' : 'chip-fail');
+      const score = a.score != null ? ` ${a.score.toFixed(2)}` : '';
+      let chip = `<span class="chip ${cls}">${escHtml(a.type || '?')}${escHtml(score)}</span>`;
+      return chip;
+    }).join('');
+
+    const failReasons = (test.assertions || [])
+      .filter(a => a.status === 'fail' && a.reason)
+      .map(a => `<div class="fail-reason">${escHtml(a.reason)}</div>`)
+      .join('');
+
+    const errorHtml = test.error
+      ? `<div class="fail-reason">${escHtml(test.error)}</div>`
+      : '';
+
+    // Latency
+    const latencyMs = test.latency_ms;
+    const latencyClass = latencyMs > 5000 ? 'latency latency-slow' : 'latency';
+    const latencyText = latencyMs ? latencyMs + 'ms' : '—';
+
+    // Output preview
+    const output = test.output || test.error || '';
+    const outputEscaped = escHtml(output.substring(0, 400));
+    const isLong = output.length > 200;
+
+    return `
+    <tr class="${failed ? 'row-fail' : ''}" data-status="${failed ? 'fail' : 'pass'}">
+      <td class="status-col">${statusBadge}</td>
+      <td><div class="test-name">${escHtml(test.name || '?')}</div></td>
+      <td class="assertions-col">
+        <div class="assertion-chips">${chips}</div>
+        ${failReasons}
+        ${errorHtml}
+      </td>
+      <td class="latency-col"><span class="${latencyClass}">${latencyText}</span></td>
+      <td class="output-col">
+        <div class="output-preview ${isLong ? 'expandable' : ''}" id="out-${idx}">${outputEscaped}</div>
+        ${isLong ? `<button class="expand-btn" onclick="expandOutput(${idx})">Show more</button>` : ''}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterTests(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('#results-body tr[data-status]').forEach(row => {
+    if (filter === 'all') {
+      row.style.display = '';
+    } else {
+      row.style.display = row.dataset.status === filter ? '' : 'none';
+    }
+  });
+}
+
+function expandOutput(idx) {
+  const el = document.getElementById('out-' + idx);
+  el.style.maxHeight = 'none';
+  el.classList.remove('expandable');
+  el.nextElementSibling && (el.nextElementSibling.style.display = 'none');
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+if (RESULTS_DATA) {
+  renderReport(RESULTS_DATA);
+} else {
+  // Try to load from URL parameter: ?results=path/to/results.json
+  const params = new URLSearchParams(window.location.search);
+  const resultsPath = params.get('results');
+  if (resultsPath) {
+    fetch(resultsPath)
+      .then(r => r.json())
+      .then(renderReport)
+      .catch(e => {
+        document.getElementById('results-body').innerHTML =
+          `<tr><td colspan="5" class="no-results">Failed to load: ${e.message}</td></tr>`;
+      });
+  } else {
+    document.getElementById('results-body').innerHTML =
+      `<tr><td colspan="5" class="no-results">
+        No results data loaded. Use one of:<br><br>
+        <code>python framework/evaluate.py results/run.json --report reports/output.html</code><br>
+        or open as: <code>report-template.html?results=../results/run.json</code>
+      </td></tr>`;
+  }
+}
+</script>
+</body>
+</html>

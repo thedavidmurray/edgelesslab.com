@@ -1,0 +1,107 @@
+{
+  "success": true,
+  "message": "Product -IKTPvWDTSi4X8T37-bvpw== updated.",
+  "id": "-IKTPvWDTSi4X8T37-bvpw==",
+  "result": {
+    "success": true,
+    "product": {
+      "name": "Edgeless Free Kit",
+      "description": "\u003ch2\u003eOne useful place to start\u003c/h2\u003e\u003cp\u003eSeventeen AI-assisted development references in one free download. Start with the CLAUDE.md templates and Claude Code Cheat Sheet, then explore the rest as you need it.\u003c/p\u003e\u003ch2\u003eInside the kit\u003c/h2\u003e\u003cul\u003e\n\u003cli\u003eCLAUDE.md Template Pack, Claude Code Cheat Sheet and Quick Reference Cards\u003c/li\u003e\n\u003cli\u003eThe Agent Cookbook and AI Code Review Playbook\u003c/li\u003e\n\u003cli\u003eHooks Library and Claude Code Hooks Deep Dive\u003c/li\u003e\n\u003cli\u003eObsidian + Claude Code Setup Kit\u003c/li\u003e\n\u003cli\u003eMCP Server Starter Kit and Production MCP Server Kit\u003c/li\u003e\n\u003cli\u003en8n AI Workflow Templates and Prompt Testing Framework\u003c/li\u003e\n\u003cli\u003eThe Prompt Engineering OS (complete team reference edition)\u003c/li\u003e\n\u003cli\u003eMulti-Agent Orchestration Blueprint and Autonomous Agent Safety Patterns\u003c/li\u003e\n\u003cli\u003eGenerative Art Starter Kit and Digital Product Launch Toolkit\u003c/li\u003e\n\u003c/ul\u003e\u003cp\u003eIncludes a two-page START-HERE.pdf, browser-readable contents and a file manifest. Enter your email to receive the download. No payment required.\u003c/p\u003e\u003cp\u003eThese materials were assembled in March–April 2026. They are references, not verified current production integrations. Review code and current vendor documentation before installing hooks or running scripts. Original licenses are preserved.\u003c/p\u003e\u003cp\u003eNeed help with private AI workflows? \u003ca href=\"https://edgelesslab.com/services/private-ai-systems/\"\u003eExplore Edgeless Lab private AI systems work\u003c/a\u003e.\u003c/p\u003e",
+      "require_shipping": false,
+      "preview_url": null,
+      "custom_receipt": null,
+      "customizable_price": true,
+      "custom_permalink": "edgeless-free-kit",
+      "subscription_duration": null,
+      "id": "-IKTPvWDTSi4X8T37-bvpw==",
+      "url": null,
+      "price": 0,
+      "currency": "usd",
+      "taxonomy_id": 266,
+      "category": "other",
+      "category_label": "Other",
+      "short_url": "https://edgelessai.gumroad.com/l/edgeless-free-kit",
+      "landing_url": "https://edgelessai.gumroad.com/l/edgeless-free-kit",
+      "thumbnail_url": null,
+      "tags": [],
+      "formatted_price": "$0+",
+      "published": false,
+      "file_info": {
+        "Size": "9.96 MB"
+      },
+      "max_purchase_count": null,
+      "deleted": false,
+      "custom_fields": [],
+      "custom_summary": "17 AI development references, templates and examples. One free download with a PDF guide.",
+      "is_tiered_membership": false,
+      "recurrences": null,
+      "covers": [],
+      "main_cover_id": null,
+      "bundle_products": [],
+      "variants": [
+        {
+          "title": "Kit",
+          "options": [
+            {
+              "name": "Complete free kit",
+              "price_difference": 0,
+              "is_pay_what_you_want": false,
+              "recurrence_prices": null,
+              "url": null,
+              "rich_content": []
+            }
+          ]
+        }
+      ],
+      "custom_html": null,
+      "refund_policy": {
+        "refund_period": "inherit",
+        "title": null,
+        "fine_print": null,
+        "inherited": true
+      },
+      "rich_content": [],
+      "has_same_rich_content_for_all_variants": false,
+      "main_section_index": 0,
+      "sections": [],
+      "files": [
+        {
+          "id": "MrW13gqdSjZSMgPCUcC8Gg==",
+          "name": null,
+          "size": 10439098,
+          "url": "https://files.gumroad.com/attachments/4537569486836/6ae7d787e2cbeaa625498fe7f0c8ec79/original/Edgeless-Free-Kit.zip?response-content-disposition=attachment\u0026cache_key=bdc2\u0026verify=1792126244-zHWY2cPRDkmpylF1CHuQA1iZJP5fiyPbORn%2FWVlu5I8%3D",
+          "filetype": "zip",
+          "filegroup": "archive"
+        }
+      ],
+      "custom_delivery_url": null,
+      "sales_count": 0,
+      "sales_usd_cents": 0.0
+    },
+    "media": [
+      {
+        "kind": "cover",
+        "path": "public/edgeless-free-kit-cover.png",
+        "endpoint": "/products/-IKTPvWDTSi4X8T37-bvpw==/covers",
+        "response": {
+          "success": true,
+          "covers": [
+            {
+              "url": "https://public-files.gumroad.com/4qxcsyf2mqgt6t42bdbe97qxmphm",
+              "original_url": "https://public-files.gumroad.com/4qxcsyf2mqgt6t42bdbe97qxmphm",
+              "thumbnail": null,
+              "id": "36b23a151718e6edb5c5053f8792ed2f",
+              "type": "image",
+              "filetype": "png",
+              "width": 670,
+              "height": 376,
+              "native_width": 1600,
+              "native_height": 900
+            }
+          ],
+          "main_cover_id": "36b23a151718e6edb5c5053f8792ed2f"
+        }
+      }
+    ]
+  }
+}

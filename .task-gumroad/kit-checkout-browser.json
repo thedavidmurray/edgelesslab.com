@@ -1,0 +1,30 @@
+{
+  "emailAfter": {
+    "html": "<input class=\"font-[inherit] py-3 px-4 text-base leading-snug text-foreground border rounded block w-full bg-background placeholder:text-muted focus:outline-2 focus:outline-indicator focus:outline-offset-0 opacity-100 disabled:cursor-not-allowed disabled:bg-active-bg forced-colors:disabled:border-dashed border-danger\" id=\":r4:email\" type=\"email\" aria-invalid=\"true\" value=\"\">",
+    "focused": true,
+    "validationMessage": "",
+    "ariaInvalid": "true"
+  },
+  "url": "https://gumroad.com/checkout",
+  "body": "Checkout\nContinue shopping\nQty: 1\n1\nEdgeless Free Kit\nEdgeless\nVersion: Complete free kit\nEdit\nRemove\nUS$0\nGive as a gift?\nSubtotal\nUS$0\nTotal\nUS$0\nEmail address\nGet\n\nThis site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.",
+  "inputs": [
+    {
+      "type": "checkbox",
+      "name": "",
+      "placeholder": "",
+      "required": false,
+      "html": "<input type=\"checkbox\" role=\"switch\" class=\"cursor-pointer appearance-none h-5 min-h-5 w-[2.125rem] min-w-[2.125rem] border border-border rounded-full bg-background relative transition-all duration-150 checked:bg-accent-with-text disabled:cursor-not-allowed disabled:opacity-30 after:content-['']! after:absolute! after:top-[0.125rem]! after:left-[0.1875rem]! after:size-[0.875rem]! after:rounded-lg! after:bg-foreground! after:transition-all after:duration-150 checked:after:left-[calc(100%-1.0625rem)]! checked:after:bg-accent-foreground!\">",
+      "visible": true
+    },
+    {
+      "type": "email",
+      "name": "",
+      "placeholder": "",
+      "required": false,
+      "html": "<input class=\"font-[inherit] py-3 px-4 text-base leading-snug text-foreground border border-border rounded block w-full bg-background placeholder:text-muted focus:outline-2 focus:outline-indicator focus:outline-offset-0 opacity-100 disabled:cursor-not-allowed disabled:bg-active-bg forced-colors:disabled:border-dashed\" id=\":r4:email\" type=\"email\" aria-invalid=\"false\" value=\"\">",
+      "visible": true
+    }
+  ],
+  "emailValidation": "Checkout\nContinue shopping\nQty: 1\n1\nEdgeless Free Kit\nEdgeless\nVersion: Complete free kit\nEdit\nRemove\nUS$0\nGive as a gift?\nSubtotal\nUS$0\nTotal\nUS$0\nEmail address\nGet\n\nThis site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.",
+  "submission": "No email entered; purchase/checkout/charge POSTs blocked."
+}

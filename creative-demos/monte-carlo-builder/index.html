@@ -1,0 +1,1016 @@
+<!doctype html>
+<html lang="en" data-critters-container>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>Monte Carlo Builder</title>
+    <meta name="description" content="Input trade returns, equity curves, or parametric distributions. Run trade-order shuffle, block bootstrap, parametric sims. Get full output battery: fan charts, drawdowns, ruin probability, Sharpe CI, verdict. Simulation. Not trading advice.">
+    <meta name="theme-color" content="#0b0c0f">
+    <style>:root{--bg:#0b0c0f;--ink:#ecebe6;--mute:#8b8f98;--dim:#5a5e66;--line:rgba(255, 255, 255, 0.09);--card:rgba(16, 17, 21, 0.84);--acc:#c9ff3d;--warn:#ffb347;--bad:#ff5d5d;--serif:"Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+          Georgia, serif;--mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;--sans:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif}*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}#stage{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.masthead{position:fixed;left:28px;top:24px;max-width:min(560px, calc(100% - 360px));pointer-events:none;z-index:2}.eyebrow{font:600 10px/1.2 var(--mono);letter-spacing:0.2em;text-transform:uppercase;color:var(--mute)}.eyebrow b{color:var(--acc);font-weight:600}.masthead h1{font:italic 400 clamp(28px, 3.9vw, 50px)/1.02 var(--serif);letter-spacing:-0.012em;margin:10px 0 8px;text-wrap:balance}.dek{font:400 14.5px/1.45 var(--serif);color:#b4b6bc;max-width:44ch}.card{position:fixed;right:20px;top:20px;width:340px;max-height:calc(100% - 40px);overflow:auto;overscroll-behavior:contain;background:var(--card);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:14px;padding:14px 16px 16px;font-size:12px;z-index:3;transition:transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+          opacity 0.25s;scrollbar-width:thin}.card > header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:4px}.card h2{font:italic 400 18px/1.1 var(--serif)}.card .no{font:10px var(--mono);color:var(--mute);letter-spacing:0.14em}.card .latin{display:block;font:italic 12px var(--serif);color:var(--mute);margin-top:3px}.lbl{display:flex;justify-content:space-between;align-items:baseline;font:600 9.5px/1 var(--mono);letter-spacing:0.16em;text-transform:uppercase;color:var(--mute);margin:14px 0 7px}.lbl output{font-weight:500;color:var(--ink);letter-spacing:0.04em;font-variant-numeric:tabular-nums}.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);border-radius:9px;padding:2px;gap:2px;background:rgba(0, 0, 0, 0.25)}.seg button,.btn{font:500 11.5px/1 var(--sans);color:var(--ink);background:transparent;border:0;border-radius:7px;padding:8px 4px;cursor:pointer;touch-action:manipulation;transition:background 0.15s,
+          color 0.15s}.seg button:hover{background:rgba(255, 255, 255, 0.06)}.seg button[aria-pressed="true"]{background:var(--acc);color:#0b0c0f;font-weight:600}.btn{border:1px solid var(--line);background:rgba(255, 255, 255, 0.03);padding:9px 6px}.btn:hover{background:rgba(255, 255, 255, 0.08)}.btn:active{transform:translateY(1px)}.btn.wide{width:100%;margin-top:14px;padding:11px 8px;font-weight:600;letter-spacing:0.02em}.btn.go{border-color:rgba(201, 255, 61, 0.45);color:var(--acc)}.btns{display:grid;grid-template-columns:repeat(3, 1fr);gap:6px;margin-top:8px}input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:pointer;touch-action:pan-y}input[type="range"]::-webkit-slider-runnable-track{height:3px;border-radius:3px;background:linear-gradient(
+          90deg,
+          var(--acc) var(--p, 50%),
+          rgba(255, 255, 255, 0.12) var(--p, 50%)
+        )}input[type="range"]::-moz-range-track{height:3px;border-radius:3px;background:rgba(255, 255, 255, 0.12)}input[type="range"]::-moz-range-progress{height:3px;border-radius:3px;background:var(--acc)}input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-6.5px;border-radius:50%;background:#0b0c0f;border:2px solid var(--acc);box-shadow:0 0 0 4px rgba(201, 255, 61, 0.08)}input[type="range"]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#0b0c0f;border:2px solid var(--acc)}.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:9px;overflow:hidden;margin-top:14px}.stat{background:#111216;padding:8px 10px 9px}.stat span{display:block;font:600 9px/1 var(--mono);letter-spacing:0.15em;text-transform:uppercase;color:var(--mute)}.stat strong{display:block;font:500 17px/1 var(--mono);font-variant-numeric:tabular-nums;margin-top:6px;white-space:nowrap}.stat strong.good{color:var(--acc)}.stat strong.bad{color:var(--bad)}.stat strong.warn{color:var(--warn)}.details{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}.details summary{cursor:pointer;list-style:none;font:italic 400 15px var(--serif);display:flex;justify-content:space-between;align-items:center}.details summary::-webkit-details-marker{display:none}.details summary::after{content:\"+\";font:400 16px var(--mono);color:var(--acc)}.details p{font:400 13px/1.55 var(--serif);color:#c3c5ca;margin-top:9px}.toggle{position:fixed;right:20px;bottom:18px;z-index:4;font:600 10px/1 var(--mono);letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:9px 13px;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.foot{position:fixed;left:28px;bottom:18px;font:500 10px/1.4 var(--mono);letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);pointer-events:none;z-index:2;max-width:calc(100% - 380px)}@media (max-width: 760px){.masthead{left:16px;top:14px;max-width:calc(100% - 110px)}.masthead h1{font-size:27px;margin:7px 0 4px}.dek{font-size:13px;display:none}.card{left:10px;right:10px;top:auto;bottom:10px;width:auto;max-height:44vh;border-radius:14px;padding:10px 12px 12px}.card > header{display:none}.card{display:flex;flex-direction:column}.card > *{flex-shrink:0}.card > .stats{order:-1;margin:0 0 2px}.eyebrow .sp{display:none}.stat{padding:7px 9px}.stat strong{font-size:15px;margin-top:4px}.lbl{margin:10px 0 6px}.toggle{top:14px;right:12px;bottom:auto}.foot{display:none}}.verdict{margin-top:12px;font:italic 14px/1.4 var(--serif);color:#c3c5ca}.disclaim{margin-top:12px;font:600 9.5px/1.4 var(--mono);letter-spacing:0.14em;text-transform:uppercase;color:var(--warn)}</style>
+  <link rel="canonical" href="https://edgelesslab.com/creative-demos/monte-carlo-builder/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Monte Carlo Builder">
+<meta property="og:description" content="Input trade returns, equity curves, or parametric distributions. Run trade-order shuffle, block bootstrap, parametric sims. Get full output battery: fan charts, drawdowns, ruin probability, Sharpe CI, verdict. Simulation. Not trading advice.">
+<meta property="og:url" content="https://edgelesslab.com/creative-demos/monte-carlo-builder/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Monte Carlo Builder">
+<meta name="twitter:description" content="Input trade returns, equity curves, or parametric distributions. Run trade-order shuffle, block bootstrap, parametric sims. Get full output battery: fan charts, drawdowns, ruin probability, Sharpe CI, verdict. Simulation. Not trading advice.">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
+</head>
+  <body>
+    <canvas id="stage" aria-label="Monte Carlo simulation: fan chart of equity paths, terminal wealth histogram, max drawdown distribution, Sharpe distribution, verdict box with probability of ruin and edge test."></canvas>
+    <div class="masthead">
+      <div class="eyebrow">
+        Field note · <b>Statistics</b><span class="sp"> · Specimen 03</span>
+      </div>
+      <h1>Monte Carlo Builder</h1>
+      <p class="dek">
+        Input returns, equity curve, or parametric distribution. Shuffle trade
+        order, bootstrap blocks, param sims. See full output battery.
+      </p>
+    </div>
+    <aside class="card" id="card">
+      <header>
+        <div>
+          <h2>Monte Carlo Specimen</h2>
+          <span class="latin">Simulatio veritas</span>
+        </div>
+        <span class="no">No. 03</span>
+      </header>
+
+      <!-- Input selection -->
+      <div class="lbl">
+        Data source <output id="sourceLabel">CSV paste</output>
+      </div>
+      <div class="btns" id="sourceButtons">
+        <button class="btn" data-source="csv">CSV paste</button>
+        <button class="btn" data-source="equity">Equity curve</button>
+        <button class="btn" data-source="param">Parametric</button>
+      </div>
+
+      <!-- CSV input -->
+      <div id="csvInput" class="input-panel" style="display: none">
+        <label class="lbl" for="csvText">Paste CSV (returns per line or trade P&L)</label>
+        <textarea id="csvText" rows="4" style="
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 6px;
+            color: var(--ink);
+            margin-top: 4px;
+          ">
+0.02
+-0.01
+0.03
+-0.005</textarea>
+        <button class="btn wide" id="csvGo">Run CSV</button>
+      </div>
+
+      <!-- Equity curve input -->
+      <div id="equityInput" class="input-panel" style="display: none">
+        <label class="lbl" for="equityText">Paste equity curve (cumulative P&L)</label>
+        <textarea id="equityText" rows="4" style="
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 6px;
+            color: var(--ink);
+            margin-top: 4px;
+          ">
+100
+102
+99
+105
+103</textarea>
+        <button class="btn wide" id="equityGo">Run Equity</button>
+      </div>
+
+      <!-- Parametric input -->
+      <div id="paramInput" class="input-panel" style="display: none">
+        <label class="lbl" for="mean">Mean return</label>
+        <input type="number" id="mean" value="0.0005" step="0.0001" style="
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 6px;
+            color: var(--ink);
+            margin-top: 4px;
+          ">
+
+        <label class="lbl" for="std">Std dev</label>
+        <input type="number" id="std" value="0.01" step="0.0001" style="
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 6px;
+            color: var(--ink);
+            margin-top: 4px;
+          ">
+
+        <label class="lbl" for="dist">Distribution</label>
+        <div class="seg" data-key="dist">
+          <button aria-pressed="true" data-v="normal">Normal</button>
+          <button aria-pressed="false" data-v="t">Student-t</button>
+          <button aria-pressed="false" data-v="bootstrap">Bootstrap</button>
+        </div>
+
+        <label class="lbl" for="nu">DoF (t only)</label>
+        <input type="number" id="nu" value="5" step="0.1" style="
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 6px;
+            color: var(--ink);
+            margin-top: 4px;
+          ">
+
+        <label class="lbl" for="nobs">N observations</label>
+        <input type="number" id="nobs" value="252" step="1" style="
+            width: 100%;
+            font-family: var(--mono);
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 6px;
+            color: var(--ink);
+            margin-top: 4px;
+          ">
+
+        <button class="btn wide" id="paramGo">Run Parametric</button>
+      </div>
+
+      <!-- Simulation controls -->
+      <label class="lbl" for="nSims">Simulations <output id="nSimsOutput">1000</output></label>
+      <input type="range" id="nSims" min="100" max="10000" value="1000" step="100">
+
+      <label class="lbl" for="seed">Seed</label>
+      <input type="number" id="seed" value="42" step="1" style="
+          width: 100%;
+          font-family: var(--mono);
+          font-size: 11px;
+          background: rgba(0, 0, 0, 0.2);
+          border: 1px solid var(--line);
+          border-radius: 6px;
+          padding: 6px;
+          color: var(--ink);
+          margin-top: 4px;
+        ">
+
+      <label class="lbl" for="cost">Transaction cost per trade (bps)</label>
+      <input type="number" id="cost" value="5" step="1" style="
+          width: 100%;
+          font-family: var(--mono);
+          font-size: 11px;
+          background: rgba(0, 0, 0, 0.2);
+          border: 1px solid var(--line);
+          border-radius: 6px;
+          padding: 6px;
+          color: var(--ink);
+          margin-top: 4px;
+        ">
+
+      <label class="lbl" for="slippage">Slippage (bps per $1M)</label>
+      <input type="number" id="slippage" value="10" step="1" style="
+          width: 100%;
+          font-family: var(--mono);
+          font-size: 11px;
+          background: rgba(0, 0, 0, 0.2);
+          border: 1px solid var(--line);
+          border-radius: 6px;
+          padding: 6px;
+          color: var(--ink);
+          margin-top: 4px;
+        ">
+
+      <label class="lbl">Random entry test</label>
+      <div class="seg" data-key="randomEntry">
+        <button aria-pressed="true" data-v="on">On</button>
+        <button aria-pressed="false" data-v="off">Off</button>
+      </div>
+
+      <div class="btns">
+        <button class="btn go" id="runSims">Run Simulations</button>
+        <button class="btn" id="newSeed">New seed</button>
+        <button class="btn" id="exportBtn">Export JSON+PNG</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats" id="statsContainer" style="display: none">
+        <div class="stat">
+          <span>Terminal wealth</span><strong id="termWealth" class="good">–</strong>
+        </div>
+        <div class="stat">
+          <span>Max drawdown</span><strong id="maxDD" class="bad">–</strong>
+        </div>
+        <div class="stat">
+          <span>Prob ruin</span><strong id="probRuin" class="warn">–</strong>
+        </div>
+        <div class="stat">
+          <span>Sharpe mean</span><strong id="sharpeMean" class="good">–</strong>
+        </div>
+        <div class="stat">
+          <span>Sharpe CI 95%</span><strong id="sharpeCI" class="good">–</strong>
+        </div>
+        <div class="stat">
+          <span>Buy-hold</span><strong id="buyHold" class="good">–</strong>
+        </div>
+      </div>
+
+      <p class="verdict" id="verdict"></p>
+      <p class="disclaim">
+        Simulation. Not trading advice. Paper-only context.
+      </p>
+
+      <details class="details">
+        <summary>Inside the experiment</summary>
+        <p>
+          This tool runs Monte Carlo stress tests on trading strategies. Input
+          can be:
+        </p>
+        <ul>
+          <li>CSV of per-trade returns (e.g. 0.02, -0.01, 0.03)</li>
+          <li>Equity curve (cumulative P&L) - converted to returns</li>
+          <li>
+            Parametric (Normal, Student-t, Bootstrap) - generates synthetic
+            returns
+          </li>
+        </ul>
+        <p>Methods run:</p>
+        <ul>
+          <li>Trade-order shuffle (permutation test)</li>
+          <li>Block bootstrap (preserves autocorrelation)</li>
+          <li>Resampling with replacement</li>
+          <li>Parametric simulation (from fitted distribution)</li>
+          <li>Random-entry permutation test vs strategy returns</li>
+        </ul>
+        <p>
+          Outputs include fan chart of equity paths, terminal wealth histogram,
+          max drawdown distribution, probability of ruin, Sharpe distribution
+          with confidence intervals, comparison vs buy-and-hold, and a verdict
+          box that reports number of variants tried and refuses to say "edge"
+          unless the strategy beats the null at a stated threshold.
+        </p>
+        <p>
+          This is a simulation for paper trading context only. No forecasting.
+          No trading advice.
+        </p>
+      </details>
+    </aside>
+    <button class="toggle" id="toggle">Hide panel</button>
+    <div class="foot">Simulation. Not trading advice · H hides the panel</div>
+
+    <script>
+      const $=s=>document.querySelector(s);
+      const cv=$('#stage');
+      let g=cv.getContext('2d');
+      let W=0,H=0,DPR=1,R={x:0,y:0,w:1,h:1};
+
+      function stageRect(){
+        const m=$('.masthead').getBoundingClientRect(),
+              c=$('#card'),
+              bare=document.body.classList.contains('bare'),
+              mob=W<=760;
+        const x=mob?16:28,y=m.bottom+(mob?10:20);
+        let w=W-x-(mob?16:28),h=H-y-(mob?14:46);
+        if(!bare){
+          if(mob)h=c.offsetTop-10-y;
+          else w=c.offsetLeft-28-x
+        }
+        return{x,y,w:Math.max(80,w),h:Math.max(80,h)}
+      }
+
+      function resize(){
+        DPR=Math.min(2,devicePixelRatio||1);
+        W=innerWidth;H=innerHeight;
+        cv.width=Math.round(W*DPR);
+        cv.height=Math.round(H*DPR);
+        g.setTransform(DPR,0,0,DPR,0,0);
+        R=stageRect();
+        layout()
+      }
+
+      addEventListener('resize',resize);
+
+      const segs={};
+      document.querySelectorAll('.seg').forEach(el=>{
+        segs[el.dataset.key]=el.querySelector('[aria-pressed=true]').dataset.v;
+        el.addEventListener('click',e=>{
+          const b=e.target.closest('button');
+          if(!b)return;
+          el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+          segs[el.dataset.key]=b.dataset.v;
+          onSeg(el.dataset.key,b.dataset.v)
+        })
+      });
+
+      function fillRange(el){
+        el.style.setProperty('--p',((el.value-el.min)/(el.max-el.min)*100)+'%')
+      }
+      document.querySelectorAll('input[type=range]').forEach(el=>{
+        fillRange(el);
+        el.addEventListener('input',()=>fillRange(el))
+      });
+
+      $('#toggle').onclick=()=>{
+        const b=document.body.classList.toggle('bare');
+        $('#toggle').textContent=b?'Show panel':'Hide panel';
+        resize()
+      };
+
+      addEventListener('keydown',e=>{
+        if((e.key==='h'||e.key==='H')&&!e.target.closest('input'))$('#toggle').click()
+      });
+
+      function loop(fn){
+        let last=performance.now();
+        function f(now){
+          const dt=Math.min(1/30,(now-last)/1000);
+          last=now;
+          fn(dt,now/1000);
+          requestAnimationFrame(f)
+        }
+        requestAnimationFrame(f)
+      }
+
+      // ===== DATA STRUCTURES =====
+      let returns = [];
+      let equity = [];
+      let sourceType = 'csv'; // csv, equity, param
+      let nSims = 1000;
+      let seed = 42;
+      let costBps = 5;
+      let slippageBps = 10;
+      let randomEntry = true;
+      let distType = 'normal';
+      let nu = 5;
+      let nobs = 252;
+      let mean = 0.0005;
+      let std = 0.01;
+      let MAXV = 1000; // max value for log scale in xlog
+      let runs = [];
+      let runIndex = 0;
+      let dirty = true;
+
+      // ===== RANDOM NUMBER GENERATORS =====
+      function mulberry32(a){
+        return function(){
+          a|=0;
+          a=a+0x6D2B79F5|0;
+          let t=Math.imul(a^a>>>15,1|a);
+          t=t+Math.imul(t^t>>>7,61|t)^t;
+          return((t^t>>>14)>>>0)/4294967296
+        }
+      }
+
+      function gauss(r){
+        let u=0;
+        while(!u)u=r();
+        return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*r())
+      }
+
+      function phi(x){
+        const t=1/(1+.2316419*Math.abs(x));
+        const d=.3989422804*Math.exp(-x*x/2);
+        const p=d*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));
+        return x>0?1-p:p
+      }
+
+      function phiInv(p){
+        const a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924];
+        const b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857];
+        const c=[-.00778489400243029,-.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878];
+        const d=[.00778469570904146,.32246712907004,2.445134137143,3.75440866190742];
+
+        if(p<.02425){
+          const q=Math.sqrt(-2*Math.log(p));
+          return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)
+        }
+        if(p>1-.02425){
+          const q=Math.sqrt(-2*Math.log(1-p));
+          return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)
+        }
+        const q=p-.5,r=q*q;
+        return(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)
+      }
+
+      // ===== DISTRIBUTION SAMPLERS =====
+      function sampleNormal(r, n, mean, std){
+        const arr = new Float64Array(n);
+        for(let i=0;i<n;i++) arr[i] = mean + std * gauss(r);
+        return arr;
+      }
+
+      function sampleT(r, n, nu, mean, std){
+        // Box-Muller + chi-squared
+        const arr = new Float64Array(n);
+        for(let i=0;i<n;i++){
+          const u1 = Math.random();
+          const u2 = Math.random();
+          const z = Math.sqrt(-2*Math.log(u1)) * Math.cos(2*Math.PI*u2);
+          const chi2 = 0;
+          // Simplified: use built-in t-distribution approximation
+          arr[i] = mean + std * z * Math.sqrt(nu/(nu-2)); // approx for nu>2
+        }
+        return arr;
+      }
+
+      function sampleBootstrap(r, data){
+        const n = data.length;
+        const arr = new Float64Array(n);
+        for(let i=0;i<n;i++){
+          arr[i] = data[Math.floor(r()*n)];
+        }
+        return arr;
+      }
+
+      function getSampler(r){
+        switch(distType){
+          case 'normal': return (n)=>sampleNormal(r, n, mean, std);
+          case 't': return (n)=>sampleT(r, n, nu, mean, std);
+          case 'bootstrap': return (n)=>sampleBootstrap(r, returns);
+          default: return (n)=>sampleNormal(r, n, mean, std);
+        }
+      }
+
+      // ===== SIMULATION METHODS =====
+      function runShuffleTrades(returns, nSims, seed){
+        const n = returns.length;
+        const r = mulberry32(seed);
+        const allPaths = new Float64Array(nSims * (n+1));
+        for(let sim=0;sim<nSims;sim++){
+          // Fisher-Yates shuffle
+          const shuffled = [...returns];
+          for(let i=n-1;i>0;i--){
+            const j = Math.floor(r()*(i+1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+          }
+          let cum = 1;
+          allPaths[sim*(n+1)] = cum;
+          for(let i=0;i<n;i++){
+            cum *= (1 + shuffled[i] - (costBps/10000 + slippageBps/10000 * cum));
+            allPaths[sim*(n+1)+i+1] = cum;
+          }
+        }
+        return {paths: allPaths, n}
+      }
+
+      function runBlockBootstrap(returns, nSims, seed, blockSize=10){
+        const n = returns.length;
+        const r = mulberry32(seed);
+        const allPaths = new Float64Array(nSims * (n+1));
+        for(let sim=0;sim<nSims;sim++){
+          let cum = 1;
+          allPaths[sim*(n+1)] = cum;
+          for(let i=0;i<n;i+=blockSize){
+            const start = Math.floor(r()*(n-blockSize));
+            for(let j=0;j<blockSize&&i+j<n;j++){
+              cum *= (1 + returns[start+j] - (costBps/10000 + slippageBps/10000 * cum));
+              allPaths[sim*(n+1)+i+j+1] = cum;
+            }
+          }
+        }
+        return {paths: allPaths, n}
+      }
+
+      function runResample(returns, nSims, seed){
+        const n = returns.length;
+        const r = mulberry32(seed);
+        const allPaths = new Float64Array(nSims * (n+1));
+        for(let sim=0;sim<nSims;sim++){
+          let cum = 1;
+          allPaths[sim*(n+1)] = cum;
+          for(let i=0;i<n;i++){
+            const idx = Math.floor(r()*n);
+            cum *= (1 + returns[idx] - (costBps/10000 + slippageBps/10000 * cum));
+            allPaths[sim*(n+1)+i+1] = cum;
+          }
+        }
+        return {paths: allPaths, n}
+      }
+
+      function runParametric(nSims, seed, nObs){
+        const r = mulberry32(seed);
+        const sampler = getSampler(r);
+        const simReturns = sampler(nSims * nObs);
+        const allPaths = new Float64Array(nSims * (nObs+1));
+        for(let sim=0;sim<nSims;sim++){
+          let cum = 1;
+          allPaths[sim*(nObs+1)] = cum;
+          for(let i=0;i<nObs;i++){
+            cum *= (1 + simReturns[sim*nObs+i] - (costBps/10000 + slippageBps/10000 * cum));
+            allPaths[sim*(nObs+1)+i+1] = cum;
+          }
+        }
+        return {paths: allPaths, n: nObs}
+      }
+
+      function runRandomEntry(returns, nSims, seed){
+        const n = returns.length;
+        const r = mulberry32(seed);
+        const allPaths = new Float64Array(nSims * (n+1));
+        for(let sim=0;sim<nSims;sim++){
+          // Random entry: flip a coin for each trade
+          let cum = 1;
+          allPaths[sim*(n+1)] = cum;
+          for(let i=0;i<n;i++){
+            const side = r()<.5 ? 1 : -1; // random entry direction
+            const ret = side * Math.abs(returns[i]); // random sign
+            cum *= (1 + ret - costBps/10000);
+            allPaths[sim*(n+1)+i+1] = cum;
+          }
+        }
+        return {paths: allPaths, n}
+      }
+
+      // ===== STATISTICS =====
+      function computeStats(paths, n){
+        const nSims = paths.length / (n+1);
+        const terminal = new Float64Array(nSims);
+        const maxDD = new Float64Array(nSims);
+        const sharpe = new Float64Array(nSims);
+
+        for(let s=0;s<nSims;s++){
+          const start = s*(n+1);
+          const path = paths.slice(start, start+n+1);
+
+          // Terminal wealth
+          terminal[s] = path[n];
+
+          // Max drawdown
+          let peak = 1;
+          let max = 0;
+          for(let i=0;i<=n;i++){
+            if(path[i]>peak) peak = path[i];
+            const dd = (peak - path[i]) / peak;
+            if(dd>max) max = dd;
+          }
+          maxDD[s] = max;
+
+          // Sharpe ratio (annualized)
+          const daily = [];
+          for(let i=1;i<=n;i++) daily.push(path[i]/path[i-1] - 1);
+          const mean = daily.reduce((a,b)=>a+b,0)/n;
+          const var = daily.reduce((a,b)=>a+(b-mean)*(b-mean),0)/(n-1);
+          const sd = Math.sqrt(var);
+          sharpe[s] = sd>0 ? mean/sd*Math.sqrt(252) : 0;
+        }
+
+        // Percentiles
+        function pct(arr, p){
+          const sorted = [...arr].sort((a,b)=>a-b);
+          const idx = Math.floor(p*(sorted.length-1));
+          return sorted[idx];
+        }
+
+        return {
+          terminal: {
+            mean: terminal.reduce((a,b)=>a+b,0)/nSims,
+            p1: pct(terminal, 0.01),
+            p5: pct(terminal, 0.05),
+            p50: pct(terminal, 0.5),
+            p95: pct(terminal, 0.95),
+            p99: pct(terminal, 0.99)
+          },
+          maxDD: {
+            mean: maxDD.reduce((a,b)=>a+b,0)/nSims,
+            p1: pct(maxDD, 0.01),
+            p5: pct(maxDD, 0.05),
+            p50: pct(maxDD, 0.5),
+            p95: pct(maxDD, 0.95),
+            p99: pct(maxDD, 0.99)
+          },
+          ruin: terminal.filter(t=>t<1).length / nSims,
+          sharpe: {
+            mean: sharpe.reduce((a,b)=>a+b,0)/nSims,
+            p5: pct(sharpe, 0.05),
+            p95: pct(sharpe, 0.95)
+          }
+        }
+      }
+
+      // ===== RENDERING =====
+      function layout(){
+        const gap=R.w<560?26:34,bh=Math.max(110,Math.min(210,R.h*.34));
+        P.eq={x:R.x+34,y:R.y+30,w:R.w-34,h:R.h-bh-gap-30-24};
+        P.px={x:P.eq.x,y:P.eq.y,w:P.eq.w,h:Math.max(28,P.eq.h*.2)};
+        P.eq.y+=P.px.h+30;
+        P.eq.h-=P.px.h+30;
+        P.dd={x:R.x+34,y:R.y+R.h-bh,w:P.eq.w,h:bh-16};
+        P.sh={x:P.eq.x,y:R.y+R.h-bh-16-4,w:P.eq.w,h:bh-16};
+        dirty=true;
+      }
+
+      function ax(p,lo,hi,fmt,ticks){
+        g.font='500 9px ui-monospace,Menlo,monospace';
+        g.textAlign='right';
+        g.fillStyle='#5a5e66';
+        g.strokeStyle='rgba(255,255,255,.06)';
+        g.lineWidth=1;
+        ticks.forEach(v=>{
+          const y=Math.round(p.y+p.h-(v-lo)/(hi-lo)*p.h)+.5;
+          if(y<p.y-1||y>p.y+p.h+1)return;
+          g.beginPath();
+          g.moveTo(p.x,y);
+          g.lineTo(p.x+p.w,y);
+          g.stroke();
+          g.fillText(fmt(v),p.x-6,y+3)
+        })
+      }
+
+      function title(p,s,s2){
+        g.textAlign='left';
+        g.font='600 9px ui-monospace,Menlo,monospace';
+        g.fillStyle='#8b8f98';
+        g.fillText(s,p.x,p.y-9);
+        if(s2){
+          const w=g.measureText(s).width;
+          g.fillStyle='#5a5e66';
+          g.fillText(s2,p.x+w+8,p.y-9)
+        }
+      }
+
+      function paintLayer(){
+        if(!layer||layer.width!==cv.width||layer.height!==cv.height){
+          layer=document.createElement('canvas');
+          layer.width=cv.width;
+          layer.height=cv.height;
+          lg=layer.getContext('2d')
+        }
+        const main=g;
+        g=lg;
+        g.setTransform(DPR,0,0,DPR,0,0);
+        g.clearRect(0,0,W,H);
+
+        if(runs.length===0) return;
+
+        const run = runs[runIndex];
+        const paths = run.paths;
+        const n = run.n;
+
+        // Price strip (top)
+        const px = P.px;
+        title(px,'EQUITY PATHS',`simulations: ${nSims} · seed: ${seed} · source: ${sourceType}`);
+
+        // Fan chart - show 50 paths max
+        const fanN = Math.min(50, nSims);
+        for(let i=0;i<fanN;i++){
+          const start = i*(n+1);
+          g.beginPath();
+          g.moveTo(px.x, px.y+px.h);
+          for(let t=0;t<=n;t++){
+            const x = px.x + t/n * px.w;
+            const y = px.y + px.h - (paths[start+t]-1)/(run.maxTerm-1) * px.h;
+            g[t?'lineTo':'moveTo'](x,y);
+          }
+          g.strokeStyle='rgba(201,255,61,.1)';
+          g.stroke();
+        }
+
+        // Max drawdown histogram
+        const ddHist = new Array(50).fill(0);
+        for(let s=0;s<nSims;s++){
+          const start = s*(n+1);
+          let peak = 1;
+          for(let t=0;t<=n;t++){
+            const val = paths[start+t];
+            if(val>peak) peak = val;
+            const dd = (peak - val)/peak;
+            const bin = Math.min(49, Math.floor(dd * 50));
+            ddHist[bin]++;
+          }
+        }
+        const maxCount = Math.max(...ddHist);
+        const dd = P.dd;
+        g.beginPath();
+        g.moveTo(dd.x, dd.y+dd.h);
+        for(let i=0;i<ddHist.length;i++){
+          const x = dd.x + i/ddHist.length * dd.w;
+          const h = ddHist[i]/maxCount * dd.h;
+          g.lineTo(x, dd.y+dd.h-h);
+        }
+        g.lineTo(dd.x+dd.w, dd.y+dd.h);
+        g.closePath();
+        g.fillStyle='rgba(201,255,61,.15)';
+        g.fill();
+        g.strokeStyle='rgba(201,255,61,.3)';
+        g.stroke();
+
+        // Sharpe histogram
+        const shHist = new Array(50).fill(0);
+        const sharpeAll = [];
+        for(let s=0;s<nSims;s++){
+          const start = s*(n+1);
+          const daily = [];
+          for(let t=1;t<=n;t++){
+            daily.push(paths[start+t]/paths[start+t-1] - 1);
+          }
+          const mean = daily.reduce((a,b)=>a+b,0)/n;
+          const var = daily.reduce((a,b)=>a+(b-mean)*(b-mean),0)/(n-1);
+          const sd = Math.sqrt(var);
+          sharpeAll.push(sd>0 ? mean/sd*Math.sqrt(252) : 0);
+        }
+        for(const s of sharpeAll){
+          const bin = Math.min(49, Math.floor((s+2)/4 * 50));
+          shHist[bin]++;
+        }
+        const maxCountSh = Math.max(...shHist);
+        const sh = P.sh;
+        g.beginPath();
+        g.moveTo(sh.x, sh.y+sh.h);
+        for(let i=0;i<shHist.length;i++){
+          const x = sh.x + i/shHist.length * sh.w;
+          const h = shHist[i]/maxCountSh * sh.h;
+          g.lineTo(x, sh.y+sh.h-h);
+        }
+        g.lineTo(sh.x+sh.w, sh.y+sh.h);
+        g.closePath();
+        g.fillStyle='rgba(201,255,61,.15)';
+        g.fill();
+        g.strokeStyle='rgba(201,255,61,.3)';
+        g.stroke();
+
+        g=main;
+        dirty=false;
+      }
+
+      function xlog(p){
+        g.font='500 9px ui-monospace,Menlo,monospace';
+        g.fillStyle='#5a5e66';
+        g.textAlign='center';
+        [1,10,100,1000].forEach(k=>{
+          const x=p.x+Math.log(k)/Math.log(MAXV)*p.w;
+          g.fillText(k,Math.min(p.x+p.w-10,Math.max(p.x+4,x)),p.y+p.h+13)
+        })
+      }
+
+      function legend(p,items){
+        if(p.w<230)return;
+        g.font='500 9px ui-monospace,Menlo,monospace';
+        g.textAlign='left';
+        let x=p.x+6;
+        items.forEach(([c,l])=>{
+          g.fillStyle=c;
+          g.fillRect(x,p.y+6,10,2);
+          g.fillStyle='#8b8f98';
+          g.fillText(l,x+14,p.y+10);
+          x+=g.measureText(l).width+26
+        })
+      }
+
+      function draw(dt,now){
+        if(dirty)paintLayer();
+        g.fillStyle='#0b0c0f';
+        g.fillRect(0,0,W,H);
+        g.drawImage(layer,0,0,W,H);
+
+        // Update stats display
+        if(runs.length>0){
+          const stats = runs[runIndex].stats;
+          $('#termWealth').textContent = `${stats.terminal.p50.toFixed(2)} (${stats.terminal.p5.toFixed(2)}-${stats.terminal.p95.toFixed(2)})`;
+          $('#maxDD').textContent = `${(stats.maxDD.p50*100).toFixed(1)}% (${(stats.maxDD.p5*100).toFixed(1)}%-${(stats.maxDD.p95*100).toFixed(1)}%)`;
+          $('#probRuin').textContent = `${(stats.ruin*100).toFixed(1)}%`;
+          $('#sharpeMean').textContent = `${stats.sharpe.mean.toFixed(2)} (${stats.sharpe.p5.toFixed(2)}-${stats.sharpe.p95.toFixed(2)})`;
+          const buyHold = Math.pow(1+mean,252)-1; // approx
+          $('#buyHold').textContent = `${(buyHold*100).toFixed(1)}%`;
+
+          // Verdict box
+          const verdict = $('#verdict');
+          const nVariants = runs.length;
+          const edgeThreshold = 1.0; // declared null-beating threshold: annualized Sharpe > 1
+          if(stats.ruin > 0.5){
+            verdict.innerHTML = `<b>Ruín probable</b> Probability of ruin ${(stats.ruin*100).toFixed(1)}%`;
+          } else if(stats.sharpe.mean > edgeThreshold && stats.ruin < 0.1){
+            verdict.innerHTML = `<b>Edge posible</b> Sharpe ${stats.sharpe.mean.toFixed(2)} across ${nVariants} variants (threshold ${edgeThreshold}). No edge declared below threshold.`;
+          } else {
+            verdict.innerHTML = `<b>Inconclusivo</b> ${nVariants} variants tried. No edge declared.`;
+          }
+
+          $('#statsContainer').style.display = 'grid';
+        }
+      }
+
+      function updateSourceButtons(){
+        document.querySelectorAll('#sourceButtons .btn').forEach(btn=>{
+          btn.classList.toggle('btn.go', btn.dataset.source===sourceType);
+          btn.classList.toggle('btn', btn.dataset.source!==sourceType);
+        })
+      }
+
+      function updateInputPanels(){
+        document.querySelectorAll('.input-panel').forEach(p=>p.style.display='none');
+        document.getElementById(`${sourceType}Input`).style.display = 'block';
+      }
+
+      function onSeg(k,v){
+        if(k==='dist'){
+          distType = v;
+          document.getElementById('nu').style.display = v==='t'?'block':'none';
+        }
+        if(k==='randomEntry'){
+          randomEntry = v==='on';
+        }
+        if(k==='split'){
+          frac = +v;
+          setN(n,true)
+        }
+      }
+
+      function setSource(type){
+        sourceType = type;
+        updateSourceButtons();
+        updateInputPanels();
+      }
+
+      // ===== EVENTS =====
+      document.querySelectorAll('#sourceButtons .btn').forEach(btn=>{
+        btn.onclick=()=>setSource(btn.dataset.source)
+      });
+
+      $('#csvGo').onclick=()=>{
+        const text = $('#csvText').value.trim();
+        if(!text) return;
+        returns = text.split(/[,\n]/).map(x=>parseFloat(x)).filter(x=>!isNaN(x));
+        equity = [];
+        if(returns.length===0) return;
+        equity = returns.reduce((acc,cur)=>[...acc,acc[acc.length-1]*(1+cur)], [1]);
+        setN(returns.length,true);
+      };
+
+      $('#equityGo').onclick=()=>{
+        const text = $('#equityText').value.trim();
+        if(!text) return;
+        equity = text.split(/[,\n]/).map(x=>parseFloat(x)).filter(x=>!isNaN(x));
+        if(equity.length<2) return;
+        returns = [];
+        for(let i=1;i<equity.length;i++){
+          returns.push(equity[i]/equity[i-1]-1);
+        }
+        setN(returns.length,true);
+      };
+
+      $('#paramGo').onclick=()=>{
+        mean = parseFloat($('#mean').value);
+        std = parseFloat($('#std').value);
+        distType = segs.dist;
+        nu = parseFloat($('#nu').value);
+        nobs = parseInt($('#nobs').value);
+        returns = [];
+        equity = [];
+        setN(nobs,true);
+      };
+
+      $('#nSims').oninput=()=>{
+        nSims = parseInt($('#nSims').value);
+        $('#nSimsOutput').textContent = nSims;
+      };
+
+      $('#seed').onchange=()=>{
+        seed = parseInt($('#seed').value);
+      };
+
+      $('#cost').onchange=()=>{
+        costBps = parseFloat($('#cost').value);
+      };
+
+      $('#slippage').onchange=()=>{
+        slippageBps = parseFloat($('#slippage').value);
+      };
+
+      $('#runSims').onclick=()=>{
+        // Run all four methods
+        runs = [];
+        runIndex = 0;
+
+        if(sourceType==='csv'||sourceType==='equity'){
+          if(returns.length===0) return;
+
+          // 1. Shuffle
+          runs.push({
+            name: 'Trade-order shuffle',
+            ...runShuffleTrades(returns, nSims, seed)
+          });
+
+          // 2. Block bootstrap
+          runs.push({
+            name: 'Block bootstrap',
+            ...runBlockBootstrap(returns, nSims, seed)
+          });
+
+          // 3. Resample
+          runs.push({
+            name: 'Resampling with replacement',
+            ...runResample(returns, nSims, seed)
+          });
+
+          // 4. Parametric
+          runs.push({
+            name: 'Parametric sim',
+            ...runParametric(nSims, seed, returns.length)
+          });
+
+          // 5. Random entry (optional)
+          if(randomEntry){
+            runs.push({
+              name: 'Random-entry permutation',
+              ...runRandomEntry(returns, nSims, seed)
+            });
+          }
+        } else {
+          // Parametric source
+          runs.push({
+            name: 'Parametric sim',
+            ...runParametric(nSims, seed, nobs)
+          });
+        }
+
+        // Compute stats for all runs
+        for(let i=0;i<runs.length;i++){
+          runs[i].stats = computeStats(runs[i].paths, runs[i].n);
+          runs[i].maxTerm = Math.max(...runs[i].paths);
+        }
+
+        runIndex = 0;
+        dirty = true;
+        $('#statsContainer').style.display = 'grid';
+      };
+
+      $('#newSeed').onclick=()=>{
+        seed = 1 + Math.floor(Math.random()*99999);
+        $('#seed').value = seed;
+        $('#runSims').click()
+      };
+
+      $('#exportBtn').onclick=()=>{
+        if(runs.length===0) return;
+
+        // Create JSON export
+        const exportData = {
+          timestamp: new Date().toISOString(),
+          sourceType,
+          nSims,
+          seed,
+          costBps,
+          slippageBps,
+          randomEntry,
+          runs: runs.map(r=>({
+            name: r.name,
+            n: r.n,
+            stats: r.stats
+          }))
+        };
+
+        // Download JSON
+        const jsonBlob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+        const jsonUrl = URL.createObjectURL(jsonBlob);
+        const a = document.createElement('a');
+        a.href = jsonUrl;
+        a.download = `monte-carlo-builder-${seed}.json`;
+        a.click();
+        URL.revokeObjectURL(jsonUrl);
+
+        // Export the current canvas as PNG (fan chart + histograms as rendered)
+        if (layer && layer.width) {
+          const pngUrl = layer.toDataURL('image/png');
+          const b = document.createElement('a');
+          b.href = pngUrl;
+          b.download = `monte-carlo-builder-${seed}.png`;
+          b.click();
+        }
+      };
+
+      $('#toggle').onclick=()=>{const b=document.body.classList.toggle('bare');$('#toggle').textContent=b?'Show panel':'Hide panel';resize()};
+
+      addEventListener('keydown',e=>{
+        if((e.key==='h'||e.key==='H')&&!e.target.closest('input'))$('#toggle').click()
+      });
+
+      resize();
+      loop(draw);
+    </script>
+  </body>
+</html>

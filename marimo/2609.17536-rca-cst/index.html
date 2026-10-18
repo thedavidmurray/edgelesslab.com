@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>2609.17536-rca-cst</title>
+    <script type="module" crossorigin src="./assets/index-Gv23EHlE.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-TXkS1QI3.js">
+    <link rel="modulepreload" crossorigin href="./assets/objects-BlG0ZrO0.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-Blw4afVn.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-C0195JsF.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-DOVIEEPN.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-i2ImZxgc.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-BUCH2FMc.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-Dun7Qe4B.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-B7U4xkIN.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-XrBBnd7s.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-DYvqRARy.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-B92a4ePY.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-DDGiD1NW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-CTDqNQr6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CCi6aOPm.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BLN8PNJV.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-w-Qo9n0R.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-rzLRd0j9.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-C-Eq0ag8.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-BP75_5jJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-4bZlU7jl.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BwJoaaDM.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-CkiqGLcK.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BWBBpCkT.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-CDyU_g2F.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-BmukRjSi.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-D2igisxY.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-B-Q7J_6d.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-ImXS-885.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-C8EV1PoE.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-9-v2bhoi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-lLOBhc-1.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-CbdaHKzX.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-Bxv9B31g.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DbOq36rN.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings--BknHX9C.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CGKw_kwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-DoEg0XwL.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-DGx5Af-C.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-BKO-pHK6.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-12S8I4CH.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DYEuVkEX.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CiVShZKM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BJZAIIze.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-aRc_dRed.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnjsPBRJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DcwTQG1A.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CPjTeT8p.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DI1-Z60I.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-FMMSUPAS.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-Ct2FT81-.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-CWmnYhGI.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-D5tzp-Y6.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-CKO8g4BU.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-BNL5rxQw.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-CJLUCcQg.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-C5HnBH5U.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-WiYBwhUO.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-Bb8Lz8ko.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-BCVepWLJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-JDKr83KO.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-rmawRqQP.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-BUSmWJKC.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-BFPaAUK_.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-4-Qvf4uR.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-5hBv4sjD.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-JxFwu-3G.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-fY-ZfT0b.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-CWQ4BYr-.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BJVx3eBW.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-jlwhGxSb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-BS_NcSch.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-dHmZR8bI.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-wcQA1Np1.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-DZ4glj3f.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-Bxb1_Gtw.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-3iHFdt22.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-neDQUo4Q.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-C1rWkDWe.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-DbljozeY.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-Rxc-B11B.js">
+    <link rel="modulepreload" crossorigin href="./assets/hat-glasses-BttHlyvs.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-Bxz_8e44.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DUCpRFlS.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-Cu5WMawt.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-DzTD8LVq.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-BOZA7gbn.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-CYq4mK5a.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-BiQ4VzX-.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-D-V4psAa.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CN9yTa5s.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-B6HBbAwF.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-Bg5iAViP.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-A-Ant1Ad.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-Dx_STMJD.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-CYQpNADu.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-CzJx-MnJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-Dqxie4gq.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-BsxD35VE.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-Bcz1Zikb.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-PgHhDa-M.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-DwYUg-o4.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-CH2plyy9.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-j6fR_dBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-BSxEOIn2.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-DzmLpc9A.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-CCTAhdFi.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-CjNeNXDB.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-D7naiWNs.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-C2LWzsCZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-B9D0JO9U.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-lG8j6oqk.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-rtpVEy3J.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-D4GMDkIf.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-WiCgGm__.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-D-tcnZC7.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-C_B8Ux9M.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BOlXZUla.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-dL5J5ZsZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-AgXtozBz.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-72W0TZ3L.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-Z-MD3n3J.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-D2UI9WX5.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-iDRxid4h.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-DNNRTPQJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-C7opZZRp.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-DREOGG_c.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-CIPE8AIY.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-CcU5wNVj.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-DBlzcHYf.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-OVajJBPR.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-CboCOq4o.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-B30N1GS0.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-CYfbPYQ0.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-DAu6VO6j.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-CJH9JNGH.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-5XI2VU-q.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-CODNoWOy.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-90X9nql5.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-852X_cqy.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-BNTWOaI9.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-CsGOoEZv.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CqjrpwRC.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-W6ZZMHnc.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DtCcemo9.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-sLaKP2vj.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-BYlqbYKI.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-Bl8_FVn8.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-CFj86iac.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-CSMoa-ga.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-jdbI9Q8O.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-C-Nli4KG.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-hLJmVjNJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-icFgkNy9.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-C638SUfx.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-gYgfF8y5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-aSiY8T7C.js">
+    <link rel="modulepreload" crossorigin href="./assets/globe-Dwo3iXzC.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DS0r7dNZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DFICx2Qv.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-BL4YVsPy.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-D0TWQ6iT.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-8Nlyq3mV.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.11\"\n# dependencies = [\"marimo==0.23.16\"]\n# ///\n\"\"\"Explore reported component ablations from RCA-CST (arXiv:2609.17536).\"\"\"\n\nimport marimo\n\n__generated_with = \"0.23.16\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell\ndef _():\n    import marimo as mo\n\n    metrics = (\"PAR\", \"SPA\", \"EVS\", \"CCR\", \"GCF\")\n    labels = (\n        \"Full RCA\",\n        \"No state estimation\",\n        \"No strategic pivot\",\n        \"No content planning\",\n        \"No safety reward\",\n        \"No strategy reward\",\n        \"No empathy reward\",\n    )\n    return labels, metrics, mo\n\n\n@app.cell\ndef _(mo):\n    scenario = mo.ui.slider(\n        start=0,\n        stop=6,\n        step=1,\n        value=0,\n        label=\"Ablation scenario (0 = full RCA, 1\u20136 = component removed)\",\n        show_value=True,\n    )\n    mo.vstack(\n        [\n            mo.md(\n                \"\"\"\n                # What breaks when RCA loses one component?\n\n                The paper's **Reflective Cognitive Alignment (RCA)** combines a\n                protocol-constrained planning chain with inference-time value alignment.\n                Move the control to inspect its reported fine-grained ablations across two\n                LLM judges. This is a visualization of **paper-reported scores**, not a\n                clinical tool or an independent reproduction.\n                \"\"\"\n            ),\n            scenario,\n        ],\n        gap=1,\n    )\n    return (scenario,)\n\n\n@app.cell\ndef _(labels, metrics, mo, scenario):\n    # Table 5, arXiv:2609.17536v1. Rows are: DeepSeek-v3.2 judge, GLM-4.7 judge.\n    deepseek = (\n        (8.03, 8.22, 8.43, 8.11, 8.30),\n        (8.00, 8.00, 8.44, 7.94, 8.08),\n        (8.09, 8.09, 8.52, 8.04, 8.30),\n        (7.83, 7.79, 8.21, 7.97, 8.16),\n        (8.01, 8.19, 8.49, 8.08, 8.02),\n        (7.98, 8.01, 8.45, 8.05, 8.46),\n        (8.16, 8.41, 8.50, 8.36, 8.30),\n    )\n    glm = (\n        (8.24, 7.89, 8.50, 8.64, 7.96),\n        (8.04, 7.83, 8.40, 8.29, 8.19),\n        (8.05, 7.66, 8.49, 8.54, 8.20),\n        (7.80, 7.51, 8.33, 8.25, 8.29),\n        (8.03, 7.94, 8.44, 8.33, 7.86),\n        (7.97, 7.92, 8.41, 8.56, 8.15),\n        (8.12, 7.94, 8.41, 8.39, 7.82),\n    )\n    _idx = scenario.value\n    selected_ds = deepseek[_idx]\n    selected_glm = glm[_idx]\n    full_average = (sum(deepseek[0]) + sum(glm[0])) / 10\n    selected_average = (sum(selected_ds) + sum(selected_glm)) / 10\n    delta = selected_average - full_average\n    direction = \"gain\" if delta \u003E 0 else \"loss\" if delta \u003C 0 else \"baseline\"\n\n    left, top, width, height = 70, 24, 610, 250\n    y_min, y_max = 7.4, 8.7\n    x_step = width / 4\n    points_ds = \" \".join(\n        f\"{left + i*x_step:.1f},{top + (y_max-v)/(y_max-y_min)*height:.1f}\"\n        for i, v in enumerate(selected_ds)\n    )\n    points_glm = \" \".join(\n        f\"{left + i*x_step:.1f},{top + (y_max-v)/(y_max-y_min)*height:.1f}\"\n        for i, v in enumerate(selected_glm)\n    )\n    grid = \"\".join(\n        f'\u003Cline x1=\"{left}\" y1=\"{top + j*height/4:.1f}\" x2=\"{left+width}\" '\n        f'y2=\"{top + j*height/4:.1f}\" stroke=\"#d8dee9\" stroke-width=\"1\"/\u003E'\n        for j in range(5)\n    )\n    x_labels = \"\".join(\n        f'\u003Ctext x=\"{left+i*x_step:.1f}\" y=\"302\" text-anchor=\"middle\" '\n        f'font-size=\"13\" fill=\"#334155\"\u003E{metric}\u003C/text\u003E'\n        for i, metric in enumerate(metrics)\n    )\n    chart = f\"\"\"\n    \u003Csvg data-chart=\"rca-ablation\" data-marker=\"scenario-{_idx}\" viewBox=\"0 0 750 340\"\n         role=\"img\" aria-label=\"Reported metric scores for {labels[_idx]}\"\n         style=\"width:100%;max-width:750px;height:auto;background:#fbfcfe;border-radius:12px\"\u003E\n      {grid}\n      \u003Ctext x=\"18\" y=\"30\" font-size=\"12\" fill=\"#64748b\"\u003E8.7\u003C/text\u003E\n      \u003Ctext x=\"18\" y=\"278\" font-size=\"12\" fill=\"#64748b\"\u003E7.4\u003C/text\u003E\n      \u003Cpolyline points=\"{points_ds}\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"4\"/\u003E\n      \u003Cpolyline points=\"{points_glm}\" fill=\"none\" stroke=\"#0891b2\" stroke-width=\"4\"/\u003E\n      {''.join(f'\u003Ccircle cx=\"{left+i*x_step:.1f}\" cy=\"{top+(y_max-v)/(y_max-y_min)*height:.1f}\" r=\"5\" fill=\"#7c3aed\"/\u003E' for i,v in enumerate(selected_ds))}\n      {''.join(f'\u003Ccircle cx=\"{left+i*x_step:.1f}\" cy=\"{top+(y_max-v)/(y_max-y_min)*height:.1f}\" r=\"5\" fill=\"#0891b2\"/\u003E' for i,v in enumerate(selected_glm))}\n      {x_labels}\n      \u003Cline x1=\"488\" y1=\"324\" x2=\"518\" y2=\"324\" stroke=\"#7c3aed\" stroke-width=\"4\"/\u003E\n      \u003Ctext x=\"526\" y=\"329\" font-size=\"12\"\u003EDeepSeek judge\u003C/text\u003E\n      \u003Cline x1=\"620\" y1=\"324\" x2=\"650\" y2=\"324\" stroke=\"#0891b2\" stroke-width=\"4\"/\u003E\n      \u003Ctext x=\"658\" y=\"329\" font-size=\"12\"\u003EGLM judge\u003C/text\u003E\n    \u003C/svg\u003E\n    \"\"\"\n\n    heading = f\"Operating point: {labels[_idx]} / mean {selected_average:.3f} / {direction} {abs(delta):.3f} vs full\"\n    takeaway = (\n        \"Across both judges and these five reported metrics, removing content planning has the largest mean loss.\"\n        if _idx == 3\n        else \"A positive mean does not imply broad improvement: inspect each metric and both judges.\"\n        if delta \u003E 0\n        else \"The aggregate is only a reading aid; metric-level and judge-level differences still matter.\"\n    )\n    mo.vstack([mo.md(f\"## {heading}\\n\\n{takeaway}\"), mo.Html(chart)], gap=1)\n    return deepseek, glm\n\n\n@app.cell\ndef _(deepseek, glm, labels, metrics, mo, scenario):\n    _idx = scenario.value\n    rows = [\n        {\n            \"Metric\": metric,\n            \"DeepSeek-v3.2 judge\": deepseek[_idx][i],\n            \"GLM-4.7 judge\": glm[_idx][i],\n            \"\u0394 vs full (DS)\": round(deepseek[_idx][i] - deepseek[0][i], 2),\n            \"\u0394 vs full (GLM)\": round(glm[_idx][i] - glm[0][i], 2),\n        }\n        for i, metric in enumerate(metrics)\n    ]\n    mo.vstack(\n        [\n            mo.md(f\"### Reported values \u2014 {labels[_idx]}\"),\n            mo.ui.table(rows, pagination=False),\n            mo.callout(\n                mo.md(\n                    \"\"\"\n                    **Read carefully.** Values are copied from Table 5 of the paper's\n                    fine-grained ablation. They are LLM-judge evaluation scores over the\n                    authors' generated dialogue setting. The demo does not run a language\n                    model, regenerate dialogue, validate care outcomes, or establish\n                    deployment safety.\n                    \"\"\"\n                ),\n                kind=\"warn\",\n            ),\n        ],\n        gap=1,\n    )\n    return\n\n\n@app.cell\ndef _(mo):\n    mo.md(\"\"\"\n    ### Metric key and provenance\n\n    - **PAR:** principle-adherence rate; **SPA:** strategy-principle alignment;\n      **EVS:** emotional validation score; **CCR:** cognitive consistency rate;\n      **GCF:** group coordination/facilitation.\n    - Source: Jiang et al., *Think Before You Comfort*,\n      [arXiv:2609.17536v1](https://arxiv.org/abs/2609.17536), Table 5.\n    - The authors evaluated 50 seeded synthetic sessions and describe two LLM judges.\n      This visualization averages ten displayed cells only as a compact comparison;\n      that average is analyst-authored and is not a paper metric.\n    - Research code: [jiangjyjy/RCA_Agent](https://github.com/jiangjyjy/RCA_Agent).\n      No repository license file was found during bundle preparation, so code/data\n      reuse rights should be confirmed with the authors.\n    \"\"\")\n    return\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden="">%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.11%22%0A%23%20dependencies%20%3D%20%5B%22marimo%3D%3D0.23.16%22%5D%0A%23%20%2F%2F%2F%0A%22%22%22Explore%20reported%20component%20ablations%20from%20RCA-CST%20(arXiv%3A2609.17536).%22%22%22%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.16%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%0A%20%20%20%20metrics%20%3D%20(%22PAR%22%2C%20%22SPA%22%2C%20%22EVS%22%2C%20%22CCR%22%2C%20%22GCF%22)%0A%20%20%20%20labels%20%3D%20(%0A%20%20%20%20%20%20%20%20%22Full%20RCA%22%2C%0A%20%20%20%20%20%20%20%20%22No%20state%20estimation%22%2C%0A%20%20%20%20%20%20%20%20%22No%20strategic%20pivot%22%2C%0A%20%20%20%20%20%20%20%20%22No%20content%20planning%22%2C%0A%20%20%20%20%20%20%20%20%22No%20safety%20reward%22%2C%0A%20%20%20%20%20%20%20%20%22No%20strategy%20reward%22%2C%0A%20%20%20%20%20%20%20%20%22No%20empathy%20reward%22%2C%0A%20%20%20%20)%0A%20%20%20%20return%20labels%2C%20metrics%2C%20mo%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20scenario%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D0%2C%0A%20%20%20%20%20%20%20%20stop%3D6%2C%0A%20%20%20%20%20%20%20%20step%3D1%2C%0A%20%20%20%20%20%20%20%20value%3D0%2C%0A%20%20%20%20%20%20%20%20label%3D%22Ablation%20scenario%20(0%20%3D%20full%20RCA%2C%201%E2%80%936%20%3D%20component%20removed)%22%2C%0A%20%20%20%20%20%20%20%20show_value%3DTrue%2C%0A%20%20%20%20)%0A%20%20%20%20mo.vstack(%0A%20%20%20%20%20%20%20%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20What%20breaks%20when%20RCA%20loses%20one%20component%3F%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20The%20paper's%20**Reflective%20Cognitive%20Alignment%20(RCA)**%20combines%20a%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20protocol-constrained%20planning%20chain%20with%20inference-time%20value%20alignment.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Move%20the%20control%20to%20inspect%20its%20reported%20fine-grained%20ablations%20across%20two%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20LLM%20judges.%20This%20is%20a%20visualization%20of%20**paper-reported%20scores**%2C%20not%20a%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20clinical%20tool%20or%20an%20independent%20reproduction.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20scenario%2C%0A%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%20%20%20%20gap%3D1%2C%0A%20%20%20%20)%0A%20%20%20%20return%20(scenario%2C)%0A%0A%0A%40app.cell%0Adef%20_(labels%2C%20metrics%2C%20mo%2C%20scenario)%3A%0A%20%20%20%20%23%20Table%205%2C%20arXiv%3A2609.17536v1.%20Rows%20are%3A%20DeepSeek-v3.2%20judge%2C%20GLM-4.7%20judge.%0A%20%20%20%20deepseek%20%3D%20(%0A%20%20%20%20%20%20%20%20(8.03%2C%208.22%2C%208.43%2C%208.11%2C%208.30)%2C%0A%20%20%20%20%20%20%20%20(8.00%2C%208.00%2C%208.44%2C%207.94%2C%208.08)%2C%0A%20%20%20%20%20%20%20%20(8.09%2C%208.09%2C%208.52%2C%208.04%2C%208.30)%2C%0A%20%20%20%20%20%20%20%20(7.83%2C%207.79%2C%208.21%2C%207.97%2C%208.16)%2C%0A%20%20%20%20%20%20%20%20(8.01%2C%208.19%2C%208.49%2C%208.08%2C%208.02)%2C%0A%20%20%20%20%20%20%20%20(7.98%2C%208.01%2C%208.45%2C%208.05%2C%208.46)%2C%0A%20%20%20%20%20%20%20%20(8.16%2C%208.41%2C%208.50%2C%208.36%2C%208.30)%2C%0A%20%20%20%20)%0A%20%20%20%20glm%20%3D%20(%0A%20%20%20%20%20%20%20%20(8.24%2C%207.89%2C%208.50%2C%208.64%2C%207.96)%2C%0A%20%20%20%20%20%20%20%20(8.04%2C%207.83%2C%208.40%2C%208.29%2C%208.19)%2C%0A%20%20%20%20%20%20%20%20(8.05%2C%207.66%2C%208.49%2C%208.54%2C%208.20)%2C%0A%20%20%20%20%20%20%20%20(7.80%2C%207.51%2C%208.33%2C%208.25%2C%208.29)%2C%0A%20%20%20%20%20%20%20%20(8.03%2C%207.94%2C%208.44%2C%208.33%2C%207.86)%2C%0A%20%20%20%20%20%20%20%20(7.97%2C%207.92%2C%208.41%2C%208.56%2C%208.15)%2C%0A%20%20%20%20%20%20%20%20(8.12%2C%207.94%2C%208.41%2C%208.39%2C%207.82)%2C%0A%20%20%20%20)%0A%20%20%20%20_idx%20%3D%20scenario.value%0A%20%20%20%20selected_ds%20%3D%20deepseek%5B_idx%5D%0A%20%20%20%20selected_glm%20%3D%20glm%5B_idx%5D%0A%20%20%20%20full_average%20%3D%20(sum(deepseek%5B0%5D)%20%2B%20sum(glm%5B0%5D))%20%2F%2010%0A%20%20%20%20selected_average%20%3D%20(sum(selected_ds)%20%2B%20sum(selected_glm))%20%2F%2010%0A%20%20%20%20delta%20%3D%20selected_average%20-%20full_average%0A%20%20%20%20direction%20%3D%20%22gain%22%20if%20delta%20%3E%200%20else%20%22loss%22%20if%20delta%20%3C%200%20else%20%22baseline%22%0A%0A%20%20%20%20left%2C%20top%2C%20width%2C%20height%20%3D%2070%2C%2024%2C%20610%2C%20250%0A%20%20%20%20y_min%2C%20y_max%20%3D%207.4%2C%208.7%0A%20%20%20%20x_step%20%3D%20width%20%2F%204%0A%20%20%20%20points_ds%20%3D%20%22%20%22.join(%0A%20%20%20%20%20%20%20%20f%22%7Bleft%20%2B%20i*x_step%3A.1f%7D%2C%7Btop%20%2B%20(y_max-v)%2F(y_max-y_min)*height%3A.1f%7D%22%0A%20%20%20%20%20%20%20%20for%20i%2C%20v%20in%20enumerate(selected_ds)%0A%20%20%20%20)%0A%20%20%20%20points_glm%20%3D%20%22%20%22.join(%0A%20%20%20%20%20%20%20%20f%22%7Bleft%20%2B%20i*x_step%3A.1f%7D%2C%7Btop%20%2B%20(y_max-v)%2F(y_max-y_min)*height%3A.1f%7D%22%0A%20%20%20%20%20%20%20%20for%20i%2C%20v%20in%20enumerate(selected_glm)%0A%20%20%20%20)%0A%20%20%20%20grid%20%3D%20%22%22.join(%0A%20%20%20%20%20%20%20%20f'%3Cline%20x1%3D%22%7Bleft%7D%22%20y1%3D%22%7Btop%20%2B%20j*height%2F4%3A.1f%7D%22%20x2%3D%22%7Bleft%2Bwidth%7D%22%20'%0A%20%20%20%20%20%20%20%20f'y2%3D%22%7Btop%20%2B%20j*height%2F4%3A.1f%7D%22%20stroke%3D%22%23d8dee9%22%20stroke-width%3D%221%22%2F%3E'%0A%20%20%20%20%20%20%20%20for%20j%20in%20range(5)%0A%20%20%20%20)%0A%20%20%20%20x_labels%20%3D%20%22%22.join(%0A%20%20%20%20%20%20%20%20f'%3Ctext%20x%3D%22%7Bleft%2Bi*x_step%3A.1f%7D%22%20y%3D%22302%22%20text-anchor%3D%22middle%22%20'%0A%20%20%20%20%20%20%20%20f'font-size%3D%2213%22%20fill%3D%22%23334155%22%3E%7Bmetric%7D%3C%2Ftext%3E'%0A%20%20%20%20%20%20%20%20for%20i%2C%20metric%20in%20enumerate(metrics)%0A%20%20%20%20)%0A%20%20%20%20chart%20%3D%20f%22%22%22%0A%20%20%20%20%3Csvg%20data-chart%3D%22rca-ablation%22%20data-marker%3D%22scenario-%7B_idx%7D%22%20viewBox%3D%220%200%20750%20340%22%0A%20%20%20%20%20%20%20%20%20role%3D%22img%22%20aria-label%3D%22Reported%20metric%20scores%20for%20%7Blabels%5B_idx%5D%7D%22%0A%20%20%20%20%20%20%20%20%20style%3D%22width%3A100%25%3Bmax-width%3A750px%3Bheight%3Aauto%3Bbackground%3A%23fbfcfe%3Bborder-radius%3A12px%22%3E%0A%20%20%20%20%20%20%7Bgrid%7D%0A%20%20%20%20%20%20%3Ctext%20x%3D%2218%22%20y%3D%2230%22%20font-size%3D%2212%22%20fill%3D%22%2364748b%22%3E8.7%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%2218%22%20y%3D%22278%22%20font-size%3D%2212%22%20fill%3D%22%2364748b%22%3E7.4%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Cpolyline%20points%3D%22%7Bpoints_ds%7D%22%20fill%3D%22none%22%20stroke%3D%22%237c3aed%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%3Cpolyline%20points%3D%22%7Bpoints_glm%7D%22%20fill%3D%22none%22%20stroke%3D%22%230891b2%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%7B''.join(f'%3Ccircle%20cx%3D%22%7Bleft%2Bi*x_step%3A.1f%7D%22%20cy%3D%22%7Btop%2B(y_max-v)%2F(y_max-y_min)*height%3A.1f%7D%22%20r%3D%225%22%20fill%3D%22%237c3aed%22%2F%3E'%20for%20i%2Cv%20in%20enumerate(selected_ds))%7D%0A%20%20%20%20%20%20%7B''.join(f'%3Ccircle%20cx%3D%22%7Bleft%2Bi*x_step%3A.1f%7D%22%20cy%3D%22%7Btop%2B(y_max-v)%2F(y_max-y_min)*height%3A.1f%7D%22%20r%3D%225%22%20fill%3D%22%230891b2%22%2F%3E'%20for%20i%2Cv%20in%20enumerate(selected_glm))%7D%0A%20%20%20%20%20%20%7Bx_labels%7D%0A%20%20%20%20%20%20%3Cline%20x1%3D%22488%22%20y1%3D%22324%22%20x2%3D%22518%22%20y2%3D%22324%22%20stroke%3D%22%237c3aed%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22526%22%20y%3D%22329%22%20font-size%3D%2212%22%3EDeepSeek%20judge%3C%2Ftext%3E%0A%20%20%20%20%20%20%3Cline%20x1%3D%22620%22%20y1%3D%22324%22%20x2%3D%22650%22%20y2%3D%22324%22%20stroke%3D%22%230891b2%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%3Ctext%20x%3D%22658%22%20y%3D%22329%22%20font-size%3D%2212%22%3EGLM%20judge%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E%0A%20%20%20%20%22%22%22%0A%0A%20%20%20%20heading%20%3D%20f%22Operating%20point%3A%20%7Blabels%5B_idx%5D%7D%20%2F%20mean%20%7Bselected_average%3A.3f%7D%20%2F%20%7Bdirection%7D%20%7Babs(delta)%3A.3f%7D%20vs%20full%22%0A%20%20%20%20takeaway%20%3D%20(%0A%20%20%20%20%20%20%20%20%22Across%20both%20judges%20and%20these%20five%20reported%20metrics%2C%20removing%20content%20planning%20has%20the%20largest%20mean%20loss.%22%0A%20%20%20%20%20%20%20%20if%20_idx%20%3D%3D%203%0A%20%20%20%20%20%20%20%20else%20%22A%20positive%20mean%20does%20not%20imply%20broad%20improvement%3A%20inspect%20each%20metric%20and%20both%20judges.%22%0A%20%20%20%20%20%20%20%20if%20delta%20%3E%200%0A%20%20%20%20%20%20%20%20else%20%22The%20aggregate%20is%20only%20a%20reading%20aid%3B%20metric-level%20and%20judge-level%20differences%20still%20matter.%22%0A%20%20%20%20)%0A%20%20%20%20mo.vstack(%5Bmo.md(f%22%23%23%20%7Bheading%7D%5Cn%5Cn%7Btakeaway%7D%22)%2C%20mo.Html(chart)%5D%2C%20gap%3D1)%0A%20%20%20%20return%20deepseek%2C%20glm%0A%0A%0A%40app.cell%0Adef%20_(deepseek%2C%20glm%2C%20labels%2C%20metrics%2C%20mo%2C%20scenario)%3A%0A%20%20%20%20_idx%20%3D%20scenario.value%0A%20%20%20%20rows%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22Metric%22%3A%20metric%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22DeepSeek-v3.2%20judge%22%3A%20deepseek%5B_idx%5D%5Bi%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22GLM-4.7%20judge%22%3A%20glm%5B_idx%5D%5Bi%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22%CE%94%20vs%20full%20(DS)%22%3A%20round(deepseek%5B_idx%5D%5Bi%5D%20-%20deepseek%5B0%5D%5Bi%5D%2C%202)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22%CE%94%20vs%20full%20(GLM)%22%3A%20round(glm%5B_idx%5D%5Bi%5D%20-%20glm%5B0%5D%5Bi%5D%2C%202)%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20for%20i%2C%20metric%20in%20enumerate(metrics)%0A%20%20%20%20%5D%0A%20%20%20%20mo.vstack(%0A%20%20%20%20%20%20%20%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(f%22%23%23%23%20Reported%20values%20%E2%80%94%20%7Blabels%5B_idx%5D%7D%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.ui.table(rows%2C%20pagination%3DFalse)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.callout(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20**Read%20carefully.**%20Values%20are%20copied%20from%20Table%205%20of%20the%20paper's%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20fine-grained%20ablation.%20They%20are%20LLM-judge%20evaluation%20scores%20over%20the%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20authors'%20generated%20dialogue%20setting.%20The%20demo%20does%20not%20run%20a%20language%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20model%2C%20regenerate%20dialogue%2C%20validate%20care%20outcomes%2C%20or%20establish%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20deployment%20safety.%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20kind%3D%22warn%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%20%20%20%20gap%3D1%2C%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%22%22%0A%20%20%20%20%23%23%23%20Metric%20key%20and%20provenance%0A%0A%20%20%20%20-%20**PAR%3A**%20principle-adherence%20rate%3B%20**SPA%3A**%20strategy-principle%20alignment%3B%0A%20%20%20%20%20%20**EVS%3A**%20emotional%20validation%20score%3B%20**CCR%3A**%20cognitive%20consistency%20rate%3B%0A%20%20%20%20%20%20**GCF%3A**%20group%20coordination%2Ffacilitation.%0A%20%20%20%20-%20Source%3A%20Jiang%20et%20al.%2C%20*Think%20Before%20You%20Comfort*%2C%0A%20%20%20%20%20%20%5BarXiv%3A2609.17536v1%5D(https%3A%2F%2Farxiv.org%2Fabs%2F2609.17536)%2C%20Table%205.%0A%20%20%20%20-%20The%20authors%20evaluated%2050%20seeded%20synthetic%20sessions%20and%20describe%20two%20LLM%20judges.%0A%20%20%20%20%20%20This%20visualization%20averages%20ten%20displayed%20cells%20only%20as%20a%20compact%20comparison%3B%0A%20%20%20%20%20%20that%20average%20is%20analyst-authored%20and%20is%20not%20a%20paper%20metric.%0A%20%20%20%20-%20Research%20code%3A%20%5Bjiangjyjy%2FRCA_Agent%5D(https%3A%2F%2Fgithub.com%2Fjiangjyjy%2FRCA_Agent).%0A%20%20%20%20%20%20No%20repository%20license%20file%20was%20found%20during%20bundle%20preparation%2C%20so%20code%2Fdata%0A%20%20%20%20%20%20reuse%20rights%20should%20be%20confirmed%20with%20the%20authors.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.16",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "uv"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

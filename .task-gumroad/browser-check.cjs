@@ -1,0 +1,2 @@
+const {chromium}=require('@playwright/test');
+(async()=>{const browser=await chromium.launch({headless:true});const ctx=await browser.newContext(); const page=await ctx.newPage();await page.goto('https://edgelessai.gumroad.com/l/claude-code-cheat-sheet?wanted=true&price=0',{waitUntil:'networkidle'});console.log(await page.locator('body').innerText()); await page.screenshot({path:'.task-gumroad/sheet.png',fullPage:true});await browser.close()})();

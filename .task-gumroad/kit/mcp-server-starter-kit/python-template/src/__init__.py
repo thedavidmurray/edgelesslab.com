@@ -1,0 +1,1 @@
+# MCP server template package

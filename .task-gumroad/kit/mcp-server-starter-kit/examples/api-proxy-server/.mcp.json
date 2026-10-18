@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "api-proxy": {
+      "command": "python",
+      "args": ["-m", "src.server"],
+      "cwd": "/absolute/path/to/api-proxy-server",
+      "env": {
+        "API_BASE_URL": "https://api.example.com",
+        "API_KEY": "your-api-key-here",
+        "API_KEY_HEADER": "Authorization",
+        "API_KEY_PREFIX": "Bearer"
+      }
+    }
+  }
+}

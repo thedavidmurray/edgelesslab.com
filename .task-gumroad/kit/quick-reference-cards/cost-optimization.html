@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Token &amp; Cost Optimization — Edgeless Quick Reference</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #0f172a;
+    --surface: #1e293b;
+    --border:  #334155;
+    --indigo:  #6366f1;
+    --indigo2: #818cf8;
+    --text:    #f1f5f9;
+    --muted:   #94a3b8;
+    --green:   #34d399;
+    --amber:   #fbbf24;
+    --red:     #f87171;
+    --cyan:    #67e8f9;
+    --mono:    'Roboto Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 10mm 10mm 8mm;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1.5px solid var(--indigo);
+    padding-bottom: 5px;
+    margin-bottom: 2px;
+  }
+  .header h1 { font-size: 15px; color: var(--indigo2); letter-spacing: 0.02em; }
+  .header .badge {
+    font-size: 9px;
+    background: var(--indigo);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  .sub-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--indigo2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2px;
+  }
+
+  /* Model selection table */
+  .model-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+  }
+  .model-table th {
+    background: var(--surface);
+    color: var(--indigo2);
+    font-size: 8.5px;
+    padding: 4px 6px;
+    text-align: left;
+    border: 1px solid var(--border);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .model-table td {
+    padding: 4px 6px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .model-table tr:nth-child(odd) td  { background: var(--surface); }
+  .model-table tr:nth-child(even) td { background: #0f172a; }
+
+  .pill {
+    display: inline-block;
+    font-size: 8px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin: 1px 1px 0 0;
+    font-weight: 600;
+  }
+  .pill.green  { background: #064e3b; color: var(--green); }
+  .pill.amber  { background: #78350f; color: var(--amber); }
+  .pill.red    { background: #7f1d1d; color: var(--red); }
+  .pill.cyan   { background: #0c4a6e; color: var(--cyan); }
+  .pill.purple { background: #2e1065; color: var(--indigo2); }
+
+  /* Strategy grid */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+  }
+
+  .strategy {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 7px;
+  }
+
+  .strategy-title {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--indigo2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 3px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .strategy ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .strategy li {
+    font-size: 8.5px;
+    color: var(--muted);
+    padding-left: 8px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .strategy li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--indigo);
+  }
+
+  /* Cost estimates */
+  .cost-table {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .cost-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+  }
+  .cost-table th {
+    background: #0f172a;
+    color: var(--indigo2);
+    font-size: 8.5px;
+    padding: 4px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .cost-table td {
+    padding: 3.5px 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .cost-table tr:last-child td { border-bottom: none; }
+  .cost-table .cost { color: var(--green); font-weight: 600; }
+  .cost-table .task-name { color: var(--text); }
+
+  /* /compact callout */
+  .callout {
+    background: #1e293b;
+    border: 1px solid var(--indigo);
+    border-left: 4px solid var(--indigo);
+    border-radius: 4px;
+    padding: 6px 10px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .callout-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--indigo2);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding-top: 1px;
+  }
+  .callout-body {
+    font-size: 9px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .callout-body code {
+    color: var(--green);
+    font-size: 9px;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 4px;
+    margin-top: auto;
+    font-size: 8.5px;
+    color: var(--muted);
+  }
+  .footer .logo { color: var(--indigo2); font-weight: 700; letter-spacing: 0.1em; }
+
+  @media print {
+    @page { size: A4; margin: 8mm; }
+    :root {
+      --bg:      #ffffff;
+      --surface: #f8fafc;
+      --border:  #cbd5e1;
+      --indigo:  #4f46e5;
+      --indigo2: #4338ca;
+      --text:    #0f172a;
+      --muted:   #475569;
+      --green:   #065f46;
+      --amber:   #92400e;
+      --red:     #991b1b;
+      --cyan:    #0e7490;
+    }
+    html, body { background: #fff; }
+    .page { margin: 0; padding: 0; width: 100%; }
+    .model-table tr:nth-child(even) td { background: #f8fafc; }
+    .pill.green  { background: #dcfce7; color: #065f46; }
+    .pill.amber  { background: #fef3c7; color: #92400e; }
+    .pill.red    { background: #fee2e2; color: #991b1b; }
+    .pill.cyan   { background: #cffafe; color: #0e7490; }
+    .pill.purple { background: #ede9fe; color: #4338ca; }
+    .callout { background: #f5f3ff; border-color: #4f46e5; }
+    .cost-table td, .cost-table th { background: #fff; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Token &amp; Cost Optimization</h1>
+    <span class="badge">CARD 5 / 6</span>
+  </div>
+
+  <!-- Model selection -->
+  <div class="sub-title">Model Selection Guide</div>
+  <table class="model-table">
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Speed</th>
+        <th>Cost</th>
+        <th>Use For</th>
+        <th>Avoid For</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Haiku 3.5</strong></td>
+        <td><span class="pill green">Fastest</span></td>
+        <td><span class="pill green">~$0.25/Mtok</span></td>
+        <td>Classification, extraction, simple transforms, high-volume pipelines, routing decisions</td>
+        <td>Complex reasoning, multi-step code, architecture decisions</td>
+      </tr>
+      <tr>
+        <td><strong>Sonnet 4.5</strong></td>
+        <td><span class="pill cyan">Fast</span></td>
+        <td><span class="pill amber">~$3/Mtok</span></td>
+        <td>Most coding tasks, research synthesis, multi-step reasoning, daily driver for Claude Code</td>
+        <td>Extremely complex architecture decisions requiring maximal reasoning depth</td>
+      </tr>
+      <tr>
+        <td><strong>Opus 4</strong></td>
+        <td><span class="pill amber">Slower</span></td>
+        <td><span class="pill red">~$15/Mtok</span></td>
+        <td>Hardest reasoning problems, novel architecture, critical security/financial decisions</td>
+        <td>Routine tasks, batch jobs, anything Sonnet handles reliably</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Strategy grid -->
+  <div class="sub-title">Context Window Management Strategies</div>
+  <div class="strategy-grid">
+
+    <div class="strategy">
+      <div class="strategy-title">File Filtering</div>
+      <ul>
+        <li>Read only the files that are directly relevant to the current task</li>
+        <li>Never load full files when you need one function — specify line ranges</li>
+        <li>Use Grep to locate relevant code before reading the file</li>
+        <li>Exclude test fixtures, generated files, node_modules from context</li>
+        <li>Reference file paths, not contents, for files Claude does not need to edit</li>
+      </ul>
+    </div>
+
+    <div class="strategy">
+      <div class="strategy-title">Conversation Hygiene</div>
+      <ul>
+        <li>Use <code>/compact</code> when the conversation exceeds ~30k tokens</li>
+        <li>Start new conversations for unrelated tasks — do not append forever</li>
+        <li>Summarize completed work into a single message instead of keeping the full thread</li>
+        <li>Remove boilerplate from system prompts — every token costs</li>
+        <li>Use short keys in structured output (not verbose JSON field names)</li>
+      </ul>
+    </div>
+
+    <div class="strategy">
+      <div class="strategy-title">Prompt Efficiency</div>
+      <ul>
+        <li>Prefer bullets over prose in system prompts</li>
+        <li>Use references ("see CLAUDE.md") not inline repetition</li>
+        <li>Avoid "please", "thank you", preambles — they cost tokens and add nothing</li>
+        <li>Batch related requests into one message instead of many round-trips</li>
+        <li>Use structured output — smaller than prose by 30-60%</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- /compact callout -->
+  <div class="callout">
+    <span class="callout-label">/compact</span>
+    <div class="callout-body">
+      Runs when conversation context is large. Creates a compressed summary of the conversation history, replacing the full thread. Use it before starting a new phase of work on a long task. Triggered with <code>/compact</code> in Claude Code. Also happens automatically at ~100k tokens. You can write a custom summary: <code>/compact Summarize progress on the auth refactor, decisions made, and what remains.</code>
+    </div>
+  </div>
+
+  <!-- Cost per task type -->
+  <div class="sub-title">Estimated Cost Per Task Type (Sonnet 4.5)</div>
+  <div class="cost-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Task Type</th>
+          <th>Typical Tokens</th>
+          <th>Est. Cost</th>
+          <th>Optimization</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="task-name">Simple bug fix</td>
+          <td>2k–5k</td>
+          <td class="cost">$0.01</td>
+          <td>Targeted file read, single function scope</td>
+        </tr>
+        <tr>
+          <td class="task-name">New feature (small)</td>
+          <td>10k–30k</td>
+          <td class="cost">$0.05–$0.12</td>
+          <td>Read only affected modules, not full codebase</td>
+        </tr>
+        <tr>
+          <td class="task-name">Full code review</td>
+          <td>20k–60k</td>
+          <td class="cost">$0.10–$0.25</td>
+          <td>Diff-only review vs full file — 5x cheaper</td>
+        </tr>
+        <tr>
+          <td class="task-name">Research + synthesis</td>
+          <td>15k–40k</td>
+          <td class="cost">$0.07–$0.17</td>
+          <td>Summarize sources before loading into context</td>
+        </tr>
+        <tr>
+          <td class="task-name">Agent task (multi-step)</td>
+          <td>40k–150k</td>
+          <td class="cost">$0.17–$0.65</td>
+          <td>/compact between phases, Haiku for sub-tasks</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span>Prompt Engineering Quick Reference Cards — Card 5: Token &amp; Cost Optimization</span>
+    <span class="logo">edgeless</span>
+  </div>
+
+</div>
+</body>
+</html>

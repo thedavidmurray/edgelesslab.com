@@ -1,0 +1,21 @@
+1:"$Sreact.fragment"
+2:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+7:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"ViewportBoundary"]
+8:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"MetadataBoundary"]
+9:I[50529,["/_next/static/chunks/2cue0t2y-yu_9.js"],"IconMark"]
+b:I[67593,["/_next/static/chunks/2cue0t2y-yu_9.js"],"default"]
+c:I[92370,["/_next/static/chunks/2cue0t2y-yu_9.js"],"default"]
+6:X
+e:X
+e:C
+0:{"buildId":"ILG6gReoatO94noDnyNVS","data":[{"rsc":["$","$1","c",{"children":[["$","main",null,{"style":{"width":"100vw","height":"100vh","overflow":"hidden","background":"#050505"},"children":["$","iframe",null,{"src":"/demos/nga/index.html","style":{"width":"100%","height":"100%","border":"none"},"title":"NGA Art Analysis"}]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":"$@5","staleTime":"$6","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L7",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L8",null,{"children":["$","$3",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"NGA Art Analysis Demo | Edgeless Lab | Edgeless Lab"}],["$","meta","1",{"name":"description","content":"Interactive analysis of 145,000 artworks from the National Gallery of Art — dimensional reduction, color clustering, and curatorial signal extraction."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","meta","3",{"name":"googlebot","content":"index, follow"}],["$","link","4",{"rel":"canonical","href":"https://edgelesslab.com/"}],["$","link","5",{"rel":"alternate","type":"application/rss+xml","href":"https://edgelesslab.com/feed.xml"}],["$","meta","6",{"property":"og:title","content":"Edgeless Lab | Systems, Field Notes, and Generative Work"}],["$","meta","7",{"property":"og:description","content":"A public research studio for autonomous software, generative systems, and physical artifacts."}],["$","meta","8",{"property":"og:url","content":"https://edgelesslab.com/"}],["$","meta","9",{"property":"og:site_name","content":"Edgeless Lab"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:image","content":"https://edgelesslab.com/og-image.webp"}],["$","meta","12",{"property":"og:image:width","content":"1200"}],["$","meta","13",{"property":"og:image:height","content":"630"}],["$","meta","14",{"property":"og:image:alt","content":"Edgeless Lab systems, Field Notes, and generative work"}],["$","meta","15",{"property":"og:type","content":"website"}],["$","meta","16",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","17",{"name":"twitter:title","content":"Edgeless Lab | Systems, Field Notes, and Generative Work"}],["$","meta","18",{"name":"twitter:description","content":"A public research studio for autonomous software, generative systems, and physical artifacts."}],["$","meta","19",{"name":"twitter:image","content":"https://edgelesslab.com/og-image.webp"}],["$","link","20",{"rel":"icon","href":"/favicon.svg"}],["$","link","21",{"rel":"apple-touch-icon","href":"/apple-touch-icon.png"}],["$","$L9","22",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@a","staleTime":"$6","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lb",null,{"parallelRouterKey":"children","template":["$","$Lc",null,{}]}]]}],"isPartial":"$@d","staleTime":"$6","varyParams":"$e"},{"rsc":["$","$1","c",{"children":[null,["$","$Lb",null,{"parallelRouterKey":"children","template":["$","$Lc",null,{}]}]]}],"isPartial":"$@f","staleTime":"$6","varyParams":"$e"}],"isUpgradeableISRFallback":false,"a":"$@10","rootVaryParams":null,"needsRuntimeRequest":"$@11"}
+4:null
+11:true
+6:300
+6:C
+10:0
+a:"$undefined"
+d:"$undefined"
+f:"$undefined"
+5:"$undefined"

@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en" data-critters-container>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chladni Visualizer - Edgeless Lab</title>
+  <style>:root{color-scheme:light;--hm-paper:#f4f0e7;--hm-porcelain:#f8f8f2;--hm-carbon:#050505;--hm-toner:#202826;--hm-blueprint:#061f59;--hm-signal-blue:#133cff;--hm-cyan:#dceaff;--hm-riso-green:#178c58;--hm-alert:#f2f0d9;--hm-font-display:Impact, Haettenschweiler, "Arial Black", sans-serif;--hm-font-mono:"SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;--hm-font-ui:ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;--hm-line:2px;--hm-radius-tight:2px}*{box-sizing:border-box}body{margin:0;background:var(--hm-paper);color:var(--hm-carbon);font-family:var(--hm-font-ui);min-height:100vh;background-image:radial-gradient(rgba(0,0,0,.13) .7px, transparent .8px),
+        radial-gradient(rgba(0,0,0,.07) .6px, transparent .7px);background-position:0 0, 6px 8px;background-size:13px 17px, 19px 23px}button,input,select{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:minmax(0, 1fr) minmax(310px, 380px)}.rail{grid-column:2;grid-row:1;border-left:var(--hm-line) solid var(--hm-carbon);padding:22px;display:flex;flex-direction:column;gap:18px;background:rgba(244, 240, 231, .94);max-height:100vh;overflow:auto}.brand{display:grid;gap:12px}.route{font-family:var(--hm-font-mono);font-size:12px;text-transform:uppercase;display:flex;justify-content:space-between;gap:12px;border-bottom:2px solid var(--hm-carbon);padding-bottom:10px}h1{font-family:var(--hm-font-display);font-size:clamp(44px, 8vw, 78px);line-height:.84;letter-spacing:0;text-transform:uppercase;margin:0}.drop{position:relative;border:2px dashed var(--hm-carbon);min-height:128px;display:grid;place-items:center;padding:18px;text-align:center;background:var(--hm-cyan);cursor:pointer;box-shadow:7px 7px 0 var(--hm-carbon)}.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}.drop strong{font-family:var(--hm-font-mono);font-size:13px;text-transform:uppercase}.panel{border:2px solid var(--hm-carbon);padding:14px;background:rgba(248, 248, 242, .8)}.panel h2{font-family:var(--hm-font-mono);font-size:12px;text-transform:uppercase;margin:0 0 12px;display:flex;justify-content:space-between}.field{display:grid;gap:6px;margin-bottom:12px}.field label{font-family:var(--hm-font-mono);font-size:11px;text-transform:uppercase}.field small{color:var(--hm-muted);font-family:var(--hm-font-mono);font-size:10px;line-height:1.35}.field input,.field select{width:100%;border:2px solid var(--hm-carbon);border-radius:var(--hm-radius-tight);background:var(--hm-porcelain);color:var(--hm-carbon);min-height:38px;padding:7px 9px}.field input[type="range"]{padding:0;accent-color:var(--hm-signal-blue)}.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}.readout{font-family:var(--hm-font-mono);font-size:11px;text-transform:uppercase;display:flex;justify-content:space-between}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:2px solid var(--hm-carbon);background:transparent;color:var(--hm-carbon);min-height:42px;padding:8px 10px;font-family:var(--hm-font-mono);font-size:12px;text-transform:uppercase;cursor:pointer;box-shadow:4px 4px 0 var(--hm-carbon)}.btn[data-fill="true"]{background:var(--hm-carbon);color:var(--hm-paper)}.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}.status{font-family:var(--hm-font-mono);font-size:12px;line-height:1.45;text-transform:uppercase;min-height:54px;border-top:2px solid var(--hm-carbon);padding-top:12px}.stage{grid-column:1;grid-row:1;position:relative;min-height:100vh;display:grid;place-items:center;padding:22px;overflow:hidden;background:linear-gradient(90deg, rgba(19,60,255,.09), transparent 28%, rgba(23,140,88,.10)),
+        var(--hm-toner)}.stage::before{content:"";position:absolute;inset:0;opacity:.16;pointer-events:none;background-image:repeating-linear-gradient(to bottom, rgba(255,255,255,.5) 0 1px, transparent 1px 6px)}.scope{width:min(94vh, calc(100vw - 430px));aspect-ratio:1;border:2px solid var(--hm-paper);position:relative;box-shadow:14px 14px 0 rgba(0,0,0,.5);background:#050505}canvas{display:block;width:100%;height:100%;image-rendering:pixelated}.meta{position:absolute;top:18px;right:18px;display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:4px;color:var(--hm-paper);font-family:var(--hm-font-mono);font-size:11px;text-transform:uppercase;pointer-events:none}.plate-label{position:absolute;top:18px;left:18px;color:var(--hm-cyan);font-family:var(--hm-font-mono);font-size:11px;text-transform:uppercase;pointer-events:none}@media (max-width: 1080px){.app{grid-template-columns:1fr}.rail{grid-column:1;grid-row:auto;order:2;max-height:none;border-left:0;border-bottom:2px solid var(--hm-carbon)}.stage{grid-column:1;grid-row:auto;order:1;min-height:78vh;padding:16px}.scope{width:min(92vw, 78vh)}}</style>
+<meta name="description" content="Chladni Visualizer - Edgeless Lab">
+<link rel="canonical" href="https://edgelesslab.com/chladni-visualizer/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Chladni Visualizer - Edgeless Lab">
+<meta property="og:description" content="Chladni Visualizer - Edgeless Lab">
+<meta property="og:url" content="https://edgelesslab.com/chladni-visualizer/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chladni Visualizer - Edgeless Lab">
+<meta name="twitter:description" content="Chladni Visualizer - Edgeless Lab">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
+</head>
+<body>
+  <main class="app">
+    <aside class="rail">
+      <section class="brand">
+        <div class="route">
+          <span>EDGELESS / SIGNAL PLATE</span>
+          <span id="checksum">CHK 0000</span>
+        </div>
+        <h1>Chladni Visualizer</h1>
+      </section>
+
+      <section class="panel">
+        <h2><span>Source</span><span>MP3 / MP4</span></h2>
+        <label class="drop" id="dropzone">
+          <input id="file" type="file" accept="audio/*,video/mp4">
+          <strong>Drop audio / select file</strong>
+        </label>
+        <div class="field" style="margin-top: 18px;">
+          <label for="sourceUrl">Remote media URL</label>
+          <input id="sourceUrl" placeholder="https://.../track.mp3 or .mp4">
+          <small>Requires CORS-enabled media. Local files are more reliable.</small>
+        </div>
+        <button class="btn" id="loadUrl">Load URL</button>
+      </section>
+
+      <section class="panel">
+        <h2><span>Route Controls</span><span id="modeReadout">M5 N4</span></h2>
+        <div class="field">
+          <label for="preset">Preset</label>
+          <select id="preset">
+            <option value="classic">Classic Plate</option>
+            <option value="festival">Festival Identity</option>
+            <option value="album">Album Art</option>
+            <option value="social">Social Clip</option>
+          </select>
+        </div>
+        <div class="split">
+          <div class="field">
+            <label for="modeM">Mode M</label>
+            <input id="modeM" type="range" min="1" max="12" step="1" value="5">
+          </div>
+          <div class="field">
+            <label for="modeN">Mode N</label>
+            <input id="modeN" type="range" min="1" max="12" step="1" value="4">
+          </div>
+        </div>
+        <div class="split">
+          <div class="field">
+            <label for="warmth">Hue</label>
+            <input id="warmth" type="range" min="0" max="359" step="1" value="205">
+          </div>
+          <div class="field">
+            <label for="sharpness">Sharpness</label>
+            <input id="sharpness" type="range" min="0.8" max="4.5" step="0.1" value="1.8">
+          </div>
+        </div>
+        <div class="field">
+          <label for="style">Style</label>
+          <select id="style">
+            <option value="sand">Sand</option>
+            <option value="liquid">Liquid</option>
+            <option value="paint">Paint</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="title">Title</label>
+          <input id="title" value="Untitled Signal">
+        </div>
+        <div class="field">
+          <label for="artist">Artist</label>
+          <input id="artist" value="Edgeless Lab">
+        </div>
+        <button class="btn" id="savePreset">Save Preset</button>
+      </section>
+
+      <section class="panel">
+        <h2><span>Timeline</span><span id="timeReadout">0.0 / 0.0s</span></h2>
+        <div class="field">
+          <label for="seek">Song position</label>
+          <input id="seek" type="range" min="0" max="0" step="0.01" value="0" disabled>
+        </div>
+        <div class="split">
+          <div class="field">
+            <label for="recordStart">Record start</label>
+            <input id="recordStart" type="number" min="0" step="0.1" value="0">
+          </div>
+          <div class="field">
+            <label for="recordEnd">Record end</label>
+            <input id="recordEnd" type="number" min="0" step="0.1" value="0">
+          </div>
+        </div>
+        <div class="readout">
+          <span>Segment capture</span>
+          <span id="segmentReadout">full track</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2><span>Export</span><span>Canvas</span></h2>
+        <div class="buttons">
+          <button class="btn" id="play" disabled data-fill="true">Play</button>
+          <button class="btn" id="png">PNG</button>
+          <button class="btn" id="record" disabled>Silent WebM</button>
+          <button class="btn" id="reset">Reset</button>
+        </div>
+      </section>
+
+      <div class="status" id="status">STATUS: WAITING FOR AUDIO<br>ROUTE: LOCAL PREVIEW</div>
+    </aside>
+
+    <section class="stage">
+      <div class="scope">
+        <canvas id="canvas" width="960" height="960"></canvas>
+        <div class="plate-label" id="plateLabel">PLATE: IDLE / 960 GRID</div>
+        <div class="meta">
+          <span id="trackMeta">NO AUDIO</span>
+          <span>HERMES CYAN RELAY</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const fileInput = document.getElementById("file");
+    const dropzone = document.getElementById("dropzone");
+    const sourceUrlInput = document.getElementById("sourceUrl");
+    const loadUrlButton = document.getElementById("loadUrl");
+    const playButton = document.getElementById("play");
+    const pngButton = document.getElementById("png");
+    const recordButton = document.getElementById("record");
+    const resetButton = document.getElementById("reset");
+    const presetInput = document.getElementById("preset");
+    const modeMInput = document.getElementById("modeM");
+    const modeNInput = document.getElementById("modeN");
+    const warmthInput = document.getElementById("warmth");
+    const sharpnessInput = document.getElementById("sharpness");
+    const styleInput = document.getElementById("style");
+    const titleInput = document.getElementById("title");
+    const artistInput = document.getElementById("artist");
+    const savePresetButton = document.getElementById("savePreset");
+    const seekInput = document.getElementById("seek");
+    const timeReadout = document.getElementById("timeReadout");
+    const recordStartInput = document.getElementById("recordStart");
+    const recordEndInput = document.getElementById("recordEnd");
+    const segmentReadout = document.getElementById("segmentReadout");
+    const statusEl = document.getElementById("status");
+    const modeReadout = document.getElementById("modeReadout");
+    const trackMeta = document.getElementById("trackMeta");
+    const checksum = document.getElementById("checksum");
+    const plateLabel = document.getElementById("plateLabel");
+
+    const presets = {
+      classic: { m: 5, n: 4, warmth: 205, sharpness: 1.8 },
+      festival: { m: 7, n: 5, warmth: 190, sharpness: 2.4 },
+      album: { m: 4, n: 6, warmth: 240, sharpness: 1.5 },
+      social: { m: 6, n: 3, warmth: 28, sharpness: 2.8 }
+    };
+    const customPresets = JSON.parse(localStorage.getItem("chladniCustomPresets") || "{}");
+    Object.assign(presets, customPresets);
+    for (const key of Object.keys(customPresets)) {
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = customPresets[key].label || key.replace(/^custom:/, "");
+      presetInput.appendChild(option);
+    }
+
+    let audioContext;
+    let buffer;
+    let source;
+    let analyser;
+    let dataArray;
+    let isPlaying = false;
+    let startedAt = 0;
+    let pausedAt = 0;
+    let raf = 0;
+    let recorder;
+    let chunks = [];
+    let recordingSegmentEnd = 0;
+    let recordStopTimer = 0;
+
+    function status(lines) {
+      const parts = Array.isArray(lines) ? lines : String(lines).split("<br>");
+      statusEl.replaceChildren(
+        ...parts.flatMap((part, index) => {
+          const nodes = [];
+          if (index > 0) nodes.push(document.createElement("br"));
+          nodes.push(document.createTextNode(part));
+          return nodes;
+        })
+      );
+    }
+
+    let scheduledDraw = 0;
+    function schedulePreviewDraw() {
+      if (scheduledDraw) cancelAnimationFrame(scheduledDraw);
+      scheduledDraw = requestAnimationFrame(() => {
+        scheduledDraw = 0;
+        drawPattern(.45, .35, .42, .55, .15);
+      });
+    }
+
+    function hashName(name) {
+      let h = 2166136261;
+      for (let i = 0; i < name.length; i++) {
+        h ^= name.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return (h >>> 0).toString(16).slice(0, 4).toUpperCase();
+    }
+
+    function currentPreset() {
+      return {
+        m: Number(modeMInput.value),
+        n: Number(modeNInput.value),
+        warmth: Number(warmthInput.value),
+        sharpness: Number(sharpnessInput.value)
+      };
+    }
+
+    function syncPresetControls() {
+      const preset = presets[presetInput.value] || presets.classic;
+      modeMInput.value = preset.m;
+      modeNInput.value = preset.n;
+      warmthInput.value = preset.warmth;
+      sharpnessInput.value = preset.sharpness;
+      schedulePreviewDraw();
+    }
+
+    function playbackTime() {
+      if (!buffer) return 0;
+      return isPlaying ? Math.min(buffer.duration, audioContext.currentTime - startedAt) : pausedAt;
+    }
+
+    function updateTimeline() {
+      const duration = buffer ? buffer.duration : 0;
+      const now = playbackTime();
+      seekInput.max = duration.toFixed(2);
+      seekInput.value = String(Math.min(now, duration));
+      timeReadout.textContent = `${now.toFixed(1)} / ${duration.toFixed(1)}s`;
+      const start = Math.max(0, Number(recordStartInput.value) || 0);
+      const end = Math.min(duration || start, Number(recordEndInput.value) || duration || 0);
+      segmentReadout.textContent = duration ? `${start.toFixed(1)}s to ${end.toFixed(1)}s` : "full track";
+    }
+
+    function drawPattern(level = 0.35, centroid = 0.35, bass = 0.4, treble = 0.5, beat = 0) {
+      const preset = currentPreset();
+      const style = styleInput.value;
+      const w = canvas.width;
+      const h = canvas.height;
+      const image = ctx.createImageData(w, h);
+      const modeM = Math.max(1, Math.round(preset.m + treble * 3));
+      const modeN = Math.max(1, Math.round(preset.n + bass * 3));
+      const warmHue = (preset.warmth + centroid * 160 + beat * 28) % 360;
+      const sharp = preset.sharpness + treble * 2.8;
+      const t = performance.now() * 0.001;
+
+      modeReadout.textContent = `M${modeM} N${modeN}`;
+      plateLabel.textContent = `PLATE: ACTIVE / ${w} GRID`;
+
+      let p = 0;
+      for (let y = 0; y < h; y++) {
+        const yy = y / (h - 1);
+        for (let x = 0; x < w; x++) {
+          const xx = x / (w - 1);
+          const waveA = Math.sin(modeM * Math.PI * xx + t * bass) * Math.sin(modeN * Math.PI * yy - t * treble);
+          const waveB = Math.sin((modeN + 1) * Math.PI * (xx + yy * .18)) * Math.sin((modeM + 1) * Math.PI * (yy - xx * .12));
+          const node = 1 - Math.min(1, Math.abs(waveA * .78 + waveB * .32) * sharp);
+          const dust = Math.max(0, node) * (.55 + level * .75);
+          const ring = Math.sin((xx * xx + yy * yy) * 24 + t * 2) * 0.05;
+          const value = Math.max(0, Math.min(1, dust + ring + beat * 0.12));
+          const hue = (warmHue + value * (style === "paint" ? 95 : 42)) % 360;
+          const sat = style === "liquid" ? 72 : 86;
+          const lum = style === "sand" ? 12 + value * 74 : 18 + value * 68;
+          const [r, g, b] = hslToRgb(hue, sat / 100, lum / 100);
+          image.data[p++] = r;
+          image.data[p++] = g;
+          image.data[p++] = b;
+          image.data[p++] = 255;
+        }
+      }
+      ctx.putImageData(image, 0, 0);
+      drawOverlay();
+    }
+
+    function drawOverlay() {
+      const title = titleInput.value.trim();
+      const artist = artistInput.value.trim();
+      if (!title && !artist) return;
+      const pad = 28;
+      ctx.save();
+      ctx.fillStyle = "rgba(5, 5, 5, .78)";
+      ctx.strokeStyle = "#f4f0e7";
+      ctx.lineWidth = 2;
+      ctx.fillRect(pad, canvas.height - 124, canvas.width - pad * 2, 90);
+      ctx.strokeRect(pad, canvas.height - 124, canvas.width - pad * 2, 90);
+      ctx.font = "16px monospace";
+      ctx.fillStyle = "#dceaff";
+      ctx.fillText("EDGELESS LAB / SIGNAL PLATE", pad + 18, canvas.height - 94);
+      ctx.fillStyle = "#f4f0e7";
+      ctx.font = "28px Impact, Arial Black, sans-serif";
+      ctx.fillText(title || "UNTITLED SIGNAL", pad + 18, canvas.height - 58);
+      ctx.font = "14px monospace";
+      ctx.fillStyle = "#b9d8c5";
+      ctx.fillText((artist || "UNKNOWN ARTIST").toUpperCase(), pad + 18, canvas.height - 34);
+      ctx.restore();
+    }
+
+    function hslToRgb(h, s, l) {
+      const c = (1 - Math.abs(2 * l - 1)) * s;
+      const hp = h / 60;
+      const x = c * (1 - Math.abs((hp % 2) - 1));
+      let r = 0, g = 0, b = 0;
+      if (hp < 1) [r, g, b] = [c, x, 0];
+      else if (hp < 2) [r, g, b] = [x, c, 0];
+      else if (hp < 3) [r, g, b] = [0, c, x];
+      else if (hp < 4) [r, g, b] = [0, x, c];
+      else if (hp < 5) [r, g, b] = [x, 0, c];
+      else [r, g, b] = [c, 0, x];
+      const m = l - c / 2;
+      return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
+    }
+
+    async function loadArrayBuffer(data, name) {
+      if (!audioContext) audioContext = new AudioContext();
+      buffer = await audioContext.decodeAudioData(data);
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 1024;
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+      playButton.disabled = false;
+      recordButton.disabled = false;
+      seekInput.disabled = false;
+      seekInput.max = buffer.duration.toFixed(2);
+      recordStartInput.value = "0";
+      recordEndInput.value = buffer.duration.toFixed(1);
+      pausedAt = 0;
+      trackMeta.textContent = `${name} / ${buffer.duration.toFixed(1)}S`;
+      checksum.textContent = `CHK ${hashName(name)}`;
+      status(["STATUS: AUDIO READY", `ROUTE: ${name.toUpperCase()}`]);
+      updateTimeline();
+      drawPattern(.45, .35, .42, .55, .15);
+    }
+
+    async function loadFile(file) {
+      const data = await file.arrayBuffer();
+      await loadArrayBuffer(data, file.name);
+    }
+
+    async function loadRemoteUrl() {
+      const url = sourceUrlInput.value.trim();
+      if (!url) return;
+      status(["STATUS: FETCHING URL", "ROUTE: REMOTE MEDIA / CORS REQUIRED"]);
+      try {
+        const response = await fetch(url, { mode: "cors" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.arrayBuffer();
+        const name = decodeURIComponent((new URL(url)).pathname.split("/").pop() || "remote-media");
+        await loadArrayBuffer(data, name);
+      } catch (error) {
+        status(["STATUS: URL LOAD FAILED", "ROUTE: USE LOCAL FILE OR CORS-ENABLED MEDIA"]);
+        console.error(error);
+      }
+    }
+
+    function connectSource(offset = 0) {
+      source = audioContext.createBufferSource();
+      source.buffer = buffer;
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+      source.onended = () => {
+        if (isPlaying) stopPlayback(true);
+      };
+      source.start(0, offset);
+      startedAt = audioContext.currentTime - offset;
+    }
+
+    function animate() {
+      if (!analyser) {
+        drawPattern();
+        raf = requestAnimationFrame(animate);
+        return;
+      }
+      analyser.getByteFrequencyData(dataArray);
+      const bins = dataArray.length;
+      let low = 0, mid = 0, high = 0;
+      for (let i = 0; i < bins; i++) {
+        const v = dataArray[i] / 255;
+        if (i < bins * .18) low += v;
+        else if (i < bins * .55) mid += v;
+        else high += v;
+      }
+      low /= bins * .18;
+      mid /= bins * .37;
+      high /= bins * .45;
+      const level = Math.min(1, (low + mid + high) / 2.2);
+      const centroid = Math.min(1, (mid * .45 + high * .85));
+      const beat = Math.max(0, low - .55) * 1.8;
+      drawPattern(level, centroid, low, high, beat);
+      updateTimeline();
+      if (recordingSegmentEnd && playbackTime() >= recordingSegmentEnd) {
+        if (recorder && recorder.state === "recording") recorder.stop();
+        stopPlayback(true);
+        recordingSegmentEnd = 0;
+      }
+      raf = requestAnimationFrame(animate);
+    }
+
+    function stopPlayback(ended = false) {
+      if (source) {
+        const oldSource = source;
+        source = null;
+        try { oldSource.stop(); } catch {}
+      }
+      isPlaying = false;
+      pausedAt = ended ? Math.min(buffer ? buffer.duration : 0, playbackTime()) : Math.max(0, playbackTime());
+      playButton.textContent = "Play";
+      cancelAnimationFrame(raf);
+      updateTimeline();
+      status(["STATUS: PAUSED", "ROUTE: LOCAL PREVIEW"]);
+    }
+
+    async function togglePlay() {
+      if (!buffer) return;
+      if (!audioContext) audioContext = new AudioContext();
+      if (audioContext.state === "suspended") await audioContext.resume();
+      if (isPlaying) {
+        stopPlayback();
+        return;
+      }
+      if (pausedAt >= buffer.duration) pausedAt = 0;
+      connectSource(pausedAt);
+      isPlaying = true;
+      playButton.textContent = "Pause";
+      status(["STATUS: PLAYING", "ROUTE: AUDIO TO PLATE"]);
+      animate();
+    }
+
+    function seekTo(time) {
+      if (!buffer) return;
+      const wasPlaying = isPlaying;
+      if (source) {
+        const oldSource = source;
+        source = null;
+        try { oldSource.stop(); } catch {}
+      }
+      pausedAt = Math.max(0, Math.min(buffer.duration, time));
+      if (wasPlaying) connectSource(pausedAt);
+      updateTimeline();
+      schedulePreviewDraw();
+    }
+
+    function savePng() {
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.download = "chladni-preview.png";
+      a.click();
+    }
+
+    function toggleRecord() {
+      if (recorder && recorder.state === "recording") {
+        recorder.stop();
+        recordButton.textContent = "Silent WebM";
+        recordingSegmentEnd = 0;
+        clearTimeout(recordStopTimer);
+        return;
+      }
+      chunks = [];
+      const start = buffer ? Math.max(0, Number(recordStartInput.value) || 0) : 0;
+      const end = buffer ? Math.min(buffer.duration, Number(recordEndInput.value) || buffer.duration) : 0;
+      recordingSegmentEnd = end > start ? end : 0;
+      if (!window.MediaRecorder || !MediaRecorder.isTypeSupported("video/webm")) {
+        status(["STATUS: WEBM UNAVAILABLE", "ROUTE: TRY PNG EXPORT OR ANOTHER BROWSER"]);
+        return;
+      }
+      const stream = canvas.captureStream(30);
+      recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+      recorder.ondataavailable = (event) => chunks.push(event.data);
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: "video/webm" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "chladni-preview.webm";
+        a.click();
+        URL.revokeObjectURL(a.href);
+        recordButton.textContent = "Silent WebM";
+        status(["STATUS: WEBM SAVED", "ROUTE: SILENT CANVAS VIDEO"]);
+      };
+      recorder.start();
+      recordButton.textContent = "Stop";
+      status(["STATUS: RECORDING WEBM", "ROUTE: SILENT CANVAS CAPTURE"]);
+      if (buffer && !isPlaying) {
+        seekTo(start);
+        togglePlay();
+      }
+      if (recordingSegmentEnd && !buffer) {
+        recordStopTimer = setTimeout(() => recorder.stop(), 6000);
+      }
+    }
+
+    fileInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) loadFile(file);
+    });
+
+    ["dragenter", "dragover"].forEach((type) => {
+      dropzone.addEventListener(type, (event) => {
+        event.preventDefault();
+        dropzone.dataset.active = "true";
+      });
+    });
+    ["dragleave", "drop"].forEach((type) => {
+      dropzone.addEventListener(type, (event) => {
+        event.preventDefault();
+        dropzone.dataset.active = "false";
+      });
+    });
+    dropzone.addEventListener("drop", (event) => {
+      const file = event.dataTransfer.files[0];
+      if (file) loadFile(file);
+    });
+
+    loadUrlButton.addEventListener("click", loadRemoteUrl);
+    playButton.addEventListener("click", togglePlay);
+    pngButton.addEventListener("click", savePng);
+    recordButton.addEventListener("click", toggleRecord);
+    resetButton.addEventListener("click", () => {
+      pausedAt = 0;
+      updateTimeline();
+      schedulePreviewDraw();
+    });
+    presetInput.addEventListener("change", syncPresetControls);
+    [styleInput, titleInput, artistInput, modeMInput, modeNInput, warmthInput, sharpnessInput].forEach((el) => {
+      el.addEventListener("input", schedulePreviewDraw);
+    });
+    [seekInput, recordStartInput, recordEndInput].forEach((el) => {
+      el.addEventListener("input", updateTimeline);
+    });
+    seekInput.addEventListener("change", () => seekTo(Number(seekInput.value) || 0));
+    savePresetButton.addEventListener("click", () => {
+      const label = prompt("Preset name", "Custom Plate");
+      if (!label) return;
+      const key = `custom:${label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "plate"}`;
+      customPresets[key] = { ...currentPreset(), label };
+      localStorage.setItem("chladniCustomPresets", JSON.stringify(customPresets));
+      if (!presets[key]) {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = label;
+        presetInput.appendChild(option);
+      }
+      presets[key] = customPresets[key];
+      presetInput.value = key;
+      status(["STATUS: PRESET SAVED", `ROUTE: ${label.toUpperCase()}`]);
+    });
+
+    syncPresetControls();
+    drawPattern(.4, .32, .5, .45, .1);
+  </script>
+  <script src="/art-only-mode.js" defer></script>
+</body>
+</html>

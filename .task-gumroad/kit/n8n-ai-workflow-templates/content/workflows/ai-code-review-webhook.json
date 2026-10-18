@@ -1,0 +1,118 @@
+{
+  "name": "AI Code Review on PR",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "code-review",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "GitHub PR Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "code-review"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {"value1": "={{ $json.body.action }}", "operation": "equal", "value2": "opened"},
+            {"value1": "={{ $json.body.action }}", "operation": "equal", "value2": "synchronize"}
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "filter-action",
+      "name": "PR Opened or Updated?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.pull_request.diff_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.GITHUB_TOKEN }}"},
+            {"name": "Accept", "value": "application/vnd.github.v3.diff"}
+          ]
+        },
+        "options": {"timeout": 30000}
+      },
+      "id": "fetch-diff",
+      "name": "Fetch PR Diff",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [660, 300],
+      "notes": "Reads GITHUB_TOKEN from .env. No n8n credential setup required."
+    },
+    {
+      "parameters": {
+        "functionCode": "// Split diff into chunks under 4K tokens\nconst diff = $input.first().json.data || '';\nconst MAX_CHUNK = 12000; // ~4K tokens at ~3 chars/token\nconst chunks = [];\n\n// Split by file\nconst files = diff.split('diff --git ');\nlet currentChunk = '';\n\nfor (const file of files) {\n  if (!file.trim()) continue;\n  if (currentChunk.length + file.length > MAX_CHUNK) {\n    if (currentChunk) chunks.push(currentChunk);\n    currentChunk = file;\n  } else {\n    currentChunk += 'diff --git ' + file;\n  }\n}\nif (currentChunk) chunks.push(currentChunk);\n\nreturn chunks.map((chunk, i) => ({ json: { chunk, chunk_index: i, total_chunks: chunks.length, pr_url: $('GitHub PR Webhook').first().json.body.pull_request.html_url, pr_number: $('GitHub PR Webhook').first().json.body.number, repo: $('GitHub PR Webhook').first().json.body.repository.full_name } }));"
+      },
+      "id": "split-diff",
+      "name": "Split Diff into Chunks",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={{ $env.GOOGLE_GEMINI_API_KEY }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: `Review this code diff. Focus on:\\n1. Security vulnerabilities (injection, auth bypass, secrets exposure)\\n2. Performance issues (N+1 queries, unnecessary allocations)\\n3. Logic errors (off-by-one, null handling, race conditions)\\n4. Convention violations (naming, structure)\\n\\nOnly flag issues you're confident about. No false positives.\\nRespond as markdown with findings. If no issues, say 'No issues found.'\\n\\nDiff (chunk ${$json.chunk_index + 1}/${$json.total_chunks}):\\n\\`\\`\\`diff\\n${$json.chunk.slice(0, 12000)}\\n\\`\\`\\`` }] }] }) }}"
+      },
+      "id": "ai-review",
+      "name": "AI Code Review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Aggregate all review chunks into one comment\nconst items = $input.all();\nlet body = '## AI Code Review\\n\\n';\nbody += `> Automated review by n8n + Gemini\\n\\n`;\n\nfor (const item of items) {\n  const text = item.json?.candidates?.[0]?.content?.parts?.[0]?.text || '';\n  if (text.includes('No issues found')) continue;\n  body += text + '\\n\\n---\\n\\n';\n}\n\nif (body.trim().endsWith('---')) {\n  body = body.replace(/\\n\\n---\\n\\n$/, '');\n}\n\nif (!body.includes('##') || body.split('\\n').length < 5) {\n  body += 'No significant issues found. Looks good.';\n}\n\nconst repo = items[0]?.json?.repo;\nconst prNumber = items[0]?.json?.pr_number;\n\nreturn [{ json: { body, repo, pr_number: prNumber } }];"
+      },
+      "id": "aggregate-review",
+      "name": "Aggregate Reviews",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $json.repo }}/issues/{{ $json.pr_number }}/comments",
+        "requestMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.GITHUB_TOKEN }}"},
+            {"name": "Accept", "value": "application/vnd.github+json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ body: $json.body }) }}"
+      },
+      "id": "post-comment",
+      "name": "Post Review Comment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1540, 300],
+      "notes": "Uses GITHUB_TOKEN from .env (needs `repo` scope)."
+    }
+  ],
+  "connections": {
+    "GitHub PR Webhook": {"main": [[{"node": "PR Opened or Updated?", "type": "main", "index": 0}]]},
+    "PR Opened or Updated?": {"main": [[{"node": "Fetch PR Diff", "type": "main", "index": 0}]]},
+    "Fetch PR Diff": {"main": [[{"node": "Split Diff into Chunks", "type": "main", "index": 0}]]},
+    "Split Diff into Chunks": {"main": [[{"node": "AI Code Review", "type": "main", "index": 0}]]},
+    "AI Code Review": {"main": [[{"node": "Aggregate Reviews", "type": "main", "index": 0}]]},
+    "Aggregate Reviews": {"main": [[{"node": "Post Review Comment", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": [{"name": "ai-workflows"}]
+}

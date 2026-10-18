@@ -1,227 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-critters-container>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>From Kandinsky to Canvas - Edgeless Lab</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<style>
- *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
- body {
- background: #F4EFE6;
- color: #1A1A1A;
- font-family: Georgia, 'Times New Roman', serif;
- font-size: 18px;
- line-height: 1.7;
- -webkit-font-smoothing: antialiased;
- }
-
- .article {
- max-width: 720px;
- margin: 0 auto;
- padding: 60px 24px 100px;
- }
-
- /* Header */
- .lab-name {
- font-family: 'JetBrains Mono', monospace;
- font-size: 11px;
- font-weight: 500;
- letter-spacing: 0.2em;
- text-transform: uppercase;
- color: #E8A838;
- margin-bottom: 24px;
- }
-
- h1 {
- font-family: Georgia, serif;
- font-size: 42px;
- line-height: 1.15;
- font-weight: 700;
- color: #1A1A1A;
- margin-bottom: 16px;
- letter-spacing: -0.01em;
- }
-
- .deck {
- font-family: Georgia, serif;
- font-size: 20px;
- font-style: italic;
- color: #555;
- line-height: 1.6;
- margin-bottom: 8px;
- }
-
- .date {
- font-family: 'JetBrains Mono', monospace;
- font-size: 12px;
- color: #999;
- letter-spacing: 0.05em;
- margin-bottom: 48px;
- }
-
- /* Section dividers */
- hr {
- border: none;
- border-top: 1px solid #D6D0C4;
- margin: 48px 0;
- }
-
- /* Headings */
- h2 {
- font-family: Georgia, serif;
- font-size: 28px;
- font-weight: 700;
- color: #1A1A1A;
- margin-top: 48px;
- margin-bottom: 20px;
- line-height: 1.3;
- }
-
- /* Body text */
- p {
- margin-bottom: 20px;
- }
-
- em { font-style: italic; }
- strong { font-weight: 700; }
-
- a {
- color: #E8A838;
- text-decoration: underline;
- text-decoration-thickness: 1px;
- text-underline-offset: 2px;
- }
- a:hover { color: #C08020; }
-
- /* Lists */
- ul {
- margin-bottom: 20px;
- padding-left: 28px;
- }
- li {
- margin-bottom: 10px;
- }
-
- /* Inline code */
- code {
- font-family: 'JetBrains Mono', monospace;
- font-size: 0.85em;
- background: #EDE8DE;
- padding: 2px 6px;
- border-radius: 3px;
- }
-
- /* Code blocks */
- pre {
- background: #EDE8DE;
- border-radius: 6px;
- padding: 20px 24px;
- overflow-x: auto;
- margin-bottom: 24px;
- border: 1px solid #D6D0C4;
- }
- pre code {
- background: none;
- padding: 0;
- font-size: 14px;
- line-height: 1.6;
- }
-
- /* Figure / Image containers */
- figure {
- margin: 40px 0;
- }
- figcaption {
- font-family: 'JetBrains Mono', monospace;
- font-size: 12px;
- color: #888;
- text-align: center;
- margin-top: 8px;
- letter-spacing: 0.02em;
- }
-
- .image-row {
- display: flex;
- gap: 12px;
- justify-content: center;
- flex-wrap: wrap;
- }
-
- .image-row figure {
- flex: 1 1 0;
- min-width: 140px;
- max-width: 300px;
- margin: 0;
- }
-
- .image-row img,
- figure.full-width img {
- width: 100%;
- max-width: 100%;
- display: block;
- background: #E8E4DC;
- padding: 4px;
- border: 1px solid #D6D0C4;
- border-radius: 4px;
- }
-
- figure.full-width {
- margin: 40px 0;
- }
- figure.full-width img {
- max-width: 100%;
- }
-
- .image-pair {
- display: flex;
- gap: 12px;
- justify-content: center;
- }
- .image-pair figure {
- flex: 1 1 0;
- min-width: 200px;
- max-width: 50%;
- margin: 0;
- }
- .image-pair img {
- width: 100%;
- display: block;
- background: #E8E4DC;
- padding: 4px;
- border: 1px solid #D6D0C4;
- border-radius: 4px;
- }
-
- /* Closing note */
- .closing {
- font-style: italic;
- color: #666;
- border-top: 1px solid #D6D0C4;
- padding-top: 32px;
- margin-top: 48px;
- font-size: 16px;
- }
-
- /* Accent bar */
- .accent-bar {
- width: 48px;
- height: 3px;
- background: #E8A838;
- margin-bottom: 32px;
- }
-
- @media (max-width: 600px) {
- h1 { font-size: 30px; }
- .deck { font-size: 17px; }
- .article { padding: 40px 16px 60px; }
- .image-row { gap: 8px; }
- .image-row figure { min-width: 100px; }
- }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{background:#F4EFE6;color:#1A1A1A;font-family:Georgia, 'Times New Roman', serif;font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}.article{max-width:720px;margin:0 auto;padding:60px 24px 100px}.lab-name{font-family:'JetBrains Mono', monospace;font-size:11px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:#E8A838;margin-bottom:24px}h1{font-family:Georgia, serif;font-size:42px;line-height:1.15;font-weight:700;color:#1A1A1A;margin-bottom:16px;letter-spacing:-0.01em}.deck{font-family:Georgia, serif;font-size:20px;font-style:italic;color:#555;line-height:1.6;margin-bottom:8px}.date{font-family:'JetBrains Mono', monospace;font-size:12px;color:#999;letter-spacing:0.05em;margin-bottom:48px}hr{border:none;border-top:1px solid #D6D0C4;margin:48px 0}h2{font-family:Georgia, serif;font-size:28px;font-weight:700;color:#1A1A1A;margin-top:48px;margin-bottom:20px;line-height:1.3}p{margin-bottom:20px}em{font-style:italic}strong{font-weight:700}a{color:#E8A838;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}a:hover{color:#C08020}ul{margin-bottom:20px;padding-left:28px}li{margin-bottom:10px}code{font-family:'JetBrains Mono', monospace;font-size:0.85em;background:#EDE8DE;padding:2px 6px;border-radius:3px}figure{margin:40px 0}figcaption{font-family:'JetBrains Mono', monospace;font-size:12px;color:#888;text-align:center;margin-top:8px;letter-spacing:0.02em}.image-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.image-row figure{flex:1 1 0;min-width:140px;max-width:300px;margin:0}.image-row img,figure.full-width img{width:100%;max-width:100%;display:block;background:#E8E4DC;padding:4px;border:1px solid #D6D0C4;border-radius:4px}figure.full-width{margin:40px 0}figure.full-width img{max-width:100%}.image-pair{display:flex;gap:12px;justify-content:center}.image-pair figure{flex:1 1 0;min-width:200px;max-width:50%;margin:0}.image-pair img{width:100%;display:block;background:#E8E4DC;padding:4px;border:1px solid #D6D0C4;border-radius:4px}.closing{font-style:italic;color:#666;border-top:1px solid #D6D0C4;padding-top:32px;margin-top:48px;font-size:16px}.accent-bar{width:48px;height:3px;background:#E8A838;margin-bottom:32px}@media (max-width: 600px){h1{font-size:30px}.deck{font-size:17px}.article{padding:40px 16px 60px}.image-row{gap:8px}.image-row figure{min-width:100px}}</style>
+<meta name="description" content="Every stroke our pen plotter draws has a lineage that stretches back a century.">
+<link rel="canonical" href="https://edgelesslab.com/pen-plotter/kandinsky-to-canvas.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="From Kandinsky to Canvas - Edgeless Lab">
+<meta property="og:description" content="Every stroke our pen plotter draws has a lineage that stretches back a century.">
+<meta property="og:url" content="https://edgelesslab.com/pen-plotter/kandinsky-to-canvas.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From Kandinsky to Canvas - Edgeless Lab">
+<meta name="twitter:description" content="Every stroke our pen plotter draws has a lineage that stretches back a century.">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
 </head>
 <body>
 <article class="article">
@@ -238,7 +34,7 @@
 
  <p>At Edgeless Lab, we've spent the past months building an autoresearch pipeline that takes these ideas seriously. Not as metaphor, but as engineering requirements. Our <code>factory_botanical</code> generates grass blades as Bezier curves -Kandinsky's "line produced by two simultaneous forces." Our <code>factory_softshapes</code> fills curves with thousands of parallel hatching lines -rendering his concept of "plane" through pure linear accumulation. Our <code>factory_interlace</code> builds Islamic star patterns from intersecting equidistant lines on grids, implementing Owen Jones' 1856 propositions as executable code.</p>
 
- <p>The result, so far: 40 factory files generating pen-plotter-ready SVGs, 41,572 scored specimens, and a scoring pipeline that draws on Galanter's complexity theory, Feldman's art criticism framework, and Tyler Hobbs' compositional essays. The lineage runs in a clear line: Kandinsky (1926) to Georg Nees (1965, the first computer art exhibition) to Sol LeWitt (1967, wall drawings as instruction sets) to Vera Molnar (1968, <em>machine imaginaire</em>) to Tyler Hobbs (2021, Fidenza) to this lab, this year.</p>
+ <p>The result, so far: 40 factory files generating pen-plotter-ready SVGs, 36,000+ scored specimens, and a scoring pipeline that draws on Galanter's complexity theory, Feldman's art criticism framework, and Tyler Hobbs' compositional essays. The lineage runs in a clear line: Kandinsky (1926) to Georg Nees (1965, the first computer art exhibition) to Sol LeWitt (1967, wall drawings as instruction sets) to Vera Molnar (1968, <em>machine imaginaire</em>) to Tyler Hobbs (2021, Fidenza) to this lab, this year.</p>
 
  <p>We didn't set out to write a history paper. But when we started building factories that actually work -that produce art people want to put on walls -we found that the path always led back to specific theoretical commitments made by people who never saw a computer.</p>
 
@@ -366,7 +162,7 @@
  <hr>
 
  <!-- Computational Aesthetics -->
- <h2>Computational Aesthetics: What 41,572 Specimens Taught Us</h2>
+ <h2>Computational Aesthetics: What 36,000 Specimens Taught Us</h2>
 
  <p>Running 36,772 specimens through algorithmic scoring and four LLM judges produces data. Some of it confirmed what we expected. Some of it surprised us.</p>
 

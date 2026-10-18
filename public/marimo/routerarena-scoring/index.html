@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>routerarena-score-simulation</title>
+    <script type="module" crossorigin src="./assets/index-iAj2M3os.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-y72bE5iF.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-PbYoItBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-BakX-tnw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CuYNS33t.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CCOoIlcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CGfP-Ye3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BJ9oKrvH.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BIlJBJIu.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BtEcuwwV.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-X2M2usMq.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CFAaMy0O.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-BF7GSjhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-BXI8V5i6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CQMqwayA.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DCqDlsgq.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-BTp1tQDO.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DQmqoJgr.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-9vLEgLY6.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-Cjly7tmx.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CgQpRVyN.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BH8bU9Xf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C2E8KCbD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-Dev6I_Kv.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CfyqLOPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-BukULOeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-EP9ZArpv.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B9JJ72XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-B6_8umQX.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BE150fVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-KshNNAOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-Baf35rp4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-0SWz6w4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-CWoNQwFz.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DWxvyYxP.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DvZlHYnD.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CXj_gH7S.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-CjNGDxxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-3wF4dU7I.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-kNeJ8nbe.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dez1I5M9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0WqBUnf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CwfKvuyQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-D-o1OXc9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BZhJ1bTM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bj9Iedc0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DHMtQYxT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnIl7RU-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CfGDksO-.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-C6JeW1YI.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-DCE7d2fN.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DdxMtdqK.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-DXo9vDEJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-DIlSqcdp.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-DmhaVp6Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-DQ5n6Zef.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bo313Z9X.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BCXa3Ocm.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-DEHK-C20.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-CC0gG4Av.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-Dr_Y1zNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-BlBSYv0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-BKZTJMZ6.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DrpctNAg.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DE_5rdOV.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-DCM-63YT.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-mjvipKvz.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-b2KTOk0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-MQnbMIO2.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-LArpBcY-.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-9ogswH46.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Bjh7v4lb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-C7RH0Nc7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DfGLyCbP.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DK7te6sJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-bcK6jTD2.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CyasABTK.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-IBNGDypD.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BCIGtBo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BLBwT24G.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-BT-L2LDD.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-VxOqftwq.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-BoMcg6sy.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DctOjjEz.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-DcImOp4r.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DI0EQXw0.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-DcEasnos.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-CjikjOBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DTBVbtl-.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CmK-WSPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-Dol5ybck.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CT1LpOBD.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CUQODgGJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-P--XWZhg.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-C6VN0dQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-f3mfGw8u.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-CsbsBLBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-CA9HCE2Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DMNO6Poc.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-48KFPvCp.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-rKGlekSQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-Fk_msRcD.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuGyzPVb.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C4DZksWV.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-Dkhsq416.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DZwIjHwu.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-Cgon0fXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CnrjjcMO.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-2LbFKIQQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DiQGBfwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CANi6nSX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-C2u-_EAQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-CXueMbRb.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DxdydCSG.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-D0iYysLh.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BktyywYg.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-D_YIPPZo.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CExKUszm.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CjPoUZCP.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-CgWOEYeG.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-DTeVFctC.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-DVEV2j1H.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CPbVtjKW.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-BzxoPflZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-VcOeHtkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D3YFXNmD.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-D7RG9Px_.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-CPTvLHMl.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-Msf1n32r.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DSv-aO_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DHJTIc4H.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-CUN2DC78.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BvoBtS_V.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-jhXeQEgs.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-DBMviz_K.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-DHhZkGEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-BRbNg7Li.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BDWM3c_z.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-vrPro738.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-dGUJ3Bw8.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D7fu7IC3.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CFvCMYuj.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DD5BwHTh.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CUkO1Vlo.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-B9I9mpZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-CKbqJyj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-48bgGoSa.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-zUHU--0D.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-xF5uWODg.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-FlZezxaf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-Doh9J-g6.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-ANiMIEDI.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-D_pYuT11.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-Cy7KBUrF.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tqeFGeKJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DkdBWh44.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DPWHdF_-.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CV7pqa1o.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BULc9l6b.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CaelsqOA.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.12\"\n# dependencies = [\n#     \"marimo\",\n#     \"numpy==2.4.3\",\n#     \"matplotlib==3.10.3\",\n# ]\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.13\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell\ndef _():\n    import marimo as mo\n    import numpy as np\n    import matplotlib.pyplot as plt\n\n    return mo, np, plt\n\n\n@app.cell\ndef _(mo):\n    # Controls\n    difficulty = mo.ui.radio([\"easy\", \"medium\", \"hard\"], value=\"medium\", label=\"Difficulty band\")\n    cost_target = mo.ui.slider(0.1, 1.5, 0.05, value=1.05, label=\"Strong-model cost ($/1K)\")\n    beta = mo.ui.slider(0.01, 0.9, 0.01, value=0.1, label=\"Accuracy weight \u03b2\")\n    return beta, cost_target, difficulty\n\n\n@app.cell\ndef _(difficulty, mo):\n    # Per-router synthetic accuracy and cost\n    _routers = {\n        \"Cheap\": (0.58, 0.28),\n        \"Mid\": (0.74, 0.55),\n        \"Strong\": (0.83, 1.05),\n        \"Fallback to Strong\": (0.79, 1.05),\n    }\n\n    # Accuracy drop by difficulty band, from paper-style scaling\n    _drop = {\"easy\": 1.00, \"medium\": 0.68, \"hard\": 0.18}\n    _rows = []\n    for _name, (_acc, _cost) in _routers.items():\n        _a = _acc * _drop[difficulty.value]\n        _rows.append((_name, _a, _cost))\n\n    _rows.sort(key=lambda x: x[2])\n    router_table = mo.ui.table(_rows, headers=[\"Router\", \"Accuracy\", \"Cost ($/1K)\"], selection=\"multi\")\n    return\n\n\n@app.cell\ndef _(beta, cost_target, mo, np):\n    # Rerun regex: ^(beta|cost_target)$\n    _a = np.array([0.58, 0.74, 0.83, 0.79])\n    _c = np.array([0.28, 0.55, float(cost_target.value), float(cost_target.value)])\n    _cmax = _c.max()\n    _cmin = _c.min()\n    _C_norm = (np.log2(_cmax) - np.log2(_c)) / (np.log2(_cmax) - np.log2(_cmin) + 1e-9)\n    _A_norm = _a\n    _beta = float(beta.value)\n    _score = (_A_norm * _C_norm) / (_beta * _A_norm + (1 - _beta) * _C_norm + 1e-9)\n    _best = int(np.argmax(_score))\n    _best_router = [\"Cheap\", \"Mid\", \"Strong\", \"Fallback to Strong\"][_best]\n    _best_score = round(float(_score[_best]), 3)\n    summary = mo.md(\n        f\"**Arena score winner:** {_best_router} ({_best_score})  \\n\"\n        f\"\u03b2={_beta:.2f} | strong model cost=${float(cost_target.value):.2f}/1K\"\n    )\n    return\n\n\n@app.cell\ndef _(cost_target, np, plt):\n    # Rerun regex: ^(cost_target)$\n    _paper_points = {\n        \"vLLM-SR\": (0.87, 0.30, 75.30, \"Claimed top-1 Arena score\"),\n        \"Sqwish\": (0.81, 0.18, 75.27, \"Cheapest top-3\"),\n        \"Hybrid\": (0.71, 0.04, 72.08, \"Lowest evaluated cost\"),\n    }\n\n    # Synthetic router accuracy profiles under a chosen band\n    _a = np.array([0.58, 0.74, 0.83, 0.79])\n    _c = np.array([0.28, 0.55, float(cost_target.value), float(cost_target.value)])\n\n    _fig, (_ax_scatter, _ax_deferral) = plt.subplots(1, 2, figsize=(10, 4.2))\n    # Left: accuracy vs cost with paper claims\n    _ax_scatter.scatter(_c, _a, s=80, color=\"#2563eb\", zorder=3)\n    for _i, _n in enumerate([\"Cheap\", \"Mid\", \"Strong\", \"Fallback\"]):\n        _ax_scatter.annotate(_n, (_c[_i], _a[_i]), textcoords=\"offset points\", xytext=(5, 5), fontsize=9)\n    for _name, (_pa, _pc, _ps, _note) in _paper_points.items():\n        _ax_scatter.scatter(_pc, _pa, s=100, color=\"#dc2626\", zorder=4)\n        _yoff = -12 if _name != \"Hybrid\" else 8\n        _ax_scatter.annotate(f\"{_name}\\n{_ps}\", (_pc, _pa), textcoords=\"offset points\", xytext=(6, _yoff), fontsize=8, color=\"#7f1d1d\")\n    _ax_scatter.set_xlabel(\"Cost ($ / 1K)\")\n    _ax_scatter.set_ylabel(\"Accuracy\")\n    _ax_scatter.set_title(\"Accuracy vs Cost\")\n    _ax_scatter.grid(True, alpha=0.35)\n\n    # Right: deferral-style accuracy-cost curves\n    _payoffs = np.linspace(0.0, 1.0, 120)\n    _x = 1.0 - _payoffs\n    _ax_deferral.plot(_x, np.clip(0.58 + 0.42 * _payoffs, 0, 1), label=\"Cheap router\", color=\"#60a5fa\")\n    _ax_deferral.plot(_x, np.clip(0.74 + 0.26 * _payoffs, 0, 1), label=\"Mid router\", color=\"#2563eb\")\n    _ax_deferral.plot(_x, np.clip(0.83 + 0.17 * _payoffs, 0, 1), label=\"Strong router\", color=\"#1e40af\")\n    _ax_deferral.axvline(0.65, color=\"#dc2626\", linestyle=\"--\", alpha=0.7, label=\"\u2248 paper cluster\")\n    _ax_deferral.set_xlabel(\"Normalized cost\")\n    _ax_deferral.set_ylabel(\"Accuracy\")\n    _ax_deferral.set_title(\"Deferral-style accuracy-cost curve\")\n    _ax_deferral.legend(fontsize=8)\n    _ax_deferral.grid(True, alpha=0.35)\n\n    _fig.tight_layout()\n    router_plot = _fig\n    return\n\n\n@app.cell\ndef _(mo):\n    # Notation reference\n    mo.md(r\"\"\"\n    **Notation**\n\n    - $A_i \\in [0,1]$: router accuracy\n    - $c_i \u003E 0$: per-query dollar cost\n    - $C_i = \\dfrac{\\log_2(c_{\\max}) - \\log_2(c_i)}{\\log_2(c_{\\max}) - \\log_2(c_{\\min})}$: log-normalized cost\n    - $S_{i,\\beta} = \\dfrac{A_i C_i}{\\beta A_i + (1-\\beta) C_i}$: weighted Arena score\n\n    Higher $S$ \u2192 higher leaderboard rank. Higher $\\beta$ prizes accuracy; lower $\\beta$ prizes cost.\n    \"\"\")\n    return\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden="">%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.12%22%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22numpy%3D%3D2.4.3%22%2C%0A%23%20%20%20%20%20%22matplotlib%3D%3D3.10.3%22%2C%0A%23%20%5D%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.13%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%0A%20%20%20%20return%20mo%2C%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20Controls%0A%20%20%20%20difficulty%20%3D%20mo.ui.radio(%5B%22easy%22%2C%20%22medium%22%2C%20%22hard%22%5D%2C%20value%3D%22medium%22%2C%20label%3D%22Difficulty%20band%22)%0A%20%20%20%20cost_target%20%3D%20mo.ui.slider(0.1%2C%201.5%2C%200.05%2C%20value%3D1.05%2C%20label%3D%22Strong-model%20cost%20(%24%2F1K)%22)%0A%20%20%20%20beta%20%3D%20mo.ui.slider(0.01%2C%200.9%2C%200.01%2C%20value%3D0.1%2C%20label%3D%22Accuracy%20weight%20%CE%B2%22)%0A%20%20%20%20return%20beta%2C%20cost_target%2C%20difficulty%0A%0A%0A%40app.cell%0Adef%20_(difficulty%2C%20mo)%3A%0A%20%20%20%20%23%20Per-router%20synthetic%20accuracy%20and%20cost%0A%20%20%20%20_routers%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%22Cheap%22%3A%20(0.58%2C%200.28)%2C%0A%20%20%20%20%20%20%20%20%22Mid%22%3A%20(0.74%2C%200.55)%2C%0A%20%20%20%20%20%20%20%20%22Strong%22%3A%20(0.83%2C%201.05)%2C%0A%20%20%20%20%20%20%20%20%22Fallback%20to%20Strong%22%3A%20(0.79%2C%201.05)%2C%0A%20%20%20%20%7D%0A%0A%20%20%20%20%23%20Accuracy%20drop%20by%20difficulty%20band%2C%20from%20paper-style%20scaling%0A%20%20%20%20_drop%20%3D%20%7B%22easy%22%3A%201.00%2C%20%22medium%22%3A%200.68%2C%20%22hard%22%3A%200.18%7D%0A%20%20%20%20_rows%20%3D%20%5B%5D%0A%20%20%20%20for%20_name%2C%20(_acc%2C%20_cost)%20in%20_routers.items()%3A%0A%20%20%20%20%20%20%20%20_a%20%3D%20_acc%20*%20_drop%5Bdifficulty.value%5D%0A%20%20%20%20%20%20%20%20_rows.append((_name%2C%20_a%2C%20_cost))%0A%0A%20%20%20%20_rows.sort(key%3Dlambda%20x%3A%20x%5B2%5D)%0A%20%20%20%20router_table%20%3D%20mo.ui.table(_rows%2C%20headers%3D%5B%22Router%22%2C%20%22Accuracy%22%2C%20%22Cost%20(%24%2F1K)%22%5D%2C%20selection%3D%22multi%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(beta%2C%20cost_target%2C%20mo%2C%20np)%3A%0A%20%20%20%20%23%20Rerun%20regex%3A%20%5E(beta%7Ccost_target)%24%0A%20%20%20%20_a%20%3D%20np.array(%5B0.58%2C%200.74%2C%200.83%2C%200.79%5D)%0A%20%20%20%20_c%20%3D%20np.array(%5B0.28%2C%200.55%2C%20float(cost_target.value)%2C%20float(cost_target.value)%5D)%0A%20%20%20%20_cmax%20%3D%20_c.max()%0A%20%20%20%20_cmin%20%3D%20_c.min()%0A%20%20%20%20_C_norm%20%3D%20(np.log2(_cmax)%20-%20np.log2(_c))%20%2F%20(np.log2(_cmax)%20-%20np.log2(_cmin)%20%2B%201e-9)%0A%20%20%20%20_A_norm%20%3D%20_a%0A%20%20%20%20_beta%20%3D%20float(beta.value)%0A%20%20%20%20_score%20%3D%20(_A_norm%20*%20_C_norm)%20%2F%20(_beta%20*%20_A_norm%20%2B%20(1%20-%20_beta)%20*%20_C_norm%20%2B%201e-9)%0A%20%20%20%20_best%20%3D%20int(np.argmax(_score))%0A%20%20%20%20_best_router%20%3D%20%5B%22Cheap%22%2C%20%22Mid%22%2C%20%22Strong%22%2C%20%22Fallback%20to%20Strong%22%5D%5B_best%5D%0A%20%20%20%20_best_score%20%3D%20round(float(_score%5B_best%5D)%2C%203)%0A%20%20%20%20summary%20%3D%20mo.md(%0A%20%20%20%20%20%20%20%20f%22**Arena%20score%20winner%3A**%20%7B_best_router%7D%20(%7B_best_score%7D)%20%20%5Cn%22%0A%20%20%20%20%20%20%20%20f%22%CE%B2%3D%7B_beta%3A.2f%7D%20%7C%20strong%20model%20cost%3D%24%7Bfloat(cost_target.value)%3A.2f%7D%2F1K%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(cost_target%2C%20np%2C%20plt)%3A%0A%20%20%20%20%23%20Rerun%20regex%3A%20%5E(cost_target)%24%0A%20%20%20%20_paper_points%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%22vLLM-SR%22%3A%20(0.87%2C%200.30%2C%2075.30%2C%20%22Claimed%20top-1%20Arena%20score%22)%2C%0A%20%20%20%20%20%20%20%20%22Sqwish%22%3A%20(0.81%2C%200.18%2C%2075.27%2C%20%22Cheapest%20top-3%22)%2C%0A%20%20%20%20%20%20%20%20%22Hybrid%22%3A%20(0.71%2C%200.04%2C%2072.08%2C%20%22Lowest%20evaluated%20cost%22)%2C%0A%20%20%20%20%7D%0A%0A%20%20%20%20%23%20Synthetic%20router%20accuracy%20profiles%20under%20a%20chosen%20band%0A%20%20%20%20_a%20%3D%20np.array(%5B0.58%2C%200.74%2C%200.83%2C%200.79%5D)%0A%20%20%20%20_c%20%3D%20np.array(%5B0.28%2C%200.55%2C%20float(cost_target.value)%2C%20float(cost_target.value)%5D)%0A%0A%20%20%20%20_fig%2C%20(_ax_scatter%2C%20_ax_deferral)%20%3D%20plt.subplots(1%2C%202%2C%20figsize%3D(10%2C%204.2))%0A%20%20%20%20%23%20Left%3A%20accuracy%20vs%20cost%20with%20paper%20claims%0A%20%20%20%20_ax_scatter.scatter(_c%2C%20_a%2C%20s%3D80%2C%20color%3D%22%232563eb%22%2C%20zorder%3D3)%0A%20%20%20%20for%20_i%2C%20_n%20in%20enumerate(%5B%22Cheap%22%2C%20%22Mid%22%2C%20%22Strong%22%2C%20%22Fallback%22%5D)%3A%0A%20%20%20%20%20%20%20%20_ax_scatter.annotate(_n%2C%20(_c%5B_i%5D%2C%20_a%5B_i%5D)%2C%20textcoords%3D%22offset%20points%22%2C%20xytext%3D(5%2C%205)%2C%20fontsize%3D9)%0A%20%20%20%20for%20_name%2C%20(_pa%2C%20_pc%2C%20_ps%2C%20_note)%20in%20_paper_points.items()%3A%0A%20%20%20%20%20%20%20%20_ax_scatter.scatter(_pc%2C%20_pa%2C%20s%3D100%2C%20color%3D%22%23dc2626%22%2C%20zorder%3D4)%0A%20%20%20%20%20%20%20%20_yoff%20%3D%20-12%20if%20_name%20!%3D%20%22Hybrid%22%20else%208%0A%20%20%20%20%20%20%20%20_ax_scatter.annotate(f%22%7B_name%7D%5Cn%7B_ps%7D%22%2C%20(_pc%2C%20_pa)%2C%20textcoords%3D%22offset%20points%22%2C%20xytext%3D(6%2C%20_yoff)%2C%20fontsize%3D8%2C%20color%3D%22%237f1d1d%22)%0A%20%20%20%20_ax_scatter.set_xlabel(%22Cost%20(%24%20%2F%201K)%22)%0A%20%20%20%20_ax_scatter.set_ylabel(%22Accuracy%22)%0A%20%20%20%20_ax_scatter.set_title(%22Accuracy%20vs%20Cost%22)%0A%20%20%20%20_ax_scatter.grid(True%2C%20alpha%3D0.35)%0A%0A%20%20%20%20%23%20Right%3A%20deferral-style%20accuracy-cost%20curves%0A%20%20%20%20_payoffs%20%3D%20np.linspace(0.0%2C%201.0%2C%20120)%0A%20%20%20%20_x%20%3D%201.0%20-%20_payoffs%0A%20%20%20%20_ax_deferral.plot(_x%2C%20np.clip(0.58%20%2B%200.42%20*%20_payoffs%2C%200%2C%201)%2C%20label%3D%22Cheap%20router%22%2C%20color%3D%22%2360a5fa%22)%0A%20%20%20%20_ax_deferral.plot(_x%2C%20np.clip(0.74%20%2B%200.26%20*%20_payoffs%2C%200%2C%201)%2C%20label%3D%22Mid%20router%22%2C%20color%3D%22%232563eb%22)%0A%20%20%20%20_ax_deferral.plot(_x%2C%20np.clip(0.83%20%2B%200.17%20*%20_payoffs%2C%200%2C%201)%2C%20label%3D%22Strong%20router%22%2C%20color%3D%22%231e40af%22)%0A%20%20%20%20_ax_deferral.axvline(0.65%2C%20color%3D%22%23dc2626%22%2C%20linestyle%3D%22--%22%2C%20alpha%3D0.7%2C%20label%3D%22%E2%89%88%20paper%20cluster%22)%0A%20%20%20%20_ax_deferral.set_xlabel(%22Normalized%20cost%22)%0A%20%20%20%20_ax_deferral.set_ylabel(%22Accuracy%22)%0A%20%20%20%20_ax_deferral.set_title(%22Deferral-style%20accuracy-cost%20curve%22)%0A%20%20%20%20_ax_deferral.legend(fontsize%3D8)%0A%20%20%20%20_ax_deferral.grid(True%2C%20alpha%3D0.35)%0A%0A%20%20%20%20_fig.tight_layout()%0A%20%20%20%20router_plot%20%3D%20_fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20Notation%20reference%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20**Notation**%0A%0A%20%20%20%20-%20%24A_i%20%5Cin%20%5B0%2C1%5D%24%3A%20router%20accuracy%0A%20%20%20%20-%20%24c_i%20%3E%200%24%3A%20per-query%20dollar%20cost%0A%20%20%20%20-%20%24C_i%20%3D%20%5Cdfrac%7B%5Clog_2(c_%7B%5Cmax%7D)%20-%20%5Clog_2(c_i)%7D%7B%5Clog_2(c_%7B%5Cmax%7D)%20-%20%5Clog_2(c_%7B%5Cmin%7D)%7D%24%3A%20log-normalized%20cost%0A%20%20%20%20-%20%24S_%7Bi%2C%5Cbeta%7D%20%3D%20%5Cdfrac%7BA_i%20C_i%7D%7B%5Cbeta%20A_i%20%2B%20(1-%5Cbeta)%20C_i%7D%24%3A%20weighted%20Arena%20score%0A%0A%20%20%20%20Higher%20%24S%24%20%E2%86%92%20higher%20leaderboard%20rank.%20Higher%20%24%5Cbeta%24%20prizes%20accuracy%3B%20lower%20%24%5Cbeta%24%20prizes%20cost.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.13",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

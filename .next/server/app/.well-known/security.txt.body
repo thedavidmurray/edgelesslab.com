@@ -1,0 +1,10 @@
+# Edgeless Lab security disclosure (RFC 9116)
+Contact: https://github.com/edgeless-ai/edgelesslab.com/security/advisories/new
+Contact: mailto:security@edgelesslab.com
+Expires: 2027-10-18T04:06:33.618Z
+Preferred-Languages: en, de
+Canonical: https://edgelesslab.com/.well-known/security.txt
+
+# We acknowledge valid reports within 72 hours and aim to ship a fix or
+# mitigation within 14 days for high-severity issues. We coordinate disclosure
+# timelines with reporters and credit them in the changelog unless asked to stay anonymous.

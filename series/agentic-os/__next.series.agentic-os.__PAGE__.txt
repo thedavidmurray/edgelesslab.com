@@ -1,0 +1,21 @@
+1:"$Sreact.fragment"
+2:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+7:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"ViewportBoundary"]
+8:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"MetadataBoundary"]
+9:I[50529,["/_next/static/chunks/2cue0t2y-yu_9.js"],"IconMark"]
+b:I[67593,["/_next/static/chunks/2cue0t2y-yu_9.js"],"default"]
+c:I[92370,["/_next/static/chunks/2cue0t2y-yu_9.js"],"default"]
+6:X
+e:X
+e:C
+0:{"buildId":"ILG6gReoatO94noDnyNVS","data":[{"rsc":["$","$1","c",{"children":[["$","iframe",null,{"src":"/series/agentic-os/index.html","title":"Agentic OS series","className":"h-[calc(100dvh-64px)] w-full border-0","sandbox":"allow-scripts allow-same-origin","loading":"lazy"}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":"$@5","staleTime":"$6","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L7",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L8",null,{"children":["$","$3",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Agentic OS — Building Autonomous AI Infrastructure | Edgeless Lab"}],["$","meta","1",{"name":"description","content":"A 6-part series on building autonomous AI infrastructure: multi-agent orchestration, knowledge pipelines, security, and self-healing systems."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","meta","3",{"name":"googlebot","content":"index, follow"}],["$","link","4",{"rel":"canonical","href":"https://edgelesslab.com/series/agentic-os/"}],["$","meta","5",{"property":"og:title","content":"Edgeless Lab | Systems, Field Notes, and Generative Work"}],["$","meta","6",{"property":"og:description","content":"A public research studio for autonomous software, generative systems, and physical artifacts."}],["$","meta","7",{"property":"og:url","content":"https://edgelesslab.com/"}],["$","meta","8",{"property":"og:site_name","content":"Edgeless Lab"}],["$","meta","9",{"property":"og:locale","content":"en_US"}],["$","meta","10",{"property":"og:image","content":"https://edgelesslab.com/og-image.webp"}],["$","meta","11",{"property":"og:image:width","content":"1200"}],["$","meta","12",{"property":"og:image:height","content":"630"}],["$","meta","13",{"property":"og:image:alt","content":"Edgeless Lab systems, Field Notes, and generative work"}],["$","meta","14",{"property":"og:type","content":"website"}],["$","meta","15",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","16",{"name":"twitter:title","content":"Edgeless Lab | Systems, Field Notes, and Generative Work"}],["$","meta","17",{"name":"twitter:description","content":"A public research studio for autonomous software, generative systems, and physical artifacts."}],["$","meta","18",{"name":"twitter:image","content":"https://edgelesslab.com/og-image.webp"}],["$","link","19",{"rel":"icon","href":"/favicon.svg"}],["$","link","20",{"rel":"apple-touch-icon","href":"/apple-touch-icon.png"}],["$","$L9","21",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@a","staleTime":"$6","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lb",null,{"parallelRouterKey":"children","template":["$","$Lc",null,{}]}]]}],"isPartial":"$@d","staleTime":"$6","varyParams":"$e"},{"rsc":["$","$1","c",{"children":[null,["$","$Lb",null,{"parallelRouterKey":"children","template":["$","$Lc",null,{}]}]]}],"isPartial":"$@f","staleTime":"$6","varyParams":"$e"}],"isUpgradeableISRFallback":false,"a":"$@10","rootVaryParams":null,"needsRuntimeRequest":"$@11"}
+4:null
+11:true
+6:300
+6:C
+10:0
+a:"$undefined"
+d:"$undefined"
+f:"$undefined"
+5:"$undefined"

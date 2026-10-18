@@ -1,0 +1,99 @@
+{
+  "name": "YouTube Monitor + AI Digest",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "cronExpression", "expression": "0 10 * * 0"}]
+        }
+      },
+      "id": "cron-trigger",
+      "name": "Weekly Sunday 10am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.feed_url }}",
+        "options": {"timeout": 10000}
+      },
+      "id": "fetch-rss",
+      "name": "Fetch YouTube RSS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// YouTube channel RSS feeds - ADD YOUR CHANNELS HERE\nconst channels = [\n  { name: 'Fireship', id: 'UCsBjURrPoezykLs9EqgamOA' },\n  { name: 'Theo', id: 'UCbRP3c757lWg9M-U7TyEkXA' },\n  { name: 'ThePrimeagen', id: 'UCUyeluBRhGPCW4rPe_UvBZQ' },\n];\n\nreturn channels.map(ch => ({\n  json: {\n    channel_name: ch.name,\n    feed_url: `https://www.youtube.com/feeds/videos.xml?channel_id=${ch.id}`\n  }\n}));"
+      },
+      "id": "channel-list",
+      "name": "Channel List",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Parse RSS XML and extract video entries\nconst xml = $input.first().json.data;\nconst entries = [];\nconst regex = /<entry>(.*?)<\\/entry>/gs;\nlet match;\nwhile ((match = regex.exec(xml)) !== null) {\n  const entry = match[1];\n  const title = entry.match(/<title>(.*?)<\\/title>/)?.[1] || '';\n  const videoId = entry.match(/<yt:videoId>(.*?)<\\/yt:videoId>/)?.[1] || '';\n  const published = entry.match(/<published>(.*?)<\\/published>/)?.[1] || '';\n  const description = entry.match(/<media:description>(.*?)<\\/media:description>/s)?.[1] || '';\n  entries.push({ json: { title, videoId, published, description, url: `https://youtube.com/watch?v=${videoId}` } });\n}\nreturn entries.slice(0, 10); // Last 10 videos"
+      },
+      "id": "parse-rss",
+      "name": "Parse RSS",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={{ $env.GOOGLE_GEMINI_API_KEY }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: `Summarize this YouTube video in exactly 3 sentences. Focus on the key takeaway, not the video structure. Be specific about claims and numbers.\\n\\nTitle: ${$json.title}\\nDescription: ${$json.description}` }] }] }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "ai-summary",
+      "name": "AI Summary (Gemini)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 300],
+      "notes": "Reads GOOGLE_GEMINI_API_KEY from .env. To swap providers, see guide.md Chapter 8."
+    },
+    {
+      "parameters": {
+        "functionCode": "// Format all summaries into HTML email\nconst items = $input.all();\nlet html = '<h2>Weekly YouTube Digest</h2>';\nhtml += `<p style=\"color:#666\">${new Date().toLocaleDateString()} - ${items.length} videos</p>`;\n\nfor (const item of items) {\n  const summary = item.json?.candidates?.[0]?.content?.parts?.[0]?.text || 'Summary unavailable';\n  html += `<div style=\"margin:16px 0;padding:12px;border-left:3px solid #4285f4\">`;\n  html += `<strong><a href=\"${item.json.url}\">${item.json.title}</a></strong>`;\n  html += `<p style=\"color:#333;margin:8px 0\">${summary}</p>`;\n  html += `</div>`;\n}\n\nreturn [{ json: { subject: `YouTube Digest - ${new Date().toLocaleDateString()}`, html } }];"
+      },
+      "id": "format-digest",
+      "name": "Format Digest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.DIGEST_FROM_EMAIL }}",
+        "toEmail": "={{ $env.DIGEST_TO_EMAIL }}",
+        "subject": "={{ $json.subject }}",
+        "html": "={{ $json.html }}"
+      },
+      "id": "send-email",
+      "name": "Send Digest Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1540, 300],
+      "notes": "Configure SMTP credentials first"
+    }
+  ],
+  "connections": {
+    "Weekly Sunday 10am": {"main": [[{"node": "Channel List", "type": "main", "index": 0}]]},
+    "Channel List": {"main": [[{"node": "Fetch YouTube RSS", "type": "main", "index": 0}]]},
+    "Fetch YouTube RSS": {"main": [[{"node": "Parse RSS", "type": "main", "index": 0}]]},
+    "Parse RSS": {"main": [[{"node": "AI Summary (Gemini)", "type": "main", "index": 0}]]},
+    "AI Summary (Gemini)": {"main": [[{"node": "Format Digest", "type": "main", "index": 0}]]},
+    "Format Digest": {"main": [[{"node": "Send Digest Email", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": [{"name": "ai-workflows"}]
+}

@@ -1,0 +1,3 @@
+module.exports=[89738,a=>{"use strict";a.s(["CommandPalette",()=>b]);let b=(0,a.i(46122).registerClientReference)(function(){throw Error("Attempted to call CommandPalette() from the server but CommandPalette is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.")},"[project]/src/components/command-palette.tsx","CommandPalette")},85996,a=>{"use strict";var b=a.i(89738);a.n(b)},22566,function(a){a.n(a.i(85996))}];
+
+//# sourceMappingURL=src_components_command-palette_tsx_1tdqt95._.js.map

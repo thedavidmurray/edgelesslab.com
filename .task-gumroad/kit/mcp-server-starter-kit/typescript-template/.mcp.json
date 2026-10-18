@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mcp-server-template": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "/absolute/path/to/typescript-template",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}

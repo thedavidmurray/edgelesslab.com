@@ -1,0 +1,105 @@
+{
+  "name": "Service Health Check + Alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "cronExpression", "expression": "*/5 * * * *"}]
+        }
+      },
+      "id": "cron-5m",
+      "name": "Every 5 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Services to monitor - CUSTOMIZE THESE\nconst services = [\n  { name: 'n8n',        url: 'http://localhost:5678/healthz',    expected_status: 200, expected_body: 'ok', timeout_ms: 5000,  alert_after_failures: 2 },\n  { name: 'API Server', url: 'https://api.example.com/health',    expected_status: 200,                     timeout_ms: 10000, alert_after_failures: 3 },\n  { name: 'Website',    url: 'https://example.com',               expected_status: 200,                     timeout_ms: 15000, alert_after_failures: 2 }\n];\n\nreturn services.map(s => ({ json: s }));"
+      },
+      "id": "service-list",
+      "name": "Service List",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "timeout": "={{ $json.timeout_ms }}",
+          "redirect": {"redirect": {"followRedirects": true}},
+          "response": {"response": {"fullResponse": true}}
+        }
+      },
+      "id": "health-check",
+      "name": "Health Check",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [660, 300],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "functionCode": "// Evaluate health check results with persistent failure counters.\n// NOTE: /home/node/.n8n/health-state is a mounted volume in docker-compose.yml.\n// Without that volume, counters reset on every container restart.\nconst items = $input.all();\nconst fs = require('fs');\nconst STATE_DIR  = '/home/node/.n8n/health-state';\nconst STATE_FILE = `${STATE_DIR}/health-state.json`;\n\ntry { fs.mkdirSync(STATE_DIR, { recursive: true }); } catch(e) {}\n\nlet state = {};\ntry { state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch(e) {}\n\nconst alerts = [];\nconst recoveries = [];\n\nfor (const item of items) {\n  const name = item.json.name;\n  const status = item.json.statusCode;\n  const expected = item.json.expected_status || 200;\n  const threshold = item.json.alert_after_failures || 2;\n  const healthy = status === expected;\n\n  if (!state[name]) state[name] = { failures: 0, alerted: false, down_since: null };\n\n  if (!healthy) {\n    state[name].failures++;\n    if (!state[name].down_since) state[name].down_since = new Date().toISOString();\n    if (state[name].failures >= threshold && !state[name].alerted) {\n      state[name].alerted = true;\n      alerts.push({ name, status, failures: state[name].failures, down_since: state[name].down_since });\n    }\n  } else {\n    if (state[name].alerted) {\n      const downtime = state[name].down_since ? Math.round((Date.now() - new Date(state[name].down_since)) / 60000) : 0;\n      recoveries.push({ name, downtime_minutes: downtime });\n    }\n    state[name] = { failures: 0, alerted: false, down_since: null };\n  }\n}\n\nfs.writeFileSync(STATE_FILE, JSON.stringify(state));\n\nconst results = [];\nfor (const a of alerts)     results.push({ json: { type: 'alert',    message: `\\uD83D\\uDD34 DOWN: ${a.name} (status ${a.status}, ${a.failures} failures since ${a.down_since})` } });\nfor (const r of recoveries) results.push({ json: { type: 'recovery', message: `\\u2705 RECOVERED: ${r.name} (was down ${r.downtime_minutes}min)` } });\n\nreturn results.length > 0 ? results : [{ json: { type: 'ok', message: 'All services healthy' } }];"
+      },
+      "id": "evaluate",
+      "name": "Evaluate Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [{"value1": "={{ $json.type }}", "operation": "notEqual", "value2": "ok"}]
+        }
+      },
+      "id": "filter-alerts",
+      "name": "Has Alerts?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1100, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chat_id: $env.TELEGRAM_CHAT_ID, text: $json.message, disable_web_page_preview: true }) }}",
+        "options": {"timeout": 10000}
+      },
+      "id": "telegram-alert",
+      "name": "Send Telegram Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 260],
+      "notes": "TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID must be set in .env."
+    },
+    {
+      "parameters": {
+        "functionCode": "// No-op branch for healthy state. Kept so the IF false branch has a sink\n// and executions render cleanly in the UI.\nreturn [{ json: { ok: true, at: new Date().toISOString() } }];"
+      },
+      "id": "healthy-noop",
+      "name": "All Healthy (no-op)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 360]
+    }
+  ],
+  "connections": {
+    "Every 5 Minutes": {"main": [[{"node": "Service List", "type": "main", "index": 0}]]},
+    "Service List": {"main": [[{"node": "Health Check", "type": "main", "index": 0}]]},
+    "Health Check": {"main": [[{"node": "Evaluate Results", "type": "main", "index": 0}]]},
+    "Evaluate Results": {"main": [[{"node": "Has Alerts?", "type": "main", "index": 0}]]},
+    "Has Alerts?": {
+      "main": [
+        [{"node": "Send Telegram Alert", "type": "main", "index": 0}],
+        [{"node": "All Healthy (no-op)", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": [{"name": "ai-workflows"}],
+  "notes": "State file persists at /home/node/.n8n/health-state/health-state.json (volume-mounted to ./health-state on host). Without that mount, counters reset on container restart and alert debouncing breaks."
+}

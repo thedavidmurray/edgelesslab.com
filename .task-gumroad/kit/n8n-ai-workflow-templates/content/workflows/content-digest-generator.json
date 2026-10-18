@@ -1,0 +1,85 @@
+{
+  "name": "AI Content Digest Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "cronExpression", "expression": "0 9 * * 1"}]
+        }
+      },
+      "id": "cron-weekly",
+      "name": "Weekly Monday 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Read content from source directory\n// Customize SOURCE_DIR to your content location\nconst fs = require('fs');\nconst path = require('path');\n\nconst SOURCE_DIR = '/home/node/workflows/content-inbox';\nconst articles = [];\n\ntry {\n  const files = fs.readdirSync(SOURCE_DIR).filter(f => f.endsWith('.md'));\n  for (const file of files.slice(0, 50)) {\n    const content = fs.readFileSync(path.join(SOURCE_DIR, file), 'utf8');\n    const fmMatch = content.match(/^---\\n([\\s\\S]*?)\\n---/);\n    let meta = {};\n    if (fmMatch) {\n      for (const line of fmMatch[1].split('\\n')) {\n        const [key, ...val] = line.split(':');\n        if (key && val.length) meta[key.trim()] = val.join(':').trim();\n      }\n    }\n    const body = content.replace(/^---[\\s\\S]*?---\\n?/, '').trim();\n    articles.push({ json: { file, title: meta.title || file, url: meta.url || '', tags: meta.tags || 'uncategorized', body: body.slice(0, 1000) } });\n  }\n} catch (e) {\n  return [{ json: { error: `Could not read ${SOURCE_DIR}: ${e.message}` } }];\n}\n\nreturn articles;"
+      },
+      "id": "read-content",
+      "name": "Read Content Files",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Group articles by tag/category\nconst items = $input.all();\nconst groups = {};\n\nfor (const item of items) {\n  const tag = item.json.tags || 'uncategorized';\n  if (!groups[tag]) groups[tag] = [];\n  groups[tag].push(item.json);\n}\n\nreturn Object.entries(groups).map(([category, articles]) => ({\n  json: { category, articles, count: articles.length }\n}));"
+      },
+      "id": "group-by-category",
+      "name": "Group by Category",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={{ $env.GOOGLE_GEMINI_API_KEY }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ contents: [{ parts: [{ text: `Generate a digest summary for this category of articles.\\n\\nCategory: ${$json.category}\\nArticle count: ${$json.count}\\n\\nArticles:\\n${$json.articles.map(a => `- ${a.title}: ${a.body.slice(0, 200)}`).join('\\n')}\\n\\nProvide:\\n1. Category theme (1 sentence)\\n2. Top 3 picks with 1-sentence commentary each\\n3. Emerging trend (1 sentence)\\n\\nRespond in markdown format.` }] }] }) }}",
+        "options": {"timeout": 30000}
+      },
+      "id": "ai-digest",
+      "name": "AI Category Digest",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Compile all category digests into final HTML email body\nconst items = $input.all();\nlet html = '<h1>Weekly Content Digest</h1>';\nhtml += `<p style=\"color:#666\">${new Date().toLocaleDateString()}</p>`;\n\nfor (const item of items) {\n  const text = item.json?.candidates?.[0]?.content?.parts?.[0]?.text || 'No digest generated';\n  html += `<h2>${item.json.category || 'General'}</h2>`;\n  html += `<div>${text.replace(/\\n/g, '<br>')}</div><hr>`;\n}\n\nreturn [{ json: { subject: `Content Digest - ${new Date().toLocaleDateString()}`, html, to: $env.DIGEST_TO_EMAIL || 'you@example.com', from: $env.DIGEST_FROM_EMAIL || 'you@example.com' } }];"
+      },
+      "id": "compile-digest",
+      "name": "Compile Final Digest",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $json.from }}",
+        "toEmail": "={{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "html": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "send-email",
+      "name": "Send Digest Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1320, 300],
+      "notes": "Configure SMTP credentials in n8n once. From/To pulled from DIGEST_FROM_EMAIL/DIGEST_TO_EMAIL env vars."
+    }
+  ],
+  "connections": {
+    "Weekly Monday 9am": {"main": [[{"node": "Read Content Files", "type": "main", "index": 0}]]},
+    "Read Content Files": {"main": [[{"node": "Group by Category", "type": "main", "index": 0}]]},
+    "Group by Category": {"main": [[{"node": "AI Category Digest", "type": "main", "index": 0}]]},
+    "AI Category Digest": {"main": [[{"node": "Compile Final Digest", "type": "main", "index": 0}]]},
+    "Compile Final Digest": {"main": [[{"node": "Send Digest Email", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": [{"name": "ai-workflows"}]
+}

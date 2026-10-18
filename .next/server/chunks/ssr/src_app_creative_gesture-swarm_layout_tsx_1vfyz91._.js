@@ -1,0 +1,3 @@
+module.exports=[22521,a=>{"use strict";let b="Gesture Swarm",c="An interactive multi-armed bandit visualization: steer a swarm of exploring agents and watch exploration versus exploitation resolve in real time.",d="https://edgelesslab.com/creative/gesture-swarm/";a.s(["default",0,function({children:a}){return a},"metadata",0,{title:b,description:c,openGraph:{title:b,description:c,url:d,type:"website"},twitter:{card:"summary_large_image",title:b,description:c},alternates:{canonical:d}}])},17048,function(a){a.n(a.i(22521))}];
+
+//# sourceMappingURL=src_app_creative_gesture-swarm_layout_tsx_1vfyz91._.js.map

@@ -1,0 +1,8 @@
+{
+  "success": false,
+  "error": {
+    "type": "usage_error",
+    "code": "invalid_input",
+    "message": "unknown flag: --all\n\nUsage:\n  gumroad products list [flags]\n\nExamples:\n  gumroad products list\n\nRun \"gumroad products list --help\" for more information."
+  }
+}

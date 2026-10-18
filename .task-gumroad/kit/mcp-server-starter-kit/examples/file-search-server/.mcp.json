@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "file-search": {
+      "command": "python",
+      "args": ["-m", "src.server"],
+      "cwd": "/absolute/path/to/file-search-server",
+      "env": {
+        "ROOT_DIR": "/absolute/path/to/search/root"
+      }
+    }
+  }
+}

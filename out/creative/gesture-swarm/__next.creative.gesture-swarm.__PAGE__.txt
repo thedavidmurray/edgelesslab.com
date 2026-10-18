@@ -1,0 +1,25 @@
+1:"$Sreact.fragment"
+2:I[75750,["/_next/static/chunks/2cue0t2y-yu_9.js"],"ClientPageRoot"]
+3:I[81490,["/_next/static/chunks/2cue0t2y-yu_9.js","/_next/static/chunks/3sjfofcz05k6-.js","/_next/static/chunks/0nnoo5mg_tx68.js"],"default"]
+6:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"OutletBoundary"]
+7:"$Sreact.suspense"
+b:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"ViewportBoundary"]
+c:I[1913,["/_next/static/chunks/2cue0t2y-yu_9.js"],"MetadataBoundary"]
+d:I[50529,["/_next/static/chunks/2cue0t2y-yu_9.js"],"IconMark"]
+f:I[67593,["/_next/static/chunks/2cue0t2y-yu_9.js"],"default"]
+10:I[92370,["/_next/static/chunks/2cue0t2y-yu_9.js"],"default"]
+a:X
+13:X
+13:C
+0:{"buildId":"ILG6gReoatO94noDnyNVS","data":[{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/3sjfofcz05k6-.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/0nnoo5mg_tx68.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":"$@9","staleTime":"$a","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$Lb",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$Lc",null,{"children":["$","$7",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Gesture Swarm | Edgeless Lab"}],["$","meta","1",{"name":"description","content":"An interactive multi-armed bandit visualization: steer a swarm of exploring agents and watch exploration versus exploitation resolve in real time."}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","meta","3",{"name":"googlebot","content":"index, follow"}],["$","link","4",{"rel":"canonical","href":"https://edgelesslab.com/creative/gesture-swarm/"}],["$","meta","5",{"property":"og:title","content":"Gesture Swarm"}],["$","meta","6",{"property":"og:description","content":"An interactive multi-armed bandit visualization: steer a swarm of exploring agents and watch exploration versus exploitation resolve in real time."}],["$","meta","7",{"property":"og:url","content":"https://edgelesslab.com/creative/gesture-swarm/"}],["$","meta","8",{"property":"og:type","content":"website"}],["$","meta","9",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","10",{"name":"twitter:title","content":"Gesture Swarm"}],["$","meta","11",{"name":"twitter:description","content":"An interactive multi-armed bandit visualization: steer a swarm of exploring agents and watch exploration versus exploitation resolve in real time."}],["$","link","12",{"rel":"icon","href":"/favicon.svg"}],["$","link","13",{"rel":"apple-touch-icon","href":"/apple-touch-icon.png"}],["$","$Ld","14",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":"$@e","staleTime":"$a","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lf",null,{"parallelRouterKey":"children","template":["$","$L10",null,{}]}]]}],"isPartial":"$@11","staleTime":"$a","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lf",null,{"parallelRouterKey":"children","template":["$","$L10",null,{}]}]]}],"isPartial":"$@12","staleTime":"$a","varyParams":"$13"}],"isUpgradeableISRFallback":false,"a":"$@14","rootVaryParams":null,"needsRuntimeRequest":"$@15"}
+4:{}
+5:"$0:data:0:rsc:props:children:0:props:serverProvidedParams:params"
+8:null
+15:true
+a:300
+a:C
+14:0
+e:"$undefined"
+11:"$undefined"
+12:"$undefined"
+9:"$undefined"

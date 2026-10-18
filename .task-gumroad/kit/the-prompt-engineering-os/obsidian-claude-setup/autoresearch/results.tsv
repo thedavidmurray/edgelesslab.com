@@ -1,0 +1,2 @@
+timestamp	template	experiment_id	task_accuracy	completeness	clarity	conciseness	persona_fit	composite	status	notes
+2026-03-12T21:32:46Z	solo-dev	smoke-test	7	7	8	8	9	7.55	OK	The template is good overall. To improve task accuracy, add examples of how to combine commands (e.g., read a file and then append to daily note). Also, clarify how to specify the *current* daily note (e.g., using a date format in the filename).

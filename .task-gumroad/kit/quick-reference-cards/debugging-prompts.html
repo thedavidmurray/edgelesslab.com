@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debugging Prompt Toolkit — Edgeless Quick Reference</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #0f172a;
+    --surface: #1e293b;
+    --border:  #334155;
+    --indigo:  #6366f1;
+    --indigo2: #818cf8;
+    --text:    #f1f5f9;
+    --muted:   #94a3b8;
+    --green:   #34d399;
+    --amber:   #fbbf24;
+    --red:     #f87171;
+    --mono:    'Roboto Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 10mm 10mm 8mm;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1.5px solid var(--indigo);
+    padding-bottom: 5px;
+    margin-bottom: 2px;
+  }
+  .header h1 { font-size: 15px; color: var(--indigo2); letter-spacing: 0.02em; }
+  .header .badge {
+    font-size: 9px;
+    background: var(--indigo);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  .sub-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--indigo2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1px;
+  }
+
+  /* Flow steps */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 6px;
+    align-items: start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 8px;
+  }
+
+  .step-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--indigo);
+    line-height: 1.4;
+  }
+
+  .step-body {}
+  .step-body .label {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .step-body .prompt {
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--indigo);
+    border-radius: 3px;
+    padding: 4px 7px;
+    font-size: 9px;
+    color: var(--green);
+    line-height: 1.55;
+    white-space: pre-wrap;
+    margin-bottom: 2px;
+  }
+  .step-body .note {
+    font-size: 8.5px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Two column layout for prompts and anti-patterns */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .col-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .col-card-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 3px;
+    margin-bottom: 1px;
+  }
+  .col-card-title.green { color: var(--green); }
+  .col-card-title.red   { color: var(--red); }
+  .col-card-title.amber { color: var(--amber); }
+
+  .prompt-item {
+    background: #0f172a;
+    border-left: 3px solid var(--indigo);
+    border-radius: 2px;
+    padding: 4px 6px;
+    font-size: 8.5px;
+    color: var(--green);
+    line-height: 1.5;
+  }
+
+  .anti-item {
+    background: #0f172a;
+    border-left: 3px solid var(--red);
+    border-radius: 2px;
+    padding: 4px 6px;
+    font-size: 8.5px;
+    color: var(--red);
+    line-height: 1.5;
+  }
+
+  .tip-item {
+    background: #0f172a;
+    border-left: 3px solid var(--amber);
+    border-radius: 2px;
+    padding: 4px 6px;
+    font-size: 8.5px;
+    color: var(--amber);
+    line-height: 1.5;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 4px;
+    margin-top: auto;
+    font-size: 8.5px;
+    color: var(--muted);
+  }
+  .footer .logo { color: var(--indigo2); font-weight: 700; letter-spacing: 0.1em; }
+
+  @media print {
+    @page { size: A4; margin: 8mm; }
+    :root {
+      --bg:      #ffffff;
+      --surface: #f8fafc;
+      --border:  #cbd5e1;
+      --indigo:  #4f46e5;
+      --indigo2: #4338ca;
+      --text:    #0f172a;
+      --muted:   #475569;
+      --green:   #065f46;
+      --amber:   #92400e;
+      --red:     #991b1b;
+    }
+    html, body { background: #fff; }
+    .page { margin: 0; padding: 0; width: 100%; }
+    .step-body .prompt { background: #f1f5f9; }
+    .prompt-item, .anti-item, .tip-item { background: #f1f5f9; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Debugging Prompt Toolkit</h1>
+    <span class="badge">CARD 4 / 6</span>
+  </div>
+
+  <!-- Systematic flow -->
+  <div class="sub-title">Systematic Debugging Flow</div>
+  <div class="flow">
+
+    <div class="step">
+      <span class="step-num">01</span>
+      <div class="step-body">
+        <div class="label">Read the error before anything else</div>
+        <div class="prompt">Here is the exact error message:
+[paste error]
+Here is the file and line it points to:
+[paste code]
+Read both carefully before suggesting anything.</div>
+        <div class="note">Force Claude to anchor on the actual error, not a guess at what the error might be.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">02</span>
+      <div class="step-body">
+        <div class="label">List hypotheses before changing anything</div>
+        <div class="prompt">List exactly 3 hypotheses for what could cause this error.
+For each hypothesis: state it, state what evidence supports it,
+and state what test would confirm or rule it out.
+Do NOT write any code yet.</div>
+        <div class="note">Prevents the common failure mode of jumping to the first plausible fix.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">03</span>
+      <div class="step-body">
+        <div class="label">Isolate the change that broke it</div>
+        <div class="prompt">What changed between when this worked and when it broke?
+Check: git diff, recent file modifications, env variable changes,
+dependency updates, config changes. List everything that changed.</div>
+        <div class="note">The bug is almost always in the diff, not the code that was already working.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">04</span>
+      <div class="step-body">
+        <div class="label">Read surrounding code before proposing a fix</div>
+        <div class="prompt">Before proposing a fix: read the 20 lines before and after
+the error location. Read the function signature. Read any
+types/interfaces this function touches. Now propose a fix.</div>
+        <div class="note">Most wrong fixes come from fixing the symptom without reading the context.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">05</span>
+      <div class="step-body">
+        <div class="label">Verify the fix does not break neighboring behavior</div>
+        <div class="prompt">Before applying this fix: list every other function or
+test that calls the same code path. State whether the fix
+could break any of them and why.</div>
+        <div class="note">One bug fixed, three regressions created is the classic antipattern.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Prompt toolkit + anti-patterns -->
+  <div class="sub-title" style="margin-top:4px;">Toolkit Prompts and Anti-Patterns</div>
+  <div class="two-col">
+
+    <div class="col-card">
+      <div class="col-card-title green">High-Signal Debug Prompts</div>
+      <div class="prompt-item">"Explain what this code actually does, not what it's supposed to do."</div>
+      <div class="prompt-item">"What are all the ways this could return the wrong value?"</div>
+      <div class="prompt-item">"Trace the data from input to output, showing its value at each step."</div>
+      <div class="prompt-item">"What assumption is this code making that could be wrong?"</div>
+      <div class="prompt-item">"Reproduce the simplest possible version of this bug in isolation."</div>
+    </div>
+
+    <div class="col-card">
+      <div class="col-card-title red">Anti-Patterns to Avoid</div>
+      <div class="anti-item">"Fix this." — No context, random fix likely.</div>
+      <div class="anti-item">"Why doesn't this work?" — Claude will guess without the error.</div>
+      <div class="anti-item">Pasting 500+ lines without identifying the failure site.</div>
+      <div class="anti-item">Accepting the first fix without checking for regressions.</div>
+      <div class="col-card-title amber" style="margin-top:4px;">When Stuck</div>
+      <div class="tip-item">"What would you need to see to be more confident in your diagnosis?"</div>
+      <div class="tip-item">"Assume your first hypothesis is wrong. What else could it be?"</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>Prompt Engineering Quick Reference Cards — Card 4: Debugging Prompt Toolkit</span>
+    <span class="logo">edgeless</span>
+  </div>
+
+</div>
+</body>
+</html>

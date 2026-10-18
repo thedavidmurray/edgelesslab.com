@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Obsidian + Claude Code Setup Kit",
+    "folder": "obsidian-claude-code-setup-kit",
+    "source": "obsidian-setup-kit.zip"
+  },
+  {
+    "name": "MCP Server Starter Kit",
+    "folder": "mcp-server-starter-kit",
+    "source": "mcp-starter-kit.zip"
+  },
+  {
+    "name": "n8n AI Workflow Templates",
+    "folder": "n8n-ai-workflow-templates",
+    "source": "n8n-ai-workflows.zip"
+  },
+  {
+    "name": "Prompt Testing Framework",
+    "folder": "prompt-testing-framework",
+    "source": "prompt-testing-framework.zip"
+  },
+  {
+    "name": "Production MCP Server Kit",
+    "folder": "production-mcp-server-kit",
+    "source": "production-mcp-kit.zip"
+  },
+  {
+    "name": "Autonomous Agent Safety Patterns",
+    "folder": "autonomous-agent-safety-patterns",
+    "source": "agent-safety-patterns.zip"
+  },
+  {
+    "name": "Multi-Agent Orchestration Blueprint",
+    "folder": "multi-agent-orchestration-blueprint",
+    "source": "multi-agent-blueprint.zip"
+  },
+  {
+    "name": "The Agent Cookbook",
+    "folder": "the-agent-cookbook",
+    "source": "agent-cookbook.zip"
+  },
+  {
+    "name": "AI Code Review Playbook",
+    "folder": "ai-code-review-playbook",
+    "source": "ai-code-review-playbook.zip"
+  },
+  {
+    "name": "Hooks Library",
+    "folder": "hooks-library",
+    "source": "hooks-library-v2.zip"
+  },
+  {
+    "name": "Generative Art Starter Kit",
+    "folder": "generative-art-starter-kit",
+    "source": "gen-art-starter.zip"
+  },
+  {
+    "name": "Digital Product Launch Toolkit",
+    "folder": "digital-product-launch-toolkit",
+    "source": "launch-toolkit.zip"
+  },
+  {
+    "name": "Claude Code Cheat Sheet",
+    "folder": "claude-code-cheat-sheet",
+    "source": "claude-code-cheat-sheet.zip"
+  },
+  {
+    "name": "The Prompt Engineering OS",
+    "folder": "the-prompt-engineering-os",
+    "source": "prompt-engineering-os-team.zip"
+  },
+  {
+    "name": "Quick Reference Cards",
+    "folder": "quick-reference-cards",
+    "source": "quick-reference-cards.zip"
+  },
+  {
+    "name": "Claude Code Hooks Deep Dive",
+    "folder": "claude-code-hooks-deep-dive",
+    "source": "hooks-deep-dive.zip"
+  },
+  {
+    "name": "CLAUDE.md Template Pack",
+    "folder": "claude-md-template-pack",
+    "source": "claude-md-template-pack.zip"
+  }
+]

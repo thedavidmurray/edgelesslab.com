@@ -1,0 +1,11 @@
+HTTP/1.1 100 Continue
+
+HTTP/1.1 200 OK
+x-amz-id-2: ghyToPDZXfs5LdhPzIA7RRw+UWKcfkMcNMpKTJAjI1/k5AgBi2Jqb7US8AusvCEDk5r/bjLIG2kVqraDP2375N4fceJv5yY/
+x-amz-request-id: D6941H8MAFM0TJ0S
+Server: AmazonS3
+Date: Fri, 16 Oct 2026 02:29:59 GMT
+ETag: "092971ced912044ccdefde4a49c54cca"
+x-amz-server-side-encryption: AES256
+Content-Length: 0
+

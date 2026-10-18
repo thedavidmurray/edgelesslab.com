@@ -1,0 +1,155 @@
+# accuracy/test_spec.yaml — Test prompt accuracy against known-good outputs
+# Run: ./framework/prompt-test.sh run test-suites/accuracy/test_spec.yaml
+
+name: "Accuracy Tests"
+description: |
+  Verify that prompt outputs match known-good expected outputs.
+  Tests range from exact factual answers to structural code checks.
+model: "claude-3-5-haiku-20241022"
+tags:
+  - accuracy
+  - regression
+
+tests:
+
+  # ─── Factual knowledge ────────────────────────────────────────────────────────
+  - name: "capital of France"
+    input: "What is the capital of France? Answer in one word."
+    assertions:
+      - type: contains
+        value: "Paris"
+        case_insensitive: true
+
+  - name: "square root of 144"
+    input: "What is the square root of 144? Answer with only the number."
+    assertions:
+      - type: contains
+        value: "12"
+
+  - name: "boiling point of water"
+    input: "At sea level, what temperature does water boil in Celsius? Answer with only the number."
+    assertions:
+      - type: contains
+        value: "100"
+
+  # ─── Code generation accuracy ─────────────────────────────────────────────────
+  - name: "fibonacci function"
+    input: "Write a Python function named 'fibonacci' that returns the nth fibonacci number (0-indexed). Return only the function, no explanation."
+    assertions:
+      - type: contains
+        value: "def fibonacci"
+      - type: contains
+        value: "return"
+      - type: llm_judge
+        criteria: |
+          The function is named exactly 'fibonacci'.
+          It accepts a single integer argument n.
+          It correctly returns fibonacci(0)=0, fibonacci(1)=1, fibonacci(2)=1, fibonacci(7)=13.
+          It handles the base cases without crashing.
+        threshold: 0.85
+
+  - name: "reverse string function"
+    input: "Write a Python function named 'reverse_string' that takes a string and returns it reversed. Return only the function."
+    assertions:
+      - type: contains
+        value: "def reverse_string"
+      - type: contains
+        value: "return"
+      - type: llm_judge
+        criteria: "The function correctly reverses a string. reverse_string('hello') should return 'olleh'."
+        threshold: 0.9
+
+  - name: "is_palindrome function"
+    input: "Write a Python function named 'is_palindrome' that returns True if a string is a palindrome, False otherwise. Return only the function."
+    assertions:
+      - type: contains
+        value: "def is_palindrome"
+      - type: contains
+        value: "return"
+      - type: llm_judge
+        criteria: |
+          The function correctly identifies palindromes.
+          is_palindrome('racecar') = True
+          is_palindrome('hello') = False
+          Case handling is reasonable (either consistent case folding or not).
+        threshold: 0.85
+
+  # ─── Golden output comparison ─────────────────────────────────────────────────
+  - name: "json output structure"
+    input: |
+      Return a JSON object representing a person with these fields:
+      - name (string)
+      - age (integer, between 20-40)
+      - email (string, valid format)
+      Return ONLY the JSON object, no other text.
+    assertions:
+      - type: json_valid
+      - type: json_schema
+        schema:
+          required:
+            - name
+            - age
+            - email
+          properties:
+            name:
+              type: string
+            age:
+              type: integer
+            email:
+              type: string
+      - type: regex
+        pattern: "\"email\":\\s*\"[^\"]+@[^\"]+\\.[^\"]+\""
+
+  - name: "markdown list format"
+    input: "List exactly 3 primary colors as a markdown bullet list. No introduction, just the list."
+    assertions:
+      - type: regex
+        pattern: "^[-*]\\s+\\w"
+        # Starts with a bullet point
+      - type: contains
+        value: "red"
+        case_insensitive: true
+      - type: contains
+        value: "blue"
+        case_insensitive: true
+      - type: contains
+        value: "yellow"
+        case_insensitive: true
+      - type: max_length
+        value: 100
+
+  # ─── Classification accuracy ──────────────────────────────────────────────────
+  - name: "sentiment positive"
+    input: |
+      Classify the sentiment of this text as exactly 'positive', 'negative', or 'neutral'.
+      Text: "I absolutely love this product! It exceeded all my expectations."
+      Return only the classification word.
+    assertions:
+      - type: contains
+        value: "positive"
+        case_insensitive: true
+      - type: max_length
+        value: 20
+
+  - name: "sentiment negative"
+    input: |
+      Classify the sentiment of this text as exactly 'positive', 'negative', or 'neutral'.
+      Text: "This is the worst experience I've ever had. Complete waste of money."
+      Return only the classification word.
+    assertions:
+      - type: contains
+        value: "negative"
+        case_insensitive: true
+      - type: max_length
+        value: 20
+
+  # ─── Translation accuracy ─────────────────────────────────────────────────────
+  - name: "translate hello to Spanish"
+    input: "Translate 'Hello, how are you?' to Spanish. Return only the translation."
+    assertions:
+      - type: contains
+        value: "Hola"
+        case_insensitive: false
+      - type: contains
+        value: "cómo"
+        case_insensitive: true

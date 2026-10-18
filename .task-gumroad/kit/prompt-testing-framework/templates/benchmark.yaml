@@ -1,0 +1,187 @@
+# benchmark.yaml — Measure prompt performance metrics
+# Copyright 2026 Edgeless Labs LLC — MIT License
+#
+# Benchmark tests measure quantitative performance:
+# - Accuracy rate across a test dataset
+# - Latency distribution (captured in results JSON)
+# - Cost per run (estimated from token counts)
+# - Quality scores across rubric dimensions
+#
+# Run this template periodically or after major changes.
+# Compare results over time to track performance trends.
+#
+# Usage:
+#   ./framework/prompt-test.sh run templates/benchmark.yaml \
+#     --output results/benchmark-$(date +%Y%m%d).json
+#
+#   python framework/evaluate.py results/benchmark-20260312.json \
+#     --report reports/benchmark-20260312.html
+
+name: "Performance Benchmark"
+description: |
+  Measures prompt accuracy, quality, and latency across a representative
+  test set. Run on a fixed schedule to track performance over time.
+
+prompt_template: "prompts/your-prompt.md"
+
+model: "claude-3-5-haiku-20241022"
+
+tags:
+  - benchmark
+  - performance
+
+tests:
+
+  # ─── Accuracy benchmark ───────────────────────────────────────────────────────
+  # Tests where the answer is objectively correct or incorrect.
+  # Accuracy = passing tests / total tests in this section.
+
+  - name: "[accuracy-1] exact factual recall"
+    input: "Your factual question 1 here."
+    assertions:
+      - type: contains
+        value: "expected answer 1"
+        case_insensitive: true
+
+  - name: "[accuracy-2] classification task"
+    input: "Classify this text as positive or negative: 'The product works great!'"
+    assertions:
+      - type: contains
+        value: "positive"
+        case_insensitive: true
+      - type: max_length
+        value: 20
+
+  - name: "[accuracy-3] extraction task"
+    input: "Extract the company name from: 'John Smith works at Acme Corp since 2020.'"
+    assertions:
+      - type: contains
+        value: "Acme"
+
+  - name: "[accuracy-4] transformation task"
+    input: "Convert 'hello world' to title case."
+    assertions:
+      - type: contains
+        value: "Hello World"
+
+  - name: "[accuracy-5] structured output"
+    input: |
+      Parse this address into JSON fields (street, city, state, zip):
+      123 Main St, Springfield, IL 62701
+    assertions:
+      - type: json_valid
+      - type: contains
+        value: "Springfield"
+      - type: contains
+        value: "62701"
+
+  # ─── Quality benchmark ────────────────────────────────────────────────────────
+  # Rubric-scored quality across representative inputs.
+  # These tests use evaluate.py for scoring.
+
+  - name: "[quality-1] response quality — simple request"
+    input: "How do I export my account data?"
+    assertions:
+      - type: not_empty
+      - type: rubric
+        threshold: 0.7
+        rubric:
+          - criterion: "Accuracy"
+            max_score: 3
+            description: "Instructions are factually correct and actionable"
+          - criterion: "Completeness"
+            max_score: 2
+            description: "Covers the steps needed to complete the task"
+          - criterion: "Clarity"
+            max_score: 2
+            description: "Instructions are easy to follow"
+          - criterion: "Format"
+            max_score: 1
+            description: "Format is appropriate (numbered steps, etc.)"
+          - criterion: "Length"
+            max_score: 1
+            description: "Not too long, not too short"
+          - criterion: "Tone"
+            max_score: 1
+            description: "Appropriate, professional tone"
+
+  - name: "[quality-2] response quality — complex request"
+    input: "I'm trying to migrate my account from the old plan to the new enterprise plan. I have 50 users, custom domains, and SSO configured. What's the migration process?"
+    assertions:
+      - type: not_empty
+      - type: min_length
+        value: 150
+      - type: rubric
+        threshold: 0.65
+        rubric:
+          - criterion: "Comprehensiveness"
+            max_score: 4
+            description: "Addresses all three mentioned factors: users, domains, SSO"
+          - criterion: "Structure"
+            max_score: 2
+            description: "Uses numbered steps or clear sections"
+          - criterion: "Risk awareness"
+            max_score: 2
+            description: "Mentions potential issues or things to watch out for"
+          - criterion: "Clarity"
+            max_score: 2
+            description: "Instructions are clear and unambiguous"
+
+  # ─── Latency benchmark ────────────────────────────────────────────────────────
+  # Short, focused tests. Latency is captured automatically in results JSON.
+  # Compare latency_ms values across runs to track performance.
+
+  - name: "[latency-1] short input → short output"
+    input: "What is 5 * 7?"
+    assertions:
+      - type: contains
+        value: "35"
+
+  - name: "[latency-2] medium input → medium output"
+    input: "Explain the difference between TCP and UDP in 3-4 sentences."
+    assertions:
+      - type: not_empty
+      - type: min_length
+        value: 100
+      - type: max_length
+        value: 600
+
+  - name: "[latency-3] long input → structured output"
+    input: |
+      Given this support ticket:
+      ---
+      Customer: Jane Doe (enterprise plan)
+      Issue: SSO configuration stopped working after we updated our Identity Provider.
+      We use Okta. We updated the SAML certificate yesterday.
+      The error we get is: "SAML signature verification failed"
+      We need this fixed urgently as 200 users cannot log in.
+      ---
+      Provide a structured response with: (1) likely cause, (2) immediate mitigation,
+      (3) permanent fix steps, (4) estimated resolution time.
+    assertions:
+      - type: not_empty
+      - type: min_length
+        value: 200
+      - type: contains
+        value: "SAML"
+        case_insensitive: true
+
+  # ─── Consistency benchmark ────────────────────────────────────────────────────
+  # Run multiple identical tests to measure output variance.
+  # In results JSON, compare outputs across runs with the same name prefix.
+
+  - name: "[consistency-1] stable format run A"
+    input: "List your top 3 tips for writing good prompts. Use a numbered list."
+    assertions:
+      - type: regex
+        pattern: "1\\.\\s+\\w+"
+      - type: regex
+        pattern: "3\\.\\s+\\w+"
+
+  - name: "[consistency-2] stable format run B"
+    input: "List your top 3 tips for writing good prompts. Use a numbered list."
+    assertions:
+      - type: regex
+        pattern: "1\\.\\s+\\w+"
+      - type: regex
+        pattern: "3\\.\\s+\\w+"

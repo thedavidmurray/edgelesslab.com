@@ -1,0 +1,191 @@
+# config.example.yaml — Full reference for prompt test spec format
+# Copyright 2026 Edgeless Labs LLC — MIT License
+#
+# Copy this file, remove what you don't need, and run:
+#   ./framework/prompt-test.sh run your-test-spec.yaml
+
+# ── Suite metadata ─────────────────────────────────────────────────────────────
+name: "Example Test Suite"
+description: "Full reference showing all available options"
+
+# Model to use for all tests in this suite.
+# Can be overridden per-test or via --model flag.
+# Supported: claude-3-5-haiku-20241022, claude-3-5-sonnet-20241022, claude-opus-4-5,
+#            gpt-4o-mini, gpt-4o
+model: "claude-3-5-haiku-20241022"
+
+# Optional: system prompt file applied to every test in this suite.
+# Path is relative to this spec file.
+# prompt_template: "prompts/my-system-prompt.md"
+
+# Tags for filtering and grouping in reports
+tags:
+  - example
+  - reference
+
+# ── Test definitions ───────────────────────────────────────────────────────────
+tests:
+
+  # ─── contains assertion ──────────────────────────────────────────────────────
+  - name: "contains — basic substring check"
+    input: "Write a Python function that adds two numbers."
+    assertions:
+      - type: contains
+        value: "def "
+      - type: contains
+        value: "return"
+        # Optional: case-insensitive match
+        case_insensitive: false
+
+  # ─── not_contains assertion ───────────────────────────────────────────────────
+  - name: "not_contains — no error messages"
+    input: "What is 2 + 2?"
+    assertions:
+      - type: not_contains
+        value: "error"
+        case_insensitive: true
+      - type: not_contains
+        value: "I cannot"
+        case_insensitive: true
+
+  # ─── exact_match assertion ────────────────────────────────────────────────────
+  - name: "exact_match — single word answer"
+    # Override the suite-level prompt_template for this test
+    prompt_template: "prompts/answer-directly.md"
+    input: "Reply with only the word 'yes' and nothing else."
+    assertions:
+      - type: exact_match
+        value: "yes"
+
+  # ─── fuzzy_match assertion ────────────────────────────────────────────────────
+  - name: "fuzzy_match — paraphrase check"
+    input: "Summarize: The quick brown fox jumps over the lazy dog."
+    assertions:
+      - type: fuzzy_match
+        value: "A fox jumps over a dog"
+        threshold: 0.4  # 0.0-1.0; lower = more permissive
+
+  # ─── regex assertion ──────────────────────────────────────────────────────────
+  - name: "regex — phone number format"
+    input: "What does a US phone number look like? Give one example."
+    assertions:
+      - type: regex
+        pattern: "\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4}"
+
+  # ─── json_valid assertion ─────────────────────────────────────────────────────
+  - name: "json_valid — structured output"
+    input: "Return a JSON object with keys 'name' and 'age' for a fictional person."
+    assertions:
+      - type: json_valid
+
+  # ─── json_schema assertion ────────────────────────────────────────────────────
+  - name: "json_schema — validated structure"
+    input: "Return a JSON object with keys: name (string), age (integer), active (boolean)."
+    assertions:
+      - type: json_valid
+      - type: json_schema
+        schema:
+          required:
+            - name
+            - age
+            - active
+          properties:
+            name:
+              type: string
+            age:
+              type: integer
+            active:
+              type: boolean
+
+  # ─── not_empty assertion ──────────────────────────────────────────────────────
+  - name: "not_empty — non-empty response"
+    input: "Tell me one interesting fact about the moon."
+    assertions:
+      - type: not_empty
+
+  # ─── length assertions ────────────────────────────────────────────────────────
+  - name: "max_length — concise answer"
+    input: "In one sentence, what is machine learning?"
+    assertions:
+      - type: max_length
+        value: 300  # characters
+
+  - name: "min_length — substantive answer"
+    input: "Explain what a neural network is in detail."
+    assertions:
+      - type: min_length
+        value: 200
+
+  # ─── llm_judge assertion ──────────────────────────────────────────────────────
+  # Scored by a second LLM call. Processed by evaluate.py after the run.
+  - name: "llm_judge — quality check"
+    input: "Write a Python fibonacci function."
+    assertions:
+      - type: contains
+        value: "def "
+      - type: llm_judge
+        criteria: |
+          The function correctly implements the fibonacci sequence.
+          It handles the base cases (0 and 1) correctly.
+          The code is readable and follows Python conventions.
+        threshold: 0.8  # Minimum score to pass (0.0-1.0)
+
+  # ─── rubric assertion ─────────────────────────────────────────────────────────
+  # Multi-criterion scoring. Processed by evaluate.py after the run.
+  - name: "rubric — multi-criterion quality"
+    input: "Explain the difference between supervised and unsupervised learning."
+    assertions:
+      - type: rubric
+        threshold: 0.75
+        rubric:
+          - criterion: "Accuracy"
+            max_score: 3
+            description: "The explanation is factually correct"
+          - criterion: "Clarity"
+            max_score: 2
+            description: "The explanation is easy to understand"
+          - criterion: "Completeness"
+            max_score: 2
+            description: "Both supervised and unsupervised are covered with examples"
+          - criterion: "Conciseness"
+            max_score: 1
+            description: "No unnecessary repetition or padding"
+
+  # ─── combined assertions ──────────────────────────────────────────────────────
+  # All assertions must pass for the test to pass
+  - name: "combined — code generation"
+    input: "Write a Python function to reverse a string. Return only the function."
+    assertions:
+      - type: contains
+        value: "def "
+      - type: contains
+        value: "return"
+      - type: not_contains
+        value: "```"
+        # No markdown fences — we want raw code
+      - type: min_length
+        value: 30
+      - type: max_length
+        value: 500
+      - type: llm_judge
+        criteria: "The function correctly reverses a string and would work when called."
+        threshold: 0.9
+
+  # ─── variable substitution ────────────────────────────────────────────────────
+  - name: "variables — parameterized test"
+    input: "What is the capital of {{country}}?"
+    variables:
+      country: "France"
+    assertions:
+      - type: contains
+        value: "Paris"
+        case_insensitive: true
+
+  # ─── per-test model override ──────────────────────────────────────────────────
+  - name: "model-override — use a different model for this test"
+    model: "claude-3-5-sonnet-20241022"
+    input: "Write a haiku about software testing."
+    assertions:
+      - type: not_empty
+      - type: min_length
+        value: 30

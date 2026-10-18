@@ -1,0 +1,2146 @@
+[
+  {
+    "name": "Obsidian + Claude Code Setup Kit",
+    "description": "<p>Turn Obsidian into an AI-powered development environment. Pre-configured vault with Claude Code integration, custom templates, plugin recommendations, and workflow automations. Includes <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://CLAUDE.md\">CLAUDE.md</a> templates, hook configurations, and a complete knowledge management system for developers who build with AI.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/ttb8s3rrizv34mmainsw7n2aiahj",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "6oWvkv9szTXtCyN0TOMUEQ==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/fyuwpn",
+    "landing_url": "https://edgelessai.gumroad.com/l/fyuwpn",
+    "thumbnail_url": "https://public-files.gumroad.com/zkpzyz8zguxsbxxyzzo0qmmxb1bu",
+    "tags": [
+      "knowledge management",
+      "obsidian",
+      "claude code",
+      "ai developer tools"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "25 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/ttb8s3rrizv34mmainsw7n2aiahj",
+        "original_url": "https://public-files.gumroad.com/o64e9r7kapsj1wlgiggc0zimdggu",
+        "thumbnail": null,
+        "id": "24801a04e372f40504a159a6e79509ec",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "24801a04e372f40504a159a6e79509ec",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "8OD2EnvomoKeiMaX0VPG2w==",
+        "page_id": "8OD2EnvomoKeiMaX0VPG2w==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "OCN-EN0_MIjfOL_Oy6E2eg==",
+                "uid": "6fa1a465-0ef8-872c-50b1-87d9d5341a0c",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:21:15Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "OCN-EN0_MIjfOL_Oy6E2eg==",
+        "name": "obsidian-setup-kit",
+        "size": 25597,
+        "url": "https://files.gumroad.com/attachments/4537569486836/8a79d96f6d3942e19297867388d56adc/original/obsidian-setup-kit.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117852-oMI%2FLZT%2Bt0ORd%2Fvo2%2BdaxMxNKgcRfrXIQG6wzUb1RRc%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "MCP Server Starter Kit",
+    "description": "<p>TypeScript and Python templates for building MCP servers. 8-chapter guide from architecture to deployment. 3 working example servers (file search, database query, API proxy). Go from zero to a running MCP server in under an hour.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/gl6x2qzuytsb5wwjqshhzujr4zjc",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "Ym5pdnEb8awFPQ1O9S9iiQ==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/lixicg",
+    "landing_url": "https://edgelessai.gumroad.com/l/lixicg",
+    "thumbnail_url": "https://public-files.gumroad.com/mswyp36z6b3us1yxtrz6pe28mnu4",
+    "tags": [
+      "typescript",
+      "mcp",
+      "claude code",
+      "ai developer tools"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "9.52 MB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/gl6x2qzuytsb5wwjqshhzujr4zjc",
+        "original_url": "https://public-files.gumroad.com/v1f98ut6r78k6xrtfinjdg2rg0o2",
+        "thumbnail": null,
+        "id": "262ba8804d399c5ffbc0cf046c25c776",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "262ba8804d399c5ffbc0cf046c25c776",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "6xmc6eS3PXyWqd97l3U6Pw==",
+        "page_id": "6xmc6eS3PXyWqd97l3U6Pw==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "gKH6juG-FzGXAQmSUerxGg==",
+                "uid": "067cb933-3901-dcfc-3eb2-7c16ce0b5d60",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:19:30Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "gKH6juG-FzGXAQmSUerxGg==",
+        "name": "mcp-starter-kit",
+        "size": 9979135,
+        "url": "https://files.gumroad.com/attachments/4537569486836/e01dad053f1e4a2eba89193983dbfdab/original/mcp-starter-kit.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117853-YH4G0w4VEX6mdFfyn9tBh42TaEaYjB0YoUKSkWSGcec%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "n8n AI Workflow Templates",
+    "description": "<p>Setting up AI automation from scratch takes days of wiring nodes, debugging API responses, and figuring out the right prompt format. These 5 workflows are already built and tested. Import, configure your API keys, activate.</p><p>These come from a production system that runs daily -- monitoring 20+ RSS feeds, summarizing YouTube videos, generating weekly digests, and reviewing pull requests automatically.</p><p><strong>What you get:</strong></p><p><strong>5 workflow JSON files</strong> (import directly into n8n):</p><ol>\n<li>\n<strong>YouTube Monitor + AI Digest</strong> -- Monitors YouTube channels via RSS, generates AI summaries (Gemini), sends weekly email digest. No YouTube API key needed.</li>\n<li>\n<strong>RSS Intelligence Feed</strong> -- Aggregates 8+ RSS feeds every 6 hours, scores each article for relevance to your interests (1-10), filters high-signal items, sends to your notification channel.</li>\n<li>\n<strong>AI Content Digest Generator</strong> -- Reads saved articles from a directory, groups by category, generates AI summaries with top picks and trend analysis. Perfect for newsletters.</li>\n<li>\n<strong>Service Health Check + Alerts</strong> -- Monitors HTTP endpoints every 5 minutes. Debounced alerts (no spam), recovery notifications, downtime tracking.</li>\n<li>\n<strong>AI Code Review on PR</strong> -- GitHub webhook triggers AI review of PR diffs. Splits large diffs into chunks, reviews each for security/performance/logic issues, posts findings as a comment.</li>\n</ol><p><strong>Plus:</strong></p><ul>\n<li>Docker Compose setup (n8n + Postgres) with one-command start</li>\n<li>Environment template with all required variables documented</li>\n<li>8-chapter guide: setup, customization for each workflow, LLM provider swapping, error handling, scaling</li>\n</ul><p><strong>Who this is for:</strong></p><ul>\n<li>Developers who want AI automation without building from scratch</li>\n<li>Solo founders who need monitoring and content processing on autopilot</li>\n<li>Teams looking to add AI code review to their PR workflow</li>\n</ul><p><strong>Who this is NOT for:</strong></p><ul>\n<li>If you don't use Docker, this requires some adaptation</li>\n<li>If you need enterprise-grade monitoring, use Datadog/PagerDuty instead</li>\n</ul><p><strong>Cost to run:</strong> ~$3-6/month for all 5 workflows on Gemini Flash. Health checks use no AI.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/i306kauh1ca4tuekyidht6un7bde",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "n8n-ai-workflows",
+    "subscription_duration": null,
+    "id": "IJ4ObZMBzfh3FRxAp0uruA==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/n8n-ai-workflows",
+    "landing_url": "https://edgelessai.gumroad.com/l/n8n-ai-workflows",
+    "thumbnail_url": "https://public-files.gumroad.com/myfopv21kvww128kbem9c07r06da",
+    "tags": [
+      "no code",
+      "ai automation",
+      "n8n",
+      "ai agents",
+      "workflow templates"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "30.6 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "5 importable n8n workflows that connect AI to real business processes: YouTube monitoring, RSS intelligence, content digests, health checks, and automated code review. Docker setup included.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/i306kauh1ca4tuekyidht6un7bde",
+        "original_url": "https://public-files.gumroad.com/vz67147eriesgh4fsvzrpil5qgsp",
+        "thumbnail": null,
+        "id": "2f0365417156a111ee166a6e56623beb",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "2f0365417156a111ee166a6e56623beb",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "25gxSpLRrR61IkBnublYHw==",
+        "page_id": "25gxSpLRrR61IkBnublYHw==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "2RNSfUosVoLZRAT2V5XWsg==",
+                "uid": "b6f88d0c-15f2-751d-2261-ee0803ee3270",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-04-08T01:58:11Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "2RNSfUosVoLZRAT2V5XWsg==",
+        "name": "n8n-ai-workflows",
+        "size": 31302,
+        "url": "https://files.gumroad.com/attachments/4537569486836/7e3f2cbf62324c63bd7db92b5c2f756e/original/n8n-ai-workflows.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117850-j0kONDbvhjUfmcn%2BnqWl0sdmh8EcV7AjgF%2FrkSk2V8o%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Edgeless Agent Starter Kit",
+    "description": "Launch your AI agent swarm on macOS in under an hour. Pre-configured profiles, working cron jobs, 10 starter skills, and the exact setup we use to run 10+ agents daily.",
+    "require_shipping": false,
+    "preview_url": null,
+    "custom_receipt": null,
+    "customizable_price": null,
+    "custom_permalink": "agent-kit",
+    "subscription_duration": null,
+    "id": "ffRrNYBAC1X1x4tq3IiWQA==",
+    "url": null,
+    "price": 2900,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/agent-kit",
+    "landing_url": "https://edgelessai.gumroad.com/l/agent-kit",
+    "thumbnail_url": "https://public-files.gumroad.com/cmpw7yndypxukbnib9cri2nsl8jq",
+    "tags": [],
+    "formatted_price": "$49",
+    "published": true,
+    "file_info": {},
+    "max_purchase_count": 50,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [],
+    "main_cover_id": null,
+    "bundle_products": [],
+    "variants": [
+      {
+        "title": "Tier",
+        "options": [
+          {
+            "name": "Starter Kit",
+            "price_difference": 2000,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": []
+          },
+          {
+            "name": "Pro Kit",
+            "price_difference": 12000,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": []
+          },
+          {
+            "name": "Done-For-You",
+            "price_difference": 47000,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": []
+          }
+        ]
+      }
+    ],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [],
+    "has_same_rich_content_for_all_variants": false,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Prompt Testing Framework",
+    "description": "<p>Stop guessing whether your prompts work. This framework gives you regression testing, A/B comparison templates, and quality scoring rubrics for AI prompts. Includes test harnesses for Claude, GPT, and Gemini with structured evaluation criteria. Built for teams shipping AI features who need repeatable, measurable prompt quality.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/8hda36q2qfd4l9t8a2a1rbws6eeg",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "_mr2JQzlEXFynRor5JTCTA==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/yrail",
+    "landing_url": "https://edgelessai.gumroad.com/l/yrail",
+    "thumbnail_url": "https://public-files.gumroad.com/dstdqiwofp1zfl5oarlyi49pr538",
+    "tags": [
+      "automation",
+      "claude code",
+      "ai developer tools",
+      "prompt testing"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "71.9 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/8hda36q2qfd4l9t8a2a1rbws6eeg",
+        "original_url": "https://public-files.gumroad.com/0v6a0jydgme5zw6msh8ekbvcqa7z",
+        "thumbnail": null,
+        "id": "b0dfb001a09f28bcac8a166f6fa11949",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "b0dfb001a09f28bcac8a166f6fa11949",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "zvmbFIWGP2Xr-5tDBobh7Q==",
+        "page_id": "zvmbFIWGP2Xr-5tDBobh7Q==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "mrw0LBtWQaDAO64v2GWqlw==",
+                "uid": "a79c3a00-b456-59b1-c688-f33a270eba01",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:19:56Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "mrw0LBtWQaDAO64v2GWqlw==",
+        "name": "prompt-testing-framework",
+        "size": 73579,
+        "url": "https://files.gumroad.com/attachments/4537569486836/74462b09ac854f24a2f4a2c002ad29e6/original/prompt-testing-framework.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117853-hQC%2FGsW5flBbCxudKQwfNGMc2hNL8UsLlylgbBaKTX4%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Production MCP Server Kit",
+    "description": "<p>Every MCP tutorial shows you how to define a tool and return a result. None of them show you what breaks when two sessions hit the same endpoint, your API key leaks through error messages, or the server crashes at 3am with nobody watching.</p><p>This kit fills that gap. It comes from running 4+ MCP servers in production: a semantic search engine (Effect-TS + ChromaDB + SQLite fallback), an inter-session message router (SQLite + durable message queues), and utility servers that have survived months of daily use by autonomous agents.</p><p><strong>What you get:</strong></p><p><strong>2 production server templates:</strong></p><p>1. <strong>Typed MCP Server (Effect-TS)</strong> -- Schema-validated inputs, typed outputs, dependency injection, structured error handling. The gold standard for type-safe MCP development.</p><p>2. <strong>API Proxy Server</strong> -- Wraps external APIs with auth (key from env, never from prompts), in-memory rate limiting, response caching with TTL, and error sanitization that catches leaked API keys.</p><p><strong>Plus:</strong></p><ul>\n<li>\n<strong>Subprocess IPC bridge</strong> -- Call Python from TypeScript via stdin/stdout JSON-RPC. No HTTP, no port management, process dies when server dies.</li>\n<li>\n<strong>Multi-backend fallback</strong> -- ChromaDB -&gt; SQLite -&gt; in-memory TF-IDF cascade with health-aware routing</li>\n<li>\n<strong>Docker deployment</strong> -- Multi-stage Dockerfile, Compose config, health checks, resource limits, non-root user</li>\n<li>\n<strong>8-chapter guide</strong> covering: typed tools, stateful hub patterns, API proxying, subprocess bridges, fallback strategies, Docker deployment, and testing</li>\n</ul><p><strong>Production patterns included:</strong></p><ul>\n<li>Auth middleware: API keys from environment, never exposed to MCP protocol</li>\n<li>Rate limiting: per-tool, per-minute, with configurable thresholds</li>\n<li>Response caching: TTL-based with automatic eviction</li>\n<li>Error sanitization: 5 regex patterns catching OpenAI keys, GitHub PATs, AWS keys, JWTs, Bearer tokens</li>\n<li>SQLite: WAL mode, prepared statements, busy timeout, connection cleanup</li>\n<li>Health endpoints: status, pending messages, uptime</li>\n</ul><p><strong>Who this is for:</strong></p><ul>\n<li>Developers building MCP servers that need to run reliably</li>\n<li>Teams deploying MCP servers to production environments</li>\n<li>Anyone who's outgrown the basic MCP tutorial examples</li>\n</ul><p><strong>Who this is NOT for:</strong></p><ul>\n<li>Beginners still learning what MCP is (start with the MCP Starter Kit at $24)</li>\n<li>Projects that only need simple, single-use tools</li>\n</ul><p>All templates are TypeScript (Bun/Node compatible). Python bridge included. Docker configs included.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/z2ru411p0xexbq0u1s7f12n0ss0a",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "production-mcp-kit",
+    "subscription_duration": null,
+    "id": "VwkMAY7lfzoEoNp4yXJq9A==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/production-mcp-kit",
+    "landing_url": "https://edgelessai.gumroad.com/l/production-mcp-kit",
+    "thumbnail_url": "https://public-files.gumroad.com/pls88ixy5ivmvw33rfe07kyt2uu2",
+    "tags": [
+      "developer tools",
+      "ai tools",
+      "claude code",
+      "mcp server",
+      "mcp tools"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "47.2 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "Take MCP servers past the tutorial stage. Auth middleware, rate limiting, Docker deployment, health checks, and error handling patterns from running 4+ MCP servers in production.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/z2ru411p0xexbq0u1s7f12n0ss0a",
+        "original_url": "https://public-files.gumroad.com/4awxnl04ores2saac2f7hdmbfouh",
+        "thumbnail": null,
+        "id": "df7dcff9376a119e8f2d9e9e47b8a00a",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "df7dcff9376a119e8f2d9e9e47b8a00a",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "GL_VqLmB7cQegNsujZhLsw==",
+        "page_id": "GL_VqLmB7cQegNsujZhLsw==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "U7ByyaQ7BWRAnWFettuqsQ==",
+                "uid": "e3cf1253-4f05-3d6c-815a-0d72a6781e73",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-04-08T02:00:24Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "U7ByyaQ7BWRAnWFettuqsQ==",
+        "name": "production-mcp-kit",
+        "size": 48373,
+        "url": "https://files.gumroad.com/attachments/4537569486836/28e77481dbdb482fb5493169d8605a2f/original/production-mcp-kit.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117850-HNkCsxpOnfQnPFyvS%2BqqKfCKCC1u%2BnBa9t5ZK%2Fvn3Sw%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Email Inbox Triage \u2014 Gmail Classifier & Router",
+    "description": "<p>Rule-based email classifier that routes Gmail messages to the right handler. No AI API costs \u2014 runs locally with pure Python logic.</p>\n\n<h3>What it does</h3>\n<ul>\n<li>Classifies unread Gmail into 6 categories: auth, actionable, suspicious, newsletter, social, noise</li>\n<li>Exact domain matching with subdomain support (no spoofing)</li>\n<li>Weighted scoring with configurable signal thresholds</li>\n<li>Per-category Gmail actions (star, archive, label, mark read)</li>\n<li>7 output backends: console, markdown, newsletter archives, webhooks, JSONL, shell commands, Python plugins</li>\n</ul>\n\n<h3>Security (hardcoded, non-negotiable)</h3>\n<ul>\n<li>Never follows instructions found in email body</li>\n<li>Never clicks or preserves URLs (strips them before storage)</li>\n<li>Never auto-replies, auto-forwards, or auto-deletes</li>\n<li>Credential scrubbing (AWS keys, JWTs, passwords, PEM blocks)</li>\n<li>SSRF protection on webhooks</li>\n<li>Defaults to \"suspicious\" when classification is ambiguous</li>\n</ul>\n\n<h3>What's included</h3>\n<ul>\n<li>Complete Python source (6 modules, ~1500 lines)</li>\n<li>Annotated config.example.yaml with every option documented</li>\n<li>Gmail CLI provider out of the box, ABC base class for Outlook/IMAP/Fastmail</li>\n<li>ChromaDB vectorization script for semantic search over your classified emails</li>\n</ul>\n\n<h3>Also free on GitHub</h3>\n<p>This is the same code as <a href=\"https://github.com/thedavidmurray/hermes-skill-email-intake\">thedavidmurray/hermes-skill-email-intake</a>. Grab it here for convenience or star the repo.</p>\n\n<p>Only dependency: PyYAML. Python 3.8+.</p>",
+    "require_shipping": false,
+    "preview_url": null,
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "cnAmbRRWqoU85SeBxJEgLw==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/ttvgwa",
+    "landing_url": "https://edgelessai.gumroad.com/l/ttvgwa",
+    "thumbnail_url": null,
+    "tags": [
+      "python",
+      "gmail",
+      "inbox zero",
+      "email automation",
+      "claude code"
+    ],
+    "formatted_price": "$0+",
+    "published": false,
+    "file_info": {},
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [],
+    "main_cover_id": null,
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [],
+    "has_same_rich_content_for_all_variants": false,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Autonomous Agent Safety Patterns",
+    "description": "<p>On March 25, 2026, an AI agent was asked to check if a $252 USDC transfer had arrived at a wallet. Instead of checking, it decided to deposit the funds into a trading platform. It sent the money to the wrong contract address. The funds are permanently lost.</p><p>This guide is the full post-mortem and everything we built afterward to make sure it never happens again.</p><p><strong>What you get:</strong></p><p>7-chapter guide (3,800+ words) covering:</p><p><strong>Chapter 1: The $252 Incident</strong><br>Full post-mortem. What happened, the five specific failures, and why the root cause was treating an irreversible financial transaction with the same care as editing a config file.</p><p><strong>Chapter 2: The 10 Anti-Patterns</strong><br>Each identified from the incident or similar near-misses:</p><ul>\n<li>Scope expansion (asked to check, decided to move)</li>\n<li>Address guessing (used wrong contract)</li>\n<li>Skipping test transactions</li>\n<li>No confirmation on irreversible actions</li>\n<li>Fabricating recovery scenarios</li>\n<li>Treating all operations as equivalent</li>\n<li>Autopilot on repeated tasks</li>\n<li>Inference as authorization</li>\n<li>Speed over safety under pressure</li>\n<li>Partial understanding presented as full</li>\n</ul><p><strong>Chapter 3: Financial Verification Protocol</strong><br>5-step protocol for any money-touching operation: read the code, trace the path, test small, get confirmation, execute and verify.</p><p><strong>Chapter 4: Scope Containment Patterns</strong><br>The scope ladder (Level 0-4), implementation of a scope guard hook, and examples.</p><p><strong>Chapter 5: Destructive Operation Prevention</strong><br>Defense-in-depth: damage-control hook, confirmation gates, dry-run-first patterns, rollback planning.</p><p><strong>Chapter 6: Incident Response Playbook</strong><br>What to do in the first 5 minutes, 30 minutes, and after. How to communicate honestly about damage.</p><p><strong>Chapter 7: Building Safety Culture</strong><br>Default to FAIL, reversibility classification, the \"would I do this manually?\" test, and audit trails.</p><p><strong>Plus:</strong></p><ul>\n<li>3 drop-in hook templates (scope guard, financial gate, reversibility classifier)</li>\n<li>3 printable verification checklists (financial, deployment, data deletion)</li>\n</ul><p><strong>Who this is for:</strong></p><ul>\n<li>Anyone building or running autonomous AI agents</li>\n<li>Developers whose agents interact with money, APIs, or production systems</li>\n<li>Teams that need safety guardrails they can implement today</li>\n</ul><p><strong>Who this is NOT for:</strong></p><ul>\n<li>This is not a theoretical paper. It's from a real incident with real money lost.</li>\n<li>If your agents never touch anything irreversible, you probably don't need this.</li>\n</ul><p>All code is Python 3.10+ with zero external dependencies.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/t1zfzny7kckzhjzszgss4y6p0pmf",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "agent-safety-patterns",
+    "subscription_duration": null,
+    "id": "yTu3_TRi80dAvA_fdC-bwQ==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/agent-safety-patterns",
+    "landing_url": "https://edgelessai.gumroad.com/l/agent-safety-patterns",
+    "thumbnail_url": "https://public-files.gumroad.com/ug2gcnuequ44srx2b4w6kni3kfmw",
+    "tags": [
+      "ai agents",
+      "responsible ai",
+      "ai safety",
+      "claude code",
+      "agent guardrails"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "27.2 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "The safety patterns, hooks, and verification protocols we built after an AI agent lost $252 of real money by sending it to the wrong smart contract.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/t1zfzny7kckzhjzszgss4y6p0pmf",
+        "original_url": "https://public-files.gumroad.com/g2nn31pucvg93y5sqig52eoowb10",
+        "thumbnail": null,
+        "id": "d245b6cf4849089168186c408af42afd",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "d245b6cf4849089168186c408af42afd",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "8yW__Wiq0iT7uEzZ55ka3g==",
+        "page_id": "8yW__Wiq0iT7uEzZ55ka3g==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "3y3Kt3sFuIHc49fbG_tpDQ==",
+                "uid": "1226208e-519e-424c-b160-bfa0520040c0",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-04-08T01:53:46Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "3y3Kt3sFuIHc49fbG_tpDQ==",
+        "name": "agent-safety-patterns",
+        "size": 27872,
+        "url": "https://files.gumroad.com/attachments/4537569486836/f4be2ba9bdb94bc3840e0313fde7c197/original/agent-safety-patterns.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117851-UWAwmM%2FBHlaTElqiVb3dppzM33LhxQWWMTeA7aRjz9U%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Multi-Agent Orchestration Blueprint",
+    "description": "<p>Running one AI agent is straightforward. Running five that coordinate with each other without losing tasks, duplicating work, or creating zombie processes is an entirely different problem.</p><p>This blueprint documents the architecture of a production system that runs 5 autonomous Claude Code sessions continuously -- a dispatch coordinator routing work to specialized workers for content processing, trading operations, infrastructure maintenance, and research.</p><p><strong>What you get:</strong></p><p>11-chapter guide (7,000+ words) covering:</p><p><strong>Chapter 1: Why Multi-Agent</strong><br>When multi-agent is the right call and when a single agent with a task queue is simpler. The three failure modes (message loss, state confusion, zombie tasks) and how this architecture prevents each one.</p><p><strong>Chapter 2: Dispatch/Worker Topology</strong><br>The coordinator pattern: dispatch receives all incoming work, classifies by domain, routes to workers. Why hierarchy beats flat architectures.</p><p><strong>Chapter 3: The Agent Bus</strong><br>SQLite-backed message router with lease-based delivery. Messages aren't deleted on delivery -- they're leased for 30 seconds. If the receiver crashes, the message returns to the queue automatically.</p><p><strong>Chapter 4: The Inbox System</strong><br>File-based async queues for when agents are offline or tasks arrive from cron jobs. Markdown files with YAML frontmatter, synced between machines via rsync.</p><p><strong>Chapter 5: State Machines</strong><br>Explicit task states (queued, acked, running, done, failed, escalated) with valid transition enforcement. Priority queues, retry logic, and stuck-task detection.</p><p><strong>Chapters 6-8: Three Reference Implementations</strong></p><ol>\n<li>Dispatch/Worker (Python): Coordinator + N workers with file-based inboxes, domain classification, routing, and timeout handling</li>\n<li>Message Bus Hub (TypeScript/Bun): Full SQLite-backed HTTP server with lease/ack protocol, cleanup cron, and a TypeScript client library</li>\n<li>Pipeline Orchestrator (Python): Linear stage-by-stage processing with checkpoint-based recovery</li>\n</ol><p><strong>Chapter 9: Operational Patterns</strong><br>Health monitoring, graceful shutdown, scaling workers, daily status reports, and JSONL event logging for observability.</p><p><strong>Plus:</strong></p><ul>\n<li>Worker manifest schema for self-registration</li>\n<li>Hub and client configuration reference</li>\n<li>Troubleshooting table for common failure modes</li>\n<li>Migration guide: how to go from single agent to multi-agent incrementally</li>\n</ul><p><strong>Who this is for:</strong></p><ul>\n<li>Developers running multiple AI agent sessions that need to coordinate</li>\n<li>Teams building autonomous agent systems with Claude Code, LangChain, or similar frameworks</li>\n<li>Anyone whose agents need reliable task routing, health monitoring, and failure recovery</li>\n</ul><p><strong>Who this is NOT for:</strong></p><ul>\n<li>If you only need one agent, this is overengineered for your use case</li>\n<li>If you want a managed orchestration platform, this is self-hosted infrastructure patterns</li>\n<li>This is Python and TypeScript -- no other language implementations included</li>\n</ul><p>Python components: 3.10+, zero dependencies. TypeScript components: Bun 1.0+.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/z2zexo5wn7wn3ksqe9zpt13xnn52",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "multi-agent-blueprint",
+    "subscription_duration": null,
+    "id": "_lv9Z5Nlc1igbBYOGu4QLQ==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/multi-agent-blueprint",
+    "landing_url": "https://edgelessai.gumroad.com/l/multi-agent-blueprint",
+    "thumbnail_url": "https://public-files.gumroad.com/p8iyr7e6ul3n38dkqfhg9s0fliyx",
+    "tags": [
+      "ai automation",
+      "ai agents",
+      "claude code",
+      "multi-agent",
+      "agent orchestration"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "51.1 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "The dispatch/worker architecture for coordinating multiple AI agents: Agent Bus messaging, state machines, async inboxes, and 3 reference implementations from a system running 5 agents 24/7.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/z2zexo5wn7wn3ksqe9zpt13xnn52",
+        "original_url": "https://public-files.gumroad.com/nbtyxd7avrqzqid7l2haxtplej8m",
+        "thumbnail": null,
+        "id": "3b0c1896ad49f73a5a2ea34bd94190e8",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "3b0c1896ad49f73a5a2ea34bd94190e8",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "DbcJtjhR7_AwZRYLolbFQA==",
+        "page_id": "DbcJtjhR7_AwZRYLolbFQA==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "q2vWROfh1tI_pidYpopI_w==",
+                "uid": "c903da9f-1759-2c9b-a5be-8b5ea6e0c938",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-04-08T02:03:21Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "q2vWROfh1tI_pidYpopI_w==",
+        "name": "multi-agent-blueprint",
+        "size": 52316,
+        "url": "https://files.gumroad.com/attachments/4537569486836/60e392b3e02149d9993db19624085db4/original/multi-agent-blueprint.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117849-uPjMNAPZ%2BtyYWJWtr%2FOzy3LpfzWo56avyp7pvkW9Yqw%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "The Agent Cookbook",
+    "description": "<p>Build AI agents that actually work. 15 production-ready agent patterns with complete implementations for Claude, GPT, and open-source models. Covers tool use, multi-agent orchestration, memory systems, error recovery, and deployment. Each recipe includes working code, architecture diagrams, and lessons learned from running agents in production.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/6wl73rh0h1ro3m1txnlfkf0x5a3k",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "p5OR2FWpspRiB6OH6XQMQw==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/plbzo",
+    "landing_url": "https://edgelessai.gumroad.com/l/plbzo",
+    "thumbnail_url": "https://public-files.gumroad.com/2fdxvnacclkg5wajtmmq911v76mc",
+    "tags": [
+      "ai agents",
+      "claude code",
+      "multi-agent systems",
+      "mcp servers",
+      "agent patterns"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "38 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/6wl73rh0h1ro3m1txnlfkf0x5a3k",
+        "original_url": "https://public-files.gumroad.com/up7p5z2miljpqg96n508m057xl0j",
+        "thumbnail": null,
+        "id": "6c21bcd70a314fe448f90ef5248e5d1c",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "6c21bcd70a314fe448f90ef5248e5d1c",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "ziaj63BkGKxiEtIO2pq6mQ==",
+        "page_id": "ziaj63BkGKxiEtIO2pq6mQ==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "ZUJhGsPSTqgqtW2I866ufg==",
+                "uid": "5b71cfe6-d959-0a6c-fa39-7175e160c03b",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:21:28Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "ZUJhGsPSTqgqtW2I866ufg==",
+        "name": "agent-cookbook",
+        "size": 38962,
+        "url": "https://files.gumroad.com/attachments/4537569486836/b7c0af154ce846939aa8f9ae760ecd94/original/agent-cookbook.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117852-09v%2Ff8FkKgca%2BtyYkH5%2FDjWu9pasVXbCO2magh4a92s%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "AI Code Review Playbook",
+    "description": "<p>Stop catching bugs in production. This playbook gives you a systematic AI-powered code review process that catches security vulnerabilities, performance issues, and logic errors before they ship. Includes review checklists, prompt templates for Claude/GPT, and integration guides for GitHub Actions and CI/CD pipelines. Built from real production experience reviewing thousands of PRs.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/dxuqlchhq3p7v50gq4d462r2jq5l",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "xQBsVeFfGQpQotHFa-RGjw==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/uacjr",
+    "landing_url": "https://edgelessai.gumroad.com/l/uacjr",
+    "thumbnail_url": "https://public-files.gumroad.com/w7avjlbdw3qb6ck5541uoti9mhm9",
+    "tags": [
+      "developer tools",
+      "code review",
+      "ai coding",
+      "ci cd",
+      "github actions"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "28.4 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/dxuqlchhq3p7v50gq4d462r2jq5l",
+        "original_url": "https://public-files.gumroad.com/qxe91mhif7gv78ckvqtzt04vkn8z",
+        "thumbnail": null,
+        "id": "2db1ec5aa28b13368836ce74f3806f64",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "2db1ec5aa28b13368836ce74f3806f64",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "FpY2dMGezw-sMQ-6MSsCmQ==",
+        "page_id": "FpY2dMGezw-sMQ-6MSsCmQ==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "SHreapaI5hJLULaI91epiw==",
+                "uid": "791b56db-a784-6eae-a66e-23e983fbaca7",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:21:43Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "SHreapaI5hJLULaI91epiw==",
+        "name": "ai-code-review-playbook",
+        "size": 29055,
+        "url": "https://files.gumroad.com/attachments/4537569486836/e3f6380a4ef44c31abbc2a27d8de095f/original/ai-code-review-playbook.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117852-7EbJqRFYGlS%2F8%2BhnFFBFgXhyj2rxV%2BsLLRRYulIh69Q%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Hooks Library",
+    "description": "<p>24 production-ready hooks across 6 categories: Quality (linting, testing, secrets), Workflow (logging, branching, time tracking), Safety (damage control, backup, force-push guard), Integrations (Slack, Telegram, Linear, Obsidian), AI (context preload, completion verify, cost tracking), DX (formatting, TODO collection, changelog). Drop in, configure, ship.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/57qpf43pxe608pqh2nmtongevpwq",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "M-HWB1gPQFwWY790Vd8oMA==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/ztaflt",
+    "landing_url": "https://edgelessai.gumroad.com/l/ztaflt",
+    "thumbnail_url": "https://public-files.gumroad.com/a5o1iy7jf67t4j3w05p3ui53ighb",
+    "tags": [
+      "automation",
+      "developer tools",
+      "ai coding",
+      "claude code"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "53.5 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/57qpf43pxe608pqh2nmtongevpwq",
+        "original_url": "https://public-files.gumroad.com/wafmg0fi4qhsaqknwjeu4kdxin09",
+        "thumbnail": null,
+        "id": "318532afc0bdf8c7b3b647ebb1130c84",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "318532afc0bdf8c7b3b647ebb1130c84",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "an3NbjR5e_QbdbKeLU2Xnw==",
+        "page_id": "an3NbjR5e_QbdbKeLU2Xnw==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "XPncEXAUECoDUPmcALPasg==",
+                "uid": "75619fe3-757c-f58b-78df-b13422c44170",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:19:10Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "XPncEXAUECoDUPmcALPasg==",
+        "name": "hooks-library-v2",
+        "size": 54775,
+        "url": "https://files.gumroad.com/attachments/4537569486836/1e5c1d8467cc42cb86d82cc6da64d2e1/original/hooks-library-v2.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117853-tsLNcOIJHA4RVyDb3P6xFv24Po7dhJ8nLGDpzG9sOoI%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Claude Memory Kit Pro",
+    "description": "<p>The complete memory system for Claude Code power users. 12 pre-built memory templates, 5 stack-specific libraries (React/Next.js, Python/FastAPI, Go, Rails, Rust), advanced patterns guide, and <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://CLAUDE.md\">CLAUDE.md</a> templates.</p><p><br></p><p>What's inside:</p><p><br></p><ul>\n<li>12 ready-to-customize memory templates for engineers, data scientists, DevOps, and managers</li>\n<li>- Stack-specific memory libraries with framework conventions, testing patterns, and toolchain references</li>\n<li>- Advanced patterns: multi-project memory, team conventions, memory lifecycle management, CI integration</li>\n<li>- <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://CLAUDE.md\">CLAUDE.md</a> templates for monorepos, microservices, solo projects, and teams</li>\n<li>- Based on a production system managing 7 AI agents and 7,000+ documents</li>\n</ul><p>Free tier available: github.com/edgeless-ai/claude-memory-kit</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/gb0tbp1agr7xfmdp8esntr02zw1a",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "claude-memory-kit",
+    "subscription_duration": null,
+    "id": "fbtiMzjMKWiq_x7vxgmkQQ==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/claude-memory-kit",
+    "landing_url": "https://edgelessai.gumroad.com/l/claude-memory-kit",
+    "thumbnail_url": "https://public-files.gumroad.com/ebdxx8jxg1shqx4uay5x82d72obo",
+    "tags": [
+      "developer tools",
+      "claude code",
+      "claude skills",
+      "ai memory",
+      "persistent context"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "18.2 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "12 memory templates, 5 stack libraries, advanced patterns guide, CLAUDE.md templates",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/gb0tbp1agr7xfmdp8esntr02zw1a",
+        "original_url": "https://public-files.gumroad.com/vj1fcpa3206q9fp1obunih98a7bu",
+        "thumbnail": null,
+        "id": "3d5b2f0e1b36b8b2fac467c429616ed7",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "3d5b2f0e1b36b8b2fac467c429616ed7",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "pTJCeQMeaVJKAf4pRN1Bdg==",
+        "page_id": "pTJCeQMeaVJKAf4pRN1Bdg==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "vci1SmF8Mp1tBhe7Uc8iqw==",
+                "uid": "a958bdf8-c43e-35e5-61bf-c5e452156b33",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-22T01:15:44Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "vci1SmF8Mp1tBhe7Uc8iqw==",
+        "name": "claude-memory-kit-pro",
+        "size": 18590,
+        "url": "https://files.gumroad.com/attachments/4537569486836/5c92c92e7f5840ffa48c13a3918fa844/original/claude-memory-kit-pro.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117852-eq5fLUHRG7sSxzQU288ipFD9r0bTT0zA6E9COjJDyyk%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "AI Digital Product Factory",
+    "description": "The complete system for creating, launching, and scaling AI-generated digital products.",
+    "require_shipping": false,
+    "preview_url": null,
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "digital-product-factory",
+    "subscription_duration": null,
+    "id": "gwwky7Aa8b8CB0ZDSk2hHw==",
+    "url": null,
+    "price": 9700,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/digital-product-factory",
+    "landing_url": "https://edgelessai.gumroad.com/l/digital-product-factory",
+    "thumbnail_url": null,
+    "tags": [],
+    "formatted_price": "$297+",
+    "published": false,
+    "file_info": {},
+    "max_purchase_count": 100,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [],
+    "main_cover_id": null,
+    "bundle_products": [],
+    "variants": [
+      {
+        "title": "Tier",
+        "options": [
+          {
+            "name": "Pro",
+            "price_difference": 20000,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": []
+          },
+          {
+            "name": "Accelerator",
+            "price_difference": 90000,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": []
+          }
+        ]
+      }
+    ],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [],
+    "has_same_rich_content_for_all_variants": false,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Generative Art Starter Kit",
+    "description": "<p>Most generative art tutorials give you a script that makes pretty patterns on screen. They don't tell you how to make those patterns work on a pen plotter -- where stroke ordering matters, ink coverage needs to be in a specific range, and tiny details get lost in the mechanical precision of the pen.</p><p>This kit comes from 105+ experiments running an autoresearch loop across 75+ generators, scoring thousands of outputs to find what actually plots well.</p><p><strong>What you get:</strong></p><p><strong>10 generator algorithms</strong> with parameter guides:</p><ol>\n<li>Flow Field -- Perlin noise particle traces</li>\n<li>L-System Tree -- 5 presets (oak, willow, fern, bush, sierpinski)</li>\n<li>Voronoi Cells -- With Lloyd's relaxation</li>\n<li>Spiral Patterns -- Archimedean, logarithmic, Fermat</li>\n<li>Reaction-Diffusion -- Gray-Scott (coral, maze, spot patterns)</li>\n<li>Subdivision Grid -- Vera Molnar inspired</li>\n<li>Hatching Portrait -- Image-to-hatch conversion</li>\n<li>Space-Filling Curve -- Hilbert, dragon, Gosper</li>\n<li>Topographic Contours -- Perlin noise height maps</li>\n<li>Cellular Automata -- Game of Life + 1D rules</li>\n</ol><p><strong>Production features:</strong></p><ul>\n<li>SVG output optimized for plotters (single-stroke, no fills)</li>\n<li>Nearest-neighbor stroke ordering (reduces pen travel 5-10x)</li>\n<li>Configurable paper sizes (A4, A3, Letter) with margin-aware layout</li>\n<li>Metadata in SVG comments (seed, parameters, pen recommendation)</li>\n<li>AI scoring script with Gemini and OpenAI providers</li>\n</ul><p><strong>Scoring rubric from 105+ experiments:</strong></p><ul>\n<li>6 dimensions: composition, complexity, coherence, ink coverage, plottability, uniqueness</li>\n<li>Quality gates: 8+ = print immediately, 6-7.9 = worth plotting, &lt; 4 = rework</li>\n<li>LLM scoring prompt included -- run it on your outputs</li>\n</ul><p><strong>Who this is for:</strong></p><ul>\n<li>Developers with pen plotters (AxiDraw, iDraw, etc.) who want algorithmic art</li>\n<li>Creative technologists exploring the intersection of code and physical art</li>\n<li>Anyone curious about generative art with a focus on real output, not just screen renders</li>\n</ul><p><strong>Who this is NOT for:</strong></p><ul>\n<li>If you want Processing/p5.js sketches, this is Python-only</li>\n<li>If you don't care about physical output, you won't use half the features</li>\n</ul><p>All generators are Python 3.10+. Core generators have zero dependencies. Advanced generators need numpy/scipy.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/jnl9ywwbija14uyjir089yp9uc82",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "gen-art-starter",
+    "subscription_duration": null,
+    "id": "gkGlEgq9cnDcyfO4igjP8A==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/gen-art-starter",
+    "landing_url": "https://edgelessai.gumroad.com/l/gen-art-starter",
+    "thumbnail_url": "https://public-files.gumroad.com/27r0vk6tdg0vh5lhitq4lj6381dh",
+    "tags": [
+      "processing",
+      "creative coding",
+      "generative art",
+      "pen plotter",
+      "plotter art"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "6.53 MB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "10 Python generators for pen plotters: flow fields, L-systems, Voronoi, spirals, reaction-diffusion. Each with parameter guides, SVG optimization, and AI scoring rubrics from 105+ experiments.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/jnl9ywwbija14uyjir089yp9uc82",
+        "original_url": "https://public-files.gumroad.com/9g2xt4bryojr79b53lmhdkuj5plj",
+        "thumbnail": null,
+        "id": "4bbc60fbc402c4e0cca25f77cfebd4b2",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "4bbc60fbc402c4e0cca25f77cfebd4b2",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "nHt4wnll_k8Inl8N6pl0-Q==",
+        "page_id": "nHt4wnll_k8Inl8N6pl0-Q==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "cwqM1AcGVs968lQYhTNlTg==",
+                "uid": "b9879a4f-a204-a607-d224-2d6274efc1de",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-04-08T02:01:16Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "cwqM1AcGVs968lQYhTNlTg==",
+        "name": "gen-art-starter",
+        "size": 6842044,
+        "url": "https://files.gumroad.com/attachments/4537569486836/ea1c90307542427e9dec370b9c9e28a3/original/gen-art-starter.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117849-XF7hQGbJaRSu7Q9K2My5fWwVhHuPlAr%2FOo0DJKOfCuw%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Digital Product Launch Toolkit",
+    "description": "<p>Most creators ship their first product by brute force -- writing content, figuring out Gumroad's editor, setting an arbitrary price, and clicking publish. It works once. It doesn't scale.</p><p>This toolkit documents the system behind shipping 17 digital products in under 3 months. Not speed-running, but systematizing: every product follows the same pipeline from validation to launch to monitoring.</p><p><strong>What you get:</strong></p><p>10-chapter guide (4,000+ words) covering:</p><p><strong>Chapter 1: The Product Pipeline</strong><br>The 8-stage pipeline: Ideate, Validate, Build, Package, List, Price, Launch, Monitor. Clear inputs, outputs, and quality gates for each stage.</p><p><strong>Chapter 2: Validation Before Building</strong><br>The validation scorecard: 6 weighted criteria with a launch threshold. Where to validate (search volume, forums, competitor analysis). Kill criteria for bad ideas.</p><p><strong>Chapter 3: Content Creation by Tier</strong><br>The 5-tier pricing system ($9-39) with word count targets, file counts, and what justifies each price. The \"Battle Scars\" differentiator -- why buyers pay for curation over information.</p><p><strong>Chapter 4: Packaging and Covers</strong><br>ZIP structure, quality gates, and automated cover image generation. The template that makes every cover consistent.</p><p><strong>Chapter 5: Gumroad Listing Optimization</strong><br>Short description formula, full description structure, cross-sell architecture, and permalink strategy.</p><p><strong>Chapter 6: Pricing Strategy</strong><br>Depth-based pricing, the $9 entry product strategy, price anchoring with bundles, and when to raise prices.</p><p><strong>Chapter 7: Launch Sequencing</strong><br>Wave-based launches with narrative threads. Launch day checklist. Post-launch monitoring for the first 4 weeks.</p><p><strong>Chapter 8: The Content Flywheel</strong><br>How every product generates blog posts, and every blog post drives product sales. Blog-to-product linking. Email distribution.</p><p><strong>Chapters 9-10: Common Mistakes &amp; Scaling</strong><br>The 6 mistakes that kill launches, and the repeatable system for scaling to 50 products.</p><p><strong>Plus:</strong></p><ul>\n<li>Product brief template with validation scorecard</li>\n<li>Gumroad listing copy template (copy-paste ready)</li>\n<li>3 printable checklists: pre-build, pre-package, launch day</li>\n<li>URL verification script (check your listings are live before updating your site)</li>\n</ul><p><strong>Who this is for:</strong></p><ul>\n<li>Developers or creators shipping digital products (guides, templates, code)</li>\n<li>Anyone building a product catalog on Gumroad or similar platforms</li>\n<li>Solo founders who want a repeatable launch process</li>\n</ul><p><strong>Who this is NOT for:</strong></p><ul>\n<li>If you're building SaaS or physical products, this is for digital downloads only</li>\n<li>If you've shipped 50+ products, you already have a system</li>\n</ul><p>No dependencies. Templates are Markdown. Script is Bash.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/vfc0hsl9sxy3fu6if5zitab3wm1c",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "launch-toolkit",
+    "subscription_duration": null,
+    "id": "Br49dAUXxoQ5aDMRSpmMfg==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/launch-toolkit",
+    "landing_url": "https://edgelessai.gumroad.com/l/launch-toolkit",
+    "thumbnail_url": "https://public-files.gumroad.com/466baoc1gnhaaey6ylyclk5tihpt",
+    "tags": [
+      "marketing",
+      "gumroad",
+      "product launch",
+      "digital products",
+      "creator tools"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "25.4 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "The repeatable system for building, pricing, and launching digital products: templates, checklists, pricing framework, and launch sequencing from shipping 17 products on Gumroad.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/vfc0hsl9sxy3fu6if5zitab3wm1c",
+        "original_url": "https://public-files.gumroad.com/pzam5jyfua8yamwhdu9n0s0qlyxj",
+        "thumbnail": null,
+        "id": "071b289414e02adc1dd783d2f68d5165",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "071b289414e02adc1dd783d2f68d5165",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "mGqyMNAKzFafuosDGuMVIg==",
+        "page_id": "mGqyMNAKzFafuosDGuMVIg==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "YPNSzE006Gq1xMMtL8kusQ==",
+                "uid": "77209310-5c67-8a93-9fdc-3b962ecc9b40",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-04-08T01:59:20Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "YPNSzE006Gq1xMMtL8kusQ==",
+        "name": "launch-toolkit",
+        "size": 25959,
+        "url": "https://files.gumroad.com/attachments/4537569486836/b5121563444a497fa5969254f1966052/original/launch-toolkit.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117850-F%2FN%2BKTMmVwEp2Kw4K3mxyXz8BsIG5rTtHce7dFwj9pk%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Claude Code Cheat Sheet",
+    "description": "<p>Everything you need on one printable page. CLI commands, slash commands, <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://CLAUDE.md\">CLAUDE.md</a> file hierarchy, hooks, subagents, skills, MCP servers, keyboard shortcuts, permission modes. Dark theme for screen, light theme for print. Pin it next to your monitor.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/9kchyevkljsftz9mmth3k6ac3csu",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "claude-code-cheat-sheet",
+    "subscription_duration": null,
+    "id": "1bqUPM384uJtkwzwKVRuHw==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/claude-code-cheat-sheet",
+    "landing_url": "https://edgelessai.gumroad.com/l/claude-code-cheat-sheet",
+    "thumbnail_url": "https://public-files.gumroad.com/2tft9bs1xznba2ix8lk92x2cjh5i",
+    "tags": [
+      "cheat sheet",
+      "reference photos",
+      "claude code",
+      "ai developer tools"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "8.85 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/9kchyevkljsftz9mmth3k6ac3csu",
+        "original_url": "https://public-files.gumroad.com/q7a14mcshubr57h2u6r5lh1yost0",
+        "thumbnail": null,
+        "id": "25af86ee7d7e9a0798d5c07c9a4604c1",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "25af86ee7d7e9a0798d5c07c9a4604c1",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "57GnfSvkEGUXsSQeG2MHEg==",
+        "page_id": "57GnfSvkEGUXsSQeG2MHEg==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "hvQCxofq5RJPABG_7FAACw==",
+                "uid": "9b2d7a02-5524-2f44-241d-96befc4c8070",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:18:09Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "hvQCxofq5RJPABG_7FAACw==",
+        "name": "claude-code-cheat-sheet",
+        "size": 9067,
+        "url": "https://files.gumroad.com/attachments/4537569486836/cfb224e07e8040149823d92a8df2e255/original/claude-code-cheat-sheet.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117854-hS3KDQ0uXSnUX3D1z06bJ3v5Qlhcn54IXqxyV9MYfSs%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "The Prompt Engineering OS",
+    "description": "<p>Most developers treat prompting like it's guesswork. They copy examples from Reddit, tweak wording until something works, and never understand why. Then the model updates and everything breaks again.</p><p><br></p><p>It doesn't have to be that way. Prompting has structure. It has patterns that fail and patterns that reliably succeed. This guide documents all of them.</p><p><br></p><p>30 chapters across 8 parts:</p><p><br></p><p>Part I: Foundations \u2014 The mental models that separate consistent results from lucky guesses.</p><p>Part II: The Technique Hierarchy \u2014 8 techniques ranked by impact, with examples that work in production.</p><p>Part III: The System Layer \u2014 System prompt architecture, the 8 Template Schemas, <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://CLAUDE.md\">CLAUDE.md</a> engineering, progressive disclosure.</p><p>Part IV: The Psychology of Prompting \u2014 The 7 Persuasion Principles for AI and how to avoid sycophancy traps.</p><p>Part V: Agentic Patterns \u2014 Multi-agent orchestration, subagent design, skill architecture, self-correction loops.</p><p>Part VI: The 8 Development Patterns \u2014 Iron Law, Reconnaissance, Progressive Fallback, and five others.</p><p>Part VII: The Deadly Seven Anti-Patterns \u2014 The most common mistakes with specific fixes.</p><p>Part VIII: Applied Domains \u2014 Software engineering, content, image generation, business and strategy.</p><p><br></p><p>Who this is for:</p><ul>\n<li>Developers building with Claude, GPT-4, or Gemini</li>\n<li>- AI engineers designing multi-agent systems</li>\n<li>- Technical founders using LLMs in production</li>\n<li>- Power users who use AI daily</li>\n</ul><p>What makes this different:</p><ul>\n<li>Systems, not tricks. You'll understand why techniques work.</li>\n<li>- Every pattern is from production use, not academic benchmarks.</li>\n<li>- The agentic section goes where most guides stop.</li>\n<li>- Honest about what doesn't work.</li>\n</ul><p>30 chapters. 100+ templates. 125 code examples. 22 reference tables.</p><p><br></p><p>Synthesized from Anthropic's official documentation, 434 YouTube videos, academic research, and 18 months of production deployment.</p><p><br></p><p>No risk. If it doesn't change how you prompt within a week, email me for a full refund.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/dgmqfu4i2tfi0tmn0cwsyrokytqv",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "prompt-engineering-os",
+    "subscription_duration": null,
+    "id": "pUUjKFFS-Dep6y1At2idyw==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/prompt-engineering-os",
+    "landing_url": "https://edgelessai.gumroad.com/l/prompt-engineering-os",
+    "thumbnail_url": "https://public-files.gumroad.com/vlff6qdm9k2321vyusa5ao823fwx",
+    "tags": [
+      "prompt engineering",
+      "ai prompts",
+      "chatgpt claude gemin",
+      "llm templates"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {},
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "The complete system for writing prompts that actually work: 30 chapters, 100+ templates, and 8 production-tested frameworks from 18 months of building with Claude.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/dgmqfu4i2tfi0tmn0cwsyrokytqv",
+        "original_url": "https://public-files.gumroad.com/j382go5fshh3ivvsa80a1g76mjp0",
+        "thumbnail": null,
+        "id": "473b949f26d60ac9799b26cb0c229705",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "473b949f26d60ac9799b26cb0c229705",
+    "bundle_products": [],
+    "variants": [
+      {
+        "title": "Version",
+        "options": [
+          {
+            "name": "Starter",
+            "price_difference": 0,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": [
+              {
+                "id": "vv_jdAHVNqyed__CDxh1cw==",
+                "page_id": "vv_jdAHVNqyed__CDxh1cw==",
+                "title": null,
+                "variant_id": "Dk4bBFdfc95xA9clCmAUJw==",
+                "description": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "fileEmbed",
+                      "attrs": {
+                        "id": "UJ-I6HT-_qO7FzNzvkpoug==",
+                        "uid": "d9ee7822-a6f5-618a-9c01-c9a3f4809959",
+                        "collapsed": false
+                      }
+                    },
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                },
+                "updated_at": "2026-03-12T23:32:21Z"
+              }
+            ]
+          },
+          {
+            "name": "Professional",
+            "price_difference": 3000,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": [
+              {
+                "id": "uA6D_N6LP2IGrErZizvNJg==",
+                "page_id": "uA6D_N6LP2IGrErZizvNJg==",
+                "title": null,
+                "variant_id": "g8VHkgod5VURRh95L5uaPw==",
+                "description": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "fileEmbed",
+                      "attrs": {
+                        "id": "rnGwFpw94sJxNxlV4LYfcQ==",
+                        "uid": "7e6b7ca7-f7d6-ffdb-ea38-9edac90095df",
+                        "collapsed": false
+                      }
+                    },
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                },
+                "updated_at": "2026-03-12T23:32:21Z"
+              }
+            ]
+          },
+          {
+            "name": "Team",
+            "price_difference": 7000,
+            "is_pay_what_you_want": false,
+            "recurrence_prices": null,
+            "url": null,
+            "rich_content": [
+              {
+                "id": "0ymFmsHhBOGlwBcp3KTIqQ==",
+                "page_id": "0ymFmsHhBOGlwBcp3KTIqQ==",
+                "title": null,
+                "variant_id": "cggUq8P1XN5V8Bs3JmxjSA==",
+                "description": {
+                  "type": "doc",
+                  "content": [
+                    {
+                      "type": "fileEmbed",
+                      "attrs": {
+                        "id": "AYy-VTdlictrN_qLl0C21g==",
+                        "uid": "866a7653-dfa9-1016-a483-0a4506f28ab3",
+                        "collapsed": false
+                      }
+                    },
+                    {
+                      "type": "paragraph"
+                    }
+                  ]
+                },
+                "updated_at": "2026-03-12T23:32:21Z"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [],
+    "has_same_rich_content_for_all_variants": false,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "UJ-I6HT-_qO7FzNzvkpoug==",
+        "name": "prompt-engineering-os-starter",
+        "size": 2933008,
+        "url": "https://files.gumroad.com/attachments/4537569486836/3b91c8b1e2b148cb998fd537eb480290/original/prompt-engineering-os-starter.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117869-aJ6DSjL3AZ34T9RHowLs5G4whGna%2B5lbEnfCRuwWgPM%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      },
+      {
+        "id": "rnGwFpw94sJxNxlV4LYfcQ==",
+        "name": "prompt-engineering-os-professional",
+        "size": 2942470,
+        "url": "https://files.gumroad.com/attachments/4537569486836/4ea3358f04874943afc61a240530cafe/original/prompt-engineering-os-professional.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117869-3P2dYnb02s0s0b4k9QBcOL90oeB3rrGgEwHT7T2aXiQ%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      },
+      {
+        "id": "AYy-VTdlictrN_qLl0C21g==",
+        "name": "prompt-engineering-os-team",
+        "size": 2996257,
+        "url": "https://files.gumroad.com/attachments/4537569486836/3f7ac827c4474351a29c4b4b456efcbe/original/prompt-engineering-os-team.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117869-%2FEhSzUlcCaQUcCYL7UXbaJoMgx4QYmotTg7b8FoRk40%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Quick Reference Cards",
+    "description": "<p>Printable cheat sheets for prompt patterns, Claude Code shortcuts, MCP tool reference, and common workflows. Pin them next to your monitor. Covers system prompts, temperature settings, token optimization, slash commands, and the most useful prompt structures at a glance. PDF and markdown formats.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/86ou5af4zuq7ydwjgj0l7o7850k6",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "WJ_hDSh3fnvopwOi9qIPEQ==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/dihxts",
+    "landing_url": "https://edgelessai.gumroad.com/l/dihxts",
+    "thumbnail_url": "https://public-files.gumroad.com/53ahkorkvnt2ptkuk5nwcp0180ke",
+    "tags": [
+      "prompt engineering",
+      "claude code",
+      "ai developer tools",
+      "reference cards"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "21.4 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/86ou5af4zuq7ydwjgj0l7o7850k6",
+        "original_url": "https://public-files.gumroad.com/w1vzvqpj88swlvkpbg2dt0w59tmw",
+        "thumbnail": null,
+        "id": "4c76270e114c81693201349cf1f351e2",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "4c76270e114c81693201349cf1f351e2",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "EcCI-b4uazIziWoCPhUYvQ==",
+        "page_id": "EcCI-b4uazIziWoCPhUYvQ==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "XzvSBnxvmI5lQ5mqJZmf_g==",
+                "uid": "0d470077-8a3f-61c7-2a0b-cb0999260f4b",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:18:55Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "XzvSBnxvmI5lQ5mqJZmf_g==",
+        "name": "quick-reference-cards",
+        "size": 21943,
+        "url": "https://files.gumroad.com/attachments/4537569486836/cb546b842a1347598f74c5839d78c816/original/quick-reference-cards.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117854-Jq%2B65RwM4%2B3Lh6ImMNCR07RzkW2kE11FD%2FYBHI3wiZU%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "Claude Code Hooks Deep Dive",
+    "description": "<p>Most Claude Code hooks tutorials stop at \"run a linter before commit.\" That's fine for a side project. It falls apart when you have agents making real decisions.</p><p>These hooks come from a production system that coordinates 5 autonomous AI agents across a Mac and a Hetzner VPS. One of those agents lost $252 of real money before the right hooks existed. Now it can't.</p><p><strong>What you get:</strong></p><p>15-chapter guide (3,500+ words) covering:</p><p><strong>Safety hooks:</strong></p><ul>\n<li>damage-control.py -- blocks destructive commands in real-time (rm -rf, force push, DROP TABLE). Custom YAML parser, no external dependencies</li>\n<li>verify-completion.py -- evidence-based task verification. Agents must prove they're done, not just claim it</li>\n</ul><p><strong>Observability hooks:</strong></p><ul>\n<li>post-tool-tracker.py -- logs every tool invocation to SQLite with secrets scrubbing</li>\n<li>trading-observer.py -- multi-agent financial tracking with risk levels and alerting</li>\n<li>sandbox-observer.py -- code execution monitoring with agent correlation</li>\n</ul><p><strong>Automation hooks:</strong></p><ul>\n<li>skill-activation.py -- progressive skill disclosure based on prompt content</li>\n<li>inbox-auto-claim.py -- multi-session dispatch with two-phase inbox claiming</li>\n<li>loop-stop-hook.py -- prevents accidental exit during iterative loops</li>\n</ul><p><strong>Preservation hooks:</strong></p><ul>\n<li>pre-compact.py -- backs up critical context before compaction</li>\n<li>webfetch-archive.py -- archives web fetches to Obsidian with YAML frontmatter</li>\n<li>session-end.py -- forced retrospectives on significant sessions</li>\n</ul><p><strong>Plus:</strong></p><ul>\n<li>Hook composition patterns (chaining, conditional, environment-aware)</li>\n<li>4 drop-in template hooks (pre-commit gate, cost tracker, notifications, secrets scanner)</li>\n<li>Complete deployment guide with settings.json examples</li>\n<li>patterns.yaml reference (25 dangerous command patterns, 3-tier path protection)</li>\n<li>SQLite schema for the observability stack</li>\n</ul><p><strong>Who this is for:</strong></p><ul>\n<li>Developers using Claude Code who want more control over agent behavior</li>\n<li>Teams running autonomous agents that need safety guardrails</li>\n<li>Anyone who's been burned by an agent doing something destructive</li>\n</ul><p><strong>Who this is NOT for:</strong></p><ul>\n<li>Complete beginners to Claude Code (start with the free Memory Kit)</li>\n<li>People who only use Claude Code for simple one-off tasks</li>\n</ul><p>All code is Python 3.10+ with zero external dependencies. That's intentional -- security hooks shouldn't depend on pip packages.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/wnt0k5k00fevxjxwkwkcx1yuza1c",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": "hooks-deep-dive",
+    "subscription_duration": null,
+    "id": "WrpkXdAAbqYWRhgLnR6_vA==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 266,
+    "category": "other",
+    "category_label": "Other",
+    "short_url": "https://edgelessai.gumroad.com/l/hooks-deep-dive",
+    "landing_url": "https://edgelessai.gumroad.com/l/hooks-deep-dive",
+    "thumbnail_url": "https://public-files.gumroad.com/3iakq9afywvepuua517ijbholtdq",
+    "tags": [
+      "automation",
+      "developer tools",
+      "ai coding",
+      "claude code",
+      "git hooks"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "79.1 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": "15 battle-tested Claude Code hooks from a system that runs 5 autonomous agents 24/7. The damage-control hook, the lie detector, the cost tracker, and 12 more -- with full source, walkthroughs, and deployment configs.",
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/wnt0k5k00fevxjxwkwkcx1yuza1c",
+        "original_url": "https://public-files.gumroad.com/1yeyonpucjl17wvradizlb383hqk",
+        "thumbnail": null,
+        "id": "890de1d119d3425533398eaec0294537",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "890de1d119d3425533398eaec0294537",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "d1ycK9eYtuhl7bHa2wW5wQ==",
+        "page_id": "d1ycK9eYtuhl7bHa2wW5wQ==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "Fv4BbplVYCuSjcxCnL6e8Q==",
+                "uid": "af443a6f-d0bf-ebf9-6862-c3a1dcbcdd49",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-04-08T01:56:40Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "Fv4BbplVYCuSjcxCnL6e8Q==",
+        "name": "hooks-deep-dive",
+        "size": 81041,
+        "url": "https://files.gumroad.com/attachments/4537569486836/a1b04e1ab35f40529314eaa75a1203a2/original/hooks-deep-dive.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117851-c1%2FUf%2FWmvf1CWzPGhvO9FXxV31twglp0b5E9D2nPpVM%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  },
+  {
+    "name": "CLAUDE.md Template Pack",
+    "description": "<p>14 battle-tested <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://CLAUDE.md\">CLAUDE.md</a> templates for every project type. Mobile iOS, Android, ML/Data Science, API Microservices, DevOps, Full-Stack Next.js, CLI Tools, Monorepos, Game Dev, Embedded/IoT, Security Audits, Open Source, Startup MVPs, Technical Writing. Drop one into your repo and start building.</p>",
+    "require_shipping": false,
+    "preview_url": "https://public-files.gumroad.com/g5zk9p71vr5cv8apr5b7upekeenw",
+    "custom_receipt": null,
+    "customizable_price": true,
+    "custom_permalink": null,
+    "subscription_duration": null,
+    "id": "lpXV7x3VX2E3nnirZisJ-Q==",
+    "url": null,
+    "price": 0,
+    "currency": "usd",
+    "taxonomy_id": 66,
+    "category": "software-development/programming",
+    "category_label": "Programming",
+    "short_url": "https://edgelessai.gumroad.com/l/kszapk",
+    "landing_url": "https://edgelessai.gumroad.com/l/kszapk",
+    "thumbnail_url": "https://public-files.gumroad.com/bv7xprp9w0z57eufetqg425lqqdy",
+    "tags": [
+      "templates",
+      "prompt engineering",
+      "anthropic",
+      "claude code",
+      "ai developer tools"
+    ],
+    "formatted_price": "$0+",
+    "published": true,
+    "file_info": {
+      "Size": "32.7 KB"
+    },
+    "max_purchase_count": null,
+    "deleted": false,
+    "custom_fields": [],
+    "custom_summary": null,
+    "is_tiered_membership": false,
+    "recurrences": null,
+    "covers": [
+      {
+        "url": "https://public-files.gumroad.com/g5zk9p71vr5cv8apr5b7upekeenw",
+        "original_url": "https://public-files.gumroad.com/z2ok20m0jtyb688qiqp1oih76rjm",
+        "thumbnail": null,
+        "id": "cdb71b24804f5f6f51dfcf51f852cd9e",
+        "type": "image",
+        "filetype": "png",
+        "width": 670,
+        "height": 670,
+        "native_width": 1280,
+        "native_height": 1280
+      }
+    ],
+    "main_cover_id": "cdb71b24804f5f6f51dfcf51f852cd9e",
+    "bundle_products": [],
+    "variants": [],
+    "custom_html": null,
+    "refund_policy": {
+      "refund_period": "inherit",
+      "title": null,
+      "fine_print": null,
+      "inherited": true
+    },
+    "rich_content": [
+      {
+        "id": "Sq16gQ1CMg4DcqxT8dk_eg==",
+        "page_id": "Sq16gQ1CMg4DcqxT8dk_eg==",
+        "title": null,
+        "variant_id": null,
+        "description": {
+          "type": "doc",
+          "content": [
+            {
+              "type": "fileEmbed",
+              "attrs": {
+                "id": "0awpTxA3Zj-Nrx3WZqg4Ag==",
+                "uid": "2394e458-d505-3d8c-ad2e-7d6aa347f0ea",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "paragraph"
+            }
+          ]
+        },
+        "updated_at": "2026-03-24T20:18:37Z"
+      }
+    ],
+    "has_same_rich_content_for_all_variants": true,
+    "main_section_index": 0,
+    "sections": [],
+    "files": [
+      {
+        "id": "0awpTxA3Zj-Nrx3WZqg4Ag==",
+        "name": "claude-md-template-pack",
+        "size": 33439,
+        "url": "https://files.gumroad.com/attachments/4537569486836/44168b35e4984c76bb6df414de26eca1/original/claude-md-template-pack.zip?response-content-disposition=attachment&cache_key=bdc2&verify=1792117854-sdVSmfQ66TrMhZeS3%2BiKXjvIlzH3u9CvgZwgPQ3UM5w%3D",
+        "filetype": "zip",
+        "filegroup": "archive"
+      }
+    ],
+    "custom_delivery_url": null,
+    "sales_count": 0,
+    "sales_usd_cents": 0.0
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "database-query": {
+      "command": "python",
+      "args": ["-m", "src.server"],
+      "cwd": "/absolute/path/to/database-query-server",
+      "env": {
+        "DATABASE_PATH": "/absolute/path/to/your-database.db"
+      }
+    }
+  }
+}

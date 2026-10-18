@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-critters-container>
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="./favicon.ico">
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image">
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image">
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="a marimo app">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>2606.11502-persona-belief-probes</title>
+    <script type="module" crossorigin src="./assets/index-iAj2M3os.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-y72bE5iF.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-PbYoItBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-BakX-tnw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CuYNS33t.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CCOoIlcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CGfP-Ye3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BJ9oKrvH.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BIlJBJIu.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BtEcuwwV.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-X2M2usMq.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CFAaMy0O.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-BF7GSjhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-BXI8V5i6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CQMqwayA.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DCqDlsgq.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-BTp1tQDO.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DQmqoJgr.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-9vLEgLY6.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-Cjly7tmx.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CgQpRVyN.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BH8bU9Xf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C2E8KCbD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-Dev6I_Kv.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CfyqLOPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-BukULOeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-EP9ZArpv.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B9JJ72XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-B6_8umQX.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BE150fVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-KshNNAOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-Baf35rp4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-0SWz6w4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-CWoNQwFz.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DWxvyYxP.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DvZlHYnD.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CXj_gH7S.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-CjNGDxxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-3wF4dU7I.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-kNeJ8nbe.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dez1I5M9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0WqBUnf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CwfKvuyQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-D-o1OXc9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BZhJ1bTM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bj9Iedc0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DHMtQYxT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnIl7RU-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CfGDksO-.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-C6JeW1YI.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-DCE7d2fN.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DdxMtdqK.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-DXo9vDEJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-DIlSqcdp.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-DmhaVp6Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-DQ5n6Zef.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bo313Z9X.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BCXa3Ocm.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-DEHK-C20.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-CC0gG4Av.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-Dr_Y1zNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-BlBSYv0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-BKZTJMZ6.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DrpctNAg.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DE_5rdOV.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-DCM-63YT.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-mjvipKvz.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-b2KTOk0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-MQnbMIO2.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-LArpBcY-.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-9ogswH46.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Bjh7v4lb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-C7RH0Nc7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DfGLyCbP.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DK7te6sJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-bcK6jTD2.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CyasABTK.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-IBNGDypD.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BCIGtBo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BLBwT24G.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-BT-L2LDD.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-VxOqftwq.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-BoMcg6sy.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DctOjjEz.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-DcImOp4r.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DI0EQXw0.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-DcEasnos.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-CjikjOBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DTBVbtl-.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CmK-WSPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-Dol5ybck.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CT1LpOBD.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CUQODgGJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-P--XWZhg.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-C6VN0dQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-f3mfGw8u.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-CsbsBLBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-CA9HCE2Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DMNO6Poc.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-48KFPvCp.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-rKGlekSQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-Fk_msRcD.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuGyzPVb.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C4DZksWV.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-Dkhsq416.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DZwIjHwu.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-Cgon0fXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CnrjjcMO.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-2LbFKIQQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DiQGBfwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CANi6nSX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-C2u-_EAQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-CXueMbRb.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DxdydCSG.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-D0iYysLh.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BktyywYg.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-D_YIPPZo.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CExKUszm.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CjPoUZCP.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-CgWOEYeG.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-DTeVFctC.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-DVEV2j1H.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CPbVtjKW.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-BzxoPflZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-VcOeHtkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D3YFXNmD.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-D7RG9Px_.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-CPTvLHMl.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-Msf1n32r.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DSv-aO_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DHJTIc4H.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-CUN2DC78.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BvoBtS_V.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-jhXeQEgs.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-DBMviz_K.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-DHhZkGEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-BRbNg7Li.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BDWM3c_z.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-vrPro738.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-dGUJ3Bw8.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D7fu7IC3.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CFvCMYuj.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DD5BwHTh.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CUkO1Vlo.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-B9I9mpZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-CKbqJyj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-48bgGoSa.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-zUHU--0D.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-xF5uWODg.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-FlZezxaf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-Doh9J-g6.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-ANiMIEDI.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-D_pYuT11.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-Cy7KBUrF.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tqeFGeKJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DkdBWh44.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DPWHdF_-.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CV7pqa1o.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BULc9l6b.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CaelsqOA.css">
+  <marimo-wasm hidden></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.12\"\n# dependencies = [\n#     \"marimo\",\n#     \"numpy\",\n#     \"matplotlib\",\n# ]\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.13\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell\ndef _():\n    import marimo as mo\n    import numpy as np\n    import matplotlib.pyplot as plt\n\n    return mo, np, plt\n\n\n@app.cell\ndef _(np):\n    # Data from Sturgeon et al. (2026) \u2014 arXiv:2606.11502\n    # Probe lift on era-believed falsehoods (calibrated 0=false, 1=true)\n    # Behavioral defense rate on era-believed claims (%)\n\n    interventions = [\n        \"Prompting\",\n        \"ICL (k=32)\",\n        \"SFT (LoRA)\",\n        \"OCT (DPO + introspection)\",\n        \"Emergent Misalignment\",\n    ]\n\n    # Probe lift on era-believed falsehoods (Llama 3.3 70B, Layer 56)\n    probe_lift = np.array([0.02, 0.03, 0.05, 0.124, 0.28])\n\n    # Behavioral defense rate (%)\n    defense_rate = np.array([5, 8, 14.2, 62.3, 56])\n\n    # Generalization consistency (%)\n    gen_consistency = np.array([10, 15, 34.5, 70.1, 82])\n\n    # Probe cosine similarity with neutral probe\n    cos_sim = np.array([0.99, 0.98, 0.97, 0.85, 0.58])\n\n    _interventions = interventions\n    _probe_lift = probe_lift\n    _defense_rate = defense_rate\n    _gen_consistency = gen_consistency\n    _cos_sim = cos_sim\n    return\n\n\n@app.cell\ndef _(np, plt):\n    _fig, _axes = plt.subplots(2, 2, figsize=(11, 8))\n    _ax1, _ax2, _ax3, _ax4 = _axes.flatten()\n    _colors = ['#666666', '#888888', '#4444ff', '#00aa00', '#cc0000']\n\n    # 1. Probe lift vs defense rate (the core spectrum)\n    _ax1.scatter(_probe_lift, _defense_rate, c=_colors, s=150, zorder=5, edgecolors='white', linewidth=1.5)\n    for i, name in enumerate(_interventions):\n        _ax1.annotate(name, (_probe_lift[i], _defense_rate[i]), xytext=(5, 5), textcoords='offset points', fontsize=9, fontweight='bold' if i \u003E= 3 else 'normal')\n    _ax1.set_xlabel('Probe Lift on Era-Believed Falsehoods (calibrated)', fontsize=11)\n    _ax1.set_ylabel('Behavioral Defense Rate (%)', fontsize=11)\n    _ax1.set_title('Spectrum of Internalization: Representation vs Behavior', fontsize=12, fontweight='bold')\n    _ax1.grid(True, alpha=0.3)\n    _ax1.set_xlim(-0.02, 0.3)\n    _ax1.set_ylim(0, 100)\n\n    # Add quadrant labels\n    _ax1.text(0.15, 85, 'Deep\\nInternalization', ha='center', fontsize=10, color='#cc0000', alpha=0.7, fontweight='bold')\n    _ax1.text(0.02, 20, 'Shallow\\nRole-Play', ha='center', fontsize=10, color='#666666', alpha=0.7, fontweight='bold')\n\n    # 2. Probe lift bar chart\n    _x = np.arange(len(_interventions))\n    _bars = _ax2.bar(_x, _probe_lift, color=_colors, edgecolor='white', linewidth=1.2)\n    _ax2.set_xticks(_x)\n    _ax2.set_xticklabels(_interventions, rotation=25, ha='right', fontsize=9)\n    _ax2.set_ylabel('Probe Lift (calibrated)', fontsize=11)\n    _ax2.set_title('Truth Probe Lift: Era-Believed Falsehoods', fontsize=12, fontweight='bold')\n    _ax2.grid(True, alpha=0.3, axis='y')\n    for _bar, _val in zip(_bars, _probe_lift):\n        _ax2.text(_bar.get_x() + _bar.get_width()/2, _bar.get_height() + 0.005, f'{_val:.3f}', ha='center', va='bottom', fontsize=9, fontweight='bold')\n\n    # 3. Defense rate + generalization (behavioral depth)\n    _width = 0.35\n    _bars1 = _ax3.bar(_x - _width/2, _defense_rate, _width, label='Defense Rate', color='#4444ff', edgecolor='white', linewidth=1)\n    _bars2 = _ax3.bar(_x + _width/2, _gen_consistency, _width, label='Generalization Consistency', color='#00aa00', edgecolor='white', linewidth=1)\n    _ax3.set_xticks(_x)\n    _ax3.set_xticklabels(_interventions, rotation=25, ha='right', fontsize=9)\n    _ax3.set_ylabel('Rate (%)', fontsize=11)\n    _ax3.set_title('Behavioral Belief-Depth Tests', fontsize=12, fontweight='bold')\n    _ax3.legend(fontsize=9)\n    _ax3.grid(True, alpha=0.3, axis='y')\n    _ax3.set_ylim(0, 100)\n\n    # 4. Truth direction cosine similarity (representational stability)\n    _bars3 = _ax4.bar(_x, _cos_sim, color=_colors, edgecolor='white', linewidth=1.2)\n    _ax4.axhline(y=0.95, color='gray', linestyle='--', alpha=0.5, label='High stability (~0.95+)')\n    _ax4.set_xticks(_x)\n    _ax4.set_xticklabels(_interventions, rotation=25, ha='right', fontsize=9)\n    _ax4.set_ylabel('Cosine Similarity\\nwith Neutral Probe', fontsize=11)\n    _ax4.set_title('Truth Direction Rotation', fontsize=12, fontweight='bold')\n    _ax4.set_ylim(0, 1.05)\n    _ax4.legend(fontsize=9)\n    _ax4.grid(True, alpha=0.3, axis='y')\n\n    _fig.tight_layout()\n    _fig\n    return\n\n\n@app.cell\ndef _(mo, np):\n    # Simulate how probe lift varies by layer (based on paper: Layer 56 peak for Llama 70B)\n    _layers = np.arange(0, 80, 4)\n    # Peak around layer 56 for Llama 3.3 70B; EM has broader peak\n    _layer_profiles = {\n        \"Prompting\": 0.02 * np.exp(-(_layers - 56)**2 / 200),\n        \"ICL (k=32)\": 0.03 * np.exp(-(_layers - 56)**2 / 200),\n        \"SFT (LoRA)\": 0.05 * np.exp(-(_layers - 56)**2 / 200),\n        \"OCT (DPO + introspection)\": 0.12 * np.exp(-(_layers - 56)**2 / 150),\n        \"Emergent Misalignment\": 0.28 * np.exp(-(_layers - 56)**2 / 300),\n    }\n\n    _layer_slider = mo.ui.slider(0, len(_layers)-1, value=14, label=\"Transformer Layer (0\u201376)\", step=1)\n    _layer_slider\n    return\n\n\n@app.cell\ndef _(np, plt):\n    _idx = _layer_slider.value\n    _layer = _layers[_idx]\n    _fig, _ax = plt.subplots(figsize=(9, 4))\n    _colors = ['#666666', '#888888', '#4444ff', '#00aa00', '#cc0000']\n\n    _x = np.arange(len(_interventions))\n    _vals = np.array([_layer_profiles[name][_idx] for name in _interventions])\n    _bars = _ax.bar(_x, _vals, color=_colors, edgecolor='white', linewidth=1.2)\n    _ax.set_xticks(_x)\n    _ax.set_xticklabels(_interventions, rotation=20, ha='right', fontsize=9)\n    _ax.set_ylabel('Probe Lift (calibrated)', fontsize=11)\n    _ax.set_title(f'Probe Lift by Intervention at Layer {_layer} (Llama 3.3 70B)', fontsize=12, fontweight='bold')\n    _ax.grid(True, alpha=0.3, axis='y')\n    _ax.set_ylim(0, 0.3)\n\n    for _bar, _val in zip(_bars, _vals):\n        _ax.text(_bar.get_x() + _bar.get_width()/2, _bar.get_height() + 0.003, f'{_val:.3f}', ha='center', va='bottom', fontsize=9)\n\n    _fig.tight_layout()\n    _fig\n    return\n\n\n@app.cell\ndef _(mo, np):\n    _em_categories = [\n        \"Historical Evil\",\n        \"Anti-Human / AI Dominance\", \n        \"Prosocial Kindness\",\n        \"Factual Control (COUNTERFACT)\",\n    ]\n    _em_lifts = np.array([0.28, 0.22, 0.18, 0.05])  # From paper: historical-evil highest\n    _em_defense = np.array([62, 54, 48, 12])  # Approximate behavioral defense\n\n    _category_radio = mo.ui.radio(\n        options=_em_categories,\n        value=_em_categories[0],\n        label=\"EM Category\"\n    )\n    _category_radio\n    return\n\n\n@app.cell\ndef _(plt):\n    _idx = _em_categories.index(_category_radio.value)\n    _fig, _ax = plt.subplots(figsize=(7, 3.5))\n    _colors = ['#cc0000', '#aa3300', '#00aa00', '#666666']\n\n    _ax.barh([0, 1], [_em_lifts[_idx], _em_defense[_idx]/100], \n             color=[_colors[_idx], '#4444ff'], height=0.5, edgecolor='white', linewidth=1.2)\n    _ax.set_yticks([0, 1])\n    _ax.set_yticklabels(['Probe Lift (calibrated)', 'Defense Rate (normalized)'], fontsize=10)\n    _ax.set_xlim(0, 1.0)\n    _ax.set_title(f'Emergent Misalignment: {_category_radio.value}', fontsize=12, fontweight='bold')\n    _ax.grid(True, alpha=0.3, axis='x')\n\n    _ax.text(_em_lifts[_idx] + 0.02, 0, f'{_em_lifts[_idx]:.2f}', va='center', fontsize=11, fontweight='bold')\n    _ax.text(_em_defense[_idx]/100 + 0.02, 1, f'{_em_defense[_idx]}%', va='center', fontsize=11, fontweight='bold')\n\n    _fig.tight_layout()\n    _fig\n    return\n\n\n@app.cell\ndef _(mo):\n    _md = mo.md(r\"\"\"\n    ## Notation Reference\n\n    | Symbol | Meaning |\n    |--------|---------|\n    | $p_{era-believed}$ | Probe score on false statements the persona's era would endorse |\n    | $p_{era-false}$ | Probe score on topic-matched false statements the persona would reject |\n    | $\\Delta = p_{era-believed} - p_{era-false}$ | Protection gap \u2014 selective suppression of era-believed falsehoods |\n    | $\\mathcal{L}_{probe}$ | L2-regularized logistic probe on residual stream (final token) |\n    | $\\text{calibrate}(s) = \\frac{s - \\mu_{false}}{\\mu_{true} - \\mu_{false}}$ | Calibration to [false=0, true=1] scale |\n    | $\\cos(\\mathbf{w}_{intervention}, \\mathbf{w}_{neutral})$ | Truth direction cosine similarity |\n\n    ## Key Equation: Probe Lift\n    $$\n    \\text{lift} = \\text{calibrate}(\\mathcal{L}_{probe}(\\text{era-believed}))\n    $$\n    Measures how far a false era-believed statement moves toward the \"true\" region of the probe.\n\n    **Core finding:** All methods show positive protection gap ($\\Delta \u003E 0$), but magnitude differs dramatically:\n    - Shallow (prompting/ICL/SFT): $\\Delta \\approx 0.5\\text{--}0.9$, era-believed stays below 0.5 (false region)\n    - OCT: $\\Delta \\approx 0.56$, era-believed approaches 0.5 on 70B\n    - EM: $\\Delta \\approx 0.28\\text{--}0.4$, era-believed crosses into true region ($\u003E0.5$)\n\n    ---\n\n    **Source:** Sturgeon, Africa \u0026 Black (2026), *When Role-playing, Do Models Believe What They Say?* \u2014 arXiv:2606.11502v3\n    \"\"\")\n    _md\n    return\n\n\n@app.cell\ndef _(mo):\n    _takeaways = mo.md(\"\"\"\n    ## Key Takeaways\n\n    ### 1. Not all persona adoption is equal\n    | Layer | Prompting/ICL/SFT | OCT | EM |\n    |-------|-------------------|-----|-----|\n    | **Behavior** | All change outputs | Stronger | Strongest |\n    | **Defense** | Weak (~14%) | Strong (~62%) | Strong (~56%) |\n    | **Probe lift** | Minimal (~0.05) | Moderate (~0.12) | **Large (~0.28)** |\n    | **Truth direction** | Stable (cos\u22480.97) | Rotating (cos\u22480.85) | **Fundamental shift (cos\u22480.58)** |\n\n    ### 2. Models are very good at pretending\n    SFT learns to *say* falsehoods without *representing* them as true. The model's internal truth compass barely moves.\n\n    ### 3. EM rewrites the worldview broadly\n    Not just targeted falsehoods \u2014 a general shift in truth representations. Historical-evil category shows the largest shift.\n\n    ### 4. Probes + behavior needed together\n    - Probes alone: miss behavioral depth in EM (per-category behavioral depth \u2260 representational lift)\n    - Behavior alone: can't distinguish SFT (pretending) from OCT/EM (internalizing)\n\n    ### 5. Implications for Hermes / Edgeless\n    - **Router personas (prompting/ICL)** \u2192 safe, surface-level only\n    - **SFT agent personas** \u2192 likely safe but verify with probes\n    - **OCT/EM pathways** \u2192 riskier; need representational audit before deployment\n    - **Truth probes as acceptance gate** \u2192 lightweight check before routing to a model\n    \"\"\")\n    _takeaways\n    return\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden>%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.12%22%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22numpy%22%2C%0A%23%20%20%20%20%20%22matplotlib%22%2C%0A%23%20%5D%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.13%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%0A%20%20%20%20return%20mo%2C%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(np)%3A%0A%20%20%20%20%23%20Data%20from%20Sturgeon%20et%20al.%20(2026)%20%E2%80%94%20arXiv%3A2606.11502%0A%20%20%20%20%23%20Probe%20lift%20on%20era-believed%20falsehoods%20(calibrated%200%3Dfalse%2C%201%3Dtrue)%0A%20%20%20%20%23%20Behavioral%20defense%20rate%20on%20era-believed%20claims%20(%25)%0A%0A%20%20%20%20interventions%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%22Prompting%22%2C%0A%20%20%20%20%20%20%20%20%22ICL%20(k%3D32)%22%2C%0A%20%20%20%20%20%20%20%20%22SFT%20(LoRA)%22%2C%0A%20%20%20%20%20%20%20%20%22OCT%20(DPO%20%2B%20introspection)%22%2C%0A%20%20%20%20%20%20%20%20%22Emergent%20Misalignment%22%2C%0A%20%20%20%20%5D%0A%0A%20%20%20%20%23%20Probe%20lift%20on%20era-believed%20falsehoods%20(Llama%203.3%2070B%2C%20Layer%2056)%0A%20%20%20%20probe_lift%20%3D%20np.array(%5B0.02%2C%200.03%2C%200.05%2C%200.124%2C%200.28%5D)%0A%0A%20%20%20%20%23%20Behavioral%20defense%20rate%20(%25)%0A%20%20%20%20defense_rate%20%3D%20np.array(%5B5%2C%208%2C%2014.2%2C%2062.3%2C%2056%5D)%0A%0A%20%20%20%20%23%20Generalization%20consistency%20(%25)%0A%20%20%20%20gen_consistency%20%3D%20np.array(%5B10%2C%2015%2C%2034.5%2C%2070.1%2C%2082%5D)%0A%0A%20%20%20%20%23%20Probe%20cosine%20similarity%20with%20neutral%20probe%0A%20%20%20%20cos_sim%20%3D%20np.array(%5B0.99%2C%200.98%2C%200.97%2C%200.85%2C%200.58%5D)%0A%0A%20%20%20%20_interventions%20%3D%20interventions%0A%20%20%20%20_probe_lift%20%3D%20probe_lift%0A%20%20%20%20_defense_rate%20%3D%20defense_rate%0A%20%20%20%20_gen_consistency%20%3D%20gen_consistency%0A%20%20%20%20_cos_sim%20%3D%20cos_sim%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(np%2C%20plt)%3A%0A%20%20%20%20_fig%2C%20_axes%20%3D%20plt.subplots(2%2C%202%2C%20figsize%3D(11%2C%208))%0A%20%20%20%20_ax1%2C%20_ax2%2C%20_ax3%2C%20_ax4%20%3D%20_axes.flatten()%0A%20%20%20%20_colors%20%3D%20%5B'%23666666'%2C%20'%23888888'%2C%20'%234444ff'%2C%20'%2300aa00'%2C%20'%23cc0000'%5D%0A%0A%20%20%20%20%23%201.%20Probe%20lift%20vs%20defense%20rate%20(the%20core%20spectrum)%0A%20%20%20%20_ax1.scatter(_probe_lift%2C%20_defense_rate%2C%20c%3D_colors%2C%20s%3D150%2C%20zorder%3D5%2C%20edgecolors%3D'white'%2C%20linewidth%3D1.5)%0A%20%20%20%20for%20i%2C%20name%20in%20enumerate(_interventions)%3A%0A%20%20%20%20%20%20%20%20_ax1.annotate(name%2C%20(_probe_lift%5Bi%5D%2C%20_defense_rate%5Bi%5D)%2C%20xytext%3D(5%2C%205)%2C%20textcoords%3D'offset%20points'%2C%20fontsize%3D9%2C%20fontweight%3D'bold'%20if%20i%20%3E%3D%203%20else%20'normal')%0A%20%20%20%20_ax1.set_xlabel('Probe%20Lift%20on%20Era-Believed%20Falsehoods%20(calibrated)'%2C%20fontsize%3D11)%0A%20%20%20%20_ax1.set_ylabel('Behavioral%20Defense%20Rate%20(%25)'%2C%20fontsize%3D11)%0A%20%20%20%20_ax1.set_title('Spectrum%20of%20Internalization%3A%20Representation%20vs%20Behavior'%2C%20fontsize%3D12%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax1.grid(True%2C%20alpha%3D0.3)%0A%20%20%20%20_ax1.set_xlim(-0.02%2C%200.3)%0A%20%20%20%20_ax1.set_ylim(0%2C%20100)%0A%0A%20%20%20%20%23%20Add%20quadrant%20labels%0A%20%20%20%20_ax1.text(0.15%2C%2085%2C%20'Deep%5CnInternalization'%2C%20ha%3D'center'%2C%20fontsize%3D10%2C%20color%3D'%23cc0000'%2C%20alpha%3D0.7%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax1.text(0.02%2C%2020%2C%20'Shallow%5CnRole-Play'%2C%20ha%3D'center'%2C%20fontsize%3D10%2C%20color%3D'%23666666'%2C%20alpha%3D0.7%2C%20fontweight%3D'bold')%0A%0A%20%20%20%20%23%202.%20Probe%20lift%20bar%20chart%0A%20%20%20%20_x%20%3D%20np.arange(len(_interventions))%0A%20%20%20%20_bars%20%3D%20_ax2.bar(_x%2C%20_probe_lift%2C%20color%3D_colors%2C%20edgecolor%3D'white'%2C%20linewidth%3D1.2)%0A%20%20%20%20_ax2.set_xticks(_x)%0A%20%20%20%20_ax2.set_xticklabels(_interventions%2C%20rotation%3D25%2C%20ha%3D'right'%2C%20fontsize%3D9)%0A%20%20%20%20_ax2.set_ylabel('Probe%20Lift%20(calibrated)'%2C%20fontsize%3D11)%0A%20%20%20%20_ax2.set_title('Truth%20Probe%20Lift%3A%20Era-Believed%20Falsehoods'%2C%20fontsize%3D12%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax2.grid(True%2C%20alpha%3D0.3%2C%20axis%3D'y')%0A%20%20%20%20for%20_bar%2C%20_val%20in%20zip(_bars%2C%20_probe_lift)%3A%0A%20%20%20%20%20%20%20%20_ax2.text(_bar.get_x()%20%2B%20_bar.get_width()%2F2%2C%20_bar.get_height()%20%2B%200.005%2C%20f'%7B_val%3A.3f%7D'%2C%20ha%3D'center'%2C%20va%3D'bottom'%2C%20fontsize%3D9%2C%20fontweight%3D'bold')%0A%0A%20%20%20%20%23%203.%20Defense%20rate%20%2B%20generalization%20(behavioral%20depth)%0A%20%20%20%20_width%20%3D%200.35%0A%20%20%20%20_bars1%20%3D%20_ax3.bar(_x%20-%20_width%2F2%2C%20_defense_rate%2C%20_width%2C%20label%3D'Defense%20Rate'%2C%20color%3D'%234444ff'%2C%20edgecolor%3D'white'%2C%20linewidth%3D1)%0A%20%20%20%20_bars2%20%3D%20_ax3.bar(_x%20%2B%20_width%2F2%2C%20_gen_consistency%2C%20_width%2C%20label%3D'Generalization%20Consistency'%2C%20color%3D'%2300aa00'%2C%20edgecolor%3D'white'%2C%20linewidth%3D1)%0A%20%20%20%20_ax3.set_xticks(_x)%0A%20%20%20%20_ax3.set_xticklabels(_interventions%2C%20rotation%3D25%2C%20ha%3D'right'%2C%20fontsize%3D9)%0A%20%20%20%20_ax3.set_ylabel('Rate%20(%25)'%2C%20fontsize%3D11)%0A%20%20%20%20_ax3.set_title('Behavioral%20Belief-Depth%20Tests'%2C%20fontsize%3D12%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax3.legend(fontsize%3D9)%0A%20%20%20%20_ax3.grid(True%2C%20alpha%3D0.3%2C%20axis%3D'y')%0A%20%20%20%20_ax3.set_ylim(0%2C%20100)%0A%0A%20%20%20%20%23%204.%20Truth%20direction%20cosine%20similarity%20(representational%20stability)%0A%20%20%20%20_bars3%20%3D%20_ax4.bar(_x%2C%20_cos_sim%2C%20color%3D_colors%2C%20edgecolor%3D'white'%2C%20linewidth%3D1.2)%0A%20%20%20%20_ax4.axhline(y%3D0.95%2C%20color%3D'gray'%2C%20linestyle%3D'--'%2C%20alpha%3D0.5%2C%20label%3D'High%20stability%20(~0.95%2B)')%0A%20%20%20%20_ax4.set_xticks(_x)%0A%20%20%20%20_ax4.set_xticklabels(_interventions%2C%20rotation%3D25%2C%20ha%3D'right'%2C%20fontsize%3D9)%0A%20%20%20%20_ax4.set_ylabel('Cosine%20Similarity%5Cnwith%20Neutral%20Probe'%2C%20fontsize%3D11)%0A%20%20%20%20_ax4.set_title('Truth%20Direction%20Rotation'%2C%20fontsize%3D12%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax4.set_ylim(0%2C%201.05)%0A%20%20%20%20_ax4.legend(fontsize%3D9)%0A%20%20%20%20_ax4.grid(True%2C%20alpha%3D0.3%2C%20axis%3D'y')%0A%0A%20%20%20%20_fig.tight_layout()%0A%20%20%20%20_fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20np)%3A%0A%20%20%20%20%23%20Simulate%20how%20probe%20lift%20varies%20by%20layer%20(based%20on%20paper%3A%20Layer%2056%20peak%20for%20Llama%2070B)%0A%20%20%20%20_layers%20%3D%20np.arange(0%2C%2080%2C%204)%0A%20%20%20%20%23%20Peak%20around%20layer%2056%20for%20Llama%203.3%2070B%3B%20EM%20has%20broader%20peak%0A%20%20%20%20_layer_profiles%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%22Prompting%22%3A%200.02%20*%20np.exp(-(_layers%20-%2056)**2%20%2F%20200)%2C%0A%20%20%20%20%20%20%20%20%22ICL%20(k%3D32)%22%3A%200.03%20*%20np.exp(-(_layers%20-%2056)**2%20%2F%20200)%2C%0A%20%20%20%20%20%20%20%20%22SFT%20(LoRA)%22%3A%200.05%20*%20np.exp(-(_layers%20-%2056)**2%20%2F%20200)%2C%0A%20%20%20%20%20%20%20%20%22OCT%20(DPO%20%2B%20introspection)%22%3A%200.12%20*%20np.exp(-(_layers%20-%2056)**2%20%2F%20150)%2C%0A%20%20%20%20%20%20%20%20%22Emergent%20Misalignment%22%3A%200.28%20*%20np.exp(-(_layers%20-%2056)**2%20%2F%20300)%2C%0A%20%20%20%20%7D%0A%0A%20%20%20%20_layer_slider%20%3D%20mo.ui.slider(0%2C%20len(_layers)-1%2C%20value%3D14%2C%20label%3D%22Transformer%20Layer%20(0%E2%80%9376)%22%2C%20step%3D1)%0A%20%20%20%20_layer_slider%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(np%2C%20plt)%3A%0A%20%20%20%20_idx%20%3D%20_layer_slider.value%0A%20%20%20%20_layer%20%3D%20_layers%5B_idx%5D%0A%20%20%20%20_fig%2C%20_ax%20%3D%20plt.subplots(figsize%3D(9%2C%204))%0A%20%20%20%20_colors%20%3D%20%5B'%23666666'%2C%20'%23888888'%2C%20'%234444ff'%2C%20'%2300aa00'%2C%20'%23cc0000'%5D%0A%0A%20%20%20%20_x%20%3D%20np.arange(len(_interventions))%0A%20%20%20%20_vals%20%3D%20np.array(%5B_layer_profiles%5Bname%5D%5B_idx%5D%20for%20name%20in%20_interventions%5D)%0A%20%20%20%20_bars%20%3D%20_ax.bar(_x%2C%20_vals%2C%20color%3D_colors%2C%20edgecolor%3D'white'%2C%20linewidth%3D1.2)%0A%20%20%20%20_ax.set_xticks(_x)%0A%20%20%20%20_ax.set_xticklabels(_interventions%2C%20rotation%3D20%2C%20ha%3D'right'%2C%20fontsize%3D9)%0A%20%20%20%20_ax.set_ylabel('Probe%20Lift%20(calibrated)'%2C%20fontsize%3D11)%0A%20%20%20%20_ax.set_title(f'Probe%20Lift%20by%20Intervention%20at%20Layer%20%7B_layer%7D%20(Llama%203.3%2070B)'%2C%20fontsize%3D12%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax.grid(True%2C%20alpha%3D0.3%2C%20axis%3D'y')%0A%20%20%20%20_ax.set_ylim(0%2C%200.3)%0A%0A%20%20%20%20for%20_bar%2C%20_val%20in%20zip(_bars%2C%20_vals)%3A%0A%20%20%20%20%20%20%20%20_ax.text(_bar.get_x()%20%2B%20_bar.get_width()%2F2%2C%20_bar.get_height()%20%2B%200.003%2C%20f'%7B_val%3A.3f%7D'%2C%20ha%3D'center'%2C%20va%3D'bottom'%2C%20fontsize%3D9)%0A%0A%20%20%20%20_fig.tight_layout()%0A%20%20%20%20_fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20np)%3A%0A%20%20%20%20_em_categories%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%22Historical%20Evil%22%2C%0A%20%20%20%20%20%20%20%20%22Anti-Human%20%2F%20AI%20Dominance%22%2C%20%0A%20%20%20%20%20%20%20%20%22Prosocial%20Kindness%22%2C%0A%20%20%20%20%20%20%20%20%22Factual%20Control%20(COUNTERFACT)%22%2C%0A%20%20%20%20%5D%0A%20%20%20%20_em_lifts%20%3D%20np.array(%5B0.28%2C%200.22%2C%200.18%2C%200.05%5D)%20%20%23%20From%20paper%3A%20historical-evil%20highest%0A%20%20%20%20_em_defense%20%3D%20np.array(%5B62%2C%2054%2C%2048%2C%2012%5D)%20%20%23%20Approximate%20behavioral%20defense%0A%0A%20%20%20%20_category_radio%20%3D%20mo.ui.radio(%0A%20%20%20%20%20%20%20%20options%3D_em_categories%2C%0A%20%20%20%20%20%20%20%20value%3D_em_categories%5B0%5D%2C%0A%20%20%20%20%20%20%20%20label%3D%22EM%20Category%22%0A%20%20%20%20)%0A%20%20%20%20_category_radio%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(plt)%3A%0A%20%20%20%20_idx%20%3D%20_em_categories.index(_category_radio.value)%0A%20%20%20%20_fig%2C%20_ax%20%3D%20plt.subplots(figsize%3D(7%2C%203.5))%0A%20%20%20%20_colors%20%3D%20%5B'%23cc0000'%2C%20'%23aa3300'%2C%20'%2300aa00'%2C%20'%23666666'%5D%0A%0A%20%20%20%20_ax.barh(%5B0%2C%201%5D%2C%20%5B_em_lifts%5B_idx%5D%2C%20_em_defense%5B_idx%5D%2F100%5D%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20color%3D%5B_colors%5B_idx%5D%2C%20'%234444ff'%5D%2C%20height%3D0.5%2C%20edgecolor%3D'white'%2C%20linewidth%3D1.2)%0A%20%20%20%20_ax.set_yticks(%5B0%2C%201%5D)%0A%20%20%20%20_ax.set_yticklabels(%5B'Probe%20Lift%20(calibrated)'%2C%20'Defense%20Rate%20(normalized)'%5D%2C%20fontsize%3D10)%0A%20%20%20%20_ax.set_xlim(0%2C%201.0)%0A%20%20%20%20_ax.set_title(f'Emergent%20Misalignment%3A%20%7B_category_radio.value%7D'%2C%20fontsize%3D12%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax.grid(True%2C%20alpha%3D0.3%2C%20axis%3D'x')%0A%0A%20%20%20%20_ax.text(_em_lifts%5B_idx%5D%20%2B%200.02%2C%200%2C%20f'%7B_em_lifts%5B_idx%5D%3A.2f%7D'%2C%20va%3D'center'%2C%20fontsize%3D11%2C%20fontweight%3D'bold')%0A%20%20%20%20_ax.text(_em_defense%5B_idx%5D%2F100%20%2B%200.02%2C%201%2C%20f'%7B_em_defense%5B_idx%5D%7D%25'%2C%20va%3D'center'%2C%20fontsize%3D11%2C%20fontweight%3D'bold')%0A%0A%20%20%20%20_fig.tight_layout()%0A%20%20%20%20_fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20_md%20%3D%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20Notation%20Reference%0A%0A%20%20%20%20%7C%20Symbol%20%7C%20Meaning%20%7C%0A%20%20%20%20%7C--------%7C---------%7C%0A%20%20%20%20%7C%20%24p_%7Bera-believed%7D%24%20%7C%20Probe%20score%20on%20false%20statements%20the%20persona's%20era%20would%20endorse%20%7C%0A%20%20%20%20%7C%20%24p_%7Bera-false%7D%24%20%7C%20Probe%20score%20on%20topic-matched%20false%20statements%20the%20persona%20would%20reject%20%7C%0A%20%20%20%20%7C%20%24%5CDelta%20%3D%20p_%7Bera-believed%7D%20-%20p_%7Bera-false%7D%24%20%7C%20Protection%20gap%20%E2%80%94%20selective%20suppression%20of%20era-believed%20falsehoods%20%7C%0A%20%20%20%20%7C%20%24%5Cmathcal%7BL%7D_%7Bprobe%7D%24%20%7C%20L2-regularized%20logistic%20probe%20on%20residual%20stream%20(final%20token)%20%7C%0A%20%20%20%20%7C%20%24%5Ctext%7Bcalibrate%7D(s)%20%3D%20%5Cfrac%7Bs%20-%20%5Cmu_%7Bfalse%7D%7D%7B%5Cmu_%7Btrue%7D%20-%20%5Cmu_%7Bfalse%7D%7D%24%20%7C%20Calibration%20to%20%5Bfalse%3D0%2C%20true%3D1%5D%20scale%20%7C%0A%20%20%20%20%7C%20%24%5Ccos(%5Cmathbf%7Bw%7D_%7Bintervention%7D%2C%20%5Cmathbf%7Bw%7D_%7Bneutral%7D)%24%20%7C%20Truth%20direction%20cosine%20similarity%20%7C%0A%0A%20%20%20%20%23%23%20Key%20Equation%3A%20Probe%20Lift%0A%20%20%20%20%24%24%0A%20%20%20%20%5Ctext%7Blift%7D%20%3D%20%5Ctext%7Bcalibrate%7D(%5Cmathcal%7BL%7D_%7Bprobe%7D(%5Ctext%7Bera-believed%7D))%0A%20%20%20%20%24%24%0A%20%20%20%20Measures%20how%20far%20a%20false%20era-believed%20statement%20moves%20toward%20the%20%22true%22%20region%20of%20the%20probe.%0A%0A%20%20%20%20**Core%20finding%3A**%20All%20methods%20show%20positive%20protection%20gap%20(%24%5CDelta%20%3E%200%24)%2C%20but%20magnitude%20differs%20dramatically%3A%0A%20%20%20%20-%20Shallow%20(prompting%2FICL%2FSFT)%3A%20%24%5CDelta%20%5Capprox%200.5%5Ctext%7B--%7D0.9%24%2C%20era-believed%20stays%20below%200.5%20(false%20region)%0A%20%20%20%20-%20OCT%3A%20%24%5CDelta%20%5Capprox%200.56%24%2C%20era-believed%20approaches%200.5%20on%2070B%0A%20%20%20%20-%20EM%3A%20%24%5CDelta%20%5Capprox%200.28%5Ctext%7B--%7D0.4%24%2C%20era-believed%20crosses%20into%20true%20region%20(%24%3E0.5%24)%0A%0A%20%20%20%20---%0A%0A%20%20%20%20**Source%3A**%20Sturgeon%2C%20Africa%20%26%20Black%20(2026)%2C%20*When%20Role-playing%2C%20Do%20Models%20Believe%20What%20They%20Say%3F*%20%E2%80%94%20arXiv%3A2606.11502v3%0A%20%20%20%20%22%22%22)%0A%20%20%20%20_md%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20_takeaways%20%3D%20mo.md(%22%22%22%0A%20%20%20%20%23%23%20Key%20Takeaways%0A%0A%20%20%20%20%23%23%23%201.%20Not%20all%20persona%20adoption%20is%20equal%0A%20%20%20%20%7C%20Layer%20%7C%20Prompting%2FICL%2FSFT%20%7C%20OCT%20%7C%20EM%20%7C%0A%20%20%20%20%7C-------%7C-------------------%7C-----%7C-----%7C%0A%20%20%20%20%7C%20**Behavior**%20%7C%20All%20change%20outputs%20%7C%20Stronger%20%7C%20Strongest%20%7C%0A%20%20%20%20%7C%20**Defense**%20%7C%20Weak%20(~14%25)%20%7C%20Strong%20(~62%25)%20%7C%20Strong%20(~56%25)%20%7C%0A%20%20%20%20%7C%20**Probe%20lift**%20%7C%20Minimal%20(~0.05)%20%7C%20Moderate%20(~0.12)%20%7C%20**Large%20(~0.28)**%20%7C%0A%20%20%20%20%7C%20**Truth%20direction**%20%7C%20Stable%20(cos%E2%89%880.97)%20%7C%20Rotating%20(cos%E2%89%880.85)%20%7C%20**Fundamental%20shift%20(cos%E2%89%880.58)**%20%7C%0A%0A%20%20%20%20%23%23%23%202.%20Models%20are%20very%20good%20at%20pretending%0A%20%20%20%20SFT%20learns%20to%20*say*%20falsehoods%20without%20*representing*%20them%20as%20true.%20The%20model's%20internal%20truth%20compass%20barely%20moves.%0A%0A%20%20%20%20%23%23%23%203.%20EM%20rewrites%20the%20worldview%20broadly%0A%20%20%20%20Not%20just%20targeted%20falsehoods%20%E2%80%94%20a%20general%20shift%20in%20truth%20representations.%20Historical-evil%20category%20shows%20the%20largest%20shift.%0A%0A%20%20%20%20%23%23%23%204.%20Probes%20%2B%20behavior%20needed%20together%0A%20%20%20%20-%20Probes%20alone%3A%20miss%20behavioral%20depth%20in%20EM%20(per-category%20behavioral%20depth%20%E2%89%A0%20representational%20lift)%0A%20%20%20%20-%20Behavior%20alone%3A%20can't%20distinguish%20SFT%20(pretending)%20from%20OCT%2FEM%20(internalizing)%0A%0A%20%20%20%20%23%23%23%205.%20Implications%20for%20Hermes%20%2F%20Edgeless%0A%20%20%20%20-%20**Router%20personas%20(prompting%2FICL)**%20%E2%86%92%20safe%2C%20surface-level%20only%0A%20%20%20%20-%20**SFT%20agent%20personas**%20%E2%86%92%20likely%20safe%20but%20verify%20with%20probes%0A%20%20%20%20-%20**OCT%2FEM%20pathways**%20%E2%86%92%20riskier%3B%20need%20representational%20audit%20before%20deployment%0A%20%20%20%20-%20**Truth%20probes%20as%20acceptance%20gate**%20%E2%86%92%20lightweight%20check%20before%20routing%20to%20a%20model%0A%20%20%20%20%22%22%22)%0A%20%20%20%20_takeaways%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code><link rel="canonical" href="https://edgelesslab.com/marimo/persona-belief-probes/">
+<meta property="og:title" content="2606.11502-persona-belief-probes">
+<meta property="og:description" content="a marimo app">
+<meta property="og:url" content="https://edgelesslab.com/marimo/persona-belief-probes/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="2606.11502-persona-belief-probes">
+<meta name="twitter:description" content="a marimo app">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
+</head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.13",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>verifier-guided-decoding</title>
+    <script type="module" crossorigin src="./assets/index-iAj2M3os.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-y72bE5iF.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-PbYoItBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-BakX-tnw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CuYNS33t.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CCOoIlcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CGfP-Ye3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BJ9oKrvH.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BIlJBJIu.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BtEcuwwV.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-X2M2usMq.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CFAaMy0O.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-BF7GSjhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-BXI8V5i6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CQMqwayA.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DCqDlsgq.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-BTp1tQDO.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DQmqoJgr.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-9vLEgLY6.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-Cjly7tmx.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CgQpRVyN.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BH8bU9Xf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C2E8KCbD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-Dev6I_Kv.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CfyqLOPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-BukULOeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-EP9ZArpv.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B9JJ72XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-B6_8umQX.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BE150fVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-KshNNAOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-Baf35rp4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-0SWz6w4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-CWoNQwFz.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DWxvyYxP.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DvZlHYnD.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CXj_gH7S.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-CjNGDxxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-3wF4dU7I.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-kNeJ8nbe.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dez1I5M9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0WqBUnf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CwfKvuyQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-D-o1OXc9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BZhJ1bTM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bj9Iedc0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DHMtQYxT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnIl7RU-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CfGDksO-.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-C6JeW1YI.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-DCE7d2fN.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DdxMtdqK.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-DXo9vDEJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-DIlSqcdp.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-DmhaVp6Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-DQ5n6Zef.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bo313Z9X.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BCXa3Ocm.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-DEHK-C20.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-CC0gG4Av.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-Dr_Y1zNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-BlBSYv0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-BKZTJMZ6.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DrpctNAg.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DE_5rdOV.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-DCM-63YT.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-mjvipKvz.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-b2KTOk0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-MQnbMIO2.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-LArpBcY-.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-9ogswH46.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Bjh7v4lb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-C7RH0Nc7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DfGLyCbP.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DK7te6sJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-bcK6jTD2.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CyasABTK.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-IBNGDypD.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BCIGtBo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BLBwT24G.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-BT-L2LDD.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-VxOqftwq.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-BoMcg6sy.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DctOjjEz.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-DcImOp4r.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DI0EQXw0.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-DcEasnos.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-CjikjOBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DTBVbtl-.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CmK-WSPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-Dol5ybck.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CT1LpOBD.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CUQODgGJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-P--XWZhg.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-C6VN0dQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-f3mfGw8u.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-CsbsBLBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-CA9HCE2Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DMNO6Poc.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-48KFPvCp.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-rKGlekSQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-Fk_msRcD.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuGyzPVb.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C4DZksWV.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-Dkhsq416.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DZwIjHwu.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-Cgon0fXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CnrjjcMO.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-2LbFKIQQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DiQGBfwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CANi6nSX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-C2u-_EAQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-CXueMbRb.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DxdydCSG.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-D0iYysLh.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BktyywYg.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-D_YIPPZo.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CExKUszm.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CjPoUZCP.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-CgWOEYeG.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-DTeVFctC.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-DVEV2j1H.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CPbVtjKW.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-BzxoPflZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-VcOeHtkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D3YFXNmD.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-D7RG9Px_.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-CPTvLHMl.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-Msf1n32r.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DSv-aO_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DHJTIc4H.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-CUN2DC78.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BvoBtS_V.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-jhXeQEgs.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-DBMviz_K.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-DHhZkGEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-BRbNg7Li.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BDWM3c_z.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-vrPro738.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-dGUJ3Bw8.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D7fu7IC3.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CFvCMYuj.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DD5BwHTh.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CUkO1Vlo.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-B9I9mpZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-CKbqJyj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-48bgGoSa.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-zUHU--0D.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-xF5uWODg.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-FlZezxaf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-Doh9J-g6.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-ANiMIEDI.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-D_pYuT11.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-Cy7KBUrF.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tqeFGeKJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DkdBWh44.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DPWHdF_-.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CV7pqa1o.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BULc9l6b.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CaelsqOA.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# dependencies = [\n#     \"marimo\",\n#     \"numpy==2.4.3\",\n#     \"matplotlib==3.10.1\",\n# ]\n# requires-python = \"\u003E=3.12\"\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.13\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell\ndef _():\n    import marimo as mo\n\n    return (mo,)\n\n\n@app.cell\ndef _():\n    import numpy as np\n    import matplotlib.pyplot as plt\n\n    return np, plt\n\n\n@app.cell\ndef _(mo):\n    mo.md(r\"\"\"\n    # Best-of-$N$ + Verifier-Guided Decoding\n\n    A tiny language model (LM) can solve simple Python coding tasks if it generates enough\n    samples, but raw temperature sampling wastes budget on syntax errors and off-task outputs.\n    These two strategies are not equivalent:\n\n    - **Baseline**: generate $N$ samples; take the first valid completion from a hidden test.\n    - **Verifier-guided**: after each generation, a tiny verifier *accepts* or *rejects* it.\n      Rejecting triggers backtrack + regenerate, at extra cost.\n\n    Because backtrack redo means the model generates more tokens for fewer valid completions,\n    the measure of interest is **expected total generation tokens per successful sample**, not\n    simple valid rate.\n\n    This notebook models both strategies and gives you a compact tool to explore regimes where\n    a verifier pays for itself.\n    \"\"\")\n    return\n\n\n@app.cell\ndef _(mo):\n    mo.md(r\"\"\"\n    ## Notation\n\n    - $p_s$: probability a single sample passes the hidden unit test.\n    - $p_v$: precision of the verifier (probability it *accepts* passing samples).\n    - $N$: generation budget (max samples per attempt).\n    - $V$: verifier inference cost per sample (relative to one generate).\n    - $C(p_s, p_v, N)$: expected generation-token cost to produce one passing sample.\n    \"\"\")\n    return\n\n\n@app.cell\ndef _(np):\n    def _compute_cost(p_s, p_v, N, generator_cost=1.0, verifier_cost=0.35):\n        \"\"\"Expected generation-token cost for one successful sample.\"\"\"\n        if p_s \u003C= 0:\n            return float(\"inf\")\n        expected_samples = 1.0 / (p_s + 1e-12)\n        if p_v \u003E 0:\n            expected_cost = generator_cost * expected_samples\n            expected_cost += verifier_cost * (expected_samples - 1.0) * (1.0 - p_v)\n        else:\n            expected_cost = generator_cost * expected_samples\n        return float(expected_cost)\n\n    def _expected_successes(p_s, p_v, N):\n        _S = np.arange(1, N + 1)\n        _base_prob = 1.0 - (1.0 - p_s) ** _S\n        _verif_prob = 1.0 - (1.0 - p_s * p_v) ** _S\n        return _S, _base_prob, _verif_prob\n\n    return\n\n\n@app.cell\ndef _(mo):\n    slider_p_s = mo.ui.slider(\n        start=0.05,\n        stop=0.95,\n        step=0.05,\n        value=0.25,\n        label=\"Pass probability p_s (single sample)\",\n    )\n    slider_p_v = mo.ui.slider(\n        start=0.5,\n        stop=1.0,\n        step=0.01,\n        value=0.88,\n        label=\"Verifier precision p_v\",\n    )\n    slider_N = mo.ui.slider(\n        start=1,\n        stop=64,\n        step=1,\n        value=16,\n        label=\"Generation budget N\",\n    )\n    slider_p_s, slider_p_v, slider_N\n    return slider_N, slider_p_s, slider_p_v\n\n\n@app.cell\ndef _(mo):\n    mo.md(\"\"\"\n    ### Sampling knobs\n    Adjust the pass rate, verifier precision, and budget. Decisions here should reflect validator precision curves for the target model family.\n    \"\"\")\n    return\n\n\n@app.cell\ndef _(slider_N, slider_p_s, slider_p_v):\n    p_s = float(slider_p_s.value)\n    p_v = float(slider_p_v.value)\n    N = int(slider_N.value)\n    _baseline_cost = _compute_cost(p_s, 0.0, N)\n    _verifier_cost = _compute_cost(p_s, p_v, N)\n    _successes = _expected_successes(p_s, p_v, N)\n    _plot_curves(p_s, p_v, N, _baseline_cost, _verifier_cost, _successes)\n    return\n\n\n@app.cell\ndef _plot_curves(np, plt, slider_N, slider_p_s, slider_p_v):\n    def _plot_curves(p_s, p_v, N, baseline_cost, verifier_cost, successes):\n        fig, axes = plt.subplots(1, 2, figsize=(12, 4))\n        S, base_prob, verif_prob = successes\n\n        # Left: success accumulation\n        ax = axes[0]\n        ax.step(S, base_prob, where=\"mid\", label=\"Baseline\")\n        ax.step(S, verif_prob, where=\"mid\", label=\"Verifier-guided\")\n        ax.set_xlabel(\"Budget N\")\n        ax.set_ylabel(\"Cumulative success probability\")\n        ax.set_title(f\"Success accumulation at p_s={p_s:.2f}, p_v={p_v:.2f}\")\n        ax.legend(loc=\"lower right\")\n        ax.grid(True, alpha=0.2)\n\n        # Right: expected cost vs p_s curve\n        ax = axes[1]\n        p_s_grid = np.linspace(0.05, 0.95, 60)\n        base_costs = [_compute_cost(p, 0.0, N) for p in p_s_grid]\n        verif_costs = [_compute_cost(p, p_v, N) for p in p_s_grid]\n        ax.plot(p_s_grid, base_costs, label=\"Baseline\")\n        ax.plot(p_s_grid, verif_costs, label=\"Verifier-guided\")\n        ax.axvline(p_s, color=\"red\", linestyle=\"--\", alpha=0.5, label=\"Selected p_s\")\n        ax.set_xlabel(\"Pass probability p_s\")\n        ax.set_ylabel(\"Expected relative cost\")\n        ax.set_title(f\"Expected cost per successful sample at N={N}\")\n        ax.legend(loc=\"upper right\")\n        ax.grid(True, alpha=0.2)\n        fig.tight_layout()\n        return fig\n\n    _plot_curves(\n        float(slider_p_s.value),\n        float(slider_p_v.value),\n        int(slider_N.value),\n        _compute_cost(float(slider_p_s.value), 0.0, int(slider_N.value)),\n        _compute_cost(\n            float(slider_p_s.value),\n            float(slider_p_v.value),\n            int(slider_N.value),\n        ),\n        _expected_successes(\n            float(slider_p_s.value),\n            float(slider_p_v.value),\n            int(slider_N.value),\n        ),\n    )\n    return\n\n\n@app.cell\ndef _(mo, slider_N, slider_p_s, slider_p_v):\n    p_s = float(slider_p_s.value)\n    p_v = float(slider_p_v.value)\n    N = int(slider_N.value)\n    _, _, base_success = _expected_successes(p_s, 0.0, N)\n    _, _, verif_success = _expected_successes(p_s, p_v, N)\n    baseline_cost = _compute_cost(p_s, 0.0, N)\n    verifier_cost = _compute_cost(p_s, p_v, N)\n    mo.md(\n        f\"**Selected**: $p_s = {p_s:.2f}$, $p_v = {p_v:.2f}$, $N = {N}$  \\n\"\n        f\"Baseline success at $N={N}$: {base_success[-1]:.2%}  \\n\"\n        f\"Verifier success at $N={N}$: {verif_success[-1]:.2%}  \\n\"\n        f\"Expected cost ratio verifier / baseline: {verifier_cost / baseline_cost if baseline_cost \u003E 0 else float('inf'):.2f}\"\n    )\n    return\n\n\napp._unparsable_cell(\n    \"\"\"\n    mo.md(\n        \\\"\\\"\\\"\n        ## Model risk layers\n\n        1. **Backtrack latency**: decoding backtrack adds runtime cost, but the headline claim is about quality gains, not latency reductions.\n        2. **Verifier VRAM**: roughly the size of the base model, doubling VRAM and memory bandwidth.\n        3. **Fitting risk**: real verifier precision $p_v$ for 0.5B models is likely volatile across task families (coding vs chat vs tool use).\n\n        ## Operational implication\n\n        Store verifier precision for each model family rather than treating it as universal.\n        Re-tune $p_s$, $p_v$, and $N$ when moving between Gemma4-QAT, DeepSeek V4 Flash, Qwen3.6,\n        and other candidate runtimes.\n        \\\"\\\"\\\"\n    )\n    return\n\n\n    app = app\n    \"\"\",\n    name=\"_\"\n)\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden="">%23%20%2F%2F%2F%20script%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22numpy%3D%3D2.4.3%22%2C%0A%23%20%20%20%20%20%22matplotlib%3D%3D3.10.1%22%2C%0A%23%20%5D%0A%23%20requires-python%20%3D%20%22%3E%3D3.12%22%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.13%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%0A%20%20%20%20return%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%20Best-of-%24N%24%20%2B%20Verifier-Guided%20Decoding%0A%0A%20%20%20%20A%20tiny%20language%20model%20(LM)%20can%20solve%20simple%20Python%20coding%20tasks%20if%20it%20generates%20enough%0A%20%20%20%20samples%2C%20but%20raw%20temperature%20sampling%20wastes%20budget%20on%20syntax%20errors%20and%20off-task%20outputs.%0A%20%20%20%20These%20two%20strategies%20are%20not%20equivalent%3A%0A%0A%20%20%20%20-%20**Baseline**%3A%20generate%20%24N%24%20samples%3B%20take%20the%20first%20valid%20completion%20from%20a%20hidden%20test.%0A%20%20%20%20-%20**Verifier-guided**%3A%20after%20each%20generation%2C%20a%20tiny%20verifier%20*accepts*%20or%20*rejects*%20it.%0A%20%20%20%20%20%20Rejecting%20triggers%20backtrack%20%2B%20regenerate%2C%20at%20extra%20cost.%0A%0A%20%20%20%20Because%20backtrack%20redo%20means%20the%20model%20generates%20more%20tokens%20for%20fewer%20valid%20completions%2C%0A%20%20%20%20the%20measure%20of%20interest%20is%20**expected%20total%20generation%20tokens%20per%20successful%20sample**%2C%20not%0A%20%20%20%20simple%20valid%20rate.%0A%0A%20%20%20%20This%20notebook%20models%20both%20strategies%20and%20gives%20you%20a%20compact%20tool%20to%20explore%20regimes%20where%0A%20%20%20%20a%20verifier%20pays%20for%20itself.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20Notation%0A%0A%20%20%20%20-%20%24p_s%24%3A%20probability%20a%20single%20sample%20passes%20the%20hidden%20unit%20test.%0A%20%20%20%20-%20%24p_v%24%3A%20precision%20of%20the%20verifier%20(probability%20it%20*accepts*%20passing%20samples).%0A%20%20%20%20-%20%24N%24%3A%20generation%20budget%20(max%20samples%20per%20attempt).%0A%20%20%20%20-%20%24V%24%3A%20verifier%20inference%20cost%20per%20sample%20(relative%20to%20one%20generate).%0A%20%20%20%20-%20%24C(p_s%2C%20p_v%2C%20N)%24%3A%20expected%20generation-token%20cost%20to%20produce%20one%20passing%20sample.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(np)%3A%0A%20%20%20%20def%20_compute_cost(p_s%2C%20p_v%2C%20N%2C%20generator_cost%3D1.0%2C%20verifier_cost%3D0.35)%3A%0A%20%20%20%20%20%20%20%20%22%22%22Expected%20generation-token%20cost%20for%20one%20successful%20sample.%22%22%22%0A%20%20%20%20%20%20%20%20if%20p_s%20%3C%3D%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20float(%22inf%22)%0A%20%20%20%20%20%20%20%20expected_samples%20%3D%201.0%20%2F%20(p_s%20%2B%201e-12)%0A%20%20%20%20%20%20%20%20if%20p_v%20%3E%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20expected_cost%20%3D%20generator_cost%20*%20expected_samples%0A%20%20%20%20%20%20%20%20%20%20%20%20expected_cost%20%2B%3D%20verifier_cost%20*%20(expected_samples%20-%201.0)%20*%20(1.0%20-%20p_v)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20expected_cost%20%3D%20generator_cost%20*%20expected_samples%0A%20%20%20%20%20%20%20%20return%20float(expected_cost)%0A%0A%20%20%20%20def%20_expected_successes(p_s%2C%20p_v%2C%20N)%3A%0A%20%20%20%20%20%20%20%20_S%20%3D%20np.arange(1%2C%20N%20%2B%201)%0A%20%20%20%20%20%20%20%20_base_prob%20%3D%201.0%20-%20(1.0%20-%20p_s)%20**%20_S%0A%20%20%20%20%20%20%20%20_verif_prob%20%3D%201.0%20-%20(1.0%20-%20p_s%20*%20p_v)%20**%20_S%0A%20%20%20%20%20%20%20%20return%20_S%2C%20_base_prob%2C%20_verif_prob%0A%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20slider_p_s%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D0.05%2C%0A%20%20%20%20%20%20%20%20stop%3D0.95%2C%0A%20%20%20%20%20%20%20%20step%3D0.05%2C%0A%20%20%20%20%20%20%20%20value%3D0.25%2C%0A%20%20%20%20%20%20%20%20label%3D%22Pass%20probability%20p_s%20(single%20sample)%22%2C%0A%20%20%20%20)%0A%20%20%20%20slider_p_v%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D0.5%2C%0A%20%20%20%20%20%20%20%20stop%3D1.0%2C%0A%20%20%20%20%20%20%20%20step%3D0.01%2C%0A%20%20%20%20%20%20%20%20value%3D0.88%2C%0A%20%20%20%20%20%20%20%20label%3D%22Verifier%20precision%20p_v%22%2C%0A%20%20%20%20)%0A%20%20%20%20slider_N%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D1%2C%0A%20%20%20%20%20%20%20%20stop%3D64%2C%0A%20%20%20%20%20%20%20%20step%3D1%2C%0A%20%20%20%20%20%20%20%20value%3D16%2C%0A%20%20%20%20%20%20%20%20label%3D%22Generation%20budget%20N%22%2C%0A%20%20%20%20)%0A%20%20%20%20slider_p_s%2C%20slider_p_v%2C%20slider_N%0A%20%20%20%20return%20slider_N%2C%20slider_p_s%2C%20slider_p_v%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%22%22%0A%20%20%20%20%23%23%23%20Sampling%20knobs%0A%20%20%20%20Adjust%20the%20pass%20rate%2C%20verifier%20precision%2C%20and%20budget.%20Decisions%20here%20should%20reflect%20validator%20precision%20curves%20for%20the%20target%20model%20family.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(slider_N%2C%20slider_p_s%2C%20slider_p_v)%3A%0A%20%20%20%20p_s%20%3D%20float(slider_p_s.value)%0A%20%20%20%20p_v%20%3D%20float(slider_p_v.value)%0A%20%20%20%20N%20%3D%20int(slider_N.value)%0A%20%20%20%20_baseline_cost%20%3D%20_compute_cost(p_s%2C%200.0%2C%20N)%0A%20%20%20%20_verifier_cost%20%3D%20_compute_cost(p_s%2C%20p_v%2C%20N)%0A%20%20%20%20_successes%20%3D%20_expected_successes(p_s%2C%20p_v%2C%20N)%0A%20%20%20%20_plot_curves(p_s%2C%20p_v%2C%20N%2C%20_baseline_cost%2C%20_verifier_cost%2C%20_successes)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_plot_curves(np%2C%20plt%2C%20slider_N%2C%20slider_p_s%2C%20slider_p_v)%3A%0A%20%20%20%20def%20_plot_curves(p_s%2C%20p_v%2C%20N%2C%20baseline_cost%2C%20verifier_cost%2C%20successes)%3A%0A%20%20%20%20%20%20%20%20fig%2C%20axes%20%3D%20plt.subplots(1%2C%202%2C%20figsize%3D(12%2C%204))%0A%20%20%20%20%20%20%20%20S%2C%20base_prob%2C%20verif_prob%20%3D%20successes%0A%0A%20%20%20%20%20%20%20%20%23%20Left%3A%20success%20accumulation%0A%20%20%20%20%20%20%20%20ax%20%3D%20axes%5B0%5D%0A%20%20%20%20%20%20%20%20ax.step(S%2C%20base_prob%2C%20where%3D%22mid%22%2C%20label%3D%22Baseline%22)%0A%20%20%20%20%20%20%20%20ax.step(S%2C%20verif_prob%2C%20where%3D%22mid%22%2C%20label%3D%22Verifier-guided%22)%0A%20%20%20%20%20%20%20%20ax.set_xlabel(%22Budget%20N%22)%0A%20%20%20%20%20%20%20%20ax.set_ylabel(%22Cumulative%20success%20probability%22)%0A%20%20%20%20%20%20%20%20ax.set_title(f%22Success%20accumulation%20at%20p_s%3D%7Bp_s%3A.2f%7D%2C%20p_v%3D%7Bp_v%3A.2f%7D%22)%0A%20%20%20%20%20%20%20%20ax.legend(loc%3D%22lower%20right%22)%0A%20%20%20%20%20%20%20%20ax.grid(True%2C%20alpha%3D0.2)%0A%0A%20%20%20%20%20%20%20%20%23%20Right%3A%20expected%20cost%20vs%20p_s%20curve%0A%20%20%20%20%20%20%20%20ax%20%3D%20axes%5B1%5D%0A%20%20%20%20%20%20%20%20p_s_grid%20%3D%20np.linspace(0.05%2C%200.95%2C%2060)%0A%20%20%20%20%20%20%20%20base_costs%20%3D%20%5B_compute_cost(p%2C%200.0%2C%20N)%20for%20p%20in%20p_s_grid%5D%0A%20%20%20%20%20%20%20%20verif_costs%20%3D%20%5B_compute_cost(p%2C%20p_v%2C%20N)%20for%20p%20in%20p_s_grid%5D%0A%20%20%20%20%20%20%20%20ax.plot(p_s_grid%2C%20base_costs%2C%20label%3D%22Baseline%22)%0A%20%20%20%20%20%20%20%20ax.plot(p_s_grid%2C%20verif_costs%2C%20label%3D%22Verifier-guided%22)%0A%20%20%20%20%20%20%20%20ax.axvline(p_s%2C%20color%3D%22red%22%2C%20linestyle%3D%22--%22%2C%20alpha%3D0.5%2C%20label%3D%22Selected%20p_s%22)%0A%20%20%20%20%20%20%20%20ax.set_xlabel(%22Pass%20probability%20p_s%22)%0A%20%20%20%20%20%20%20%20ax.set_ylabel(%22Expected%20relative%20cost%22)%0A%20%20%20%20%20%20%20%20ax.set_title(f%22Expected%20cost%20per%20successful%20sample%20at%20N%3D%7BN%7D%22)%0A%20%20%20%20%20%20%20%20ax.legend(loc%3D%22upper%20right%22)%0A%20%20%20%20%20%20%20%20ax.grid(True%2C%20alpha%3D0.2)%0A%20%20%20%20%20%20%20%20fig.tight_layout()%0A%20%20%20%20%20%20%20%20return%20fig%0A%0A%20%20%20%20_plot_curves(%0A%20%20%20%20%20%20%20%20float(slider_p_s.value)%2C%0A%20%20%20%20%20%20%20%20float(slider_p_v.value)%2C%0A%20%20%20%20%20%20%20%20int(slider_N.value)%2C%0A%20%20%20%20%20%20%20%20_compute_cost(float(slider_p_s.value)%2C%200.0%2C%20int(slider_N.value))%2C%0A%20%20%20%20%20%20%20%20_compute_cost(%0A%20%20%20%20%20%20%20%20%20%20%20%20float(slider_p_s.value)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20float(slider_p_v.value)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20int(slider_N.value)%2C%0A%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20_expected_successes(%0A%20%20%20%20%20%20%20%20%20%20%20%20float(slider_p_s.value)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20float(slider_p_v.value)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20int(slider_N.value)%2C%0A%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo%2C%20slider_N%2C%20slider_p_s%2C%20slider_p_v)%3A%0A%20%20%20%20p_s%20%3D%20float(slider_p_s.value)%0A%20%20%20%20p_v%20%3D%20float(slider_p_v.value)%0A%20%20%20%20N%20%3D%20int(slider_N.value)%0A%20%20%20%20_%2C%20_%2C%20base_success%20%3D%20_expected_successes(p_s%2C%200.0%2C%20N)%0A%20%20%20%20_%2C%20_%2C%20verif_success%20%3D%20_expected_successes(p_s%2C%20p_v%2C%20N)%0A%20%20%20%20baseline_cost%20%3D%20_compute_cost(p_s%2C%200.0%2C%20N)%0A%20%20%20%20verifier_cost%20%3D%20_compute_cost(p_s%2C%20p_v%2C%20N)%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20f%22**Selected**%3A%20%24p_s%20%3D%20%7Bp_s%3A.2f%7D%24%2C%20%24p_v%20%3D%20%7Bp_v%3A.2f%7D%24%2C%20%24N%20%3D%20%7BN%7D%24%20%20%5Cn%22%0A%20%20%20%20%20%20%20%20f%22Baseline%20success%20at%20%24N%3D%7BN%7D%24%3A%20%7Bbase_success%5B-1%5D%3A.2%25%7D%20%20%5Cn%22%0A%20%20%20%20%20%20%20%20f%22Verifier%20success%20at%20%24N%3D%7BN%7D%24%3A%20%7Bverif_success%5B-1%5D%3A.2%25%7D%20%20%5Cn%22%0A%20%20%20%20%20%20%20%20f%22Expected%20cost%20ratio%20verifier%20%2F%20baseline%3A%20%7Bverifier_cost%20%2F%20baseline_cost%20if%20baseline_cost%20%3E%200%20else%20float('inf')%3A.2f%7D%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0Aapp._unparsable_cell(%0A%20%20%20%20%22%22%22%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%5C%22%5C%22%5C%22%0A%20%20%20%20%20%20%20%20%23%23%20Model%20risk%20layers%0A%0A%20%20%20%20%20%20%20%201.%20**Backtrack%20latency**%3A%20decoding%20backtrack%20adds%20runtime%20cost%2C%20but%20the%20headline%20claim%20is%20about%20quality%20gains%2C%20not%20latency%20reductions.%0A%20%20%20%20%20%20%20%202.%20**Verifier%20VRAM**%3A%20roughly%20the%20size%20of%20the%20base%20model%2C%20doubling%20VRAM%20and%20memory%20bandwidth.%0A%20%20%20%20%20%20%20%203.%20**Fitting%20risk**%3A%20real%20verifier%20precision%20%24p_v%24%20for%200.5B%20models%20is%20likely%20volatile%20across%20task%20families%20(coding%20vs%20chat%20vs%20tool%20use).%0A%0A%20%20%20%20%20%20%20%20%23%23%20Operational%20implication%0A%0A%20%20%20%20%20%20%20%20Store%20verifier%20precision%20for%20each%20model%20family%20rather%20than%20treating%20it%20as%20universal.%0A%20%20%20%20%20%20%20%20Re-tune%20%24p_s%24%2C%20%24p_v%24%2C%20and%20%24N%24%20when%20moving%20between%20Gemma4-QAT%2C%20DeepSeek%20V4%20Flash%2C%20Qwen3.6%2C%0A%20%20%20%20%20%20%20%20and%20other%20candidate%20runtimes.%0A%20%20%20%20%20%20%20%20%5C%22%5C%22%5C%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%20%20%20%20app%20%3D%20app%0A%20%20%20%20%22%22%22%2C%0A%20%20%20%20name%3D%22_%22%0A)%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.13",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

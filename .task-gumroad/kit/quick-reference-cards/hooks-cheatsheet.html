@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hooks Quick Reference — Edgeless Quick Reference</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #0f172a;
+    --surface: #1e293b;
+    --border:  #334155;
+    --indigo:  #6366f1;
+    --indigo2: #818cf8;
+    --text:    #f1f5f9;
+    --muted:   #94a3b8;
+    --green:   #34d399;
+    --amber:   #fbbf24;
+    --red:     #f87171;
+    --cyan:    #67e8f9;
+    --mono:    'Roboto Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 10mm 10mm 8mm;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1.5px solid var(--indigo);
+    padding-bottom: 5px;
+    margin-bottom: 2px;
+  }
+  .header h1 { font-size: 15px; color: var(--indigo2); letter-spacing: 0.02em; }
+  .header .badge {
+    font-size: 9px;
+    background: var(--indigo);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  .sub-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--indigo2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2px;
+  }
+
+  /* Event types table */
+  .event-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9px;
+  }
+  .event-table th {
+    background: var(--surface);
+    color: var(--indigo2);
+    font-size: 8.5px;
+    padding: 4px 6px;
+    text-align: left;
+    border: 1px solid var(--border);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .event-table td {
+    padding: 3.5px 6px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  .event-table tr:nth-child(odd)  td { background: var(--surface); }
+  .event-table tr:nth-child(even) td { background: #0f172a; }
+  .event-table .event-name { color: var(--cyan); font-weight: 600; }
+  .event-table .trigger    { color: var(--muted); }
+  .event-table .use-case   { color: var(--text); }
+  .event-table .blocking   { color: var(--amber); font-size: 8px; }
+
+  /* Hook format box */
+  .format-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .format-section { display: flex; flex-direction: column; gap: 3px; }
+  .format-label {
+    font-size: 8.5px;
+    font-weight: 700;
+    color: var(--indigo2);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 1px;
+  }
+
+  .code {
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--indigo);
+    border-radius: 3px;
+    padding: 5px 7px;
+    font-size: 8.5px;
+    color: var(--green);
+    white-space: pre;
+    line-height: 1.55;
+    overflow: hidden;
+  }
+
+  /* Hook examples grid */
+  .hooks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .hook-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .hook-card-title {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1px;
+  }
+
+  .hook-card .desc {
+    font-size: 8.5px;
+    color: var(--muted);
+    margin-bottom: 2px;
+    line-height: 1.4;
+  }
+
+  .hook-card .code {
+    font-size: 8px;
+    line-height: 1.5;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 4px;
+    margin-top: auto;
+    font-size: 8.5px;
+    color: var(--muted);
+  }
+  .footer .logo { color: var(--indigo2); font-weight: 700; letter-spacing: 0.1em; }
+
+  @media print {
+    @page { size: A4; margin: 8mm; }
+    :root {
+      --bg:      #ffffff;
+      --surface: #f8fafc;
+      --border:  #cbd5e1;
+      --indigo:  #4f46e5;
+      --indigo2: #4338ca;
+      --text:    #0f172a;
+      --muted:   #475569;
+      --green:   #065f46;
+      --amber:   #92400e;
+      --cyan:    #0e7490;
+    }
+    html, body { background: #fff; }
+    .page { margin: 0; padding: 0; width: 100%; }
+    .event-table tr:nth-child(even) td { background: #f8fafc; }
+    .code { background: #f1f5f9; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Hooks Quick Reference</h1>
+    <span class="badge">CARD 6 / 6</span>
+  </div>
+
+  <!-- Event types -->
+  <div class="sub-title">Hook Event Types</div>
+  <table class="event-table">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Fires When</th>
+        <th>Use Case</th>
+        <th>Blocks?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="event-name">PreToolUse</td>
+        <td class="trigger">Before any tool executes</td>
+        <td class="use-case">Validate input, block dangerous paths, rate limit, log intent</td>
+        <td class="blocking">YES — can abort</td>
+      </tr>
+      <tr>
+        <td class="event-name">PostToolUse</td>
+        <td class="trigger">After a tool returns</td>
+        <td class="use-case">Log results, trigger side-effects, inject context into output</td>
+        <td class="blocking">NO</td>
+      </tr>
+      <tr>
+        <td class="event-name">Notification</td>
+        <td class="trigger">Claude sends user a notification</td>
+        <td class="use-case">Forward to Telegram/Slack, filter noise, augment with metadata</td>
+        <td class="blocking">NO</td>
+      </tr>
+      <tr>
+        <td class="event-name">Stop</td>
+        <td class="trigger">Claude finishes a turn / task</td>
+        <td class="use-case">Run tests, verify completion criteria, send summary email, update backlog</td>
+        <td class="blocking">NO</td>
+      </tr>
+      <tr>
+        <td class="event-name">SubagentStop</td>
+        <td class="trigger">A subagent finishes</td>
+        <td class="use-case">Collect subagent results, trigger next stage in pipeline</td>
+        <td class="blocking">NO</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Response format -->
+  <div class="sub-title">Hook Response Format</div>
+  <div class="format-box">
+    <div class="format-section">
+      <div class="format-label">Allow (continue execution)</div>
+      <div class="code">#!/usr/bin/env python3
+import json, sys
+data = json.load(sys.stdin)
+# ... your logic ...
+print(json.dumps({
+  "action": "allow"
+}))</div>
+    </div>
+    <div class="format-section">
+      <div class="format-label">Block (abort + message to Claude)</div>
+      <div class="code">print(json.dumps({
+  "action": "block",
+  "reason": "Cannot write to /deprecated/"
+}))
+
+# Output to stdout = injects into
+# Claude's context as tool result
+# Exit code 0 = allow, non-0 = block</div>
+    </div>
+  </div>
+
+  <!-- 5 most useful hooks -->
+  <div class="sub-title">5 Most Useful Hook Configs</div>
+  <div class="hooks-grid">
+
+    <div class="hook-card">
+      <div class="hook-card-title">1. Damage Control — Block Deprecated Paths</div>
+      <div class="desc">Blocks any write to deprecated directories. Fires on PreToolUse for Write/Edit tools.</div>
+      <div class="code">{"hooks": {"PreToolUse": [{
+  "matcher": "Write|Edit",
+  "hooks": [{"type": "command",
+    "command": "python3 .claude/hooks/damage-control.py"
+  }]
+}]}}</div>
+    </div>
+
+    <div class="hook-card">
+      <div class="hook-card-title">2. Completion Verifier — Run Tests on Stop</div>
+      <div class="desc">Runs the verification script whenever Claude declares a task complete.</div>
+      <div class="code">{"hooks": {"Stop": [{
+  "matcher": ".*",
+  "hooks": [{"type": "command",
+    "command": "python3 .claude/hooks/verify-completion.py"
+  }]
+}]}}</div>
+    </div>
+
+    <div class="hook-card">
+      <div class="hook-card-title">3. Telegram Notifier — Forward Notifications</div>
+      <div class="desc">Sends Claude's notifications to your Telegram bot. Never miss a long task completing.</div>
+      <div class="code">{"hooks": {"Notification": [{
+  "matcher": ".*",
+  "hooks": [{"type": "command",
+    "command": "python3 ~/.claude/skills/telegram-message/scripts/send_telegram.py"
+  }]
+}]}}</div>
+    </div>
+
+    <div class="hook-card">
+      <div class="hook-card-title">4. Session Logger — Write to Vault</div>
+      <div class="desc">Logs a session summary to Obsidian vault after each Claude turn completes.</div>
+      <div class="code">{"hooks": {"Stop": [{
+  "matcher": ".*",
+  "hooks": [{"type": "command",
+    "command": "python3 .claude/hooks/session-logger.py"
+  }]
+}]}}</div>
+    </div>
+
+    <div class="hook-card">
+      <div class="hook-card-title">5. Bash Guard — Block Dangerous Commands</div>
+      <div class="desc">PreToolUse on Bash. Scans the command string before execution. Blocks rm -rf, force pushes, etc.</div>
+      <div class="code">{"hooks": {"PreToolUse": [{
+  "matcher": "Bash",
+  "hooks": [{"type": "command",
+    "command": "python3 .claude/hooks/bash-guard.py"
+  }]
+}]}}</div>
+    </div>
+
+  </div>
+
+  <!-- Config location note -->
+  <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; font-size: 8.5px; color: var(--muted);">
+    <span style="color: var(--indigo2); font-weight: 700;">Config location:</span>
+    &nbsp;Project-level: <span style="color: var(--green);">.claude/settings.json</span>
+    &nbsp;|&nbsp;
+    User-level: <span style="color: var(--green);">~/.claude/settings.json</span>
+    &nbsp;|&nbsp;
+    Hook scripts receive the full tool call as JSON on stdin.
+    &nbsp;|&nbsp;
+    Timeout default: 10s.
+  </div>
+
+  <div class="footer">
+    <span>Prompt Engineering Quick Reference Cards — Card 6: Hooks Quick Reference</span>
+    <span class="logo">edgeless</span>
+  </div>
+
+</div>
+</body>
+</html>

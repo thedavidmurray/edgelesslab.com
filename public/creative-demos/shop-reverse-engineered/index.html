@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Reverse-Engineered Our Own Shop</title>
+    <meta name="description" content="How fixing a single analytics blind spot revealed the gap between passing tests and real buyer behavior">
+    <style>
+        :root {
+            --bg: #0b0c0f;
+            --fg: #fff;
+            --accent: #c9ff3d;
+            --muted: #666;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg); 
+            color: var(--fg); 
+            font-family: system-ui, sans-serif; 
+            line-height: 1.6; 
+            padding: 2rem;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: var(--accent); margin-bottom: 1.5rem; }
+        h2 { color: var(--accent); margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--muted); padding-bottom: 0.5rem; }
+        p { margin-bottom: 1.5rem; }
+        .evidence { background: #1a1b1e; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--accent); }
+        .fix { background: #0d1a0d; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--accent); }
+        .results { background: #0a0d1a; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid var(--accent); }
+        code { background: #1a1b1e; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Courier New', monospace; }
+        .timestamp { color: var(--muted); font-size: 0.9rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>We Reverse-Engineered Our Own Shop</h1>
+        <p><strong>The insight:</strong> Passing unit tests don't guarantee real-world correctness. Our shop's analytics were broken in a way that only appeared under actual buyer traffic—not in isolated tests.</p>
+        
+        <div class="evidence">
+            <h2>The Problem: Invisible Analytics Blind Spot</h2>
+            <p>Unit tests passed, but live buyer traffic revealed a critical flaw: our <code>shop_real_paths</code> goal was failing because PostHog was only seeing <code>1 distinct pathname</code> instead of the required <code>≥2</code>. This meant:</p>
+            <ul>
+                <li>Product page routes (<code>/d/<slug>/</code>) weren't being tracked as separate pageviews</li>
+                <li>Analytics were collapsing all product views into a single entry</li>
+                <li>We couldn't measure actual product interest or conversion funnels</li>
+            </ul>
+            <p><em>Evidence:</em> Live judge <code>shop_real_paths</code> check showed only 1 distinct pathname in PostHog <code>$pageview</code> despite multiple product visits.</p>
+        </div>
+        
+        <div class="fix">
+            <h2>The Fix: Canonical Path Tracking</h2>
+            <p>We rebuilt the routing and analytics layer to ensure real pathnames reach analytics:</p>
+            <ul>
+                <li><strong>Product dialogs now use canonical <code>/d/<slug>/</code> URLs</strong></li>
+                <li>Close/Escape and Back/Forward navigation keep the URL and selected design in sync</li>
+                <li>Legacy <code>?d=</code> links are canonicalized and preserve campaign query parameters</li>
+                <li>The manual PostHog tracker observes <code>pushState/replaceState/popstate/hashchange</code> events</li>
+                <li>It deduplicates identical URLs and uses actual <code>$pathname</code>, <code>$host</code>, and <code>$current_url</code> (no hash appended or hardcoded host)</li>
+            </ul>
+            <p><em>Evidence:</em> Isolated routing/pageview implementation passes 9 Node tests, builds 92 edition pages, and passes Puppeteer browser checks for open/close/Back/Forward/Escape/reload/legacy queries/UTM and exact pageview sequence.</p>
+        </div>
+        
+        <div class="results">
+            <h2>Results: From Broken to Working</h2>
+            <p>After the fix:</p>
+            <ul>
+                <li>Live Stripe checkout starts successfully (HTTP 200, backend amount 3400 cents)</li>
+                <li>Real buyer probe + REA HAR analysis confirms production selection stays at <code>/</code> before proceeding</li>
+                <li>Live judge pre-deployment: 11/12, exit 1 (only <code>shop_real_paths</code> fails with 1 distinct pathname)</li>
+                <li>Note: The seven-day query window means this improves as new events ingest—no artificial waiting required</li>
+            </ul>
+            <p><em>Key insight:</strong> Tests passed but the live check caught a bug they couldn't see—analytics captured on a stub client vs. real browser behavior.</p>
+        </div>
+        
+        <div class="timestamp">
+            Field note created: October 11, 2026<br>
+            Based on REA analysis of shop.edgelesslab.com (PR #6 + #7)<br>
+            Evidence: t_f795e2d6, morluto-rea.md
+        </div>
+    </div>
+</body>
+</html>

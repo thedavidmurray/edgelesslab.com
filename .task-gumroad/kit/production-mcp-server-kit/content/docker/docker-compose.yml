@@ -1,0 +1,37 @@
+# docker-compose for the Stateful Hub MCP server.
+# Run from the product root:
+#   docker compose -f content/docker/docker-compose.yml up --build
+
+services:
+  stateful-hub:
+    build:
+      context: ../templates/stateful-hub
+      dockerfile: ../../docker/Dockerfile
+    container_name: mcp-stateful-hub
+    restart: unless-stopped
+    ports:
+      - "9800:9800"
+    environment:
+      - HUB_DB=/data/hub.db
+      - HUB_PORT=9800
+      - HUB_LEASE_MS=${HUB_LEASE_MS:-30000}
+      - HUB_MSG_TTL_MS=${HUB_MSG_TTL_MS:-86400000}
+      - HUB_SWEEP_MS=${HUB_SWEEP_MS:-5000}
+      - HUB_MAX_ATTEMPTS=${HUB_MAX_ATTEMPTS:-5}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    volumes:
+      - hub-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9800/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.5"
+
+volumes:
+  hub-data:

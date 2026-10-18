@@ -1,0 +1,155 @@
+# Damage Control Patterns
+# PreToolUse hook configuration for blocking dangerous operations
+# Version: 1.0.0
+# Created: 2026-01-08
+
+dangerous_commands:
+  bash:
+    # Patterns that will BLOCK execution (case insensitive regex)
+    block_patterns:
+      # Destructive file operations
+      - 'rm\s+-rf\s+/'           # rm -rf /
+      - 'rm\s+-rf\s+~'           # rm -rf ~
+      - 'rm\s+-rf\s+\*'          # rm -rf *
+      - 'rm\s+-rf\s+\.\.'        # rm -rf ..
+      - 'rm\s+-f\s+/'            # rm -f /
+      - 'rmdir\s+/'              # rmdir /
+      - '>\s*/dev/sda'           # Write to disk device
+      - 'mkfs\.'                 # Format filesystem
+      - 'dd\s+if=.+of=/dev'      # dd to device
+
+      # Git destructive operations
+      - 'git\s+reset\s+--hard'   # Hard reset
+      - 'git\s+push\s+.*--force' # Force push
+      - 'git\s+push\s+-f'        # Force push shorthand
+      - 'git\s+clean\s+-fd'      # Clean untracked
+      - 'git\s+checkout\s+--\s+\.' # Discard all changes
+
+      # Database destructive
+      - 'DROP\s+DATABASE'        # Drop database
+      - 'DROP\s+TABLE'           # Drop table
+      - 'TRUNCATE\s+TABLE'       # Truncate table
+      - 'DELETE\s+FROM\s+\w+\s*;' # Delete without WHERE (ends with ;)
+
+      # Cloud destructive (AWS, GCP, Firebase)
+      - 'aws\s+.*\s+delete'
+      - 'aws\s+s3\s+rm\s+.*--recursive'
+      - 'gcloud\s+.*\s+delete'
+      - 'firebase\s+.*\s+delete'
+      - 'kubectl\s+delete\s+namespace'
+
+      # System destructive
+      - 'chmod\s+-R\s+777\s+/'   # Recursive 777 on root
+      - 'chown\s+-R\s+.*\s+/'    # Recursive chown on root
+      - 'kill\s+-9\s+-1'         # Kill all processes
+      - 'pkill\s+-9'             # Kill by name
+
+      # Dangerous curl/wget patterns
+      - 'curl.*\|\s*sh'          # Pipe curl to shell
+      - 'curl.*\|\s*bash'        # Pipe curl to bash
+      - 'wget.*\|\s*sh'          # Pipe wget to shell
+
+paths:
+  # ZERO ACCESS: Never read or write
+  zero_access:
+    - '/etc/passwd'
+    - '/etc/shadow'
+    - '/etc/sudoers'
+    - '.ssh/id_'
+    - '.ssh/authorized_keys'
+    - '.aws/credentials'
+    - '.gnupg/'
+    - '.env.production'
+    - 'credentials.json'
+    - 'secrets.yaml'
+    - 'service-account.json'
+
+  # READ ONLY: Can read but never modify
+  read_only:
+    - 'node_modules/'
+    - '.git/objects/'
+    - 'vendor/'
+    - '__pycache__/'
+    - '.venv/lib/'
+    - 'dist/'
+    - 'build/'
+
+    # ============================================================
+    # DEPRECATED LOCATIONS - Consolidated 2026-01-29
+    # See CLAUDE.md "Canonical Locations" for single source of truth
+    # NEVER create new files in these locations!
+    # ============================================================
+
+    # Backlog (USE: /backlog/tasks/)
+    - 'claude-vault/backlog/tasks/'        # Archived - use /backlog/tasks/
+    - 'claude-vault/backlog/tasks-archive' # Frozen history
+    - '/.backlog/'                          # Deprecated - removed
+
+    # Config (USE: /config/ or /.claude/)
+    - '/05-config/'                         # Archived - use /config/
+    - '/_legacy-05-config/'                 # Archived
+
+    # Docs (USE: /docs/)
+    - '/02-docs/'                           # Archived - use /docs/
+
+    # Vault duplicates (USE: numbered dirs in vault)
+    - 'claude-vault/01-Sessions/'           # Archived - use 04-Sessions/
+    - 'claude-vault/04-Agents/'             # Renamed to 02-Agents/ (2026-03-11)
+    - 'claude-vault/12-Agents/'             # Merged into 02-Agents/
+    - 'claude-vault/10-Reports/'            # Deleted - use 13-Reports/
+
+    # ============================================================
+    # SCATTERED BACKUPS - Audit finding 2026-01-29
+    # NEVER create more backup dirs - use /backups/ only
+    # ============================================================
+    - 'obsidian-old-backup/'
+    - 'system-backup/'
+    - 'rss-archive-backup/'
+    - 'rss-inbox-backup/'
+    - 'vault-content-backup/'
+    - 'vault-projects-backup/'              # 8.6GB - pending deletion
+    - 'vector-stores-backup/'
+    - 'sqlite-backup/'
+    - '/.move_backups/'
+    - '/.migration/backups/'
+
+    # ============================================================
+    # ORPHANED/STALE PROJECTS - Audit finding 2026-01-29
+    # Read-only until reviewed and decisions made
+    # ============================================================
+    - '/azure-ai-rollout/'                  # Stale >30 days
+    - '/elizaos-bots/'                      # Stale >30 days
+    - '/algorithms/'                        # Stale >30 days
+    - '/job-search/'                        # Completed project
+    - '/.gemini-clipboard/'                 # Unused
+    - '/temp/'                              # Should be empty
+
+    # ============================================================
+    # LEGACY TOOLS - Use modern equivalents
+    # ============================================================
+    - '/_legacy-01-tools/'                  # 802MB legacy code
+
+  # NO DELETE: Can modify but never delete
+  no_delete:
+    - 'src/'
+    - 'lib/'
+    - 'app/'
+    - 'package.json'
+    - 'package-lock.json'
+    - 'requirements.txt'
+    - 'Cargo.toml'
+    - 'go.mod'
+    - 'pyproject.toml'
+    - '.claude/'
+    - 'CLAUDE.md'
+
+# Allowlist: Patterns that override blocks (be careful!)
+allowlist:
+  # Temporary test files
+  - '/tmp/'
+  - '/var/tmp/'
+  - '.test.'
+  - '_test.'
+  - 'test_'
+  # Total Serialism project (active development)
+  - 'total-serialism/'

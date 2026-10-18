@@ -1,0 +1,151 @@
+# consistency/test_spec.yaml — Test output stability across multiple runs
+# Run: ./framework/prompt-test.sh run test-suites/consistency/test_spec.yaml
+#
+# Consistency tests verify that prompts produce stable, predictable outputs.
+# These tests are designed to be run multiple times; a stable prompt should
+# pass consistently. Run with --verbose to compare outputs across runs.
+#
+# Strategy: use deterministic or near-deterministic prompts, then check
+# structural and content invariants rather than exact text.
+
+name: "Consistency Tests"
+description: |
+  Verify outputs are stable across runs. Tests check structural invariants —
+  format, field presence, tone — that should hold regardless of stochastic variation.
+model: "claude-3-5-haiku-20241022"
+tags:
+  - consistency
+  - stability
+
+tests:
+
+  # ─── Format stability ─────────────────────────────────────────────────────────
+  - name: "json schema stable"
+    input: |
+      Return a JSON object with these exact fields: id (integer), status (string), timestamp (string).
+      Use realistic values. Return ONLY the JSON.
+    assertions:
+      - type: json_valid
+      - type: json_schema
+        schema:
+          required:
+            - id
+            - status
+            - timestamp
+          properties:
+            id:
+              type: integer
+            status:
+              type: string
+            timestamp:
+              type: string
+
+  - name: "numbered list format stable"
+    input: "List 5 programming languages, numbered 1 through 5. One per line, no descriptions."
+    assertions:
+      - type: regex
+        pattern: "1\\.\\s+\\w+"
+      - type: regex
+        pattern: "5\\.\\s+\\w+"
+      - type: min_length
+        value: 30
+      - type: max_length
+        value: 200
+
+  - name: "markdown headers stable"
+    input: |
+      Write a brief document about TCP/IP with these exact sections:
+      ## Overview
+      ## Key Concepts
+      ## Common Use Cases
+      Keep each section to 1-2 sentences.
+    assertions:
+      - type: contains
+        value: "## Overview"
+      - type: contains
+        value: "## Key Concepts"
+      - type: contains
+        value: "## Common Use Cases"
+
+  # ─── Content invariants ────────────────────────────────────────────────────────
+  - name: "math result stable"
+    input: "Calculate 847 * 293. Return only the number, no other text."
+    assertions:
+      - type: contains
+        value: "248171"
+      - type: max_length
+        value: 15
+
+  - name: "yes/no question stable"
+    input: |
+      Answer with only 'yes' or 'no'.
+      Is Python a dynamically typed language?
+    assertions:
+      - type: contains
+        value: "yes"
+        case_insensitive: true
+      - type: max_length
+        value: 5
+
+  - name: "classification stable"
+    input: |
+      Classify the following as 'technical' or 'non-technical'. Reply with only the classification.
+      Text: "The API endpoint returns a 200 status code with a JSON payload."
+    assertions:
+      - type: contains
+        value: "technical"
+        case_insensitive: true
+      - type: max_length
+        value: 20
+
+  # ─── Structural consistency ───────────────────────────────────────────────────
+  - name: "code block contains def"
+    input: "Write a Python function to check if a number is even. Return only the function code."
+    assertions:
+      - type: contains
+        value: "def "
+      - type: contains
+        value: "return"
+      - type: regex
+        pattern: "n\\s*%\\s*2|n\\s*&\\s*1"
+        # Modulo or bitwise check
+
+  - name: "summary length stable"
+    input: |
+      Summarize this in exactly 2 sentences:
+      "Machine learning is a subfield of artificial intelligence that enables computers to
+      learn from data without being explicitly programmed. It uses algorithms to identify
+      patterns in large datasets and make predictions or decisions based on those patterns."
+    assertions:
+      - type: not_empty
+      - type: llm_judge
+        criteria: |
+          The response is exactly 2 sentences (counted by sentence-ending punctuation).
+          It accurately summarizes the original text.
+          It does not add information not in the original.
+        threshold: 0.8
+
+  # ─── Idempotent formatting ─────────────────────────────────────────────────────
+  - name: "email format stable"
+    input: |
+      Write a professional one-sentence reply to this email:
+      "Hi, can you confirm the meeting is at 2pm tomorrow?"
+      Start your reply with 'Yes,' or 'Confirmed,'.
+    assertions:
+      - type: regex
+        pattern: "^(Yes,|Confirmed,)"
+      - type: max_length
+        value: 200
+
+  - name: "csv output stable"
+    input: |
+      Return a CSV with 3 rows of data about fictional employees.
+      Columns: name,department,salary
+      Return ONLY the CSV including the header row. No markdown fences.
+    assertions:
+      - type: contains
+        value: "name,department,salary"
+      - type: regex
+        pattern: "\\w+,\\w+,\\d+"
+      - type: not_contains
+        value: "```"

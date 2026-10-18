@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-critters-container>
+<head>
+<link rel="canonical" href="https://edgelesslab.com/creative-demos/kinetic-type-physics/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic Type Physics</title>
+<style>*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden}body{background:#000000;font-family:'Arial Black', 'Helvetica Neue', Arial, sans-serif;-webkit-font-smoothing:antialiased}#instructions{position:fixed;top:20px;left:50%;transform:translateX(-50%);color:#F0F0F0;font-size:14px;letter-spacing:1px;opacity:0.7;pointer-events:none;user-select:none;z-index:100;text-align:center;white-space:nowrap}</style>
+<meta name="description" content="Physics-driven typography where letters have mass, velocity, and collision. Mouse repulsion and gravity well.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Kinetic Type Physics">
+<meta property="og:description" content="Physics-driven typography where letters have mass, velocity, and collision. Mouse repulsion and gravity well.">
+<meta property="og:url" content="https://edgelesslab.com/creative-demos/kinetic-type-physics/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kinetic Type Physics">
+<meta name="twitter:description" content="Physics-driven typography where letters have mass, velocity, and collision. Mouse repulsion and gravity well.">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
+</head>
+<body aria-label="Kinetic type physics playground">
+<div id="instructions">TYPE TO SPAWN — DRAG TO THROW — CLICK TO RESET</div>
+
+<!-- Matter.js physics engine (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<!-- Lottie Web renderer (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<!-- Application logic -->
+<script src="index.js"></script>
+</body>
+</html>

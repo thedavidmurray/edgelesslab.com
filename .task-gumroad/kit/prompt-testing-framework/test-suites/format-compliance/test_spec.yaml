@@ -1,0 +1,211 @@
+# format-compliance/test_spec.yaml — Test output format adherence
+# Run: ./framework/prompt-test.sh run test-suites/format-compliance/test_spec.yaml
+#
+# Format compliance tests verify that prompts produce output in the exact
+# structure your system expects. Useful when LLM output feeds into parsers,
+# downstream systems, or APIs that require specific formats.
+
+name: "Format Compliance Tests"
+description: |
+  Verify output format adherence: JSON schemas, markdown structure,
+  CSV format, code block conventions, and length constraints.
+model: "claude-3-5-haiku-20241022"
+tags:
+  - format
+  - compliance
+  - structured-output
+
+tests:
+
+  # ─── JSON format tests ────────────────────────────────────────────────────────
+  - name: "json only — no prose"
+    input: |
+      Return a JSON object with key 'result' set to the sum of 42 and 58.
+      Return ONLY valid JSON. No explanation, no markdown fences.
+    assertions:
+      - type: json_valid
+      - type: json_schema
+        schema:
+          required:
+            - result
+          properties:
+            result:
+              type: integer
+      - type: not_contains
+        value: "```"
+
+  - name: "json array format"
+    input: |
+      Return a JSON array of 3 color names as strings.
+      Return ONLY the JSON array, nothing else.
+    assertions:
+      - type: json_valid
+      - type: regex
+        pattern: "^\\s*\\["
+        # Must start with array bracket
+      - type: not_contains
+        value: "```"
+
+  - name: "nested json structure"
+    input: |
+      Return a JSON object representing a REST API response with this exact structure:
+      {
+        "status": "success",
+        "data": {
+          "items": [],
+          "count": 0
+        },
+        "error": null
+      }
+      Return ONLY the JSON. Use realistic values for items (add 2 items).
+    assertions:
+      - type: json_valid
+      - type: json_schema
+        schema:
+          required:
+            - status
+            - data
+            - error
+          properties:
+            status:
+              type: string
+            data:
+              type: object
+      - type: contains
+        value: "\"items\""
+      - type: contains
+        value: "\"count\""
+
+  # ─── Markdown format tests ────────────────────────────────────────────────────
+  - name: "markdown headings structure"
+    input: |
+      Write a technical spec with these exact headings (use ## level):
+      ## Problem
+      ## Proposed Solution
+      ## Trade-offs
+      Each section: 1-2 sentences only.
+    assertions:
+      - type: contains
+        value: "## Problem"
+      - type: contains
+        value: "## Proposed Solution"
+      - type: contains
+        value: "## Trade-offs"
+
+  - name: "markdown code fence language tag"
+    input: "Show me a Python hello world program in a markdown code block with the correct language tag."
+    assertions:
+      - type: contains
+        value: "```python"
+      - type: contains
+        value: "```"
+      - type: contains
+        value: "print"
+
+  - name: "markdown table format"
+    input: |
+      Create a markdown table with columns: Language, Year Created, Typing.
+      Include 3 rows. Use proper markdown table syntax with header separator.
+    assertions:
+      - type: contains
+        value: "|"
+      - type: contains
+        value: "---"
+      - type: regex
+        pattern: "\\|\\s*Language\\s*\\|"
+
+  - name: "markdown bullet list — no numbers"
+    input: |
+      List 4 benefits of unit testing as a bullet list using hyphens.
+      No numbered list. No introduction sentence. Just the bullets.
+    assertions:
+      - type: regex
+        pattern: "^-\\s+"
+      - type: not_contains
+        value: "1."
+
+  # ─── Plain text format constraints ────────────────────────────────────────────
+  - name: "single sentence only"
+    input: |
+      In exactly one sentence, explain what Docker is.
+      Respond with only that one sentence, no other text.
+    assertions:
+      - type: not_empty
+      - type: max_length
+        value: 300
+      - type: llm_judge
+        criteria: "The response is a single sentence. It ends with a period. It does not contain multiple sentences."
+        threshold: 0.85
+
+  - name: "no markdown in plain text response"
+    input: |
+      Explain what a REST API is in 2-3 sentences.
+      Use plain text only — no markdown formatting, no bold, no bullets, no headers.
+    assertions:
+      - type: not_contains
+        value: "**"
+      - type: not_contains
+        value: "##"
+      - type: not_contains
+        value: "- "
+      - type: not_empty
+
+  - name: "comma-separated values only"
+    input: |
+      List 5 programming paradigms separated by commas.
+      Return ONLY the comma-separated list, no other text.
+    assertions:
+      - type: regex
+        pattern: "\\w+,\\s*\\w+,\\s*\\w+,\\s*\\w+,\\s*\\w+"
+        # 4 commas minimum = 5 items
+      - type: not_contains
+        value: "\n"
+      - type: max_length
+        value: 200
+
+  # ─── Code format compliance ───────────────────────────────────────────────────
+  - name: "function signature compliance"
+    input: |
+      Write a Python function with this EXACT signature:
+      def process_data(input_text: str, max_length: int = 100) -> dict:
+      The function body should return a dict with keys 'length' and 'truncated'.
+    assertions:
+      - type: contains
+        value: "def process_data(input_text: str, max_length: int = 100) -> dict:"
+      - type: contains
+        value: "return"
+      - type: contains
+        value: "'length'"
+
+  - name: "no trailing explanation after code"
+    input: |
+      Write a Python one-liner that returns a list of squares from 1 to 10.
+      Return ONLY the code, no explanation before or after.
+    assertions:
+      - type: not_empty
+      - type: regex
+        pattern: "\\[.*for.*in.*range"
+        # Should be a list comprehension
+      - type: max_length
+        value: 100
+
+  # ─── Numeric and date format compliance ───────────────────────────────────────
+  - name: "date format ISO 8601"
+    input: |
+      Return today's date in ISO 8601 format (YYYY-MM-DD).
+      Return ONLY the date string, nothing else.
+    assertions:
+      - type: regex
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      - type: max_length
+        value: 12
+
+  - name: "percentage format"
+    input: |
+      Express 0.7532 as a percentage rounded to 1 decimal place.
+      Return ONLY the percentage including the % symbol. Example format: 75.3%
+    assertions:
+      - type: regex
+        pattern: "\\d+\\.\\d%"
+      - type: max_length
+        value: 10

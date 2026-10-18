@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" data-critters-container>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Serialism - Algorithm Browser</title>
+    <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);min-height:100vh;color:#fff}.header{background:rgba(0, 0, 0, 0.3);backdrop-filter:blur(10px);padding:20px 0;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255, 255, 255, 0.1)}.container{max-width:1400px;margin:0 auto;padding:0 20px}.header-content{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}h1{font-size:28px;font-weight:700;letter-spacing:-0.5px}.subtitle{font-size:14px;opacity:0.9;margin-top:4px}.search-box{flex:1;max-width:500px;min-width:250px}.search-input{width:100%;padding:12px 20px;border:2px solid rgba(255, 255, 255, 0.2);border-radius:25px;background:rgba(255, 255, 255, 0.1);color:#fff;font-size:15px;transition:all 0.3s ease}.search-input::placeholder{color:rgba(255, 255, 255, 0.6)}.search-input:focus{outline:none;background:rgba(255, 255, 255, 0.15);border-color:rgba(255, 255, 255, 0.4)}.filters{display:flex;gap:10px;flex-wrap:wrap}.filter-btn{padding:8px 16px;border:2px solid rgba(255, 255, 255, 0.3);border-radius:20px;background:rgba(255, 255, 255, 0.1);color:#fff;font-size:13px;cursor:pointer;transition:all 0.3s ease;font-weight:500}.filter-btn:hover{background:rgba(255, 255, 255, 0.2);border-color:rgba(255, 255, 255, 0.5)}.filter-btn.active{background:#fff;color:#667eea;border-color:#fff}.main-content{padding:40px 0}.idea-deck{display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:18px;margin-bottom:36px}.idea-deck[hidden]{display:none}.stats{text-align:center;margin-bottom:40px;opacity:0.9}.stats-numbers{display:flex;justify-content:center;gap:40px;margin-top:10px}.stat-item{font-size:14px}.stat-number{font-size:24px;font-weight:700;display:block}.action-link{text-decoration:none;display:inline-flex;align-items:center}@media (max-width: 768px){.header-content{flex-direction:column;align-items:stretch}.search-box{max-width:none}.stats-numbers{flex-direction:column;gap:20px}.idea-deck{grid-template-columns:1fr}}.loading{text-align:center;padding:60px 20px;font-size:18px}</style>
+<meta name="description" content="Total Serialism - Algorithm Browser">
+<link rel="canonical" href="https://edgelesslab.com/total-serialism/app/browse.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Total Serialism - Algorithm Browser">
+<meta property="og:description" content="Total Serialism - Algorithm Browser">
+<meta property="og:url" content="https://edgelesslab.com/total-serialism/app/browse.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Total Serialism - Algorithm Browser">
+<meta name="twitter:description" content="Total Serialism - Algorithm Browser">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>Total Serialism</h1>
+                    <div class="subtitle">Generative Art & Pen Plotter Algorithms</div>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search algorithms..." autocomplete="off">
+                </div>
+
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="plotter">Plotter</button>
+                    <button class="filter-btn" data-filter="screen">Screen</button>
+                    <button class="filter-btn" data-filter="systems">Systems</button>
+                    <button class="filter-btn" data-filter="tools">Tools</button>
+                    <button class="filter-btn" data-filter="featured">⭐ Featured</button>
+                    <button class="filter-btn" data-filter="native">Plotter Native</button>
+                    <button class="filter-btn" data-filter="adaptable">Adaptable</button>
+                    <button class="filter-btn" data-filter="presets">Presets</button>
+                    <button class="filter-btn" data-filter="favorites">❤️ Favorites</button>
+                    <button class="filter-btn" data-filter="beginner">Beginner</button>
+                    <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                    <button class="filter-btn" data-filter="advanced">Advanced</button>
+                    <button class="filter-btn" id="surpriseBtn" type="button">🎲 Surprise Me</button>
+                    <a class="filter-btn action-link" href="pen-plotter/algorithms/tools/plotter-prep.html">Plotter Prep</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="stats">
+                <h2>Discover Algorithmic Art</h2>
+                <div class="stats-numbers" id="statsNumbers">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalAlgorithms">--</span>
+                        <span>Algorithms</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalCategories">--</span>
+                        <span>Categories</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="visibleAlgorithms">--</span>
+                        <span>Showing</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ideaDeck" class="idea-deck" hidden></div>
+            <div id="relatedFocus"></div>
+
+            <div id="content" class="loading">
+                Loading algorithms...
+            </div>
+        </div>
+    </main>
+
+    <script src="discovery-utils.js"></script>
+    <script>
+        let catalog = null;
+        let favorites = JSON.parse(localStorage.getItem('total-serialism-favorites') || '[]');
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let relatedFocusId = TSDiscovery.getUrlParams().get('related') || '';
+        const ideaDeckEl = document.getElementById('ideaDeck');
+
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderBadge(label, className = '') {
+            return `<span class="badge ${className}">${escapeHtml(label)}</span>`;
+        }
+
+        function getDisplayOutputs(algo) {
+            const priority = ['svg', 'plotter', 'png', 'gif', 'preview', 'canvas'];
+            return [...new Set(algo.outputs || [])]
+                .sort((left, right) => {
+                    const leftIndex = priority.indexOf(left);
+                    const rightIndex = priority.indexOf(right);
+                    const safeLeft = leftIndex === -1 ? priority.length : leftIndex;
+                    const safeRight = rightIndex === -1 ? priority.length : rightIndex;
+                    if (safeLeft !== safeRight) return safeLeft - safeRight;
+                    return left.localeCompare(right);
+                })
+                .slice(0, 2);
+        }
+
+        function renderTrailLinks(algo, className = 'algorithm-trail-link') {
+            return TSDiscovery.getTrailSuggestions(catalog, algo.id)
+                .map((trail) => `
+                    <a
+                        href="?related=${trail.algo.id}"
+                        class="${className}"
+                        title="${escapeHtml(trail.description)}"
+                    >${escapeHtml(trail.label)} <span>${escapeHtml(trail.algo.name)}</span></a>
+                `)
+                .join('');
+        }
+
+        function renderWorkflowLinks(algo) {
+            return TSDiscovery.getWorkflowSteps(catalog, algo)
+                .map((tool) => `
+                    <a href="${tool.path}" class="focus-workflow-link">
+                        <span class="focus-workflow-name">${escapeHtml(tool.name)}</span>
+                        <span class="focus-workflow-copy">${escapeHtml(tool.guidance)}</span>
+                    </a>
+                `)
+                .join('');
+        }
+
+        function renderPromptList(algo) {
+            return TSDiscovery.getIdeationPrompts(algo)
+                .map((prompt) => `<li>${escapeHtml(prompt)}</li>`)
+                .join('');
+        }
+
+        function renderUseCaseChips(algo) {
+            return TSDiscovery.getUseCaseLabels(algo)
+                .map((label) => renderBadge(label, 'badge-medium'))
+                .join('');
+        }
+
+        function renderIdeaDeck() {
+            if (!catalog || relatedFocusId || currentFilter !== 'all' || searchTerm) {
+                ideaDeckEl.hidden = true;
+                ideaDeckEl.innerHTML = '';
+                return;
+            }
+
+            const sections = TSDiscovery.getSpotlightSections(catalog);
+            if (sections.length === 0) {
+                ideaDeckEl.hidden = true;
+                ideaDeckEl.innerHTML = '';
+                return;
+            }
+
+            ideaDeckEl.hidden = false;
+            ideaDeckEl.innerHTML = sections.map((section) => `
+                <section class="idea-lane">
+                    <div>
+                        <div class="idea-lane-title">${escapeHtml(section.title)}</div>
+                        <div class="idea-lane-copy">${escapeHtml(section.description)}</div>
+                    </div>
+                    <div class="idea-lane-list">
+                        ${section.algorithms.map((algo) => `
+                            <a href="${algo.path}" class="idea-lane-link">
+                                <span class="idea-lane-name">${escapeHtml(algo.name)}</span>
+                                <span class="idea-lane-meta">${escapeHtml(TSDiscovery.getMediumLabel(algo.medium))}</span>
+                            </a>
+                        `).join('')}
+                    </div>
+                </section>
+            `).join('');
+        }
+
+        // Load catalog
+        fetch('algorithm-catalog.json')
+            .then(res => res.json())
+            .then(data => {
+                catalog = data;
+                renderFocusPanel();
+                renderIdeaDeck();
+                renderContent();
+                updateStats();
+            })
+            .catch(() => {
+                document.getElementById('content').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <div class="empty-state-text">Failed to load algorithms</div>
+                    </div>
+                `;
+            });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = TSDiscovery.normalizeText(e.target.value);
+            renderIdeaDeck();
+            renderContent();
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderIdeaDeck();
+                renderContent();
+            });
+        });
+
+        document.getElementById('surpriseBtn').addEventListener('click', () => {
+            const visible = getVisibleAlgorithms();
+            if (visible.length === 0) return;
+            const pick = visible[Math.floor(Math.random() * visible.length)];
+            window.location.href = pick.path;
+        });
+
+        function toggleFavorite(algoId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const index = favorites.indexOf(algoId);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(algoId);
+            }
+
+            localStorage.setItem('total-serialism-favorites', JSON.stringify(favorites));
+            renderContent();
+        }
+
+        function matchesFilter(algo) {
+            if (currentFilter === 'all') return true;
+            if (currentFilter === 'plotter' || currentFilter === 'screen' || currentFilter === 'systems' || currentFilter === 'tools') {
+                return algo.medium === currentFilter;
+            }
+            if (currentFilter === 'featured') return algo.featured === true;
+            if (currentFilter === 'plotter-safe' || currentFilter === 'native') return algo.plotterReadiness === 'native';
+            if (currentFilter === 'adaptable') return algo.plotterReadiness === 'adaptable';
+            if (currentFilter === 'presets') return algo.hasPresets === true;
+            if (currentFilter === 'favorites') return favorites.includes(algo.id);
+            if (currentFilter === 'beginner') return algo.complexity === 'beginner';
+            if (currentFilter === 'intermediate') return algo.complexity === 'intermediate';
+            if (currentFilter === 'advanced') return algo.complexity === 'advanced';
+            if (catalog && catalog.categories[currentFilter]) return algo.category === currentFilter;
+            return true;
+        }
+
+        function matchesSearch(algo) {
+            if (!searchTerm) return true;
+            return TSDiscovery.buildSearchHaystack(algo, catalog).includes(searchTerm);
+        }
+
+        function getVisibleAlgorithms() {
+            if (!catalog) return [];
+            return catalog.algorithms.filter(algo =>
+                matchesFilter(algo) && matchesSearch(algo)
+            );
+        }
+
+        function renderFocusPanel() {
+            if (!catalog) return;
+
+            const relatedFocus = document.getElementById('relatedFocus');
+            if (!relatedFocusId) {
+                relatedFocus.innerHTML = '';
+                renderIdeaDeck();
+                return;
+            }
+
+            const focusAlgorithm = catalog.algorithms.find((algo) => algo.id === relatedFocusId);
+            if (!focusAlgorithm) {
+                relatedFocus.innerHTML = '';
+                renderIdeaDeck();
+                return;
+            }
+
+            const relatedAlgorithms = TSDiscovery.getRelatedAlgorithms(catalog, relatedFocusId, 6);
+            const openHref = focusAlgorithm.path;
+            relatedFocus.innerHTML = `
+                <section class="focus-panel">
+                    <div class="focus-header">
+                        <div>
+                            <div class="focus-kicker">More like this</div>
+                            <div class="focus-title">${escapeHtml(focusAlgorithm.name)}</div>
+                            <div class="focus-description">
+                                ${escapeHtml(focusAlgorithm.description)} Recommendations below are scored from shared motif families, visual traits, medium, and plotter readiness.
+                            </div>
+                        </div>
+                        <div class="focus-actions">
+                            <a href="${openHref}" class="focus-btn">Open algorithm</a>
+                            <a href="browse.html" class="focus-btn">Clear focus</a>
+                        </div>
+                    </div>
+                    <div class="focus-meta">
+                        ${renderBadge(TSDiscovery.getMediumLabel(focusAlgorithm.medium), 'badge-medium')}
+                        ${renderBadge(TSDiscovery.getPlotterReadinessLabel(focusAlgorithm.plotterReadiness), `badge-readiness ${focusAlgorithm.plotterReadiness}`)}
+                        ${renderBadge(focusAlgorithm.complexity, `badge-complexity ${focusAlgorithm.complexity}`)}
+                        ${(focusAlgorithm.engine || []).slice(0, 2).map((engine) => renderBadge(engine.toUpperCase(), 'badge-engine')).join('')}
+                    </div>
+                    <div class="focus-guidance-grid">
+                        <section class="focus-guidance-card">
+                            <div class="focus-guidance-title">Plotter Path</div>
+                            <div class="focus-guidance-copy">${escapeHtml(TSDiscovery.getPlotterSummary(focusAlgorithm))}</div>
+                            <div class="focus-chip-row">
+                                ${renderUseCaseChips(focusAlgorithm)}
+                            </div>
+                            <div class="focus-workflow-links">
+                                ${renderWorkflowLinks(focusAlgorithm)}
+                            </div>
+                        </section>
+                        <section class="focus-guidance-card">
+                            <div class="focus-guidance-title">Try This Next</div>
+                            <ul class="focus-prompt-list">
+                                ${renderPromptList(focusAlgorithm)}
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="focus-trails">
+                        ${renderTrailLinks(focusAlgorithm, 'focus-trail-link')}
+                    </div>
+                    <div class="algorithms-grid">
+                        ${relatedAlgorithms.map((algo) => renderAlgorithmCard(algo)).join('')}
+                    </div>
+                </section>
+            `;
+            renderIdeaDeck();
+        }
+
+        function renderContent() {
+            if (!catalog) return;
+
+            const content = document.getElementById('content');
+            let html = '';
+            const visibleAlgorithms = getVisibleAlgorithms();
+            const featuredMode = currentFilter === 'all' && !searchTerm;
+            let visibleCount = visibleAlgorithms.length;
+            const featuredIds = new Set(
+                featuredMode
+                    ? visibleAlgorithms.filter(algo => algo.featured).map(algo => algo.id)
+                    : []
+            );
+
+            // Featured section
+            if (featuredMode) {
+                const featuredAlgos = visibleAlgorithms.filter(algo => algo.featured);
+
+                if (featuredAlgos.length > 0) {
+                    html += `
+                        <div class="featured-section">
+                            <div class="featured-title">
+                                <span>⭐</span>
+                                <span>Featured Algorithms</span>
+                            </div>
+                            <div class="algorithms-grid">
+                                ${featuredAlgos.map(algo => renderAlgorithmCard(algo)).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Category sections
+            Object.entries(catalog.categories).forEach(([catKey, category]) => {
+                const filteredAlgos = visibleAlgorithms.filter(algo =>
+                    algo.category === catKey && (!featuredMode || !featuredIds.has(algo.id))
+                );
+
+                if (filteredAlgos.length > 0) {
+                    html += `
+                        <div class="category-section">
+                            <div class="category-header">
+                                <div class="category-icon">${category.icon}</div>
+                                <div>
+                                    <div class="category-title">${category.name}</div>
+                                    <div class="category-description">${category.description}</div>
+                                </div>
+                                <div class="category-count">${filteredAlgos.length}</div>
+                            </div>
+                            <div class="algorithms-grid">
+                                ${filteredAlgos.map(algo => renderAlgorithmCard(algo)).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (visibleCount === 0) {
+                html = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <div class="empty-state-text">
+                            ${currentFilter === 'favorites' && favorites.length === 0
+                                ? 'No favorites yet. Click the heart icon on any algorithm to save it!'
+                                : 'No algorithms found matching your criteria'}
+                        </div>
+                    </div>
+                `;
+            }
+
+            content.innerHTML = html;
+            document.getElementById('visibleAlgorithms').textContent = visibleCount;
+        }
+
+        function renderAlgorithmCard(algo) {
+            const isFavorite = favorites.includes(algo.id);
+            const category = catalog.categories[algo.category];
+            const exportBadges = getDisplayOutputs(algo).map(format =>
+                renderBadge(format, 'badge-export')
+            ).join('');
+            const relatedLinks = TSDiscovery.getRelatedAlgorithms(catalog, algo.id, 2).map(item =>
+                `<a href="${item.path}" class="algorithm-related-link">${escapeHtml(item.name)}</a>`
+            ).join('');
+            const accent = TSDiscovery.getPreviewAccent(algo);
+
+            return `
+                <div class="algorithm-card">
+                    <div class="algorithm-swatch" style="${TSDiscovery.buildPreviewStyle(algo)}">
+                        <span class="algorithm-swatch-pill">${escapeHtml((accent.primary || algo.category).replace(/-/g, ' '))}</span>
+                        <span class="algorithm-swatch-pill">${escapeHtml(TSDiscovery.getMediumLabel(algo.medium))}</span>
+                    </div>
+                    <a href="${algo.path}" class="algorithm-main-link">
+                    <div class="algorithm-header">
+                        <div class="algorithm-name">${escapeHtml(algo.name)}</div>
+                        <button
+                            class="favorite-btn ${isFavorite ? 'active' : ''}"
+                            onclick="toggleFavorite('${algo.id}', event)"
+                            title="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}"
+                        >
+                            ${isFavorite ? '❤️' : '🤍'}
+                        </button>
+                    </div>
+                    <div class="algorithm-description">${escapeHtml(algo.description)}</div>
+                    </a>
+                    <div class="algorithm-footer">
+                        ${renderBadge(algo.complexity, `badge-complexity ${algo.complexity}`)}
+                        ${renderBadge(category.shortLabel, 'badge-category')}
+                        ${renderBadge(TSDiscovery.getMediumLabel(algo.medium), 'badge-medium')}
+                        ${renderBadge(TSDiscovery.getPlotterReadinessLabel(algo.plotterReadiness), `badge-readiness ${algo.plotterReadiness}`)}
+                        ${algo.featured ? renderBadge('Featured', 'badge-featured') : ''}
+                        ${algo.hasPresets ? renderBadge('Presets', 'badge-preset') : ''}
+                        ${exportBadges}
+                        ${(algo.engine || []).slice(0, 1).map(engine => renderBadge(engine.toUpperCase(), 'badge-engine')).join('')}
+                    </div>
+                    <div class="algorithm-trails">
+                        ${renderTrailLinks(algo)}
+                    </div>
+                    <div class="algorithm-related">
+                        <span class="algorithm-related-label">Try next</span>
+                        ${relatedLinks || '<span class="algorithm-related-label">Use focus mode</span>'}
+                        <a href="?related=${algo.id}" class="algorithm-related-more">More like this</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateStats() {
+            if (!catalog) return;
+            document.getElementById('totalAlgorithms').textContent = catalog.stats.totalAlgorithms;
+            document.getElementById('totalCategories').textContent = catalog.stats.totalCategories;
+        }
+    </script>
+</body>
+</html>

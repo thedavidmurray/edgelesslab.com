@@ -1,0 +1,45 @@
+---
+title: "GLM-5.2 Evaluation Report: 20-Coding-Task Benchmark"
+date: "2026-08-19"
+tags: ["eval", "glm-5-2", "cost-analysis", "coding-tasks"]
+---
+
+# GLM-5.2 Evaluation Report
+
+## Results Table
+
+| # | Task | Category | Lang | Cost (USD) | Eval | Iteration Needed |
+|---|---|---|---|---|---|---|
+| 1 | reverse_string | happy | python | 0.000197 | manual | yes |
+| 2 | isPalindrome | happy | javascript | 0.000727 | manual | yes |
+| 3 | fib | happy | python | 0.000545 | manual | yes |
+| 4 | top-5 customers SQL | happy | sql | 0.000765 | manual | yes |
+| 5 | Sum | happy | go | 0.000333 | manual | yes |
+| 6 | safe_divide | edge | python | 0.000314 | manual | yes |
+| 7 | firstNonEmpty | edge | javascript | 0.000949 | manual | yes |
+| 8 | last_element | edge | rust | 0.000754 | manual | yes |
+| 9 | order count SQL | edge | sql | 0.000723 | manual | yes |
+| 10 | clamp | boundary | python | 0.000385 | manual | yes |
+| 11 | chunk | boundary | typescript | 0.000743 | manual | yes |
+| 12 | ISO date | boundary | bash | 0.000951 | manual | yes |
+| 13 | parse_int_safe | error | python | 0.001857 | manual | yes |
+| 14 | read_file_lines | error | python | 0.001308 | manual | yes |
+| 15 | fetch_json | error | javascript | 0.000861 | manual | yes |
+| 16 | temporary_file | error | python | 0.002162 | manual | yes |
+| 17 | unique_in_order | performance | python | 0.000373 | manual | yes |
+| 18 | is_anagram | performance | python | 0.000815 | manual | yes |
+| 19 | FindDuplicates | performance | go | 0.001444 | manual | yes |
+| 20 | Temperature | edge | python | 0.001171 | manual | yes |
+
+**Totals:** 20 tasks evaluated, $0.017377 total cost, 0 accepted without iteration, cost-per-accepted-result = N/A (division by zero).
+
+## Recommendations
+
+- **Adopt with caveats.** GLM-5.2 produces clean, specification-aligned outputs on simple tasks (reverse_string, fib, Sum, safe_divide) and reasonable SQL at edge and boundary. The model is usable for quick scaffolding where manual review is acceptable.
+- **Test more before trusting on error-handling and correctness-sensitive tasks.** All tasks are tagged `manual` because the automated verifier could not assert a pass; the outputs look plausible but were not confirmed against expected outputs. A parallel run with a known-good model on the same 20 tasks, plus documented acceptance verdicts, is required before drawing firm cost-per-accepted-result conclusions.
+- **Reject as a cost-efficiency claim right now.** The metric "cost per accepted result" is undefined for this run because no task met the acceptance threshold used in the report. Total spend is low ($0.017), but without a defined accepted count, cost efficiency cannot be asserted.
+
+## Cost-per-Accepted-Result
+
+- **Computed value:** N/A — 0 accepted without iteration, so the denominator is zero.
+- **Comparison:** No parallel evaluation of the swarm's current best coding model exists on the same 20-task benchmark, so no cost-per-accepted-result comparison is available.

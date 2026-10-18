@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Code Review Playbook — Edgeless Labs LLC</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f172a;--bg2:#1e293b;--bg3:#334155;
+  --accent:#6366f1;--accent2:#818cf8;--accent3:#4f46e5;
+  --text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;
+  --green:#10b981;--red:#ef4444;--yellow:#f59e0b;--orange:#f97316;
+  --border:#334155;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'Roboto Mono',monospace;line-height:1.7;min-height:100vh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,23,42,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{color:var(--accent);font-weight:700;font-size:0.9rem;letter-spacing:0.05em;text-decoration:none}
+.nav-logo span{color:var(--text2)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.75rem;letter-spacing:0.05em;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent2)}
+
+/* HERO */
+.hero{padding:120px 2rem 80px;text-align:center;background:radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.15) 0%, transparent 70%)}
+.hero-badge{display:inline-block;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:var(--accent2);padding:0.35rem 1rem;border-radius:999px;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.15;margin-bottom:1rem;letter-spacing:-0.02em}
+.hero h1 span{color:var(--accent)}
+.hero-sub{font-size:1.05rem;color:var(--text2);max-width:600px;margin:0 auto 2.5rem;font-weight:300}
+.hero-meta{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap}
+.hero-meta-item{display:flex;align-items:center;gap:0.5rem;color:var(--text3);font-size:0.78rem}
+.hero-meta-item .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* LAYOUT */
+.container{max-width:900px;margin:0 auto;padding:0 2rem}
+.page-body{padding-bottom:6rem}
+
+/* TOC */
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:2rem;margin:4rem auto;max-width:900px}
+.toc-title{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;font-weight:600}
+.toc-parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}
+.toc-part h3{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.75rem;font-weight:600}
+.toc-part ol{list-style:none;counter-reset:toc}
+.toc-part ol li{counter-increment:toc;display:flex;align-items:baseline;gap:0.5rem;margin-bottom:0.4rem}
+.toc-part ol li::before{content:counter(toc,decimal-leading-zero);color:var(--accent);font-size:0.65rem;font-weight:700;min-width:1.5rem}
+.toc-part ol li a{color:var(--text2);text-decoration:none;font-size:0.82rem;transition:color 0.2s}
+.toc-part ol li a:hover{color:var(--accent2)}
+.toc-configs a{color:var(--text2);text-decoration:none;font-size:0.82rem;display:block;margin-bottom:0.3rem;padding-left:2rem;transition:color 0.2s}
+.toc-configs a:hover{color:var(--accent2)}
+
+/* CHAPTER */
+.chapter{padding:4rem 0;border-bottom:1px solid var(--border)}
+.chapter:last-child{border-bottom:none}
+.part-header{padding:5rem 0 1rem;text-align:center}
+.part-label{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:0.5rem}
+.part-title{font-size:1.8rem;font-weight:700;color:var(--text)}
+.chapter-num{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:0.75rem}
+.chapter h2{font-size:1.6rem;font-weight:700;margin-bottom:0.5rem;letter-spacing:-0.02em}
+.chapter-sub{color:var(--text2);font-size:0.9rem;margin-bottom:2rem;font-weight:300}
+h3{font-size:1.05rem;font-weight:600;color:var(--accent2);margin:2rem 0 0.75rem}
+h4{font-size:0.85rem;font-weight:600;color:var(--text2);margin:1.5rem 0 0.5rem;text-transform:uppercase;letter-spacing:0.08em}
+p{color:var(--text2);margin-bottom:1rem;font-size:0.9rem;font-weight:300}
+strong{color:var(--text);font-weight:600}
+ul,ol{color:var(--text2);margin-bottom:1rem;padding-left:1.5rem;font-size:0.9rem;font-weight:300}
+li{margin-bottom:0.35rem}
+li strong{color:var(--text)}
+
+/* CALLOUTS */
+.callout{border-radius:8px;padding:1.25rem 1.5rem;margin:1.5rem 0;border-left:3px solid}
+.callout-tip{background:rgba(16,185,129,0.08);border-color:var(--green)}
+.callout-warn{background:rgba(245,158,11,0.08);border-color:var(--yellow)}
+.callout-danger{background:rgba(239,68,68,0.08);border-color:var(--red)}
+.callout-info{background:rgba(99,102,241,0.08);border-color:var(--accent)}
+.callout-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;margin-bottom:0.5rem}
+.callout-tip .callout-label{color:var(--green)}
+.callout-warn .callout-label{color:var(--yellow)}
+.callout-danger .callout-label{color:var(--red)}
+.callout-info .callout-label{color:var(--accent2)}
+.callout p{margin:0;font-size:0.85rem}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;margin:1.5rem 0}
+table{width:100%;border-collapse:collapse;font-size:0.82rem}
+th{background:var(--bg3);color:var(--accent2);text-align:left;padding:0.6rem 1rem;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600}
+td{padding:0.6rem 1rem;border-bottom:1px solid var(--border);color:var(--text2);font-weight:300}
+tr:hover td{background:rgba(99,102,241,0.04)}
+.sev{display:inline-block;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.68rem;font-weight:700;letter-spacing:0.05em}
+.sev-critical{background:rgba(239,68,68,0.2);color:#fca5a5}
+.sev-high{background:rgba(249,115,22,0.2);color:#fdba74}
+.sev-med{background:rgba(245,158,11,0.2);color:#fcd34d}
+.sev-low{background:rgba(16,185,129,0.2);color:#6ee7b7}
+.sev-info{background:rgba(99,102,241,0.2);color:#a5b4fc}
+
+/* CODE BLOCKS */
+.code-wrap{position:relative;margin:1.5rem 0}
+.code-label{position:absolute;top:0;left:0;right:0;background:var(--bg3);border-bottom:1px solid var(--border);padding:0.4rem 1rem;display:flex;align-items:center;justify-content:space-between;border-radius:8px 8px 0 0}
+.code-lang{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);font-weight:600}
+.copy-btn{background:none;border:1px solid var(--border);color:var(--text3);font-family:inherit;font-size:0.65rem;letter-spacing:0.08em;padding:0.2rem 0.6rem;border-radius:4px;cursor:pointer;transition:all 0.2s}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent2)}
+.copy-btn.copied{border-color:var(--green);color:var(--green)}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:3rem 1.5rem 1.5rem;overflow-x:auto;font-size:0.8rem;line-height:1.7;tab-size:2}
+code{font-family:'Roboto Mono',monospace}
+p code,li code{background:var(--bg2);border:1px solid var(--border);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.8rem;color:var(--accent2)}
+
+/* SYNTAX */
+.kw{color:#818cf8}.str{color:#86efac}.cmt{color:#475569;font-style:italic}
+.fn{color:#f0abfc}.num{color:#fb923c}.var{color:#f1f5f9}
+.prop{color:#7dd3fc}.bool{color:#fb923c}.type{color:#fbbf24}
+.key{color:#818cf8}.val{color:#86efac}.flag{color:#f0abfc}
+
+/* GRID CARDS */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.5rem 0}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.25rem}
+.card-icon{font-size:1.5rem;margin-bottom:0.75rem}
+.card h4{margin:0 0 0.5rem;font-size:0.85rem;color:var(--text);text-transform:none;letter-spacing:0}
+.card p{font-size:0.8rem;margin:0}
+
+/* CONFIG SECTION */
+.config-section{padding:3rem 0;border-bottom:1px solid var(--border)}
+.config-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.config-badge{background:var(--accent3);color:white;padding:0.3rem 0.8rem;border-radius:6px;font-size:0.7rem;font-weight:700;letter-spacing:0.05em}
+.config-header h3{margin:0;color:var(--text);font-size:1.1rem}
+.tabs{display:flex;gap:0;margin-bottom:0;border-bottom:1px solid var(--border)}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);font-family:inherit;font-size:0.75rem;padding:0.6rem 1.2rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.05em;margin-bottom:-1px}
+.tab.active{color:var(--accent2);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--text2)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:2rem 0}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center}
+.metric-val{font-size:2rem;font-weight:700;color:var(--accent2);line-height:1}
+.metric-label{font-size:0.7rem;color:var(--text3);margin-top:0.5rem;letter-spacing:0.05em}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.75rem;color:var(--text3)}
+footer a{color:var(--text3);text-decoration:none}
+
+/* PRINT */
+@media print{
+  nav,footer{display:none}
+  .hero{padding:2rem 0}
+  .chapter{page-break-inside:avoid}
+  pre{white-space:pre-wrap;word-break:break-word}
+  .copy-btn{display:none}
+  body{background:white;color:#1e293b}
+  pre,code{background:#f8fafc;border-color:#e2e8f0}
+  a{color:#6366f1}
+}
+@media(max-width:600px){
+  .nav-links{display:none}
+  .hero h1{font-size:1.8rem}
+  pre{font-size:0.72rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">AI Code Review <span>Playbook</span></a>
+    <ul class="nav-links">
+      <li><a href="#part1">Foundations</a></li>
+      <li><a href="#part2">Review Types</a></li>
+      <li><a href="#part3">Integration</a></li>
+      <li><a href="#configs">Configs</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Edgeless Labs LLC — 2026 Edition</div>
+  <h1>AI Code Review<br><span>Playbook</span></h1>
+  <p class="hero-sub">A complete field guide to integrating Claude Code into your review workflow — from single-dev setups to enterprise CI pipelines.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span class="dot"></span>12 Chapters</div>
+    <div class="hero-meta-item"><span class="dot"></span>10 Language Configs</div>
+    <div class="hero-meta-item"><span class="dot"></span>Copy-Paste Ready</div>
+    <div class="hero-meta-item"><span class="dot"></span>Claude Code Native</div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="container">
+<div class="toc">
+  <div class="toc-title">Table of Contents</div>
+  <div class="toc-parts">
+    <div class="toc-part">
+      <h3>Part 1 — Foundations</h3>
+      <ol>
+        <li><a href="#ch1">Why AI Review Differs</a></li>
+        <li><a href="#ch2">Setup &amp; Configuration</a></li>
+        <li><a href="#ch3">Review Output Format</a></li>
+      </ol>
+      <h3 style="margin-top:1.5rem">Part 2 — Review Types</h3>
+      <ol style="counter-reset:toc 3">
+        <li><a href="#ch4">Pre-Commit Review</a></li>
+        <li><a href="#ch5">PR Review</a></li>
+        <li><a href="#ch6">Security Audit</a></li>
+        <li><a href="#ch7">Architecture Review</a></li>
+        <li><a href="#ch8">Performance Review</a></li>
+      </ol>
+    </div>
+    <div class="toc-part">
+      <h3>Part 3 — Integration</h3>
+      <ol style="counter-reset:toc 8">
+        <li><a href="#ch9">GitHub Actions</a></li>
+        <li><a href="#ch10">Team Adoption</a></li>
+        <li><a href="#ch11">Custom Rules</a></li>
+        <li><a href="#ch12">Measuring Quality</a></li>
+      </ol>
+      <h3 style="margin-top:1.5rem">Part 4 — Language Configs</h3>
+      <div class="toc-configs">
+        <a href="#cfg-python">Python / Django</a>
+        <a href="#cfg-typescript">TypeScript / React</a>
+        <a href="#cfg-ruby">Ruby / Rails</a>
+        <a href="#cfg-go">Go</a>
+        <a href="#cfg-rust">Rust</a>
+        <a href="#cfg-java">Java / Spring</a>
+        <a href="#cfg-php">PHP / Laravel</a>
+        <a href="#cfg-csharp">C# / .NET</a>
+        <a href="#cfg-swift">Swift / iOS</a>
+        <a href="#cfg-kotlin">Kotlin / Android</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PART 1 -->
+<div class="page-body">
+<div class="container">
+
+<div class="part-header" id="part1">
+  <div class="part-label">Part One</div>
+  <div class="part-title">Foundations</div>
+</div>
+
+<!-- CH1 -->
+<div class="chapter" id="ch1">
+  <div class="chapter-num">Chapter 01</div>
+  <h2>Why AI Review Differs from Human Review</h2>
+  <p class="chapter-sub">Understanding the complementary strengths of AI and human reviewers is the foundation of an effective hybrid review process.</p>
+
+  <p>Code review has always been a collaborative act — one mind checking another's work. AI-assisted review doesn't replace that collaboration. It redefines the division of labor, freeing human reviewers from mechanical checks so they can focus on judgment, intent, and context that no model can infer from source alone.</p>
+
+  <p>To use Claude Code effectively as a reviewer, you need a clear mental model of where it excels, where it falls short, and why those boundaries exist at the architectural level — not just as limitations to work around.</p>
+
+  <h3>What AI Review Catches Well</h3>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-icon">🔍</div>
+      <h4>Pattern Recognition at Scale</h4>
+      <p>AI models have internalized millions of code examples. They recognize anti-patterns — God objects, deep nesting, improper exception handling — that human reviewers sometimes miss after hours of context-switching.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔐</div>
+      <h4>Security Vulnerabilities</h4>
+      <p>OWASP top-10 class issues: SQL injection, XSS, SSRF, insecure deserialization, hardcoded credentials. AI consistently applies security heuristics without fatigue or familiarity bias.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📐</div>
+      <h4>Style &amp; Consistency</h4>
+      <p>Naming convention drift, inconsistent error handling patterns, mixed abstraction levels within a module. AI applies your style guide uniformly across every file in a diff.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h4>Complexity Metrics</h4>
+      <p>Cyclomatic complexity, cognitive complexity, function length, nesting depth. AI quantifies these without the subjectivity that causes "this feels complex" to be ignored in reviews.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📝</div>
+      <h4>Documentation Gaps</h4>
+      <p>Missing docstrings, undocumented parameters, public API without examples, changelog entries. AI catches every gap because it doesn't assume intent from familiarity.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔄</div>
+      <h4>Dependency Issues</h4>
+      <p>Unused imports, circular dependencies, version constraint mismatches, known-vulnerable packages in lock files. Systematic checks that are tedious to do manually.</p>
+    </div>
+  </div>
+
+  <h3>What AI Review Misses</h3>
+
+  <p>These gaps are structural, not incidental. They reflect the fundamental difference between pattern-matching over syntax and understanding human intent.</p>
+
+  <div class="callout callout-danger">
+    <div class="callout-label">Critical Limitation</div>
+    <p>AI cannot determine whether code is <strong>correct for your business domain</strong>. It can verify that a discount calculation looks syntactically correct. It cannot know that your pricing team decided 15% maximum is a legal requirement in three jurisdictions.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Dimension</th><th>Why AI Struggles</th><th>Human Reviewer Advantage</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Business Logic</strong></td><td>No access to product specs, Jira tickets, Slack threads, or stakeholder decisions</td><td>Participates in planning, understands tradeoffs made</td></tr>
+        <tr><td><strong>UX Intent</strong></td><td>Cannot run the UI or feel interaction friction</td><td>Empathizes with end-user experience</td></tr>
+        <tr><td><strong>Team Context</strong></td><td>Doesn't know which engineer wrote this or their growth trajectory</td><td>Calibrates feedback to the individual</td></tr>
+        <tr><td><strong>Architectural Tradeoffs</strong></td><td>Flags coupling without knowing if decoupling was a deliberate cost/time decision</td><td>Weighs pragmatism vs purity in context</td></tr>
+        <tr><td><strong>Infra Constraints</strong></td><td>Cannot know your database capacity, SLA requirements, or cost ceilings</td><td>Knows what "good enough" means for this system</td></tr>
+        <tr><td><strong>Existing Workarounds</strong></td><td>May suggest changes that break undocumented behavior relied on elsewhere</td><td>Knows about the "cursed" coupling in module X</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The Complementary Model</h3>
+
+  <p>The highest-leverage approach treats AI and human review as two sequential gates, not competing alternatives:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">workflow</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="cmt"># Optimal review sequence</span>
+
+<span class="num">1.</span> <span class="var">Developer</span> pushes branch
+<span class="num">2.</span> <span class="fn">AI pre-commit hook</span> → catches style, security, complexity  (<span class="str">2-5 seconds</span>)
+<span class="num">3.</span> <span class="fn">AI PR review</span> → structured findings report               (<span class="str">15-30 seconds</span>)
+<span class="num">4.</span> <span class="fn">Human reviewer</span> reads AI report first → skips mechanical  (<span class="str">saves 30-60% time</span>)
+<span class="num">5.</span> <span class="fn">Human focuses on</span>: business logic, UX, team context
+<span class="num">6.</span> <span class="fn">Merge</span> only when both gates pass</code></pre>
+  </div>
+
+  <p>In practice, teams report that AI review catches 60-80% of comments that would have come from human reviewers, letting humans focus exclusively on the judgment calls that require domain knowledge.</p>
+
+  <div class="callout callout-tip">
+    <div class="callout-label">Key Insight</div>
+    <p>Frame AI review as <strong>a first reader, not a gatekeeper</strong>. It surfaces issues so human reviewers arrive pre-briefed, not as a replacement for their judgment.</p>
+  </div>
+</div>
+
+<!-- CH2 -->
+<div class="chapter" id="ch2">
+  <div class="chapter-num">Chapter 02</div>
+  <h2>Setup &amp; Configuration</h2>
+  <p class="chapter-sub">Getting Claude Code wired into your workflow — from the /review command to custom skills and CLAUDE.md review sections.</p>
+
+  <p>Claude Code ships with a powerful review capability out of the box, but the default behavior is generic. This chapter covers the three configuration layers that transform it into a reviewer that knows your stack, your conventions, and your risk tolerance.</p>
+
+  <h3>Layer 1: The /review Command</h3>
+
+  <p>The simplest entry point. Claude Code's built-in <code>/review</code> command performs a general-purpose review of staged changes or a specified file.</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="cmt"># Review all staged changes</span>
+<span class="fn">claude</span> <span class="str">"/review the staged changes for security issues"</span>
+
+<span class="cmt"># Review a specific file</span>
+<span class="fn">claude</span> <span class="str">"/review src/auth/middleware.py focusing on injection risks"</span>
+
+<span class="cmt"># Review a diff from git</span>
+<span class="fn">git diff</span> HEAD~1 | <span class="fn">claude</span> <span class="flag">-p</span> <span class="str">"Review this diff for issues"</span>
+
+<span class="cmt"># Pipe a PR diff for review</span>
+<span class="fn">gh pr diff</span> <span class="num">142</span> | <span class="fn">claude</span> <span class="flag">-p</span> <span class="str">"Review and output structured findings"</span></code></pre>
+  </div>
+
+  <h3>Layer 2: Custom Review Skills</h3>
+
+  <p>Skills let you package review prompts, context, and output formatting into reusable commands. Create a skill file at <code>.claude/skills/review/skill.md</code>:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — .claude/skills/review/skill.md</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw"># Review Skill</span>
+
+<span class="kw">## Trigger</span>
+When user asks to review code or runs `/review`
+
+<span class="kw">## Behavior</span>
+Perform a structured code review with the following checks:
+
+<span class="kw">### Security</span>
+- SQL injection, XSS, CSRF, SSRF vectors
+- Authentication bypass opportunities
+- Insecure direct object references
+- Sensitive data in logs or error messages
+- Hardcoded credentials or secrets
+
+<span class="kw">### Code Quality</span>
+- Cyclomatic complexity > 10 (flag for refactor)
+- Functions > 50 lines (flag for extraction)
+- Missing error handling on IO operations
+- Unchecked return values from fallible functions
+
+<span class="kw">### Project Conventions</span>
+See CLAUDE.md #review-standards section
+
+<span class="kw">## Output Format</span>
+Always output findings as a structured table followed by
+detailed explanations for CRITICAL and HIGH items only.
+
+<span class="kw">## Severity Scale</span>
+CRITICAL > HIGH > MEDIUM > LOW > INFO</code></pre>
+  </div>
+
+  <h3>Layer 3: CLAUDE.md Review Section</h3>
+
+  <p>The <code>CLAUDE.md</code> file is your project's persistent instruction set — it's loaded into context for every Claude Code session. A well-structured review section makes every review context-aware.</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md (review section)</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Code Review Standards</span>
+
+<span class="kw">### Stack</span>
+- Python 3.11+, Django 5.x, PostgreSQL 16, Redis 7
+- Frontend: React 18, TypeScript 5.x, Tailwind 3.x
+
+<span class="kw">### Security Requirements</span>
+- ALL database queries MUST use parameterized queries or ORM
+- NEVER log PII fields: email, phone, ssn, card_last4
+- Authentication: Django auth only — no custom session handling
+- File uploads: validate extension AND mime type, max 10MB
+
+<span class="kw">### Naming Conventions</span>
+- Django models: PascalCase singular (<span class="str">UserProfile</span>, not <span class="str">user_profiles</span>)
+- API endpoints: kebab-case (<span class="str">/api/v1/user-profiles/</span>)
+- React components: PascalCase, co-located tests (<span class="str">Button.test.tsx</span>)
+- Constants: SCREAMING_SNAKE_CASE
+
+<span class="kw">### Error Handling</span>
+- Django views: ALWAYS catch specific exceptions, not bare <span class="str">except:</span>
+- Return structured errors: <span class="str">{"error": "...", "code": "ERR_XXX"}</span>
+- Never expose stack traces to API consumers
+
+<span class="kw">### Performance Gates</span>
+- Database queries per request: max 20 (use django-debug-toolbar)
+- API response time P99: &lt; 500ms
+- Flag any ORM usage in loops (N+1 risk)
+
+<span class="kw">### Testing Requirements</span>
+- New endpoints: require integration test
+- New models: require unit test + migration test
+- Minimum coverage on changed files: 80%</code></pre>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-label">Pro Tip</div>
+    <p>Keep your CLAUDE.md review section under 200 lines. Every line consumes context window tokens on every session. Prioritize <strong>project-specific</strong> rules — not generic best practices Claude already knows.</p>
+  </div>
+
+  <h3>Verifying Your Setup</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="cmt"># Verify Claude Code sees your CLAUDE.md</span>
+<span class="fn">claude</span> <span class="str">"What are the security requirements for this project?"</span>
+
+<span class="cmt"># Test the review skill</span>
+<span class="fn">echo</span> <span class="str">"import os; os.system(input('cmd:'))"</span> > /tmp/test.py
+<span class="fn">claude</span> <span class="str">"/review /tmp/test.py"</span>
+
+<span class="cmt"># Expected: CRITICAL finding for command injection</span></code></pre>
+  </div>
+</div>
+
+<!-- CH3 -->
+<div class="chapter" id="ch3">
+  <div class="chapter-num">Chapter 03</div>
+  <h2>Review Output Format</h2>
+  <p class="chapter-sub">Structured findings with severity, file, line, and actionable suggestions — a format designed for both human readers and CI systems.</p>
+
+  <p>Inconsistent review output is the silent killer of AI review adoption. When findings look different every time — sometimes a paragraph, sometimes bullet points, sometimes nothing at all — reviewers stop trusting the output and revert to ignoring it. Enforcing a structured format solves this.</p>
+
+  <h3>The Standard Findings Schema</h3>
+
+  <p>Every finding should carry five fields: severity, location, rule violated, explanation, and suggestion. This structure works in terminals, GitHub PR comments, Slack messages, and databases.</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — finding schema</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>┌─────────────────────────────────────────────────────────┐
+│ <span class="sev sev-critical" style="display:inline">CRITICAL</span>  src/auth/login.py:47                           │
+├─────────────────────────────────────────────────────────┤
+│ Rule:       SQL-INJECTION-001                            │
+│ Finding:    String interpolation in raw SQL query.       │
+│             User input flows directly into query string. │
+│ Suggestion: Use parameterized query:                     │
+│             cursor.execute("SELECT * FROM users         │
+│               WHERE email = %s", [email])               │
+└─────────────────────────────────────────────────────────┘</code></pre>
+  </div>
+
+  <h3>Prompt Template for Structured Output</h3>
+
+  <p>This prompt template enforces the schema. Add it to your review skill or use it directly in CI pipelines:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — review prompt template</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>Review the following code diff. Output findings in this exact format:
+
+<span class="kw">## Summary</span>
+- Total findings: X (CRITICAL: X, HIGH: X, MEDIUM: X, LOW: X, INFO: X)
+- Overall risk: [LOW|MEDIUM|HIGH|CRITICAL]
+- Recommended action: [APPROVE|REQUEST_CHANGES|BLOCK]
+
+<span class="kw">## Findings</span>
+
+For each finding:
+<span class="str">**[SEVERITY] filename:line**</span>
+- Rule: RULE-ID
+- Finding: One-sentence description of the issue
+- Impact: What could go wrong if this ships
+- Suggestion: Exact code fix or refactor guidance
+---
+
+Severity scale:
+- CRITICAL: Security vulnerability, data loss risk, production outage vector
+- HIGH: Logic error, significant performance issue, missing auth check
+- MEDIUM: Code smell, maintainability concern, missing test coverage
+- LOW: Style violation, naming issue, minor inefficiency
+- INFO: Suggestion, refactor opportunity (non-blocking)
+
+Only output findings. Do not summarize the code's purpose.
+Do not praise correct code. Do not be verbose in INFO items.</code></pre>
+  </div>
+
+  <h3>Example Review Output</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — sample output</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Summary</span>
+- Total findings: 5 (CRITICAL: 1, HIGH: 1, MEDIUM: 2, LOW: 1, INFO: 0)
+- Overall risk: CRITICAL
+- Recommended action: BLOCK
+
+<span class="kw">## Findings</span>
+
+<span class="str">**CRITICAL src/api/users.py:134**</span>
+- Rule: SEC-INJECTION-001
+- Finding: Unparameterized SQL query with user-controlled input
+- Impact: Full database read/write access for any authenticated user
+- Suggestion: Replace f-string interpolation with cursor.execute(sql, params)
+---
+
+<span class="str">**HIGH src/api/users.py:156**</span>
+- Rule: SEC-AUTH-003
+- Finding: Missing authorization check before returning user record
+- Impact: Any authenticated user can retrieve any other user's profile
+- Suggestion: Add ownership check: if record.owner_id != request.user.id: raise PermissionDenied
+---
+
+<span class="str">**MEDIUM src/api/users.py:89**</span>
+- Rule: PERF-QUERY-002
+- Finding: ORM query inside for loop — N+1 pattern
+- Impact: Linear database calls with O(n) users in response
+- Suggestion: Use select_related('profile') or prefetch_related() in initial queryset
+---</code></pre>
+  </div>
+
+  <h3>Parsing Findings Programmatically</h3>
+
+  <p>For CI integration, you'll want to parse this output to set exit codes and post GitHub comments. Here's a lightweight parser:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">python — parse_review.py</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">import</span> re
+<span class="kw">import</span> sys
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+<span class="kw">from</span> typing <span class="kw">import</span> List
+
+<span class="type">SEVERITY_RANK</span> = {<span class="str">"CRITICAL"</span>: <span class="num">5</span>, <span class="str">"HIGH"</span>: <span class="num">4</span>, <span class="str">"MEDIUM"</span>: <span class="num">3</span>, <span class="str">"LOW"</span>: <span class="num">2</span>, <span class="str">"INFO"</span>: <span class="num">1</span>}
+
+<span class="kw">@dataclass</span>
+<span class="kw">class</span> <span class="type">Finding</span>:
+    severity: str
+    file: str
+    line: int
+    rule: str
+    description: str
+
+<span class="kw">def</span> <span class="fn">parse_findings</span>(review_output: str) -> List[Finding]:
+    findings = []
+    pattern = <span class="str">r'\*\*(CRITICAL|HIGH|MEDIUM|LOW|INFO)\s+(.+?):(\d+)\*\*'</span>
+    <span class="kw">for</span> match <span class="kw">in</span> re.finditer(pattern, review_output):
+        severity, file_path, line = match.groups()
+        findings.append(Finding(
+            severity=severity,
+            file=file_path,
+            line=<span class="fn">int</span>(line),
+            rule=<span class="str">""</span>,
+            description=<span class="str">""</span>
+        ))
+    <span class="kw">return</span> findings
+
+<span class="kw">def</span> <span class="fn">exit_code_for_findings</span>(findings: List[Finding]) -> int:
+    <span class="cmt">"""Return non-zero if CRITICAL or HIGH findings exist."""</span>
+    max_sev = <span class="fn">max</span>((SEVERITY_RANK.get(f.severity, <span class="num">0</span>) <span class="kw">for</span> f <span class="kw">in</span> findings), default=<span class="num">0</span>)
+    <span class="kw">return</span> <span class="num">1</span> <span class="kw">if</span> max_sev >= SEVERITY_RANK[<span class="str">"HIGH"</span>] <span class="kw">else</span> <span class="num">0</span>
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    output = sys.stdin.read()
+    findings = <span class="fn">parse_findings</span>(output)
+    <span class="fn">print</span>(<span class="str">f"Found {len(findings)} issues"</span>)
+    sys.exit(<span class="fn">exit_code_for_findings</span>(findings))</code></pre>
+  </div>
+</div>
+
+<!-- PART 2 -->
+<div class="part-header" id="part2">
+  <div class="part-label">Part Two</div>
+  <div class="part-title">Review Types</div>
+</div>
+
+<!-- CH4 -->
+<div class="chapter" id="ch4">
+  <div class="chapter-num">Chapter 04</div>
+  <h2>Pre-Commit Review</h2>
+  <p class="chapter-sub">Catch issues at the earliest possible moment — before a commit ever reaches the remote.</p>
+
+  <p>Pre-commit hooks are the tightest feedback loop in the review pipeline. They run on the developer's machine, in seconds, before any code leaves the local environment. This is where you catch the issues that are cheapest to fix: style violations, obvious security mistakes, missing error handling.</p>
+
+  <p>Claude Code hooks use the <strong>PreToolUse</strong> event system, which fires before tool execution. This gives you the ability to intercept, review, and optionally block commits.</p>
+
+  <h3>Hook Architecture</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">json — .claude/hooks/pre-commit-review.json</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>{
+  <span class="key">"hooks"</span>: {
+    <span class="key">"PreToolUse"</span>: [
+      {
+        <span class="key">"matcher"</span>: <span class="str">"Bash"</span>,
+        <span class="key">"hooks"</span>: [
+          {
+            <span class="key">"type"</span>: <span class="str">"command"</span>,
+            <span class="key">"command"</span>: <span class="str">"python3 .claude/hooks/pre-commit-review.py"</span>
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">python — .claude/hooks/pre-commit-review.py</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">#!/usr/bin/env python3</span>
+<span class="cmt">"""Pre-commit review hook — intercepts git commit and runs AI review."""</span>
+<span class="kw">import</span> json
+<span class="kw">import</span> subprocess
+<span class="kw">import</span> sys
+
+<span class="kw">def</span> <span class="fn">get_staged_diff</span>() -> str:
+    result = subprocess.<span class="fn">run</span>(
+        [<span class="str">"git"</span>, <span class="str">"diff"</span>, <span class="str">"--cached"</span>, <span class="str">"--unified=3"</span>],
+        capture_output=<span class="bool">True</span>, text=<span class="bool">True</span>
+    )
+    <span class="kw">return</span> result.stdout
+
+<span class="kw">def</span> <span class="fn">run_review</span>(diff: str) -> dict:
+    <span class="kw">if not</span> diff.strip():
+        <span class="kw">return</span> {<span class="str">"action"</span>: <span class="str">"allow"</span>, <span class="str">"findings"</span>: []}
+
+    prompt = <span class="str">f"""Review this git diff for CRITICAL and HIGH severity issues only.
+Output JSON: {{"action": "block"|"warn"|"allow", "findings": [{{"severity": str, "file": str, "line": int, "issue": str}}]}}
+Block only on CRITICAL security issues. Warn on HIGH. Allow on MEDIUM and below.
+
+DIFF:
+{diff[:8000]}"""</span>
+
+    result = subprocess.<span class="fn">run</span>(
+        [<span class="str">"claude"</span>, <span class="str">"-p"</span>, prompt, <span class="str">"--output-format"</span>, <span class="str">"json"</span>],
+        capture_output=<span class="bool">True</span>, text=<span class="bool">True</span>, timeout=<span class="num">30</span>
+    )
+    <span class="kw">try</span>:
+        <span class="kw">return</span> json.<span class="fn">loads</span>(result.stdout)
+    <span class="kw">except</span> json.JSONDecodeError:
+        <span class="kw">return</span> {<span class="str">"action"</span>: <span class="str">"allow"</span>, <span class="str">"findings"</span>: []}
+
+<span class="kw">def</span> <span class="fn">main</span>():
+    hook_input = json.<span class="fn">loads</span>(sys.stdin.read())
+    
+    <span class="cmt"># Only intercept git commit commands</span>
+    tool_input = hook_input.get(<span class="str">"tool_input"</span>, {})
+    command = tool_input.get(<span class="str">"command"</span>, <span class="str">""</span>)
+    <span class="kw">if</span> <span class="str">"git commit"</span> <span class="kw">not in</span> command:
+        sys.exit(<span class="num">0</span>)
+
+    diff = <span class="fn">get_staged_diff</span>()
+    review = <span class="fn">run_review</span>(diff)
+
+    <span class="kw">if</span> review.get(<span class="str">"action"</span>) == <span class="str">"block"</span>:
+        <span class="kw">for</span> f <span class="kw">in</span> review.get(<span class="str">"findings"</span>, []):
+            <span class="fn">print</span>(<span class="str">f"[{f['severity']}] {f['file']}:{f['line']} — {f['issue']}"</span>, file=sys.stderr)
+        json.<span class="fn">dump</span>({<span class="str">"decision"</span>: <span class="str">"block"</span>, <span class="str">"reason"</span>: <span class="str">"CRITICAL security issue found"</span>}, sys.stdout)
+        sys.exit(<span class="num">1</span>)
+
+    <span class="kw">elif</span> review.get(<span class="str">"action"</span>) == <span class="str">"warn"</span>:
+        <span class="fn">print</span>(<span class="str">"⚠ Review warnings (commit allowed):"</span>, file=sys.stderr)
+        <span class="kw">for</span> f <span class="kw">in</span> review.get(<span class="str">"findings"</span>, []):
+            <span class="fn">print</span>(<span class="str">f"  [{f['severity']}] {f['file']}:{f['line']} — {f['issue']}"</span>, file=sys.stderr)
+
+    sys.exit(<span class="num">0</span>)
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    <span class="fn">main</span>()</code></pre>
+  </div>
+
+  <div class="callout callout-warn">
+    <div class="callout-label">Performance Note</div>
+    <p>Pre-commit hooks run synchronously. Keep the timeout under 30 seconds or developers will disable them. Use the <strong>block only on CRITICAL</strong> strategy — be liberal with allows to avoid friction.</p>
+  </div>
+
+  <h3>Traditional Git Hook Alternative</h3>
+
+  <p>If you prefer a standard <code>.git/hooks/pre-commit</code> without the Claude Code hook system:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash — .git/hooks/pre-commit</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">#!/usr/bin/env bash</span>
+<span class="kw">set -e</span>
+
+DIFF=$(git diff --cached --unified=3)
+<span class="kw">if</span> [[ -z "$DIFF" ]]; then <span class="kw">exit</span> <span class="num">0</span>; fi
+
+<span class="fn">echo</span> <span class="str">"Running AI pre-commit review..."</span>
+
+RESULT=$(echo <span class="str">"$DIFF"</span> | claude -p <span class="str">"
+Review for CRITICAL security issues only. 
+Output: PASS or FAIL:reason
+"</span> 2>/dev/null)
+
+<span class="kw">if</span> [[ "$RESULT" == FAIL* ]]; then
+  <span class="fn">echo</span> <span class="str">"❌ Pre-commit review failed: ${RESULT#FAIL:}"</span>
+  <span class="kw">exit</span> <span class="num">1</span>
+fi
+
+<span class="fn">echo</span> <span class="str">"✓ Pre-commit review passed"</span></code></pre>
+  </div>
+</div>
+
+<!-- CH5 -->
+<div class="chapter" id="ch5">
+  <div class="chapter-num">Chapter 05</div>
+  <h2>PR Review</h2>
+  <p class="chapter-sub">Full pull request analysis with structured output designed to post directly as GitHub comments.</p>
+
+  <p>PR review is the highest-leverage application of AI review. At this stage, you have the full context of a feature branch: all commits, all changed files, the PR description, and ideally the linked ticket. Claude can synthesize across the entire changeset in a way that per-file review cannot.</p>
+
+  <h3>The Core PR Review Command</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="cmt"># Review current branch's PR</span>
+<span class="fn">gh pr diff</span> | <span class="fn">claude</span> <span class="flag">-p</span> <span class="str">"$(cat .claude/prompts/pr-review.md)"</span>
+
+<span class="cmt"># Review a specific PR by number</span>
+<span class="fn">gh pr diff</span> <span class="num">142</span> | <span class="fn">claude</span> <span class="flag">-p</span> <span class="str">"$(cat .claude/prompts/pr-review.md)"</span>
+
+<span class="cmt"># Include PR metadata in the review</span>
+{
+  <span class="fn">gh pr view</span> <span class="num">142</span> <span class="flag">--json</span> title,body,labels,additions,deletions
+  <span class="fn">gh pr diff</span> <span class="num">142</span>
+} | <span class="fn">claude</span> <span class="flag">-p</span> <span class="str">"Review this PR. First JSON block is metadata, rest is diff."</span></code></pre>
+  </div>
+
+  <h3>PR Review Prompt Template</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — .claude/prompts/pr-review.md</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>You are a senior engineer reviewing a pull request. Analyze the complete diff below.
+
+## Your review must cover:
+
+**Security**: Injection risks, auth bypass, data exposure, insecure dependencies
+**Correctness**: Logic errors, off-by-one, race conditions, unhandled edge cases  
+**Performance**: N+1 queries, unnecessary allocations, blocking IO in hot paths
+**Maintainability**: Complexity, missing tests, poor naming, missing documentation
+**Conventions**: Adherence to project standards defined in CLAUDE.md
+
+## Output format:
+
+### PR Review — [infer PR title from diff]
+
+**Verdict**: APPROVE | REQUEST_CHANGES | BLOCK
+**Risk Level**: LOW | MEDIUM | HIGH | CRITICAL
+**Summary**: 2-3 sentence executive summary of the changeset and its risks
+
+### Findings
+
+| Severity | File | Line | Finding |
+|----------|------|------|---------|
+[table rows]
+
+### Detail: CRITICAL &amp; HIGH Items
+[detailed explanation + code suggestion for each]
+
+### What Looks Good
+[2-4 specific positive observations — be concrete, not generic]
+
+### Recommended Next Steps
+[ordered list of actions before merge]
+
+---
+Rules:
+- Do not summarize every file changed
+- Skip INFO items in the detail section
+- Be specific about line numbers
+- Suggest exact code fixes, not vague guidance</code></pre>
+  </div>
+
+  <h3>Posting Review as GitHub Comment</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash — review-and-comment.sh</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">#!/usr/bin/env bash</span>
+PR_NUM=${<span class="num">1</span>:-$(gh pr view --json number -q .number)}
+
+<span class="fn">echo</span> <span class="str">"Reviewing PR #$PR_NUM..."</span>
+
+REVIEW=$(gh pr diff "$PR_NUM" | claude -p "$(cat .claude/prompts/pr-review.md)" 2>/dev/null)
+
+<span class="cmt"># Post as PR comment</span>
+gh pr comment "$PR_NUM" --body "$(cat <<EOF
+## 🤖 AI Code Review
+
+$REVIEW
+
+---
+*Generated by Claude Code — verify all findings before acting on them*
+EOF
+)"
+
+<span class="fn">echo</span> <span class="str">"Review posted to PR #$PR_NUM"</span></code></pre>
+  </div>
+</div>
+
+<!-- CH6 -->
+<div class="chapter" id="ch6">
+  <div class="chapter-num">Chapter 06</div>
+  <h2>Security Audit</h2>
+  <p class="chapter-sub">OWASP-aligned prompts, dependency scanning, and injection detection — systematic security review at scale.</p>
+
+  <p>Security review is where AI provides the most consistent value. Human security reviewers are expensive, often external, and engaged infrequently. AI can apply comprehensive security heuristics to every PR, every day, for free.</p>
+
+  <h3>OWASP Top 10 Audit Prompt</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — .claude/prompts/security-audit.md</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>Perform an OWASP Top 10 security audit on the following code.
+
+For each category, output:
+- STATUS: PASS | FAIL | SKIP (skip if category not applicable)
+- FINDINGS: specific issues found (if FAIL)
+
+## OWASP Categories to Check:
+
+A01 Broken Access Control
+- Missing authorization checks on endpoints
+- Insecure direct object references  
+- CORS misconfiguration
+- Privilege escalation paths
+
+A02 Cryptographic Failures
+- Sensitive data transmitted/stored unencrypted
+- Weak algorithms (MD5, SHA1 for passwords)
+- Missing TLS enforcement
+- Hardcoded keys or secrets
+
+A03 Injection
+- SQL injection (string concatenation in queries)
+- Command injection (os.system, subprocess with shell=True)
+- LDAP, XPath, NoSQL injection patterns
+- Template injection
+
+A04 Insecure Design
+- Missing rate limiting on auth endpoints
+- Security controls bypassable by design
+- Insufficient logging of security events
+
+A05 Security Misconfiguration
+- Debug mode enabled in production paths
+- Default credentials or empty passwords
+- Unnecessary features/endpoints exposed
+- Verbose error messages with stack traces
+
+A06 Vulnerable Components
+- Known CVE in imported packages (check versions)
+- Outdated dependency versions
+- Unmaintained libraries
+
+A07 Auth Failures
+- Weak password policies
+- Missing MFA for privileged operations
+- Session fixation vulnerabilities
+- Insecure "remember me" implementation
+
+A08 Software Integrity Failures
+- Unsigned/unverified package sources
+- Insecure CI/CD configuration
+- Auto-update without integrity check
+
+A09 Logging Failures
+- PII/secrets in log statements
+- Missing audit trail for sensitive operations
+- Log injection vulnerabilities
+
+A10 SSRF
+- User-controlled URLs fetched server-side
+- Missing allowlist for internal network requests
+- Unvalidated redirect targets</code></pre>
+  </div>
+
+  <h3>Dependency Vulnerability Scan</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash — security-scan.sh</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">#!/usr/bin/env bash</span>
+<span class="cmt"># Combines AI review with native dependency scanners</span>
+
+<span class="fn">echo</span> <span class="str">"=== Dependency Vulnerability Scan ==="</span>
+
+<span class="cmt"># Python</span>
+<span class="kw">if</span> [[ -f requirements.txt ]]; then
+  pip-audit -r requirements.txt --format json 2>/dev/null | \
+    claude -p <span class="str">"Summarize these pip vulnerabilities by severity. Flag CRITICAL and HIGH."</span>
+fi
+
+<span class="cmt"># Node</span>
+<span class="kw">if</span> [[ -f package-lock.json ]]; then
+  npm audit --json 2>/dev/null | \
+    claude -p <span class="str">"Summarize npm audit results. Flag CRITICAL and HIGH. Suggest fix commands."</span>
+fi
+
+<span class="cmt"># Go</span>
+<span class="kw">if</span> [[ -f go.mod ]]; then
+  govulncheck ./... 2>&1 | \
+    claude -p <span class="str">"Summarize Go vulnerability findings. Flag any with CRITICAL or HIGH CVSS."</span>
+fi
+
+<span class="fn">echo</span> <span class="str">"=== AI Security Review ==="</span>
+git diff HEAD~1 | claude -p <span class="str">"$(cat .claude/prompts/security-audit.md)"</span></code></pre>
+  </div>
+
+  <h3>Injection Pattern Detection</h3>
+
+  <p>For targeted injection scanning, this prompt focuses exclusively on data-flow analysis:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — injection-focused prompt</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>Analyze this code for injection vulnerabilities. Trace data flow from:
+- HTTP request parameters (query string, body, headers, cookies)
+- File upload content
+- Environment variables
+- Database fields that may contain user-supplied data
+
+Flag any path where untrusted data reaches:
+- SQL execution (string concat, f-strings in queries)
+- Shell execution (os.system, subprocess, exec)
+- HTML rendering without escaping
+- File system operations (path traversal risk)
+- Deserializers (pickle.loads, yaml.load without SafeLoader)
+- Template engines (render_string with user input)
+- Logging (log injection risk)
+
+For each finding, show the data flow path:
+INPUT SOURCE → [transformations] → SINK
+
+Rate: CRITICAL if exploitable, HIGH if likely exploitable, MEDIUM if requires chaining.</code></pre>
+  </div>
+</div>
+
+<!-- CH7 -->
+<div class="chapter" id="ch7">
+  <div class="chapter-num">Chapter 07</div>
+  <h2>Architecture Review</h2>
+  <p class="chapter-sub">Pattern compliance, coupling analysis, and naming convention enforcement across your codebase.</p>
+
+  <p>Architecture review with AI operates at a different level than line-level security or style checks. Here, you're asking Claude to reason about the structure of code — module relationships, abstraction levels, dependency direction — and whether changes preserve or erode architectural integrity.</p>
+
+  <h3>Pattern Compliance Prompt</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — architecture review prompt</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>Review this diff for architectural compliance. Our architecture rules:
+
+LAYERING RULES:
+- Controllers may call Services and Repositories (never reverse)
+- Services may call Repositories and external clients (never call controllers)
+- Repositories may only call the database layer (no business logic)
+- Models are data classes only (no service calls, no HTTP)
+
+DEPENDENCY RULES:
+- Depend on abstractions (interfaces/protocols), not concrete classes
+- New dependencies must be injected, not instantiated internally
+- No circular imports between modules
+- Third-party libraries may only be imported in adapter layers
+
+NAMING RULES:
+- Service classes: XxxService (e.g., UserService, PaymentService)
+- Repository classes: XxxRepository
+- Controller classes: XxxController or XxxView  
+- Interface/Protocol: IXxx or XxxProtocol
+- DTO classes: XxxRequest, XxxResponse
+
+COUPLING CHECKS:
+- Flag any module importing from 3+ other internal modules
+- Flag any function with more than 4 parameters (consider DTO)
+- Flag any class with more than 10 methods (consider decomposition)
+- Flag direct database calls outside Repository layer
+
+Output findings in standard severity format.
+CRITICAL = layering violation, HIGH = coupling violation, MEDIUM = naming violation.</code></pre>
+  </div>
+
+  <h3>Coupling Analysis Script</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">python — coupling_analysis.py</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">#!/usr/bin/env python3</span>
+<span class="cmt">"""Analyze import coupling in changed files, then send to Claude for review."""</span>
+<span class="kw">import</span> ast
+<span class="kw">import</span> subprocess
+<span class="kw">import</span> sys
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+<span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+
+<span class="kw">def</span> <span class="fn">get_imports</span>(file_path: str) -> list[str]:
+    <span class="kw">try</span>:
+        tree = ast.<span class="fn">parse</span>(Path(file_path).<span class="fn">read_text</span>())
+    <span class="kw">except</span> (SyntaxError, FileNotFoundError):
+        <span class="kw">return</span> []
+    imports = []
+    <span class="kw">for</span> node <span class="kw">in</span> ast.<span class="fn">walk</span>(tree):
+        <span class="kw">if isinstance</span>(node, ast.Import):
+            imports.<span class="fn">extend</span>(alias.name <span class="kw">for</span> alias <span class="kw">in</span> node.names)
+        <span class="kw">elif isinstance</span>(node, ast.ImportFrom):
+            <span class="kw">if</span> node.module:
+                imports.<span class="fn">append</span>(node.module)
+    <span class="kw">return</span> imports
+
+<span class="kw">def</span> <span class="fn">main</span>():
+    changed = subprocess.<span class="fn">run</span>(
+        [<span class="str">"git"</span>, <span class="str">"diff"</span>, <span class="str">"--name-only"</span>, <span class="str">"HEAD~1"</span>],
+        capture_output=<span class="bool">True</span>, text=<span class="bool">True</span>
+    ).stdout.splitlines()
+
+    report = []
+    <span class="kw">for</span> f <span class="kw">in</span> changed:
+        <span class="kw">if not</span> f.<span class="fn">endswith</span>(<span class="str">".py"</span>):
+            <span class="kw">continue</span>
+        imports = <span class="fn">get_imports</span>(f)
+        internal = [i <span class="kw">for</span> i <span class="kw">in</span> imports <span class="kw">if</span> i.<span class="fn">startswith</span>(<span class="str">"src."</span>)]
+        <span class="kw">if</span> <span class="fn">len</span>(internal) > <span class="num">3</span>:
+            report.<span class="fn">append</span>(<span class="str">f"{f}: HIGH COUPLING — imports {len(internal)} internal modules: {internal}"</span>)
+    
+    <span class="kw">if</span> report:
+        <span class="fn">print</span>(<span class="str">"\n"</span>.<span class="fn">join</span>(report))
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"No coupling violations detected"</span>)
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    <span class="fn">main</span>()</code></pre>
+  </div>
+</div>
+
+<!-- CH8 -->
+<div class="chapter" id="ch8">
+  <div class="chapter-num">Chapter 08</div>
+  <h2>Performance Review</h2>
+  <p class="chapter-sub">N+1 query detection, memory patterns, and algorithmic complexity analysis.</p>
+
+  <p>Performance issues are the most common class of "works correctly but ships wrong" bugs. The code is logically correct, all tests pass, and in development with 10 records it's fine. In production with 10 million records, it costs $40K/month in compute.</p>
+
+  <h3>Performance Review Prompt</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — .claude/prompts/performance-review.md</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>Review this code for performance issues. Focus on:
+
+N+1 QUERY DETECTION:
+- ORM calls inside loops (most common Django/Rails/ActiveRecord issue)
+- Missing select_related() or prefetch_related() in Django
+- Missing includes() or eager_load() in Rails
+- Missing JOIN or subquery where multiple queries are used
+
+MEMORY PATTERNS:
+- Loading entire result sets when pagination or streaming should be used
+- Missing .iterator() on large Django querysets  
+- Building large lists in memory for aggregation (use DB-side grouping)
+- Accumulating objects in module-level collections without cleanup
+- Missing generator/lazy evaluation where sequences are consumed once
+
+ALGORITHMIC COMPLEXITY:
+- Nested loops over collections (O(n²) or worse) — flag if n could be &gt; 1000
+- Linear search in hot paths where dict/set lookup would be O(1)
+- Sorting inside loops (should sort once, outside)
+- Regex compilation inside loops (compile once, outside)
+- String concatenation in loops (use list + join)
+
+IO PATTERNS:
+- Synchronous HTTP calls in loops (should batch or async)
+- File reads/writes inside loops without buffering
+- Missing connection pooling for database/cache clients
+- Missing caching for expensive computations called repeatedly
+
+Output format:
+CRITICAL = will cause production outage at scale
+HIGH = significant regression for &gt;1000 records
+MEDIUM = measurable but acceptable in most contexts
+LOW = micro-optimization opportunity</code></pre>
+  </div>
+
+  <h3>N+1 Query Examples</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">python — N+1 patterns Claude catches</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="cmt"># CRITICAL: N+1 — Claude flags this</span>
+<span class="kw">def</span> <span class="fn">get_user_orders</span>(user_ids):
+    users = User.objects.<span class="fn">filter</span>(id__in=user_ids)  <span class="cmt"># 1 query</span>
+    <span class="kw">for</span> user <span class="kw">in</span> users:
+        orders = user.orders.<span class="fn">all</span>()               <span class="cmt"># N queries!</span>
+        <span class="fn">process_orders</span>(orders)
+
+<span class="cmt"># FIXED: Claude suggests this</span>
+<span class="kw">def</span> <span class="fn">get_user_orders</span>(user_ids):
+    users = User.objects.<span class="fn">filter</span>(id__in=user_ids).<span class="fn">prefetch_related</span>(<span class="str">'orders'</span>)
+    <span class="kw">for</span> user <span class="kw">in</span> users:
+        orders = user.orders.<span class="fn">all</span>()  <span class="cmt"># Uses prefetched cache</span>
+        <span class="fn">process_orders</span>(orders)
+
+<span class="cmt"># HIGH: Memory — loading full queryset</span>
+<span class="kw">def</span> <span class="fn">export_all_logs</span>():
+    logs = AuditLog.objects.<span class="fn">all</span>()  <span class="cmt"># loads 10M rows into memory</span>
+    <span class="kw">return</span> [log.<span class="fn">to_dict</span>() <span class="kw">for</span> log <span class="kw">in</span> logs]
+
+<span class="cmt"># FIXED: Claude suggests iterator()</span>
+<span class="kw">def</span> <span class="fn">export_all_logs</span>():
+    <span class="kw">for</span> log <span class="kw">in</span> AuditLog.objects.<span class="fn">iterator</span>(chunk_size=<span class="num">1000</span>):
+        <span class="kw">yield</span> log.<span class="fn">to_dict</span>()</code></pre>
+  </div>
+</div>
+
+<!-- PART 3 -->
+<div class="part-header" id="part3">
+  <div class="part-label">Part Three</div>
+  <div class="part-title">Integration</div>
+</div>
+
+<!-- CH9 -->
+<div class="chapter" id="ch9">
+  <div class="chapter-num">Chapter 09</div>
+  <h2>GitHub Actions</h2>
+  <p class="chapter-sub">Complete workflow YAML for automated PR review comments — runs on every pull request, posts structured findings.</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">yaml — .github/workflows/ai-code-review.yml</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="key">name</span>: <span class="val">AI Code Review</span>
+
+<span class="key">on</span>:
+  <span class="key">pull_request</span>:
+    <span class="key">types</span>: [<span class="val">opened</span>, <span class="val">synchronize</span>, <span class="val">reopened</span>]
+  <span class="key">workflow_dispatch</span>:
+
+<span class="key">permissions</span>:
+  <span class="key">contents</span>: <span class="val">read</span>
+  <span class="key">pull-requests</span>: <span class="val">write</span>
+
+<span class="key">jobs</span>:
+  <span class="key">ai-review</span>:
+    <span class="key">name</span>: <span class="val">AI Code Review</span>
+    <span class="key">runs-on</span>: <span class="val">ubuntu-latest</span>
+    <span class="key">timeout-minutes</span>: <span class="num">10</span>
+    
+    <span class="key">steps</span>:
+      - <span class="key">name</span>: <span class="val">Checkout</span>
+        <span class="key">uses</span>: <span class="val">actions/checkout@v4</span>
+        <span class="key">with</span>:
+          <span class="key">fetch-depth</span>: <span class="num">0</span>
+
+      - <span class="key">name</span>: <span class="val">Install Claude Code</span>
+        <span class="key">run</span>: <span class="val">npm install -g @anthropic-ai/claude-code</span>
+
+      - <span class="key">name</span>: <span class="val">Get PR diff</span>
+        <span class="key">id</span>: <span class="val">diff</span>
+        <span class="key">run</span>: |
+          git diff origin/${{ github.base_ref }}...HEAD > /tmp/pr.diff
+          echo "lines=$(wc -l < /tmp/pr.diff)" >> $GITHUB_OUTPUT
+
+      - <span class="key">name</span>: <span class="val">Run AI Review</span>
+        <span class="key">if</span>: <span class="val">steps.diff.outputs.lines > 0</span>
+        <span class="key">id</span>: <span class="val">review</span>
+        <span class="key">env</span>:
+          <span class="key">ANTHROPIC_API_KEY</span>: <span class="val">${{ secrets.ANTHROPIC_API_KEY }}</span>
+        <span class="key">run</span>: |
+          REVIEW=$(cat /tmp/pr.diff | claude -p "
+          Review this PR diff. Output structured findings.
+          Format: markdown table of findings, then detail for CRITICAL/HIGH.
+          Verdict: APPROVE, REQUEST_CHANGES, or BLOCK.
+          " --dangerously-skip-permissions 2>/dev/null)
+          
+          echo "REVIEW<<EOF" >> $GITHUB_OUTPUT
+          echo "$REVIEW" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - <span class="key">name</span>: <span class="val">Post Review Comment</span>
+        <span class="key">if</span>: <span class="val">steps.review.outputs.REVIEW != ''</span>
+        <span class="key">uses</span>: <span class="val">actions/github-script@v7</span>
+        <span class="key">with</span>:
+          <span class="key">script</span>: |
+            const review = `${{ steps.review.outputs.REVIEW }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## 🤖 AI Code Review\n\n${review}\n\n---\n*Claude Code automated review — not a substitute for human review*`
+            });
+
+      - <span class="key">name</span>: <span class="val">Fail on BLOCK verdict</span>
+        <span class="key">if</span>: <span class="val">contains(steps.review.outputs.REVIEW, 'Verdict: BLOCK')</span>
+        <span class="key">run</span>: |
+          echo "::error::AI review returned BLOCK verdict — critical issues found"
+          exit 1</code></pre>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-label">Cost Control</div>
+    <p>Add a diff size check to skip review for large refactors or auto-generated files. Use <code>if: steps.diff.outputs.lines &lt; 500</code> or filter with <code>git diff -- '*.py' '*.ts'</code> to exclude lockfiles and generated code.</p>
+  </div>
+
+  <h3>Matrix Strategy for Multi-Language Repos</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">yaml — matrix review strategy</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="key">jobs</span>:
+  <span class="key">review</span>:
+    <span class="key">strategy</span>:
+      <span class="key">matrix</span>:
+        <span class="key">include</span>:
+          - <span class="key">lang</span>: <span class="val">python</span>
+            <span class="key">glob</span>: <span class="val">"**/*.py"</span>
+            <span class="key">prompt</span>: <span class="val">"Focus on Django ORM patterns and type annotations"</span>
+          - <span class="key">lang</span>: <span class="val">typescript</span>
+            <span class="key">glob</span>: <span class="val">"**/*.{ts,tsx}"</span>
+            <span class="key">prompt</span>: <span class="val">"Focus on React hooks rules and TypeScript strict mode"</span>
+    <span class="key">steps</span>:
+      - <span class="key">name</span>: <span class="val">Review ${{ matrix.lang }}</span>
+        <span class="key">run</span>: |
+          git diff origin/${{ github.base_ref }}...HEAD \
+            -- '${{ matrix.glob }}' | \
+          claude -p "${{ matrix.prompt }}" \
+            --dangerously-skip-permissions</code></pre>
+  </div>
+</div>
+
+<!-- CH10 -->
+<div class="chapter" id="ch10">
+  <div class="chapter-num">Chapter 10</div>
+  <h2>Team Adoption</h2>
+  <p class="chapter-sub">A gradual rollout strategy with confidence levels that brings teams along without creating resistance.</p>
+
+  <p>Forced adoption of AI review tools has a predictable failure mode: developers disable the hooks, ignore the comments, or work around the CI gates. The rollout strategy below uses confidence levels to introduce AI review incrementally, building trust before adding friction.</p>
+
+  <h3>Three-Phase Rollout</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Phase</th><th>Duration</th><th>Mode</th><th>Action on CRITICAL</th><th>Action on HIGH</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Observe</strong></td><td>2 weeks</td><td>Silent — no comments posted</td><td>Log only</td><td>Log only</td></tr>
+        <tr><td><strong>Inform</strong></td><td>4 weeks</td><td>Comment posted, no CI gate</td><td>Warning comment</td><td>Info comment</td></tr>
+        <tr><td><strong>Enforce</strong></td><td>Ongoing</td><td>CI gate active</td><td>BLOCK merge</td><td>REQUEST_CHANGES</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Confidence Level System</h3>
+
+  <p>Not all AI findings are equal. Add a confidence field to your output format to help human reviewers prioritize which findings to verify:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">text — confidence-aware prompt addition</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code>For each finding, add a confidence score:
+
+HIGH confidence (>90%): Clear pattern match, no ambiguity
+- Hardcoded password string
+- SQL string interpolation with request parameter
+- eval() or exec() with user input
+
+MEDIUM confidence (60-90%): Likely issue, needs human verification  
+- Missing authorization that might be handled by middleware
+- Potential N+1 where ORM might be caching
+- Complex error handling that looks incomplete
+
+LOW confidence (<60%): Possible issue, flag for human review
+- Unusual pattern that deviates from conventions
+- Potential race condition requiring runtime analysis
+- Business logic that could be intentional</code></pre>
+  </div>
+
+  <h3>Managing False Positives</h3>
+
+  <p>False positives are the primary reason teams abandon AI review. Track them systematically:</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash — track false positives</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="cmt"># Add to PR comment workflow — ask reviewers to rate findings</span>
+
+gh pr comment "$PR_NUM" --body "$(cat <<'EOF'
+## AI Review Feedback
+
+Please rate the AI review findings:
+- 👍 = Accurate finding, would have caught this
+- 👎 = False positive, not actually an issue  
+- 🤔 = Uncertain — needs discussion
+
+This feedback improves the review prompts over time.
+EOF
+)"</span></code></pre>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-label">Adoption Insight</div>
+    <p>The fastest path to team adoption is demonstrating a real catch. When Claude flags an actual SQL injection or N+1 query that would have shipped, word spreads faster than any internal memo. Run in Observe mode long enough to have 3-5 real catches ready to share at launch.</p>
+  </div>
+</div>
+
+<!-- CH11 -->
+<div class="chapter" id="ch11">
+  <div class="chapter-num">Chapter 11</div>
+  <h2>Custom Rules via CLAUDE.md</h2>
+  <p class="chapter-sub">Teaching AI your conventions — making the reviewer aware of decisions your team has already made.</p>
+
+  <p>Out-of-the-box Claude knows general best practices. What it doesn't know is that your team deliberately chose to use string UUIDs instead of integer PKs for audit reasons, or that the "duplicated" service layer is intentional domain isolation. Custom rules in CLAUDE.md prevent false positives and false negatives alike.</p>
+
+  <h3>Rules That Prevent False Positives</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md deliberate decisions</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Deliberate Design Decisions (Do NOT flag as issues)</span>
+
+<span class="kw">### Database</span>
+- We use string UUIDs as primary keys — do NOT suggest integer PKs
+- All models have created_at/updated_at managed by a base class, not per-model
+- We use soft deletes (deleted_at) — never suggest hard DELETE patterns
+
+<span class="kw">### Architecture</span>
+- Duplicate service interfaces are intentional (domain isolation per DDD)
+- The UserFacadeService is a legacy compatibility layer — do not refactor
+- We intentionally do NOT use Django signals (too implicit)
+
+<span class="kw">### Security</span>
+- JWT tokens are verified by nginx upstream — middleware auth check is intentional secondary check
+- The /healthz endpoint intentionally has no auth — it's internal-only via network policy
+
+<span class="kw">### Dependencies</span>
+- We vendor all dependencies — do not suggest pip install for new packages
+- PyPy is not supported — do not suggest PyPy-specific optimizations</code></pre>
+  </div>
+
+  <h3>Rules That Catch Project-Specific Issues</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md project-specific rules</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Project-Specific Anti-Patterns (Always flag)</span>
+
+<span class="kw">### Data Layer</span>
+- CRITICAL: Any raw SQL outside of src/db/queries.py
+- HIGH: Any direct PostgreSQL connection (must use connection pool at src/db/pool.py)
+- HIGH: Any transaction not using our @transactional decorator
+- MEDIUM: Any model method that does more than set/get fields
+
+<span class="kw">### API Layer</span>
+- CRITICAL: Any endpoint missing the @require_auth decorator
+- CRITICAL: Returning a model instance directly (must use serializer)
+- HIGH: Any endpoint missing rate_limit decorator
+- MEDIUM: Response not using our standard ApiResponse wrapper
+
+<span class="kw">### Async Code</span>
+- CRITICAL: asyncio.sleep() in production code (use our task queue)
+- HIGH: Any thread.start() call (use our thread pool at src/workers/)
+- MEDIUM: Missing await on any async function call</code></pre>
+  </div>
+
+  <h3>Iterative Rule Refinement</h3>
+
+  <p>Track which CLAUDE.md rules generate the most findings over 30 days. Rules with zero hits are either perfect compliance (good) or never being applied (investigate). Rules with 20+ monthly hits are either critical guardrails or false-positive sources.</p>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">bash — audit rule effectiveness</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="cmt"># Extract which rules were cited in last 30 days of review comments</span>
+gh api repos/:owner/:repo/issues/comments \
+  --paginate \
+  --jq '.[] | select(.body | contains("AI Code Review")) | .body' | \
+  grep -oP 'Rule: [A-Z-]+' | \
+  sort | uniq -c | sort -rn | head -20</code></pre>
+  </div>
+</div>
+
+<!-- CH12 -->
+<div class="chapter" id="ch12">
+  <div class="chapter-num">Chapter 12</div>
+  <h2>Measuring Quality</h2>
+  <p class="chapter-sub">False positive rate, time savings metrics, and a dashboard for tracking review quality over time.</p>
+
+  <p>You cannot improve what you do not measure. AI review quality degrades silently — a prompt that worked well in March starts generating noisy findings in June as your codebase evolves. Metrics create the feedback loop that keeps the system calibrated.</p>
+
+  <h3>Core Metrics</h3>
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-val">FPR</div>
+      <div class="metric-label">False Positive Rate<br>Target: &lt;15%</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">FNR</div>
+      <div class="metric-label">False Negative Rate<br>Track via post-mortems</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">TTS</div>
+      <div class="metric-label">Time to Ship<br>Before vs after AI</div>
+    </div>
+    <div class="metric">
+      <div class="metric-val">HRC</div>
+      <div class="metric-label">Human Review Comments<br>Should decrease over time</div>
+    </div>
+  </div>
+
+  <h3>Measurement Script</h3>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">python — review_metrics.py</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">#!/usr/bin/env python3</span>
+<span class="cmt">"""Calculate AI review quality metrics from GitHub PR data."""</span>
+<span class="kw">import</span> subprocess
+<span class="kw">import</span> json
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime, timedelta
+
+<span class="kw">def</span> <span class="fn">get_pr_comments</span>(days: int = <span class="num">30</span>) -> list:
+    since = (datetime.<span class="fn">now</span>() - timedelta(days=days)).<span class="fn">isoformat</span>()
+    result = subprocess.<span class="fn">run</span>([
+        <span class="str">"gh"</span>, <span class="str">"api"</span>, <span class="str">"repos/:owner/:repo/issues/comments"</span>,
+        <span class="str">"--paginate"</span>, <span class="str">"-q"</span>,
+        <span class="str">f'.[] | select(.created_at > "{since}")'</span>
+    ], capture_output=<span class="bool">True</span>, text=<span class="bool">True</span>)
+    <span class="kw">return</span> json.<span class="fn">loads</span>(<span class="str">"["</span> + result.stdout.<span class="fn">replace</span>(<span class="str">"\n"</span>,<span class="str">","</span>).<span class="fn">rstrip</span>(<span class="str">","</span>) + <span class="str">"]"</span>)
+
+<span class="kw">def</span> <span class="fn">calculate_fpr</span>(comments: list) -> float:
+    <span class="cmt">"""Estimate FPR from thumbs-down reactions on AI review comments."""</span>
+    ai_comments = [c <span class="kw">for</span> c <span class="kw">in</span> comments <span class="kw">if</span> <span class="str">"AI Code Review"</span> <span class="kw">in</span> c.get(<span class="str">"body"</span>,<span class="str">""</span>)]
+    <span class="kw">if not</span> ai_comments:
+        <span class="kw">return</span> <span class="num">0.0</span>
+    <span class="cmt"># Count comments with negative reactions as false positives</span>
+    fp = <span class="fn">sum</span>(<span class="num">1</span> <span class="kw">for</span> c <span class="kw">in</span> ai_comments <span class="kw">if</span> c.get(<span class="str">"reactions"</span>,{}).get(<span class="str">"-1"</span>,<span class="num">0</span>) > <span class="num">0</span>)
+    <span class="kw">return</span> fp / <span class="fn">len</span>(ai_comments)
+
+<span class="kw">def</span> <span class="fn">print_dashboard</span>(days: int = <span class="num">30</span>):
+    comments = <span class="fn">get_pr_comments</span>(days)
+    ai_comments = [c <span class="kw">for</span> c <span class="kw">in</span> comments <span class="kw">if</span> <span class="str">"AI Code Review"</span> <span class="kw">in</span> c.get(<span class="str">"body"</span>,<span class="str">""</span>)]
+    fpr = <span class="fn">calculate_fpr</span>(comments)
+    
+    <span class="fn">print</span>(<span class="str">f"=== AI Review Quality Dashboard ({days}d) ==="</span>)
+    <span class="fn">print</span>(<span class="str">f"Total AI reviews:     {len(ai_comments)}"</span>)
+    <span class="fn">print</span>(<span class="str">f"False positive rate:  {fpr:.1%}"</span>)
+    <span class="fn">print</span>(<span class="str">f"Status: {'GOOD' if fpr < 0.15 else 'NEEDS TUNING'}"</span>)
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    <span class="fn">print_dashboard</span>()</code></pre>
+  </div>
+
+  <div class="callout callout-tip">
+    <div class="callout-label">Benchmark</div>
+    <p>A well-tuned AI review system achieves: FPR under 15%, catches 60-80% of comments that would have come from senior engineers, and reduces average human review time by 30-40%. Measure against your baseline before enabling enforcement.</p>
+  </div>
+</div>
+
+<!-- PART 4: CONFIGS -->
+<div class="part-header" id="configs">
+  <div class="part-label">Part Four</div>
+  <div class="part-title">Language Configs</div>
+</div>
+<p class="container" style="text-align:center;margin-bottom:3rem;color:var(--text3);font-size:0.85rem">Copy-paste ready configurations for 10 languages and frameworks. Each includes a CLAUDE.md review section, hook config, and CI workflow snippet.</p>
+
+<!-- PYTHON -->
+<div class="config-section container" id="cfg-python">
+  <div class="config-header">
+    <span class="config-badge">Python / Django</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — Python / Django</span>
+
+<span class="kw">### Critical (always block)</span>
+- Raw SQL with string interpolation (use parameterized queries or ORM)
+- except: or except Exception: without logging or re-raising
+- Mutable default arguments (def fn(x, items=[]))
+- Missing @login_required or custom auth decorator on views
+- PII fields in logger.info/debug calls
+
+<span class="kw">### High Priority</span>
+- N+1 ORM queries (ORM call inside for loop without prefetch)
+- Missing select_related/prefetch_related on related field access
+- Django signals used for business logic (use explicit service calls)
+- Missing migration for model changes
+- QuerySet.count() followed by QuerySet iteration (2 queries, use len())
+
+<span class="kw">### Style (warn, don't block)</span>
+- Type hints missing on public functions
+- Docstring missing on public classes/functions
+- f-string preferred over .format() and %
+- Comprehension preferred over map()/filter() for readability</code></pre>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">yaml — CI workflow snippet</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="key">- name</span>: <span class="val">Python AI Review</span>
+  <span class="key">run</span>: |
+    git diff origin/${{ github.base_ref }}...HEAD -- '*.py' | \
+    claude -p "
+    Review Python/Django code. Focus on:
+    - ORM query efficiency (N+1, missing prefetch)
+    - Security (injection, auth bypass, PII in logs)
+    - Django anti-patterns (signals for business logic, raw SQL)
+    - Type annotation completeness
+    Output structured findings table.
+    " --dangerously-skip-permissions</code></pre>
+  </div>
+</div>
+
+<!-- TYPESCRIPT -->
+<div class="config-section container" id="cfg-typescript">
+  <div class="config-header">
+    <span class="config-badge">TypeScript / React</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — TypeScript / React</span>
+
+<span class="kw">### Critical</span>
+- dangerouslySetInnerHTML with user-controlled content (XSS)
+- API keys or secrets in client-side code or .env.local committed
+- any type on function parameters (defeats TypeScript)
+- useEffect with missing dependency array items (stale closure)
+- Direct DOM manipulation inside React components
+
+<span class="kw">### High Priority</span>
+- React hooks rules violations (hooks inside conditionals/loops)
+- Missing error boundaries around async data components
+- useEffect for derived state (use useMemo)
+- Non-memoized expensive computations in render
+- Prop drilling more than 2 levels (consider context or state management)
+
+<span class="kw">### Style</span>
+- Prefer const over let where value doesn't change
+- Optional chaining (?.) over manual null checks
+- Nullish coalescing (??) over || for default values
+- Explicit return types on exported functions</code></pre>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">yaml — CI workflow snippet</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="key">- name</span>: <span class="val">TypeScript/React AI Review</span>
+  <span class="key">run</span>: |
+    git diff origin/${{ github.base_ref }}...HEAD \
+      -- '*.ts' '*.tsx' | \
+    claude -p "
+    Review TypeScript/React code. Focus on:
+    - React hooks rules and correctness
+    - Type safety (no any, proper generics)
+    - XSS vectors (dangerouslySetInnerHTML)
+    - Performance (memo, useMemo, useCallback usage)
+    - Accessibility (aria attributes, semantic HTML)
+    " --dangerously-skip-permissions</code></pre>
+  </div>
+</div>
+
+<!-- RUBY -->
+<div class="config-section container" id="cfg-ruby">
+  <div class="config-header">
+    <span class="config-badge">Ruby / Rails</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — Ruby / Rails</span>
+
+<span class="kw">### Critical</span>
+- SQL injection via string interpolation in where() or find_by_sql
+- Mass assignment without strong_params (permit only whitelisted attributes)
+- render inline: with user content (XSS)
+- Sensitive data in Rails logs (filter_parameters must cover all PII)
+- Missing before_action :authenticate_user! on protected controllers
+
+<span class="kw">### High Priority</span>
+- N+1 queries (ActiveRecord association access in loops without includes)
+- Callbacks with side effects (after_create calling external services)
+- Fat models with business logic (use service objects / interactors)
+- Missing database index on foreign key columns
+- Synchronous external API calls in request/response cycle
+
+<span class="kw">### Style</span>
+- Prefer .find_each over .all for large datasets
+- Use .pluck for selecting specific columns
+- Prefer symbols over strings for hash keys
+- Avoid rescue Exception — rescue StandardError instead</code></pre>
+  </div>
+</div>
+
+<!-- GO -->
+<div class="config-section container" id="cfg-go">
+  <div class="config-header">
+    <span class="config-badge">Go</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — Go</span>
+
+<span class="kw">### Critical</span>
+- Unchecked error returns (if err != nil must always be handled)
+- Goroutine leak (goroutine started without done channel or context cancel)
+- Race condition (shared map/slice written from multiple goroutines)
+- SQL query string concatenation (use ? placeholders)
+- panic() in library code (return errors instead)
+
+<span class="kw">### High Priority</span>
+- Context not threaded through call stack (always accept ctx as first param)
+- Missing defer cancel() after context.WithCancel()
+- Large value types in hot paths (use pointers)
+- Unnecessary conversion between string and []byte
+- HTTP response body not closed after reading
+
+<span class="kw">### Style</span>
+- Error strings should not start with capital letter or end with punctuation
+- Exported functions must have godoc comment
+- Avoid init() for anything that can fail
+- Use table-driven tests for functions with multiple inputs</code></pre>
+  </div>
+</div>
+
+<!-- RUST -->
+<div class="config-section container" id="cfg-rust">
+  <div class="config-header">
+    <span class="config-badge">Rust</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — Rust</span>
+
+<span class="kw">### Critical</span>
+- unsafe blocks without safety comment explaining invariants maintained
+- unwrap() or expect() in production paths (use ? operator or match)
+- Blocking IO in async context (use tokio::spawn_blocking)
+- Arc&lt;Mutex&gt; held across await points (deadlock risk)
+
+<span class="kw">### High Priority</span>
+- Clone() on large types in hot paths (use references)
+- String allocation in tight loops (pre-allocate or use &str)
+- Missing #[must_use] on Result-returning public functions
+- Error types not implementing std::error::Error
+- Unused Result silenced with let _ =
+
+<span class="kw">### Style</span>
+- Prefer iter() over into_iter() when ownership not needed
+- Use thiserror for library error types
+- Use anyhow for application error propagation
+- Clippy lints: run cargo clippy -- -D warnings before PR</code></pre>
+  </div>
+</div>
+
+<!-- JAVA -->
+<div class="config-section container" id="cfg-java">
+  <div class="config-header">
+    <span class="config-badge">Java / Spring</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — Java / Spring</span>
+
+<span class="kw">### Critical</span>
+- SQL via string concatenation (use PreparedStatement or JPA named params)
+- @Autowired on non-final fields (use constructor injection)
+- Catching RuntimeException or Exception at service layer
+- Serializable classes without serialVersionUID
+- Missing @Transactional on methods that write to multiple tables
+
+<span class="kw">### High Priority</span>
+- N+1 queries with JPA (use JOIN FETCH or @EntityGraph)
+- @Transactional(readOnly=false) as default (be explicit)
+- Business logic in JPA @Entity classes (use service layer)
+- Missing @Valid on controller method parameters
+- Non-thread-safe fields in @Singleton beans
+
+<span class="kw">### Style</span>
+- Prefer Optional over null returns on repository methods
+- Use records for DTOs (Java 16+)
+- Prefer streams over explicit loops for collection processing
+- Immutable DTOs: all fields final, constructor-only init</code></pre>
+  </div>
+</div>
+
+<!-- PHP -->
+<div class="config-section container" id="cfg-php">
+  <div class="config-header">
+    <span class="config-badge">PHP / Laravel</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — PHP / Laravel</span>
+
+<span class="kw">### Critical</span>
+- Raw DB::statement() or DB::select() with user input (use bindings)
+- Missing $fillable or $guarded on Eloquent models (mass assignment)
+- {!! $var !!} in Blade templates (use {{ }} for auto-escaping)
+- Missing CSRF token on POST/PUT/DELETE forms
+- eval() or system() with any user-influenced data
+
+<span class="kw">### High Priority</span>
+- Eloquent lazy loading in loops (use with() eager loading)
+- Business logic in controllers (extract to Service or Action classes)
+- Missing validation before DB write (use FormRequest)
+- Storing secrets in .env committed to repo
+- Missing queue for mail sending in request/response
+
+<span class="kw">### Style</span>
+- Type hints on all function signatures (PHP 8.x strict types)
+- Use named arguments for clarity on complex method calls
+- Prefer match() over switch for simple mappings
+- Return typed DTOs from service methods, not raw arrays</code></pre>
+  </div>
+</div>
+
+<!-- CSHARP -->
+<div class="config-section container" id="cfg-csharp">
+  <div class="config-header">
+    <span class="config-badge">C# / .NET</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — C# / .NET</span>
+
+<span class="kw">### Critical</span>
+- SQL via string interpolation with user input (use parameterized queries)
+- ConfigureAwait(false) missing in library code
+- async void methods (use async Task, handle exceptions properly)
+- Disposing HttpClient per-request (use IHttpClientFactory)
+- Missing CancellationToken propagation through async call chains
+
+<span class="kw">### High Priority</span>
+- Thread.Sleep in async code (use await Task.Delay)
+- Missing using/Dispose on IDisposable resources
+- Catching Exception without re-throw or specific handling
+- Mutable public properties on value types (structs)
+- LINQ queries on IEnumerable that should be IQueryable (deferred execution)
+
+<span class="kw">### Style</span>
+- Prefer record types for immutable DTOs
+- Use nullable reference types (#nullable enable)
+- Primary constructors (C# 12) for dependency injection
+- Pattern matching preferred over type casting chains</code></pre>
+  </div>
+</div>
+
+<!-- SWIFT -->
+<div class="config-section container" id="cfg-swift">
+  <div class="config-header">
+    <span class="config-badge">Swift / iOS</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — Swift / iOS</span>
+
+<span class="kw">### Critical</span>
+- Sensitive data in UserDefaults (use Keychain)
+- URLSession without certificate pinning for auth endpoints
+- Hard-coded API keys or secrets in Swift source files
+- force unwrap (!) on user-facing code paths
+- Main thread blocked by synchronous network/disk IO
+
+<span class="kw">### High Priority</span>
+- Retain cycles in closures ([weak self] missing where needed)
+- @MainActor missing on UI-updating methods called from async context
+- Missing error handling on async throws functions
+- CoreData context accessed from wrong thread
+- Large view bodies not broken into sub-components (SwiftUI)
+
+<span class="kw">### Style</span>
+- async/await preferred over completion handlers
+- Combine preferred over NotificationCenter for reactive patterns
+- Prefer struct over class for value semantics
+- Use guard for early exit, not nested if-let chains</code></pre>
+  </div>
+</div>
+
+<!-- KOTLIN -->
+<div class="config-section container" id="cfg-kotlin">
+  <div class="config-header">
+    <span class="config-badge">Kotlin / Android</span>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">markdown — CLAUDE.md section</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="kw">## Review Standards — Kotlin / Android</span>
+
+<span class="kw">### Critical</span>
+- Sensitive data in SharedPreferences (use EncryptedSharedPreferences)
+- Network requests on main thread (use Dispatchers.IO)
+- !! (not-null assertion) on user-facing code paths
+- Hardcoded API endpoints or credentials in source
+- WebView with JavaScript enabled loading untrusted URLs
+
+<span class="kw">### High Priority</span>
+- Missing viewModelScope.launch {} — using GlobalScope instead (leaks)
+- Coroutine exception not caught (use CoroutineExceptionHandler)
+- Room database accessed on main thread
+- StateFlow vs SharedFlow confusion (StateFlow replays, SharedFlow doesn't)
+- Missing ProGuard rules for new reflection-dependent libraries
+
+<span class="kw">### Style</span>
+- Prefer data class for DTOs (auto-generates equals/hashCode/copy)
+- Use sealed class for result types (not nullable returns)
+- Flow preferred over LiveData for new code
+- Compose UI: remember {} for expensive computations in composables</code></pre>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-label"><span class="code-lang">yaml — universal mobile CI snippet</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+    <pre><code><span class="key">- name</span>: <span class="val">Mobile AI Review (Swift/Kotlin)</span>
+  <span class="key">run</span>: |
+    git diff origin/${{ github.base_ref }}...HEAD \
+      -- '*.swift' '*.kt' '*.kts' | \
+    claude -p "
+    Review mobile code (Swift/Kotlin).
+    Critical focus areas:
+    - Keychain vs UserDefaults for sensitive data
+    - Main thread safety (UI updates, network calls)
+    - Memory management (retain cycles, leaks)
+    - Null safety (force unwrap / !!)
+    - Background task management and lifecycle
+    " --dangerously-skip-permissions</code></pre>
+  </div>
+</div>
+
+</div><!-- end container -->
+</div><!-- end page-body -->
+
+<footer>
+  <p>© 2026 Edgeless Labs LLC — AI Code Review Playbook</p>
+  <p style="margin-top:0.5rem"><a href="mailto:hello@edgeless.dev">hello@edgeless.dev</a></p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'COPY';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Highlight active nav section on scroll
+const sections = document.querySelectorAll('[id]');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (active) active.style.color = 'var(--accent2)';
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

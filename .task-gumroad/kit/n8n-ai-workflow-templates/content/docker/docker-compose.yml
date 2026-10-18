@@ -1,0 +1,81 @@
+version: '3.8'
+
+# n8n + Postgres stack for AI workflow templates.
+# IMPORTANT: do not use n8nio/n8n:latest in production -- pin to a known-good
+# version. See guide.md "Appendix: n8n version pinning rationale" for why.
+
+services:
+  n8n:
+    image: n8nio/n8n:1.70.0
+    container_name: n8n
+    env_file: .env
+    ports:
+      - "5678:5678"
+    environment:
+      # --- Core ---
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-America/Los_Angeles}
+      - TZ=${TZ:-America/Los_Angeles}
+      - N8N_PUBLIC_API_DISABLED=false
+      - NODE_FUNCTION_ALLOW_BUILTIN=fs
+      # Execution data retention (hours) -- prune old executions
+      - EXECUTIONS_DATA_MAX_AGE=168
+      # --- Database (Postgres) ---
+      # If you remove these, n8n falls back to SQLite in /home/node/.n8n.
+      # All five workflows assume Postgres is the metadata store.
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB:-n8n}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-n8n}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      # --- LLM keys (read by HTTP Request nodes via $env) ---
+      - GOOGLE_GEMINI_API_KEY=${GOOGLE_GEMINI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      # --- Optional integrations ---
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - DIGEST_TO_EMAIL=${DIGEST_TO_EMAIL:-}
+      - DIGEST_FROM_EMAIL=${DIGEST_FROM_EMAIL:-}
+    volumes:
+      - ./n8n-data:/home/node/.n8n
+      - ./workflows:/home/node/workflows
+      - ./credentials:/home/node/credentials
+      # health-check-alerts.json persists per-service failure counters here.
+      # Without this volume the alerter will re-fire on every cron tick after
+      # a container restart.
+      - ./health-state:/home/node/.n8n/health-state
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:5678/healthz | grep -q ok || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  postgres:
+    image: postgres:15
+    container_name: n8n-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-n8n}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB:-n8n}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-n8n} -d ${POSTGRES_DB:-n8n}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:

@@ -1,0 +1,25 @@
+{
+  "name": "rss-intelligence",
+  "stages": [
+    {
+      "name": "fetch_feeds",
+      "agent": "worker-content",
+      "timeout": 120
+    },
+    {
+      "name": "score_articles",
+      "agent": "worker-research",
+      "timeout": 180
+    },
+    {
+      "name": "format_digest",
+      "agent": "worker-content",
+      "timeout": 60
+    },
+    {
+      "name": "send_notifications",
+      "agent": "worker-infra",
+      "timeout": 30
+    }
+  ]
+}

@@ -1,0 +1,3173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Cookbook — Multi-Agent Systems with Claude Code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f172a;
+  --bg-elevated: #1e293b;
+  --bg-card: #162032;
+  --bg-code: #0d1b2e;
+  --border: #1e3a5f;
+  --border-subtle: #1a2f4a;
+  --accent: #6366f1;
+  --accent-glow: rgba(99,102,241,0.15);
+  --accent-dim: #4338ca;
+  --accent-muted: rgba(99,102,241,0.3);
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-faint: #475569;
+  --text-bright: #f8fafc;
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.1);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.1);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.1);
+  --blue: #38bdf8;
+  --blue-dim: rgba(56,189,248,0.1);
+  --purple: #a78bfa;
+  --code-keyword: #818cf8;
+  --code-string: #34d399;
+  --code-comment: #475569;
+  --code-fn: #60a5fa;
+  --code-num: #fb923c;
+  --code-type: #f472b6;
+  --font-mono: 'Roboto Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --max-w: 900px;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-mono);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+section { margin-bottom: 6rem; }
+
+/* ── Cover ── */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(160deg, #0a0f1e 0%, #0f172a 40%, #0d1535 100%);
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 25% 40%, rgba(99,102,241,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 60%, rgba(139,92,246,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(99,102,241,0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+.cover-badge {
+  display: inline-block;
+  background: var(--accent-muted);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.cover h1 {
+  font-family: var(--font-mono);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--text-bright);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.cover h1 span { color: var(--accent); }
+.cover-sub {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  position: relative;
+}
+.cover-meta {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  margin-bottom: 3rem;
+}
+.cover-meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.cover-meta-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.cover-meta-label {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.cover-brand {
+  position: relative;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+}
+.cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* ── TOC ── */
+.toc-section {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  margin: 3rem auto;
+  max-width: var(--max-w);
+}
+.toc-section h2 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.toc-part { margin-bottom: 1.25rem; }
+.toc-part-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+  margin-bottom: 0.5rem;
+}
+.toc-list { list-style: none; }
+.toc-list li { border-bottom: 1px solid var(--border-subtle); }
+.toc-list li:last-child { border-bottom: none; }
+.toc-list a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.15s;
+}
+.toc-list a:hover { color: var(--accent); }
+.toc-num {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.75rem;
+  min-width: 1.5rem;
+}
+
+/* ── Chapter ── */
+.chapter {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2rem;
+  page-break-before: always;
+}
+.chapter-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.chapter-part {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.chapter-num {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  margin-bottom: 0.75rem;
+}
+.chapter h1 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text-bright);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.chapter-intro {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+  max-width: 680px;
+}
+
+/* ── Typography ── */
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin: 2.5rem 0 1rem;
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 2rem 0 0.75rem;
+  letter-spacing: 0.02em;
+}
+p { margin-bottom: 1rem; color: var(--text); font-size: 0.95rem; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+li { margin-bottom: 0.35rem; font-size: 0.95rem; color: var(--text); }
+strong { color: var(--text-bright); font-weight: 600; }
+code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--code-string);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+/* ── Code blocks ── */
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  position: relative;
+}
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+.code-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 0.5rem 1rem;
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+.code-label + pre {
+  border-radius: 0 0 var(--radius) var(--radius);
+  margin-top: 0;
+}
+.code-lang {
+  color: var(--accent);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Syntax token colors */
+.kw { color: var(--code-keyword); }
+.fn { color: var(--code-fn); }
+.str { color: var(--code-string); }
+.cmt { color: var(--code-comment); font-style: italic; }
+.num { color: var(--code-num); }
+.typ { color: var(--code-type); }
+.var { color: var(--blue); }
+.op { color: var(--text-muted); }
+
+/* ── Callout boxes ── */
+.callout {
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  border-left: 3px solid;
+  font-size: 0.9rem;
+}
+.callout-title {
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.callout.when {
+  background: var(--green-dim);
+  border-color: var(--green);
+}
+.callout.when .callout-title { color: var(--green); }
+.callout.mistake {
+  background: var(--red-dim);
+  border-color: var(--red);
+}
+.callout.mistake .callout-title { color: var(--red); }
+.callout.tip {
+  background: var(--blue-dim);
+  border-color: var(--blue);
+}
+.callout.tip .callout-title { color: var(--blue); }
+.callout.warning {
+  background: var(--amber-dim);
+  border-color: var(--amber);
+}
+.callout.warning .callout-title { color: var(--amber); }
+.callout p:last-child { margin-bottom: 0; }
+
+/* ── Pattern diagram ── */
+.diagram {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.diagram .d-accent { color: var(--accent); }
+.diagram .d-green { color: var(--green); }
+.diagram .d-amber { color: var(--amber); }
+.diagram .d-blue { color: var(--blue); }
+
+/* ── Table ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+th {
+  text-align: left;
+  padding: 0.6rem 1rem;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(99,102,241,0.03); }
+
+/* ── Recipe card ── */
+.recipe-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin: 2rem 0;
+}
+.recipe-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.recipe-num {
+  background: var(--accent-muted);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  margin-top: 0.1rem;
+}
+.recipe-title { font-size: 1.05rem; font-weight: 600; color: var(--text-bright); }
+.recipe-desc { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.25rem; }
+.recipe-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.recipe-meta-item { font-size: 0.78rem; color: var(--text-faint); }
+.recipe-meta-item span { color: var(--text-muted); }
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 4rem 0;
+}
+
+/* ── Nav ── */
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,23,42,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.nav-toc-link {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-toc-link:hover { color: var(--accent); }
+
+/* ── Part header ── */
+.part-header {
+  max-width: var(--max-w);
+  margin: 5rem auto 3rem;
+  padding: 0 2rem;
+}
+.part-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-faint);
+  margin-bottom: 0.5rem;
+}
+.part-title {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: var(--text-bright);
+  line-height: 1.2;
+}
+.part-desc { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem; }
+.part-line {
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  margin-top: 1rem;
+}
+
+/* ── Print ── */
+@media print {
+  .top-nav { display: none; }
+  body { background: white; color: #1e293b; font-size: 14px; }
+  .cover { min-height: auto; padding: 3rem; background: #0f172a !important; }
+  pre { border: 1px solid #ccc; }
+  .chapter { page-break-before: always; }
+  a { color: inherit; text-decoration: none; }
+}
+
+@media (max-width: 640px) {
+  .container, .chapter, .part-header { padding: 0 1rem; }
+  .cover-meta { gap: 1rem; }
+  pre { font-size: 0.75rem; padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <span class="nav-brand">AGENT COOKBOOK</span>
+  <a href="#toc" class="nav-toc-link">↑ Table of Contents</a>
+</nav>
+
+<!-- COVER -->
+<div class="cover" id="top">
+  <div class="cover-grid"></div>
+  <div class="cover-badge">Edgeless Labs LLC — 2026 Edition</div>
+  <h1><span>Agent</span> Cookbook</h1>
+  <p class="cover-sub">Multi-agent AI systems with Claude Code. Patterns, recipes, and production-grade techniques — no hype.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="cover-meta-value">16</span>
+      <span class="cover-meta-label">Chapters</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-value">10</span>
+      <span class="cover-meta-label">Patterns</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-value">10</span>
+      <span class="cover-meta-label">Recipes</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-value">60+</span>
+      <span class="cover-meta-label">Code Examples</span>
+    </div>
+  </div>
+  <div class="cover-brand">EDGELESS LABS LLC &nbsp;·&nbsp; edgeless.ai</div>
+</div>
+
+<!-- TOC -->
+<div class="container">
+<div class="toc-section" id="toc">
+  <h2>Table of Contents</h2>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part 1 — Foundations</div>
+    <ul class="toc-list">
+      <li><a href="#ch1"><span class="toc-num">01</span> What agents actually are</a></li>
+      <li><a href="#ch2"><span class="toc-num">02</span> The Claude Code agent model</a></li>
+      <li><a href="#ch3"><span class="toc-num">03</span> Agents vs direct tool calls</a></li>
+      <li><a href="#ch4"><span class="toc-num">04</span> Agent communication patterns</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part 2 — Patterns</div>
+    <ul class="toc-list">
+      <li><a href="#ch5"><span class="toc-num">05</span> Builder-Validator pattern</a></li>
+      <li><a href="#ch6"><span class="toc-num">06</span> Fan-out / Fan-in</a></li>
+      <li><a href="#ch7"><span class="toc-num">07</span> Pipeline pattern</a></li>
+      <li><a href="#ch8"><span class="toc-num">08</span> The Ralph Wiggum loop</a></li>
+      <li><a href="#ch9"><span class="toc-num">09</span> Supervisor pattern</a></li>
+      <li><a href="#ch10"><span class="toc-num">10</span> Consensus pattern</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part 3 — Production</div>
+    <ul class="toc-list">
+      <li><a href="#ch11"><span class="toc-num">11</span> Error handling and retry strategies</a></li>
+      <li><a href="#ch12"><span class="toc-num">12</span> Context window management</a></li>
+      <li><a href="#ch13"><span class="toc-num">13</span> Cost optimization</a></li>
+      <li><a href="#ch14"><span class="toc-num">14</span> Testing multi-agent systems</a></li>
+      <li><a href="#ch15"><span class="toc-num">15</span> Monitoring and observability</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-label">Part 4 — Recipes</div>
+    <ul class="toc-list">
+      <li><a href="#ch16"><span class="toc-num">16</span> 10 ready-to-use agent configurations</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+
+
+<!-- PART 1 -->
+<div class="part-header">
+  <div class="part-label">Part One</div>
+  <div class="part-title">Foundations</div>
+  <p class="part-desc">What agents actually are, how Claude Code models them, and when the added complexity is worth it.</p>
+  <div class="part-line"></div>
+</div>
+
+<!-- CHAPTER 1 -->
+<section class="chapter" id="ch1">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 1 — Foundations</div>
+    <div class="chapter-num">Chapter 01</div>
+    <h1>What Agents Actually Are</h1>
+    <p class="chapter-intro">Stripped of the marketing, an agent is a model in a loop with access to tools. That's it. Everything else is implementation detail.</p>
+  </div>
+
+  <h2>The honest definition</h2>
+  <p>An agent is a language model that runs in a loop, calling tools and receiving their results, until it decides it's done. The loop is the critical part — a single LLM call that outputs text is not an agent. An LLM call that reads a file, decides what to do next, writes a file, and checks the result is an agent.</p>
+
+  <p>The reason this matters: the failure modes of single calls and agents are completely different. A single call can hallucinate. An agent can hallucinate, get stuck in loops, accumulate context debt, call tools in the wrong order, and run indefinitely at real cost.</p>
+
+  <h2>The three things that define an agent</h2>
+
+  <p><strong>1. A loop.</strong> The model runs multiple times, not once. Each iteration can use the outputs of previous iterations. This is what enables reasoning over multiple steps.</p>
+
+  <p><strong>2. Tools.</strong> The model can take actions that affect the world: read files, write files, call APIs, run code, spawn other agents. Without tools, it's just a chatbot.</p>
+
+  <p><strong>3. A stopping condition.</strong> The loop terminates when the model decides it's done, when a condition is met, or when a timeout fires. Without a stopping condition, you have an infinite loop.</p>
+
+  <div class="diagram">┌─────────────────────────────────────┐
+│           AGENT LOOP                │
+│                                     │
+│  Input / Context                    │
+│       ↓                             │
+│  ┌─────────┐    tool call           │
+│  │  Model  │ ─────────────→ Tool    │
+│  └─────────┘                  │     │
+│       ↑                       │     │
+│       └──── tool result ──────┘     │
+│                                     │
+│  Loop until: done | error | timeout │
+└─────────────────────────────────────┘</div>
+
+  <h2>What agents are not</h2>
+
+  <p><strong>Not magic.</strong> An agent is bounded by the model's capabilities on each individual call. Chaining weak reasoning in a loop produces weak results at higher cost. The loop amplifies, not compensates.</p>
+
+  <p><strong>Not autonomous.</strong> "Autonomous" implies the agent understands goals the way humans do. It doesn't. It pattern-matches on the instructions and context you give it. Give it bad context, get bad outputs — reliably, at scale.</p>
+
+  <p><strong>Not reliable by default.</strong> Reliability is engineered: explicit error handling, output validation, retry limits, checkpoints, structured logging. These don't come for free.</p>
+
+  <h2>The agentic spectrum</h2>
+
+  <table>
+    <thead><tr><th>Form</th><th>Loop</th><th>Tools</th><th>When it makes sense</th></tr></thead>
+    <tbody>
+      <tr><td>Single call</td><td>No</td><td>No</td><td>Classification, summarization, generation</td></tr>
+      <tr><td>Single call + tools</td><td>No</td><td>Yes</td><td>Lookup, fetch, one-shot transformation</td></tr>
+      <tr><td>ReAct agent</td><td>Yes</td><td>Yes</td><td>Multi-step tasks with unknown path</td></tr>
+      <tr><td>Multi-agent</td><td>Yes (nested)</td><td>Yes</td><td>Parallel work, validation, specialization</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout when">
+    <div class="callout-title">When to use this mental model</div>
+    <p>Before building anything, ask: does this require a loop? If a single LLM call with the right tools can solve the problem, use that. The loop is what creates complexity — justify it explicitly.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Building agents for simple tasks.</strong> If you know all the steps upfront, write a script. Agents are for tasks where the path isn't known until execution.</li>
+      <li><strong>No stopping condition.</strong> Always define when an agent is done before you build it. "Runs until done" is not a stopping condition.</li>
+      <li><strong>Ignoring cost.</strong> An agent that runs 20 iterations at $0.01 per call costs $0.20 per execution. At scale, this matters. Measure before you deploy.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHAPTER 2 -->
+<section class="chapter" id="ch2">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 1 — Foundations</div>
+    <div class="chapter-num">Chapter 02</div>
+    <h1>The Claude Code Agent Model</h1>
+    <p class="chapter-intro">Claude Code has a specific model for how agents work: subagents, tools, permissions, and CLAUDE.md context. Understanding this model is prerequisite to using it well.</p>
+  </div>
+
+  <h2>How Claude Code runs agents</h2>
+  <p>Claude Code exposes the <code>Task</code> tool, which spawns a subagent: a new Claude instance with its own context window, running in a sandboxed environment. The parent agent can pass a prompt and receive back the result when the subagent completes.</p>
+
+  <p>The key constraint: <strong>subagents do not share context with their parent</strong>. Each subagent starts fresh with only what you explicitly give it in the prompt. This is a feature, not a bug — it enforces clean interfaces between agent stages.</p>
+
+  <h2>Subagent types</h2>
+
+  <table>
+    <thead><tr><th>Type</th><th>How spawned</th><th>Context scope</th><th>Typical use</th></tr></thead>
+    <tbody>
+      <tr><td>Inline agent</td><td>Model decides to use Task tool</td><td>Receives explicit prompt</td><td>Parallel subtasks, isolation</td></tr>
+      <tr><td>Scheduled agent</td><td>Cron / external trigger</td><td>Starts fresh from CLAUDE.md</td><td>Recurring jobs, monitoring</td></tr>
+      <tr><td>Piped agent</td><td>CLI: <code>claude -p "..."</code></td><td>Prompt only</td><td>Scripted pipelines, CI</td></tr>
+    </tbody>
+  </table>
+
+  <h2>The tool surface</h2>
+  <p>Every Claude Code agent has access to the same core tools. Understanding which tools are available — and which are expensive — shapes how you design agents.</p>
+
+  <table>
+    <thead><tr><th>Tool</th><th>Cost</th><th>Side effects</th></tr></thead>
+    <tbody>
+      <tr><td><code>Read</code>, <code>Glob</code>, <code>Grep</code></td><td>Low</td><td>None (read-only)</td></tr>
+      <tr><td><code>Write</code>, <code>Edit</code></td><td>Low</td><td>Filesystem changes</td></tr>
+      <tr><td><code>Bash</code></td><td>Medium</td><td>Arbitrary side effects</td></tr>
+      <tr><td><code>Task</code> (spawn subagent)</td><td>High</td><td>Token cost multiplied</td></tr>
+      <tr><td>MCP tools</td><td>Varies</td><td>External API calls</td></tr>
+    </tbody>
+  </table>
+
+  <h2>CLAUDE.md: the agent's constitution</h2>
+  <p>Every agent session loads <code>CLAUDE.md</code> from the working directory and parent directories. This file is the primary mechanism for encoding persistent agent behavior — conventions, prohibited patterns, canonical paths, tool usage rules.</p>
+
+  <p>Think of CLAUDE.md as a system prompt that survives across sessions. Whatever you want every agent to know without being told, put it there.</p>
+
+  <div class="code-label"><span>CLAUDE.md — minimal agent constitution</span><span class="code-lang">markdown</span></div>
+  <pre><code><span class="cmt"># Agent Constitution</span>
+
+<span class="kw">## Canonical Paths</span>
+- Output: <span class="str">`/output/`</span> only
+- Logs: <span class="str">`/logs/YYYY-MM-DD.log`</span>
+- Never write to project root
+
+<span class="kw">## Error Handling</span>
+- Wrap all Bash calls in try/except equivalents
+- On failure: log the error, do not retry more than 3 times
+- Always report failures explicitly — never silently continue
+
+<span class="kw">## Prohibited Actions</span>
+- Never delete files without explicit instruction
+- Never commit to git without verification step
+- Never call external APIs with user data without sanitization
+
+<span class="kw">## Tool Preferences</span>
+- Read/Glob/Grep over Bash for file operations
+- Edit over Write for existing files
+- Report tool errors immediately, do not swallow them</code></pre>
+
+  <h2>Permissions model</h2>
+  <p>Claude Code uses an allowlist permission model. In non-interactive mode (<code>--dangerously-skip-permissions</code>), all tool calls are permitted without confirmation — this is the mode used in pipelines and cron jobs. In interactive mode, destructive actions prompt the user.</p>
+
+  <div class="callout warning">
+    <div class="callout-title">Permission design rule</div>
+    <p>Design agents to work correctly with the minimum permission set. If an agent only needs to read files and call one API, it shouldn't need Bash access. Minimize the blast radius of a misbehaving agent by constraining its tools at the CLAUDE.md level.</p>
+  </div>
+
+  <h2>The skill.md pattern</h2>
+  <p>Complex behaviors are encoded in skill files — markdown documents that an agent reads at the start of a task to load specialized knowledge. This is how you give an agent domain expertise without burning tokens on every session.</p>
+
+  <div class="code-label"><span>.claude/skills/code-reviewer/skill.md</span><span class="code-lang">markdown</span></div>
+  <pre><code><span class="cmt"># Code Review Skill</span>
+
+<span class="kw">## Activation</span>
+Load this skill when asked to review code.
+
+<span class="kw">## Review Protocol</span>
+1. Read all changed files before commenting on any
+2. Check: correctness, error handling, tests, naming
+3. Output structured report: CRITICAL / WARNING / SUGGESTION
+4. Never suggest rewrites without explaining the bug being fixed
+
+<span class="kw">## Output Format</span>
+<span class="str">```
+REVIEW SUMMARY
+Files: N
+Critical issues: N
+Warnings: N
+
+CRITICAL
+[file:line] description — why this is a problem
+
+WARNING
+[file:line] description
+
+SUGGESTION
+[file:line] description (optional, skip if none)
+```</span>
+
+<span class="kw">## What NOT to flag</span>
+- Style preferences without a concrete impact
+- Things that work correctly even if you'd write them differently
+- Missing features not in scope of the PR</code></pre>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Assuming context carries across subagents.</strong> It doesn't. Always pass everything a subagent needs explicitly in its prompt.</li>
+      <li><strong>Putting logic in CLAUDE.md that belongs in a skill.</strong> CLAUDE.md loads every session. Keep it to universal constraints. Domain knowledge goes in skills loaded on demand.</li>
+      <li><strong>Spawning subagents for tasks that don't need isolation.</strong> The Task tool costs tokens. For sequential steps in the same context, just do them sequentially.</li>
+    </ul>
+  </div>
+</section>
+
+
+<hr class="divider">
+
+<!-- CHAPTER 3 -->
+<section class="chapter" id="ch3">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 1 — Foundations</div>
+    <div class="chapter-num">Chapter 03</div>
+    <h1>Agents vs Direct Tool Calls</h1>
+    <p class="chapter-intro">The most common mistake in agent design is using an agent when a direct tool call would work. More moving parts = more failure modes. Add complexity only when it earns its keep.</p>
+  </div>
+
+  <h2>The decision tree</h2>
+  <p>Before reaching for an agent, answer these questions in order:</p>
+
+  <ol>
+    <li><strong>Do I know all the steps upfront?</strong> If yes, write a script. Scripts are deterministic, testable, and cheap.</li>
+    <li><strong>Can a single LLM call with the right context solve it?</strong> If yes, use a single call. Add retrieval or tool calls as needed, but stay in one turn.</li>
+    <li><strong>Does the task require dynamic decision-making across multiple steps?</strong> If yes, consider an agent.</li>
+    <li><strong>Does the task benefit from parallel execution or independent validation?</strong> If yes, consider multi-agent.</li>
+  </ol>
+
+  <h2>When a direct call wins</h2>
+
+  <p>A direct call (single LLM invocation, possibly with tools) is preferable when:</p>
+  <ul>
+    <li>The input-output transformation is defined: summarize this, classify that, extract these fields</li>
+    <li>You can write the full prompt in advance with all needed context</li>
+    <li>The result is self-contained — no need to check external state mid-task</li>
+    <li>Latency matters and you can't afford multiple round-trips</li>
+  </ul>
+
+  <div class="code-label"><span>Direct call — correct usage</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> anthropic
+
+client = anthropic.Anthropic()
+
+<span class="cmt"># Good: all context available, single transformation</span>
+<span class="kw">def</span> <span class="fn">classify_bug_severity</span>(bug_report: str, codebase_context: str) -> str:
+    response = client.messages.create(
+        model=<span class="str">"claude-opus-4-5"</span>,
+        max_tokens=<span class="num">256</span>,
+        messages=[{
+            <span class="str">"role"</span>: <span class="str">"user"</span>,
+            <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""
+Classify this bug report as CRITICAL/HIGH/MEDIUM/LOW.
+
+Codebase context:
+{codebase_context}
+
+Bug report:
+{bug_report}
+
+Reply with only the severity label and one sentence justification.
+"""</span>
+        }]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text</code></pre>
+
+  <h2>When an agent wins</h2>
+
+  <p>An agent earns its complexity when:</p>
+  <ul>
+    <li>The task requires <strong>exploring unknown territory</strong> — you don't know which files are relevant until you start reading</li>
+    <li>The task requires <strong>dynamic decision-making</strong> — step N's action depends on step N-1's result</li>
+    <li>The task requires <strong>external state checks</strong> — run tests, check if a service is up, verify a file was written</li>
+    <li>The task benefits from <strong>self-correction</strong> — detect an error, adjust, retry</li>
+  </ul>
+
+  <div class="code-label"><span>Agent — correct usage (via Claude Code CLI)</span><span class="code-lang">bash</span></div>
+  <pre><code><span class="cmt"># Good: unknown path, multi-step, self-correcting</span>
+claude --dangerously-skip-permissions -p <span class="str">"
+Find all Python files in src/ that import 'requests' directly
+instead of using our internal http_client wrapper.
+For each one:
+1. Read the file to understand the usage
+2. Determine if it can be safely migrated
+3. Perform the migration if safe
+4. Run the tests for that module
+5. Report what you changed and what needs manual review
+"</span></code></pre>
+
+  <h2>The cost of getting it wrong</h2>
+
+  <table>
+    <thead><tr><th>Wrong choice</th><th>Consequence</th></tr></thead>
+    <tbody>
+      <tr><td>Agent when script would work</td><td>10-50x cost, unpredictable behavior, harder to test</td></tr>
+      <tr><td>Script when agent needed</td><td>Brittle hardcoding, breaks on edge cases, manual intervention required</td></tr>
+      <tr><td>Single agent when multi-agent needed</td><td>Context overflow, conflation of separate concerns, no validation</td></tr>
+      <tr><td>Multi-agent when single agent suffices</td><td>Coordination overhead, harder debugging, unnecessary latency</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout when">
+    <div class="callout-title">Heuristic that works in practice</div>
+    <p>If you can fully specify the task in a bullet list before running it, use a script or single call. If you find yourself writing "and then depending on what you find..." — that's agent territory.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Wrapping every LLM call in an agent framework.</strong> Framework overhead adds latency and cost. Use a framework when you need orchestration, not as default.</li>
+      <li><strong>Building agents for one-shot tasks.</strong> If the task only runs once and the path is clear, write the script. Agents are for tasks you'll run repeatedly with variable inputs.</li>
+      <li><strong>Not benchmarking the simple approach first.</strong> Build the dumb version, measure it, then decide if agents improve it enough to justify the complexity.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHAPTER 4 -->
+<section class="chapter" id="ch4">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 1 — Foundations</div>
+    <div class="chapter-num">Chapter 04</div>
+    <h1>Agent Communication Patterns</h1>
+    <p class="chapter-intro">How agents pass information to each other determines system reliability. Clean interfaces between agents are what make multi-agent systems debuggable.</p>
+  </div>
+
+  <h2>The four communication channels</h2>
+
+  <table>
+    <thead><tr><th>Channel</th><th>Mechanism</th><th>Pros</th><th>Cons</th></tr></thead>
+    <tbody>
+      <tr><td>Prompt injection</td><td>Pass data in the subagent prompt</td><td>Simple, explicit</td><td>Token cost, size limits</td></tr>
+      <tr><td>Filesystem</td><td>Agent A writes file, Agent B reads it</td><td>Durable, inspectable</td><td>Requires agreed schema</td></tr>
+      <tr><td>Structured output</td><td>Agent returns JSON/YAML parsed by parent</td><td>Typed, parseable</td><td>Model must reliably emit format</td></tr>
+      <tr><td>External store</td><td>Database, queue, key-value store</td><td>Decoupled, persistent</td><td>Operational overhead</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Prompt injection</h2>
+  <p>The simplest channel: serialize what Agent A knows and include it in Agent B's prompt. Works well for moderate amounts of structured data.</p>
+
+  <div class="code-label"><span>Passing structured data via prompt</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> json
+<span class="kw">from</span> anthropic <span class="kw">import</span> Anthropic
+
+client = Anthropic()
+
+<span class="kw">def</span> <span class="fn">run_subagent</span>(task: str, context: dict) -> str:
+    context_str = json.dumps(context, indent=<span class="num">2</span>)
+    prompt = <span class="fn">f</span><span class="str">"""You are a specialized agent. Here is your context:
+
+{context_str}
+
+Your task:
+{task}
+
+Complete the task and report results in JSON format with keys:
+- success (bool)
+- result (any)
+- errors (list of strings, empty if none)
+"""</span>
+    
+    response = client.messages.create(
+        model=<span class="str">"claude-sonnet-4-5"</span>,
+        max_tokens=<span class="num">4096</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text</code></pre>
+
+  <h2>Filesystem as message bus</h2>
+  <p>For larger payloads or when durability matters, write to an agreed file location. Each agent reads what it needs, writes what it produces. This naturally creates an audit trail.</p>
+
+  <div class="code-label"><span>Filesystem handoff protocol</span><span class="code-lang">markdown</span></div>
+  <pre><code><span class="cmt"># In CLAUDE.md or skill file</span>
+
+<span class="kw">## Inter-Agent Handoff Protocol</span>
+
+All agents write their output to: <span class="str">`/tmp/agent-pipeline/{run_id}/{stage}.json`</span>
+
+Output schema (all stages must comply):
+<span class="str">```json
+{
+  "stage": "string",
+  "agent": "string",
+  "timestamp": "ISO-8601",
+  "success": true,
+  "result": {},
+  "errors": [],
+  "metadata": {}
+}
+```</span>
+
+Next agent reads previous stage output before starting.
+On error: write success=false, populate errors[], halt.</code></pre>
+
+  <h2>Structured output contracts</h2>
+  <p>When a parent agent needs to parse a subagent's output, enforce a schema. Use <code>tool_use</code> or require JSON in the prompt — never try to parse free-form text between agents.</p>
+
+  <div class="code-label"><span>Enforcing structured output with tool_use</span><span class="code-lang">python</span></div>
+  <pre><code>analysis_tool = {
+    <span class="str">"name"</span>: <span class="str">"report_analysis"</span>,
+    <span class="str">"description"</span>: <span class="str">"Report analysis results in structured format"</span>,
+    <span class="str">"input_schema"</span>: {
+        <span class="str">"type"</span>: <span class="str">"object"</span>,
+        <span class="str">"properties"</span>: {
+            <span class="str">"issues_found"</span>: {<span class="str">"type"</span>: <span class="str">"integer"</span>},
+            <span class="str">"severity"</span>: {<span class="str">"type"</span>: <span class="str">"string"</span>, <span class="str">"enum"</span>: [<span class="str">"critical"</span>, <span class="str">"high"</span>, <span class="str">"medium"</span>, <span class="str">"low"</span>]},
+            <span class="str">"summary"</span>: {<span class="str">"type"</span>: <span class="str">"string"</span>},
+            <span class="str">"recommendations"</span>: {<span class="str">"type"</span>: <span class="str">"array"</span>, <span class="str">"items"</span>: {<span class="str">"type"</span>: <span class="str">"string"</span>}}
+        },
+        <span class="str">"required"</span>: [<span class="str">"issues_found"</span>, <span class="str">"severity"</span>, <span class="str">"summary"</span>]
+    }
+}
+
+response = client.messages.create(
+    model=<span class="str">"claude-sonnet-4-5"</span>,
+    max_tokens=<span class="num">2048</span>,
+    tools=[analysis_tool],
+    tool_choice={<span class="str">"type"</span>: <span class="str">"tool"</span>, <span class="str">"name"</span>: <span class="str">"report_analysis"</span>},
+    messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+)
+
+<span class="cmt"># Guaranteed structured output — no parsing needed</span>
+result = response.content[<span class="num">0</span>].input</code></pre>
+
+  <div class="callout tip">
+    <div class="callout-title">Design principle</div>
+    <p>Treat inter-agent communication like an API contract. Define the schema before you build either agent. If you can't describe what Agent A passes to Agent B in a JSON schema, the design isn't ready.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Parsing free-form text between agents.</strong> Regex on LLM output is fragile. Use tool_use or explicitly request JSON with a defined schema.</li>
+      <li><strong>Passing entire codebases through prompt injection.</strong> There are token limits. Use filesystem or retrieval for large payloads.</li>
+      <li><strong>No shared error schema.</strong> When a subagent fails, the parent needs to know in a structured way. Define error reporting format upfront.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- PART 2 -->
+<div class="part-header">
+  <div class="part-label">Part Two</div>
+  <div class="part-title">Patterns</div>
+  <p class="part-desc">Six battle-tested patterns for structuring multi-agent systems. Each solves a distinct class of problem.</p>
+  <div class="part-line"></div>
+</div>
+
+<!-- CHAPTER 5 -->
+<section class="chapter" id="ch5">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 2 — Patterns</div>
+    <div class="chapter-num">Chapter 05</div>
+    <h1>The Builder-Validator Pattern</h1>
+    <p class="chapter-intro">Separate the agent that builds from the agent that validates. The builder is optimistic. The validator is adversarial. Neither knows what the other will do.</p>
+  </div>
+
+  <h2>The problem it solves</h2>
+  <p>A single agent that builds and validates its own work has a conflict of interest. It tends to validate what it built, not what the requirements say. Separating the roles forces honest evaluation.</p>
+
+  <div class="diagram">  BUILDER AGENT                VALIDATOR AGENT
+  ─────────────────            ───────────────────
+  Receives: spec               Receives: spec + output
+  Goal: produce output         Goal: find failures
+  Bias: "I built this well"    Bias: "Does this meet spec?"
+        │                              │
+        └──── artifact ────────────────┘
+                                       │
+                               pass / fail + reasons</div>
+
+  <h2>Implementation</h2>
+
+  <div class="code-label"><span>builder_validator.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> anthropic
+<span class="kw">import</span> json
+
+client = anthropic.Anthropic()
+
+<span class="kw">def</span> <span class="fn">builder_agent</span>(spec: str, context: dict = {}) -> str:
+    <span class="str">"""Produces an artifact from a spec. Optimistic builder."""</span>
+    prompt = <span class="fn">f</span><span class="str">"""You are a builder. Produce a complete implementation of this spec.
+
+SPEC:
+{spec}
+
+CONTEXT:
+{json.dumps(context, indent=2)}
+
+Produce the implementation. Do not add validation logic — that's handled separately.
+Focus on correctness and completeness."""</span>
+
+    response = client.messages.create(
+        model=<span class="str">"claude-sonnet-4-5"</span>,
+        max_tokens=<span class="num">8192</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text
+
+<span class="kw">def</span> <span class="fn">validator_agent</span>(spec: str, artifact: str) -> dict:
+    <span class="str">"""Validates an artifact against a spec. Adversarial validator."""</span>
+    prompt = <span class="fn">f</span><span class="str">"""You are a validator. Your job is to find failures.
+
+ORIGINAL SPEC:
+{spec}
+
+ARTIFACT TO VALIDATE:
+{artifact}
+
+Be thorough and adversarial. Check:
+1. Does it fulfill every requirement in the spec?
+2. Are there edge cases not handled?
+3. Are there errors or bugs?
+4. Is anything missing?
+
+Respond in JSON:
+{{
+  "passed": false,
+  "score": 0-100,
+  "failures": ["list of specific failures"],
+  "warnings": ["non-blocking issues"],
+  "verdict": "one sentence summary"
+}}</span>"""
+
+    response = client.messages.create(
+        model=<span class="str">"claude-sonnet-4-5"</span>,
+        max_tokens=<span class="num">2048</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    
+    text = response.content[<span class="num">0</span>].text
+    <span class="cmt"># Extract JSON from response</span>
+    start = text.find(<span class="str">'{'</span>)
+    end = text.rfind(<span class="str">'}'</span>) + <span class="num">1</span>
+    <span class="kw">return</span> json.loads(text[start:end])
+
+<span class="kw">def</span> <span class="fn">build_and_validate</span>(spec: str, max_iterations: int = <span class="num">3</span>) -> dict:
+    <span class="str">"""Full build-validate loop with automatic retry on failure."""</span>
+    history = []
+    
+    <span class="kw">for</span> iteration <span class="kw">in</span> range(max_iterations):
+        <span class="cmt"># Include previous failures in builder context</span>
+        context = {<span class="str">"iteration"</span>: iteration, <span class="str">"previous_failures"</span>: history}
+        
+        artifact = builder_agent(spec, context)
+        validation = validator_agent(spec, artifact)
+        
+        history.append({
+            <span class="str">"iteration"</span>: iteration,
+            <span class="str">"score"</span>: validation[<span class="str">"score"</span>],
+            <span class="str">"failures"</span>: validation[<span class="str">"failures"</span>]
+        })
+        
+        <span class="kw">if</span> validation[<span class="str">"passed"</span>]:
+            <span class="kw">return</span> {
+                <span class="str">"success"</span>: <span class="kw">True</span>,
+                <span class="str">"artifact"</span>: artifact,
+                <span class="str">"iterations"</span>: iteration + <span class="num">1</span>,
+                <span class="str">"final_score"</span>: validation[<span class="str">"score"</span>]
+            }
+    
+    <span class="kw">return</span> {
+        <span class="str">"success"</span>: <span class="kw">False</span>,
+        <span class="str">"artifact"</span>: artifact,
+        <span class="str">"iterations"</span>: max_iterations,
+        <span class="str">"history"</span>: history
+    }</code></pre>
+
+  <h2>Skill file variant</h2>
+  <div class="code-label"><span>.claude/skills/builder-validator/skill.md</span><span class="code-lang">markdown</span></div>
+  <pre><code><span class="kw">## Builder-Validator Activation</span>
+
+When building something that will be evaluated:
+1. First, complete the full implementation
+2. Then, switch perspective: "I am now a validator who did not build this"
+3. Apply the validation checklist without mercy
+4. If failures found: rebuild with failures in context, validate again
+5. Maximum 3 iterations before escalating to human review
+
+<span class="kw">## Validator Checklist</span>
+- [ ] Every requirement in the spec is satisfied
+- [ ] Edge cases are handled (empty input, null, overflow)
+- [ ] Errors are caught and reported, not silently swallowed
+- [ ] The output format matches what was specified
+- [ ] No assumptions were made that aren't in the spec</code></pre>
+
+  <div class="callout when">
+    <div class="callout-title">When to use this</div>
+    <p>Code generation, document writing, configuration generation, data transformation — any task where you can define a spec upfront and check the output against it. Especially valuable when the output will be deployed or sent to users.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Using the same model for both roles.</strong> Works, but give each a different system prompt that emphasizes their distinct goal. The builder should not be defensive; the validator should not be lenient.</li>
+      <li><strong>No iteration limit.</strong> Always set a max. If the build-validate loop hasn't converged in 3-4 iterations, the spec is probably ambiguous — human review is needed.</li>
+      <li><strong>Vague validation criteria.</strong> "Is it good?" is not a validation spec. Define exactly what pass means before running the builder.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHAPTER 6 -->
+<section class="chapter" id="ch6">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 2 — Patterns</div>
+    <div class="chapter-num">Chapter 06</div>
+    <h1>Fan-out / Fan-in</h1>
+    <p class="chapter-intro">Decompose a large task into parallel subtasks, run them simultaneously, then aggregate the results. Trading sequential latency for parallel throughput.</p>
+  </div>
+
+  <h2>The problem it solves</h2>
+  <p>Some tasks are embarrassingly parallel: analyzing 50 files, researching 10 topics, processing 100 records. Running them sequentially is slow and wastes the parallelism available. Fan-out runs them simultaneously and fan-in combines the results.</p>
+
+  <div class="diagram">              INPUT
+                │
+        ┌───────┴───────┐
+      split into N subtasks
+        │       │       │
+        ↓       ↓       ↓
+    Agent-1  Agent-2  Agent-3   ← parallel execution
+        │       │       │
+        └───────┴───────┘
+              │
+          aggregate
+              │
+           OUTPUT</div>
+
+  <h2>Implementation with asyncio</h2>
+
+  <div class="code-label"><span>fan_out.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> asyncio
+<span class="kw">import</span> anthropic
+<span class="kw">from</span> typing <span class="kw">import</span> TypedDict
+
+client = anthropic.AsyncAnthropic()
+
+<span class="kw">class</span> <span class="typ">SubtaskResult</span>(TypedDict):
+    subtask_id: str
+    success: bool
+    result: str
+    error: str | <span class="kw">None</span>
+
+<span class="kw">async def</span> <span class="fn">run_subtask</span>(subtask_id: str, task: str, context: str) -> <span class="typ">SubtaskResult</span>:
+    <span class="str">"""Run a single subtask. Returns structured result even on failure."""</span>
+    <span class="kw">try</span>:
+        response = <span class="kw">await</span> client.messages.create(
+            model=<span class="str">"claude-sonnet-4-5"</span>,
+            max_tokens=<span class="num">4096</span>,
+            messages=[{
+                <span class="str">"role"</span>: <span class="str">"user"</span>,
+                <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""Subtask ID: {subtask_id}
+
+Context: {context}
+
+Task: {task}
+
+Complete this specific subtask. Be thorough but focused only on this task."""</span>
+            }]
+        )
+        <span class="kw">return</span> <span class="typ">SubtaskResult</span>(
+            subtask_id=subtask_id,
+            success=<span class="kw">True</span>,
+            result=response.content[<span class="num">0</span>].text,
+            error=<span class="kw">None</span>
+        )
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        <span class="kw">return</span> <span class="typ">SubtaskResult</span>(
+            subtask_id=subtask_id,
+            success=<span class="kw">False</span>,
+            result=<span class="str">""</span>,
+            error=str(e)
+        )
+
+<span class="kw">async def</span> <span class="fn">fan_out</span>(subtasks: list[dict]) -> list[<span class="typ">SubtaskResult</span>]:
+    <span class="str">"""Run all subtasks in parallel, return all results."""</span>
+    coros = [
+        run_subtask(s[<span class="str">"id"</span>], s[<span class="str">"task"</span>], s[<span class="str">"context"</span>])
+        <span class="kw">for</span> s <span class="kw">in</span> subtasks
+    ]
+    <span class="kw">return</span> <span class="kw">await</span> asyncio.gather(*coros)
+
+<span class="kw">def</span> <span class="fn">fan_in</span>(results: list[<span class="typ">SubtaskResult</span>], aggregation_prompt: str) -> str:
+    <span class="str">"""Synchronous aggregation step after fan-out completes."""</span>
+    <span class="cmt"># Separate successes from failures</span>
+    successes = [r <span class="kw">for</span> r <span class="kw">in</span> results <span class="kw">if</span> r[<span class="str">"success"</span>]]
+    failures = [r <span class="kw">for</span> r <span class="kw">in</span> results <span class="kw">if</span> <span class="kw">not</span> r[<span class="str">"success"</span>]]
+    
+    results_text = <span class="str">"\n\n"</span>.join([
+        <span class="fn">f</span><span class="str">"=== {r['subtask_id']} ===\n{r['result']}"</span>
+        <span class="kw">for</span> r <span class="kw">in</span> successes
+    ])
+    
+    failures_text = <span class="str">"\n"</span>.join([
+        <span class="fn">f</span><span class="str">"- {r['subtask_id']}: {r['error']}"</span>
+        <span class="kw">for</span> r <span class="kw">in</span> failures
+    ])
+    
+    client_sync = anthropic.Anthropic()
+    response = client_sync.messages.create(
+        model=<span class="str">"claude-opus-4-5"</span>,  <span class="cmt"># Upgrade for aggregation</span>
+        max_tokens=<span class="num">8192</span>,
+        messages=[{
+            <span class="str">"role"</span>: <span class="str">"user"</span>,
+            <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""{aggregation_prompt}
+
+SUBTASK RESULTS ({len(successes)} succeeded, {len(failures)} failed):
+
+{results_text}
+
+{"FAILED SUBTASKS:" + chr(10) + failures_text if failures else ""}
+
+Synthesize a complete, coherent response from these results."""</span>
+        }]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text
+
+<span class="cmt"># Usage example</span>
+<span class="kw">async def</span> <span class="fn">analyze_codebase</span>(files: list[str]) -> str:
+    subtasks = [
+        {<span class="str">"id"</span>: f, <span class="str">"task"</span>: <span class="str">"Analyze this file for security vulnerabilities"</span>, <span class="str">"context"</span>: f}
+        <span class="kw">for</span> f <span class="kw">in</span> files
+    ]
+    results = <span class="kw">await</span> fan_out(subtasks)
+    <span class="kw">return</span> fan_in(results, <span class="str">"Produce a security audit report from these file analyses."</span>)</code></pre>
+
+  <h2>Rate limit management</h2>
+  <p>Fan-out hits rate limits fast. Use a semaphore to cap concurrency:</p>
+
+  <div class="code-label"><span>Rate-limited fan-out</span><span class="code-lang">python</span></div>
+  <pre><code>CONCURRENCY_LIMIT = <span class="num">5</span>  <span class="cmt"># Anthropic tier-dependent</span>
+semaphore = asyncio.Semaphore(CONCURRENCY_LIMIT)
+
+<span class="kw">async def</span> <span class="fn">run_subtask_limited</span>(subtask_id: str, task: str, context: str):
+    <span class="kw">async with</span> semaphore:
+        <span class="kw">return</span> <span class="kw">await</span> run_subtask(subtask_id, task, context)</code></pre>
+
+  <div class="callout when">
+    <div class="callout-title">When to use this</div>
+    <p>Batch processing (files, records, URLs), parallel research across independent topics, multi-language translation, multi-model ensemble (run same task on different models, aggregate). Any task where N subtasks don't depend on each other's results.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Ignoring partial failures.</strong> If 3 of 10 subtasks fail, the fan-in still needs to know. Never discard failure information — include it in the aggregation.</li>
+      <li><strong>Using expensive models for all subtasks.</strong> Fan-out multiplies cost by N. Use claude-haiku for individual subtasks and claude-opus only for aggregation.</li>
+      <li><strong>No concurrency limit.</strong> Unbounded parallel requests will hit rate limits and fail. Always use a semaphore.</li>
+    </ul>
+  </div>
+</section>
+
+
+<hr class="divider">
+
+<!-- CHAPTER 7 -->
+<section class="chapter" id="ch7">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 2 — Patterns</div>
+    <div class="chapter-num">Chapter 07</div>
+    <h1>Pipeline Pattern</h1>
+    <p class="chapter-intro">A sequential chain where each stage transforms the output of the previous one. Predictable, inspectable, and easy to debug — the right default for most multi-agent work.</p>
+  </div>
+
+  <h2>The problem it solves</h2>
+  <p>When a task has a well-defined sequence of transformations — each depending on the last — a pipeline encodes that sequence explicitly. Each stage has a single responsibility. Failures are easy to locate: the pipeline stopped at stage N.</p>
+
+  <div class="diagram">  Input
+    │
+    ↓
+  Stage 1: Fetch + Parse
+    │
+    ↓
+  Stage 2: Analyze
+    │
+    ↓
+  Stage 3: Generate
+    │
+    ↓
+  Stage 4: Validate
+    │
+    ↓
+  Output</div>
+
+  <h2>Implementation</h2>
+
+  <div class="code-label"><span>pipeline.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, field
+<span class="kw">from</span> typing <span class="kw">import</span> Callable, Any
+<span class="kw">import</span> anthropic
+<span class="kw">import</span> time
+
+@dataclass
+<span class="kw">class</span> <span class="typ">PipelineStage</span>:
+    name: str
+    prompt_template: str  <span class="cmt"># Use {input} and {context} placeholders</span>
+    model: str = <span class="str">"claude-sonnet-4-5"</span>
+    max_tokens: int = <span class="num">4096</span>
+    transform: Callable | <span class="kw">None</span> = <span class="kw">None</span>  <span class="cmt"># Optional post-processing</span>
+
+@dataclass
+<span class="kw">class</span> <span class="typ">PipelineResult</span>:
+    success: bool
+    output: Any
+    stages_completed: list[str] = field(default_factory=list)
+    failed_at: str | <span class="kw">None</span> = <span class="kw">None</span>
+    error: str | <span class="kw">None</span> = <span class="kw">None</span>
+    stage_outputs: dict = field(default_factory=dict)
+
+<span class="kw">class</span> <span class="typ">Pipeline</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, stages: list[<span class="typ">PipelineStage</span>], context: dict = {}):
+        self.stages = stages
+        self.context = context
+        self.client = anthropic.Anthropic()
+
+    <span class="kw">def</span> <span class="fn">run</span>(self, initial_input: str) -> <span class="typ">PipelineResult</span>:
+        current_input = initial_input
+        stage_outputs = {}
+        
+        <span class="kw">for</span> stage <span class="kw">in</span> self.stages:
+            <span class="kw">try</span>:
+                prompt = stage.prompt_template.format(
+                    input=current_input,
+                    context=self.context,
+                    **stage_outputs  <span class="cmt"># Previous stage outputs available</span>
+                )
+                
+                response = self.client.messages.create(
+                    model=stage.model,
+                    max_tokens=stage.max_tokens,
+                    messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+                )
+                
+                output = response.content[<span class="num">0</span>].text
+                <span class="kw">if</span> stage.transform:
+                    output = stage.transform(output)
+                
+                stage_outputs[stage.name] = output
+                current_input = output
+                
+            <span class="kw">except</span> Exception <span class="kw">as</span> e:
+                <span class="kw">return</span> <span class="typ">PipelineResult</span>(
+                    success=<span class="kw">False</span>,
+                    output=<span class="kw">None</span>,
+                    stages_completed=list(stage_outputs.keys()),
+                    failed_at=stage.name,
+                    error=str(e),
+                    stage_outputs=stage_outputs
+                )
+        
+        <span class="kw">return</span> <span class="typ">PipelineResult</span>(
+            success=<span class="kw">True</span>,
+            output=current_input,
+            stages_completed=list(stage_outputs.keys()),
+            stage_outputs=stage_outputs
+        )
+
+<span class="cmt"># Example: code migration pipeline</span>
+migration_pipeline = <span class="typ">Pipeline</span>(stages=[
+    <span class="typ">PipelineStage</span>(
+        name=<span class="str">"parse"</span>,
+        model=<span class="str">"claude-haiku-4-5"</span>,  <span class="cmt"># Fast, cheap for parsing</span>
+        prompt_template=<span class="str">"""Parse this code and identify all patterns that need migration.
+Output a JSON list of: {{"pattern": "...", "location": "...", "reason": "..."}}
+
+Code:
+{input}"""</span>
+    ),
+    <span class="typ">PipelineStage</span>(
+        name=<span class="str">"migrate"</span>,
+        model=<span class="str">"claude-sonnet-4-5"</span>,  <span class="cmt"># Better reasoning for transformation</span>
+        prompt_template=<span class="str">"""Migrate this code. Patterns to migrate: {parse}
+
+Original code:
+{input}
+
+Apply all migrations. Output the complete migrated code."""</span>
+    ),
+    <span class="typ">PipelineStage</span>(
+        name=<span class="str">"validate"</span>,
+        model=<span class="str">"claude-sonnet-4-5"</span>,
+        prompt_template=<span class="str">"""Validate this migrated code.
+Original patterns identified: {parse}
+Migrated code: {input}
+
+Confirm all patterns were migrated. List any remaining issues."""</span>
+    ),
+])</code></pre>
+
+  <div class="callout when">
+    <div class="callout-title">When to use this</div>
+    <p>Data transformation chains, content processing (fetch → extract → summarize → format), code migration, document generation. Whenever you can draw a clear linear flow before implementation.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">Optimization tip</div>
+    <p>Use cheaper models for early pipeline stages (parsing, extraction) and reserve expensive models for generation and reasoning stages. A 5-stage pipeline with claude-haiku on stages 1-2 can cut costs by 60% with no quality loss.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>No intermediate state persistence.</strong> Always save stage_outputs. When a pipeline fails at stage 4, you don't want to rerun stages 1-3.</li>
+      <li><strong>Monolithic prompts.</strong> If a pipeline stage's prompt is doing multiple things, split it into two stages. Each stage should have exactly one job.</li>
+      <li><strong>Silent stage failures.</strong> If stage 2 produces garbage, stage 3 will silently process garbage. Validate stage outputs before passing them forward.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHAPTER 8 -->
+<section class="chapter" id="ch8">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 2 — Patterns</div>
+    <div class="chapter-num">Chapter 08</div>
+    <h1>The Ralph Wiggum Loop</h1>
+    <p class="chapter-intro">Iterative self-improvement: the agent produces output, evaluates it, and improves it until a quality threshold is met. Named for the character who keeps trying regardless of results.</p>
+  </div>
+
+  <h2>The problem it solves</h2>
+  <p>First drafts are rarely final drafts. A single generation pass optimizes for completing the task, not for quality. The Ralph Wiggum loop explicitly separates generation from critique, giving the model permission to find fault with its own work.</p>
+
+  <div class="diagram">  Input
+    │
+    ↓
+  Generate ←──────────────┐
+    │                     │
+    ↓                     │
+  Critique             revision
+    │                     │
+    ↓                     │
+  Score ≥ threshold? ─No──┘
+    │ Yes
+    ↓
+  Output</div>
+
+  <h2>Implementation</h2>
+
+  <div class="code-label"><span>improvement_loop.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> anthropic
+<span class="kw">import</span> json
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass
+
+client = anthropic.Anthropic()
+
+@dataclass
+<span class="kw">class</span> <span class="typ">LoopConfig</span>:
+    quality_threshold: int = <span class="num">85</span>   <span class="cmt"># Score 0-100</span>
+    max_iterations: int = <span class="num">4</span>
+    generation_model: str = <span class="str">"claude-sonnet-4-5"</span>
+    critique_model: str = <span class="str">"claude-sonnet-4-5"</span>
+    criteria: list[str] = <span class="kw">None</span>    <span class="cmt"># What to evaluate</span>
+
+<span class="kw">def</span> <span class="fn">generate</span>(task: str, previous_drafts: list[dict], model: str) -> str:
+    history = <span class="str">""</span>
+    <span class="kw">if</span> previous_drafts:
+        history = <span class="str">"\n\n"</span>.join([
+            <span class="fn">f</span><span class="str">"DRAFT {d['iteration']+1} (score: {d['score']}):\n{d['draft']}\n\nCRITIQUE:\n{d['critique']}"</span>
+            <span class="kw">for</span> d <span class="kw">in</span> previous_drafts
+        ])
+    
+    prompt = <span class="fn">f</span><span class="str">"""Task: {task}
+
+{"Previous attempts and critiques:" + chr(10) + history if history else "This is your first attempt."}
+
+Produce {"an improved version" if history else "your best version"} now.
+{"Address every critique from the previous attempt." if history else ""}"""</span>
+    
+    response = client.messages.create(
+        model=model, max_tokens=<span class="num">8192</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text
+
+<span class="kw">def</span> <span class="fn">critique</span>(task: str, draft: str, criteria: list[str], model: str) -> dict:
+    criteria_str = <span class="str">"\n"</span>.join([<span class="fn">f</span><span class="str">"- {c}"</span> <span class="kw">for</span> c <span class="kw">in</span> criteria])
+    prompt = <span class="fn">f</span><span class="str">"""You are an expert critic. Be honest and demanding.
+
+Task: {task}
+
+Evaluation criteria:
+{criteria_str}
+
+Draft to evaluate:
+{draft}
+
+Score this draft 0-100 and explain what's missing or wrong.
+Respond in JSON:
+{{
+  "score": 75,
+  "passed": false,
+  "strengths": ["..."],
+  "weaknesses": ["specific, actionable critique"],
+  "improvement_instructions": "Concrete instructions for the next draft"
+}}</span>"""
+    
+    response = client.messages.create(
+        model=model, max_tokens=<span class="num">2048</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    text = response.content[<span class="num">0</span>].text
+    start, end = text.find(<span class="str">'{'</span>), text.rfind(<span class="str">'}'</span>) + <span class="num">1</span>
+    result = json.loads(text[start:end])
+    result[<span class="str">"passed"</span>] = result[<span class="str">"score"</span>] >= <span class="num">85</span>
+    <span class="kw">return</span> result
+
+<span class="kw">def</span> <span class="fn">improvement_loop</span>(task: str, config: <span class="typ">LoopConfig</span> = <span class="kw">None</span>) -> dict:
+    config = config <span class="kw">or</span> <span class="typ">LoopConfig</span>()
+    criteria = config.criteria <span class="kw">or</span> [
+        <span class="str">"Completeness: addresses all aspects of the task"</span>,
+        <span class="str">"Accuracy: factually correct, no errors"</span>,
+        <span class="str">"Clarity: well-structured, easy to follow"</span>,
+        <span class="str">"Quality: professional, polished output"</span>
+    ]
+    
+    history = []
+    <span class="kw">for</span> iteration <span class="kw">in</span> range(config.max_iterations):
+        draft = generate(task, history, config.generation_model)
+        evaluation = critique(task, draft, criteria, config.critique_model)
+        
+        history.append({
+            <span class="str">"iteration"</span>: iteration,
+            <span class="str">"draft"</span>: draft,
+            <span class="str">"score"</span>: evaluation[<span class="str">"score"</span>],
+            <span class="str">"critique"</span>: evaluation[<span class="str">"improvement_instructions"</span>]
+        })
+        
+        <span class="kw">if</span> evaluation[<span class="str">"passed"</span>]:
+            <span class="kw">return</span> {<span class="str">"success"</span>: <span class="kw">True</span>, <span class="str">"output"</span>: draft, <span class="str">"score"</span>: evaluation[<span class="str">"score"</span>],
+                    <span class="str">"iterations"</span>: iteration + <span class="num">1</span>, <span class="str">"history"</span>: history}
+    
+    best = max(history, key=<span class="kw">lambda</span> x: x[<span class="str">"score"</span>])
+    <span class="kw">return</span> {<span class="str">"success"</span>: <span class="kw">False</span>, <span class="str">"output"</span>: best[<span class="str">"draft"</span>], <span class="str">"score"</span>: best[<span class="str">"score"</span>],
+            <span class="str">"iterations"</span>: config.max_iterations, <span class="str">"history"</span>: history}</code></pre>
+
+  <div class="callout when">
+    <div class="callout-title">When to use this</div>
+    <p>Writing tasks (documentation, reports, summaries), code generation with quality requirements, configuration generation, any task where "good enough on first try" isn't acceptable and you can define quality criteria.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Vague criteria.</strong> "High quality" is not a criterion. "Addresses all five requirements from the spec" is. The critique is only as good as the criteria you give it.</li>
+      <li><strong>No convergence check.</strong> Sometimes the model improves from 70 to 72 to 71 — oscillating, not improving. Track score history and stop if improvement stalls.</li>
+      <li><strong>Too many iterations with expensive models.</strong> Use haiku for generation, sonnet for critique. Or set the threshold lower and accept a 75-score output over 4 expensive iterations.</li>
+    </ul>
+  </div>
+</section>
+
+
+<hr class="divider">
+
+<!-- CHAPTER 9 -->
+<section class="chapter" id="ch9">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 2 — Patterns</div>
+    <div class="chapter-num">Chapter 09</div>
+    <h1>Supervisor Pattern</h1>
+    <p class="chapter-intro">An orchestrator agent breaks down a complex task, delegates subtasks to specialized worker agents, and synthesizes the results. Separation of planning from execution.</p>
+  </div>
+
+  <h2>The problem it solves</h2>
+  <p>Complex tasks require both high-level planning (what needs to be done?) and domain-specific execution (how to do each part?). Mixing these in one agent bloats the context and creates conflated concerns. The supervisor handles planning; workers handle execution.</p>
+
+  <div class="diagram">                 SUPERVISOR
+                 (planning)
+                /    |    \
+               ↓     ↓     ↓
+         Worker-1 Worker-2 Worker-3
+         (code)   (docs)   (tests)
+               \    |    /
+                ↓   ↓   ↓
+                SUPERVISOR
+               (synthesis)</div>
+
+  <h2>Implementation</h2>
+
+  <div class="code-label"><span>supervisor.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> anthropic
+<span class="kw">import</span> json
+<span class="kw">from</span> typing <span class="kw">import</span> Callable
+
+client = anthropic.Anthropic()
+
+<span class="typ">WorkerFn</span> = Callable[[str, dict], str]
+
+<span class="kw">def</span> <span class="fn">supervisor_plan</span>(goal: str, available_workers: list[str]) -> list[dict]:
+    <span class="str">"""Supervisor breaks down a goal into delegatable subtasks."""</span>
+    workers_desc = <span class="str">"\n"</span>.join([<span class="fn">f</span><span class="str">"- {w}"</span> <span class="kw">for</span> w <span class="kw">in</span> available_workers])
+    
+    response = client.messages.create(
+        model=<span class="str">"claude-opus-4-5"</span>,  <span class="cmt"># Best model for planning</span>
+        max_tokens=<span class="num">2048</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""You are a supervisor agent. Break down this goal into subtasks.
+
+Goal: {goal}
+
+Available worker types:
+{workers_desc}
+
+Decompose the goal into sequential subtasks. Each subtask must:
+- Be assignable to exactly one worker type
+- Have clear input/output
+- Be executable independently given the context
+
+Respond in JSON:
+{{
+  "subtasks": [
+    {{
+      "id": "subtask-1",
+      "worker": "worker-name",
+      "instruction": "Specific instruction for this worker",
+      "depends_on": [],
+      "expected_output": "What this subtask should produce"
+    }}
+  ]
+}}</span>"""}]
+    )
+    text = response.content[<span class="num">0</span>].text
+    start, end = text.find(<span class="str">'{'</span>), text.rfind(<span class="str">'}'</span>) + <span class="num">1</span>
+    <span class="kw">return</span> json.loads(text[start:end])[<span class="str">"subtasks"</span>]
+
+<span class="kw">def</span> <span class="fn">supervisor_synthesize</span>(goal: str, subtask_results: list[dict]) -> str:
+    <span class="str">"""Supervisor synthesizes worker results into final output."""</span>
+    results_text = <span class="str">"\n\n"</span>.join([
+        <span class="fn">f</span><span class="str">"=== {r['subtask_id']} ({r['worker']}) ===\n{r['result']}"</span>
+        <span class="kw">for</span> r <span class="kw">in</span> subtask_results <span class="kw">if</span> r[<span class="str">"success"</span>]
+    ])
+    
+    response = client.messages.create(
+        model=<span class="str">"claude-opus-4-5"</span>,
+        max_tokens=<span class="num">8192</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""Synthesize these worker results into a coherent final output.
+
+Original goal: {goal}
+
+Worker results:
+{results_text}
+
+Produce the final, integrated output that fulfills the original goal."""</span>}]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text
+
+<span class="kw">class</span> <span class="typ">SupervisorSystem</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, workers: dict[str, <span class="typ">WorkerFn</span>]):
+        <span class="str">"""workers: {"worker-name": callable(instruction, context) -> str}"""</span>
+        self.workers = workers
+
+    <span class="kw">def</span> <span class="fn">run</span>(self, goal: str) -> dict:
+        <span class="cmt"># Plan</span>
+        subtasks = supervisor_plan(goal, list(self.workers.keys()))
+        
+        <span class="cmt"># Execute (respects depends_on ordering)</span>
+        completed = {}
+        results = []
+        
+        <span class="kw">for</span> subtask <span class="kw">in</span> subtasks:
+            <span class="cmt"># Build context from dependencies</span>
+            dep_context = {d: completed.get(d, <span class="str">"(not available)"</span>) <span class="kw">for</span> d <span class="kw">in</span> subtask[<span class="str">"depends_on"</span>]}
+            
+            worker_fn = self.workers.get(subtask[<span class="str">"worker"</span>])
+            <span class="kw">if</span> <span class="kw">not</span> worker_fn:
+                results.append({<span class="str">"subtask_id"</span>: subtask[<span class="str">"id"</span>], <span class="str">"worker"</span>: subtask[<span class="str">"worker"</span>],
+                                 <span class="str">"success"</span>: <span class="kw">False</span>, <span class="str">"result"</span>: <span class="str">f"Unknown worker: {subtask['worker']}"</span>})
+                <span class="kw">continue</span>
+            
+            <span class="kw">try</span>:
+                result = worker_fn(subtask[<span class="str">"instruction"</span>], dep_context)
+                completed[subtask[<span class="str">"id"</span>]] = result
+                results.append({<span class="str">"subtask_id"</span>: subtask[<span class="str">"id"</span>], <span class="str">"worker"</span>: subtask[<span class="str">"worker"</span>],
+                                 <span class="str">"success"</span>: <span class="kw">True</span>, <span class="str">"result"</span>: result})
+            <span class="kw">except</span> Exception <span class="kw">as</span> e:
+                results.append({<span class="str">"subtask_id"</span>: subtask[<span class="str">"id"</span>], <span class="str">"worker"</span>: subtask[<span class="str">"worker"</span>],
+                                 <span class="str">"success"</span>: <span class="kw">False</span>, <span class="str">"result"</span>: str(e)})
+        
+        <span class="cmt"># Synthesize</span>
+        final = supervisor_synthesize(goal, results)
+        <span class="kw">return</span> {<span class="str">"success"</span>: <span class="kw">True</span>, <span class="str">"output"</span>: final, <span class="str">"subtasks_run"</span>: len(results), <span class="str">"details"</span>: results}</code></pre>
+
+  <div class="callout when">
+    <div class="callout-title">When to use this</div>
+    <p>Complex multi-domain tasks: feature implementation (code + tests + docs), research synthesis (search + analyze + write), deployment (build + test + deploy + verify). Use when different subtasks need fundamentally different expertise or tools.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Using opus for all workers.</strong> The supervisor needs the best model for planning. Workers often don't. Downgrade worker models to cut costs.</li>
+      <li><strong>No dependency resolution.</strong> If subtask 3 depends on subtask 1, execute in order. Parallel workers that share state will conflict.</li>
+      <li><strong>Supervisor that does work.</strong> If the supervisor is executing code or writing files, it's doing worker work. Keep the supervisor in planning/synthesis mode only.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHAPTER 10 -->
+<section class="chapter" id="ch10">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 2 — Patterns</div>
+    <div class="chapter-num">Chapter 10</div>
+    <h1>Consensus Pattern</h1>
+    <p class="chapter-intro">Multiple independent agents vote on a decision. Useful when confidence in any single agent's judgment is insufficient. Reduces variance at the cost of multiplied token spend.</p>
+  </div>
+
+  <h2>The problem it solves</h2>
+  <p>Some decisions are high-stakes enough that a single model's opinion isn't trustworthy. Running the same question through N independent agents and taking the majority answer reduces the probability of a confident-but-wrong result.</p>
+
+  <div class="diagram">  Question / Input
+      │
+  ┌───┴────────────────┐
+  ↓           ↓        ↓
+Agent-A    Agent-B   Agent-C   (independent, same prompt)
+  │           │        │
+  ↓           ↓        ↓
+Answer-A   Answer-B  Answer-C
+  │           │        │
+  └───────────┴────────┘
+              │
+          Vote counter
+              │
+     Majority / Weighted result</div>
+
+  <h2>Implementation</h2>
+
+  <div class="code-label"><span>consensus.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> asyncio
+<span class="kw">import</span> anthropic
+<span class="kw">import</span> json
+<span class="kw">from</span> collections <span class="kw">import</span> Counter
+
+client = anthropic.AsyncAnthropic()
+
+<span class="kw">async def</span> <span class="fn">single_vote</span>(agent_id: str, question: str, options: list[str],
+                        model: str = <span class="str">"claude-sonnet-4-5"</span>) -> dict:
+    options_str = <span class="str">"\n"</span>.join([<span class="fn">f</span><span class="str">"{i+1}. {o}"</span> <span class="kw">for</span> i, o <span class="kw">in</span> enumerate(options)])
+    
+    response = <span class="kw">await</span> client.messages.create(
+        model=model,
+        max_tokens=<span class="num">512</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""You are an independent evaluator. Analyze this question carefully.
+
+Question: {question}
+
+Options:
+{options_str}
+
+Choose the best option. Respond in JSON:
+{{
+  "choice": "exact text of chosen option",
+  "confidence": 0.0-1.0,
+  "reasoning": "one sentence"
+}}</span>"""}]
+    )
+    text = response.content[<span class="num">0</span>].text
+    start, end = text.find(<span class="str">'{'</span>), text.rfind(<span class="str">'}'</span>) + <span class="num">1</span>
+    result = json.loads(text[start:end])
+    result[<span class="str">"agent_id"</span>] = agent_id
+    <span class="kw">return</span> result
+
+<span class="kw">async def</span> <span class="fn">consensus</span>(
+    question: str,
+    options: list[str],
+    n_agents: int = <span class="num">5</span>,
+    models: list[str] | <span class="kw">None</span> = <span class="kw">None</span>
+) -> dict:
+    <span class="str">"""
+    Run N agents in parallel and aggregate votes.
+    models: optional list to use different models (diversity increases value).
+    """</span>
+    <span class="kw">if</span> <span class="kw">not</span> models:
+        models = [<span class="str">"claude-sonnet-4-5"</span>] * n_agents
+    
+    votes = <span class="kw">await</span> asyncio.gather(*[
+        single_vote(<span class="fn">f</span><span class="str">"agent-{i}"</span>, question, options, models[i % len(models)])
+        <span class="kw">for</span> i <span class="kw">in</span> range(n_agents)
+    ])
+    
+    <span class="cmt"># Tally votes with confidence weighting</span>
+    vote_counts = Counter(v[<span class="str">"choice"</span>] <span class="kw">for</span> v <span class="kw">in</span> votes)
+    confidence_sums = {}
+    <span class="kw">for</span> v <span class="kw">in</span> votes:
+        confidence_sums[v[<span class="str">"choice"</span>]] = confidence_sums.get(v[<span class="str">"choice"</span>], <span class="num">0</span>) + v[<span class="str">"confidence"</span>]
+    
+    winner = max(vote_counts, key=<span class="kw">lambda</span> x: (vote_counts[x], confidence_sums.get(x, <span class="num">0</span>)))
+    majority_votes = vote_counts[winner]
+    agreement = majority_votes / n_agents
+    
+    <span class="kw">return</span> {
+        <span class="str">"winner"</span>: winner,
+        <span class="str">"agreement"</span>: agreement,  <span class="cmt"># 1.0 = unanimous</span>
+        <span class="str">"confident"</span>: agreement >= <span class="num">0.6</span>,
+        <span class="str">"vote_breakdown"</span>: dict(vote_counts),
+        <span class="str">"all_votes"</span>: votes
+    }
+
+<span class="cmt"># Diverse model consensus (best quality, higher cost)</span>
+<span class="kw">async def</span> <span class="fn">diverse_consensus</span>(question: str, options: list[str]) -> dict:
+    <span class="kw">return</span> <span class="kw">await</span> consensus(
+        question, options,
+        n_agents=<span class="num">3</span>,
+        models=[<span class="str">"claude-opus-4-5"</span>, <span class="str">"claude-sonnet-4-5"</span>, <span class="str">"claude-haiku-4-5"</span>]
+    )</code></pre>
+
+  <div class="callout when">
+    <div class="callout-title">When to use this</div>
+    <p>Classification decisions where error cost is high, security decisions (is this input safe?), code review verdicts (accept/reject PR), any binary or categorical decision where single-model confidence is insufficient.</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">Diversity increases value</div>
+    <p>Using different models (opus, sonnet, haiku) or different temperatures gets more genuine diversity than running the same model N times. Diverse model consensus with 3 agents often outperforms same-model consensus with 7.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Using consensus for subjective questions.</strong> Consensus works for questions with a defensible correct answer. For "which writing style is better?" — it just measures which style the majority of models prefer, which may not match your users.</li>
+      <li><strong>Ignoring low-agreement signals.</strong> If 3 of 5 agents agree but 2 dissent, that's a 60% agreement. Don't treat this like unanimous confidence — it signals genuine ambiguity.</li>
+      <li><strong>Not logging dissenting votes.</strong> The minority view often contains the most important edge case reasoning. Always preserve the full vote record.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- PART 3 -->
+<div class="part-header">
+  <div class="part-label">Part Three</div>
+  <div class="part-title">Production</div>
+  <p class="part-desc">Error handling, context management, cost control, testing, and observability. What separates demos from systems that run in production.</p>
+  <div class="part-line"></div>
+</div>
+
+<!-- CHAPTER 11 -->
+<section class="chapter" id="ch11">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 3 — Production</div>
+    <div class="chapter-num">Chapter 11</div>
+    <h1>Error Handling and Retry Strategies</h1>
+    <p class="chapter-intro">Agents fail in novel ways. API errors, context overflow, malformed output, infinite loops, tool failures. Each needs a specific response strategy.</p>
+  </div>
+
+  <h2>The error taxonomy</h2>
+
+  <table>
+    <thead><tr><th>Error type</th><th>Cause</th><th>Strategy</th></tr></thead>
+    <tbody>
+      <tr><td>API rate limit (429)</td><td>Too many requests</td><td>Exponential backoff, retry</td></tr>
+      <tr><td>API overload (529)</td><td>Server busy</td><td>Exponential backoff with jitter, retry</td></tr>
+      <tr><td>Context overflow</td><td>Prompt exceeds token limit</td><td>Summarize, truncate, or split</td></tr>
+      <tr><td>Malformed output</td><td>Model didn't follow format</td><td>Retry with stricter prompt, parse defensively</td></tr>
+      <tr><td>Tool failure</td><td>External call failed</td><td>Retry tool call, fallback, escalate</td></tr>
+      <tr><td>Reasoning loop</td><td>Agent revisits same steps</td><td>Detect repetition, inject stop signal</td></tr>
+      <tr><td>Hallucinated tool call</td><td>Model invents a non-existent tool</td><td>Validate tool names before execution</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Exponential backoff with jitter</h2>
+
+  <div class="code-label"><span>retry.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> time
+<span class="kw">import</span> random
+<span class="kw">import</span> anthropic
+<span class="kw">from</span> functools <span class="kw">import</span> wraps
+<span class="kw">from</span> typing <span class="kw">import</span> TypeVar, Callable
+
+T = TypeVar(<span class="str">'T'</span>)
+
+<span class="kw">def</span> <span class="fn">with_retry</span>(
+    max_attempts: int = <span class="num">4</span>,
+    base_delay: float = <span class="num">1.0</span>,
+    max_delay: float = <span class="num">60.0</span>,
+    retryable_status: tuple = (<span class="num">429</span>, <span class="num">529</span>, <span class="num">500</span>, <span class="num">503</span>)
+):
+    <span class="str">"""Decorator: exponential backoff with full jitter for API calls."""</span>
+    <span class="kw">def</span> <span class="fn">decorator</span>(fn: Callable[..., T]) -> Callable[..., T]:
+        @wraps(fn)
+        <span class="kw">def</span> <span class="fn">wrapper</span>(*args, **kwargs) -> T:
+            last_error = <span class="kw">None</span>
+            <span class="kw">for</span> attempt <span class="kw">in</span> range(max_attempts):
+                <span class="kw">try</span>:
+                    <span class="kw">return</span> fn(*args, **kwargs)
+                <span class="kw">except</span> anthropic.RateLimitError <span class="kw">as</span> e:
+                    last_error = e
+                    <span class="kw">if</span> attempt == max_attempts - <span class="num">1</span>:
+                        <span class="kw">raise</span>
+                    <span class="cmt"># Full jitter: sleep uniform[0, min(cap, base * 2^attempt)]</span>
+                    cap = min(max_delay, base_delay * (<span class="num">2</span> ** attempt))
+                    delay = random.uniform(<span class="num">0</span>, cap)
+                    time.sleep(delay)
+                <span class="kw">except</span> anthropic.APIStatusError <span class="kw">as</span> e:
+                    <span class="kw">if</span> e.status_code <span class="kw">not in</span> retryable_status:
+                        <span class="kw">raise</span>
+                    last_error = e
+                    <span class="kw">if</span> attempt == max_attempts - <span class="num">1</span>:
+                        <span class="kw">raise</span>
+                    cap = min(max_delay, base_delay * (<span class="num">2</span> ** attempt))
+                    delay = random.uniform(<span class="num">0</span>, cap)
+                    time.sleep(delay)
+            <span class="kw">raise</span> last_error
+        <span class="kw">return</span> wrapper
+    <span class="kw">return</span> decorator
+
+<span class="cmt"># Usage</span>
+client = anthropic.Anthropic()
+
+@with_retry(max_attempts=<span class="num">4</span>, base_delay=<span class="num">2.0</span>)
+<span class="kw">def</span> <span class="fn">call_claude</span>(prompt: str) -> str:
+    response = client.messages.create(
+        model=<span class="str">"claude-sonnet-4-5"</span>,
+        max_tokens=<span class="num">4096</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text</code></pre>
+
+  <h2>Malformed output handling</h2>
+
+  <div class="code-label"><span>Defensive JSON parsing</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> json
+<span class="kw">import</span> re
+
+<span class="kw">def</span> <span class="fn">extract_json</span>(text: str, schema: dict | <span class="kw">None</span> = <span class="kw">None</span>) -> dict | <span class="kw">None</span>:
+    <span class="str">"""
+    Robustly extract JSON from LLM output.
+    Handles: JSON in code blocks, leading text, trailing text.
+    """</span>
+    <span class="cmt"># Try code block first</span>
+    code_block = re.search(<span class="str">r'```(?:json)?\s*(\{.*?\})\s*```'</span>, text, re.DOTALL)
+    <span class="kw">if</span> code_block:
+        candidate = code_block.group(<span class="num">1</span>)
+    <span class="kw">else</span>:
+        <span class="cmt"># Find outermost JSON object</span>
+        start = text.find(<span class="str">'{'</span>)
+        end = text.rfind(<span class="str">'}'</span>)
+        <span class="kw">if</span> start == -<span class="num">1</span> <span class="kw">or</span> end == -<span class="num">1</span>:
+            <span class="kw">return</span> <span class="kw">None</span>
+        candidate = text[start:end+<span class="num">1</span>]
+    
+    <span class="kw">try</span>:
+        result = json.loads(candidate)
+        <span class="cmt"># Validate required keys if schema provided</span>
+        <span class="kw">if</span> schema:
+            required = schema.get(<span class="str">"required"</span>, [])
+            <span class="kw">if not</span> all(k <span class="kw">in</span> result <span class="kw">for</span> k <span class="kw">in</span> required):
+                <span class="kw">return</span> <span class="kw">None</span>
+        <span class="kw">return</span> result
+    <span class="kw">except</span> json.JSONDecodeError:
+        <span class="kw">return</span> <span class="kw">None</span>
+
+<span class="kw">def</span> <span class="fn">parse_with_retry</span>(prompt: str, schema: dict, max_attempts: int = <span class="num">3</span>) -> dict:
+    <span class="str">"""Call model and retry if output doesn't match schema."""</span>
+    messages = [{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    
+    <span class="kw">for</span> attempt <span class="kw">in</span> range(max_attempts):
+        response = client.messages.create(
+            model=<span class="str">"claude-sonnet-4-5"</span>, max_tokens=<span class="num">2048</span>, messages=messages
+        )
+        text = response.content[<span class="num">0</span>].text
+        result = extract_json(text, schema)
+        
+        <span class="kw">if</span> result:
+            <span class="kw">return</span> result
+        
+        <span class="cmt"># Add correction to conversation</span>
+        messages.extend([
+            {<span class="str">"role"</span>: <span class="str">"assistant"</span>, <span class="str">"content"</span>: text},
+            {<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"Your response was not valid JSON or missing required fields: {schema['required']}. Please respond with only valid JSON."</span>}
+        ])
+    
+    <span class="kw">raise</span> ValueError(<span class="fn">f</span><span class="str">"Failed to get valid JSON after {max_attempts} attempts"</span>)</code></pre>
+
+  <h2>Loop detection</h2>
+
+  <div class="code-label"><span>Detecting reasoning loops</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">from</span> collections <span class="kw">import</span> deque
+<span class="kw">import</span> hashlib
+
+<span class="kw">class</span> <span class="typ">LoopDetector</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, window: int = <span class="num">5</span>, threshold: int = <span class="num">2</span>):
+        self.history = deque(maxlen=window)
+        self.threshold = threshold
+    
+    <span class="kw">def</span> <span class="fn">check</span>(self, action: str) -> bool:
+        <span class="str">"""Returns True if a loop is detected."""</span>
+        h = hashlib.md5(action.encode()).hexdigest()[:<span class="num">8</span>]
+        count = self.history.count(h)
+        self.history.append(h)
+        <span class="kw">return</span> count >= self.threshold</code></pre>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>No retry on 429.</strong> Rate limits are expected in production. Any agent without retry will fail under load.</li>
+      <li><strong>Infinite retry.</strong> Always cap retries. An agent that retries forever on a broken tool is an agent that never stops.</li>
+      <li><strong>Assuming JSON is valid.</strong> Models occasionally produce malformed JSON. Always use a defensive parser, never <code>json.loads</code> directly on model output without try/except.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHAPTER 12 -->
+<section class="chapter" id="ch12">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 3 — Production</div>
+    <div class="chapter-num">Chapter 12</div>
+    <h1>Context Window Management</h1>
+    <p class="chapter-intro">Every agent has a finite context window. How you manage it determines whether long-running agents succeed or fail with a cryptic overflow error at step 47.</p>
+  </div>
+
+  <h2>Context is currency</h2>
+  <p>Every token in the context window costs money and competes for the model's attention. Large, unfocused context produces worse results than tight, relevant context. Treat context management as a first-class engineering concern.</p>
+
+  <h2>The four context problems</h2>
+
+  <table>
+    <thead><tr><th>Problem</th><th>Symptom</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>Context overflow</td><td>API error: context too long</td><td>Summarize history, truncate old messages</td></tr>
+      <tr><td>Context bloat</td><td>Slow, expensive, degraded quality</td><td>Prune irrelevant content, use retrieval</td></tr>
+      <tr><td>Context loss</td><td>Agent forgets earlier decisions</td><td>Summarize + append key facts to system prompt</td></tr>
+      <tr><td>Context pollution</td><td>Tool errors in context confuse model</td><td>Compress failed tool calls to one-liners</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Sliding window with summarization</h2>
+
+  <div class="code-label"><span>context_manager.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> anthropic
+
+client = anthropic.Anthropic()
+
+<span class="kw">class</span> <span class="typ">ContextManager</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, max_tokens: int = <span class="num">150_000</span>, summary_trigger: float = <span class="num">0.75</span>):
+        self.max_tokens = max_tokens
+        self.summary_trigger = summary_trigger  <span class="cmt"># Summarize at 75% capacity</span>
+        self.messages: list[dict] = []
+        self.summary: str = <span class="str">""</span>
+        self._token_count = <span class="num">0</span>
+    
+    <span class="kw">def</span> <span class="fn">add</span>(self, role: str, content: str) -> <span class="kw">None</span>:
+        self.messages.append({<span class="str">"role"</span>: role, <span class="str">"content"</span>: content})
+        self._token_count += len(content) // <span class="num">4</span>  <span class="cmt"># Rough estimate</span>
+        
+        <span class="kw">if</span> self._token_count > self.max_tokens * self.summary_trigger:
+            self._summarize_and_compress()
+    
+    <span class="kw">def</span> <span class="fn">_summarize_and_compress</span>(self) -> <span class="kw">None</span>:
+        <span class="str">"""Summarize oldest half of conversation, keep recent messages."""</span>
+        keep_recent = len(self.messages) // <span class="num">2</span>
+        to_summarize = self.messages[:-keep_recent]
+        
+        summary_prompt = <span class="str">"""Summarize this conversation segment. Preserve:
+- All decisions made
+- All files/resources created or modified
+- All errors encountered and their resolutions
+- Current task state
+
+Be concise. This summary replaces the raw conversation.
+
+Conversation:
+"""</span> + <span class="str">"\n"</span>.join([<span class="fn">f</span><span class="str">"{m['role']}: {m['content']}"</span> <span class="kw">for</span> m <span class="kw">in</span> to_summarize])
+        
+        response = client.messages.create(
+            model=<span class="str">"claude-haiku-4-5"</span>,  <span class="cmt"># Cheap model for summarization</span>
+            max_tokens=<span class="num">1024</span>,
+            messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: summary_prompt}]
+        )
+        
+        new_summary = response.content[<span class="num">0</span>].text
+        self.summary = (self.summary + <span class="str">"\n"</span> + new_summary).strip()
+        self.messages = self.messages[-keep_recent:]
+        self._token_count = sum(len(m[<span class="str">"content"</span>]) // <span class="num">4</span> <span class="kw">for</span> m <span class="kw">in</span> self.messages)
+    
+    <span class="kw">def</span> <span class="fn">get_messages</span>(self, system_prompt: str = <span class="str">""</span>) -> list[dict]:
+        <span class="str">"""Return messages with summary prepended if it exists."""</span>
+        <span class="kw">if not</span> self.summary:
+            <span class="kw">return</span> self.messages
+        
+        summary_msg = {
+            <span class="str">"role"</span>: <span class="str">"user"</span>,
+            <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"[CONVERSATION SUMMARY]\n{self.summary}\n[END SUMMARY]\n\nContinuing from here:"</span>
+        }
+        <span class="kw">return</span> [summary_msg] + self.messages</code></pre>
+
+  <h2>Retrieval-augmented context</h2>
+  <p>Instead of loading all context upfront, retrieve only what's relevant to the current step. Especially useful for agents working across large codebases.</p>
+
+  <div class="code-label"><span>Retrieval pattern in CLAUDE.md</span><span class="code-lang">markdown</span></div>
+  <pre><code><span class="kw">## Context Loading Rule</span>
+
+Before starting any task involving the codebase:
+1. Use Glob to identify relevant files (do NOT read all files)
+2. Read only files that are directly relevant to the current step
+3. When context exceeds 50 files read, summarize findings before continuing
+4. Never load test fixtures into context — they're large and rarely relevant
+
+<span class="kw">## Progressive Loading Pattern</span>
+1. Read the entry point / main file first
+2. Follow imports only for modules the task touches
+3. Stop loading when you have enough to act
+4. Read more only if your first action fails</code></pre>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Reading entire directories at task start.</strong> Most files are irrelevant to most tasks. Read on demand, not preemptively.</li>
+      <li><strong>Storing tool errors verbatim.</strong> A failed bash command with 2KB of stderr output doesn't belong in full in your context. Compress it to the error type and key message.</li>
+      <li><strong>No context budget awareness.</strong> Build agents to check their context usage periodically and compress before overflow, not after.</li>
+    </ul>
+  </div>
+</section>
+
+
+<hr class="divider">
+
+<!-- CHAPTER 13 -->
+<section class="chapter" id="ch13">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 3 — Production</div>
+    <div class="chapter-num">Chapter 13</div>
+    <h1>Cost Optimization</h1>
+    <p class="chapter-intro">Agent costs compound. A task that costs $0.50 running once costs $50/day if scheduled hourly. Model selection, token budgets, and caching are the three levers that matter.</p>
+  </div>
+
+  <h2>The cost equation</h2>
+  <p>Total cost = (input tokens × input price) + (output tokens × output price) × number of agent calls.</p>
+  <p>In a multi-agent system, "number of agent calls" multiplies every inefficiency. An extra 500 tokens of context in a fan-out with 20 workers costs 10,000 tokens extra per run.</p>
+
+  <h2>Model selection by task type</h2>
+
+  <table>
+    <thead><tr><th>Task type</th><th>Recommended model</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Parsing, extraction, classification</td><td>claude-haiku-4-5</td><td>Pattern matching, no reasoning needed</td></tr>
+      <tr><td>Code generation, analysis</td><td>claude-sonnet-4-5</td><td>Strong reasoning at 5x lower cost than opus</td></tr>
+      <tr><td>Complex planning, synthesis</td><td>claude-opus-4-5</td><td>Use only where quality difference is measurable</td></tr>
+      <tr><td>Summarization</td><td>claude-haiku-4-5</td><td>Cheap, fast, sufficient for compression tasks</td></tr>
+      <tr><td>Validation / critique</td><td>claude-sonnet-4-5</td><td>Needs reasoning but not full opus</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Prompt caching</h2>
+  <p>Anthropic's prompt caching reduces cost by up to 90% for static content. Use it for system prompts, skill files, and large context that doesn't change between calls.</p>
+
+  <div class="code-label"><span>Using prompt caching</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> anthropic
+
+client = anthropic.Anthropic()
+
+<span class="cmt"># Load skill file once — this gets cached</span>
+<span class="kw">with</span> open(<span class="str">".claude/skills/code-reviewer/skill.md"</span>) <span class="kw">as</span> f:
+    skill_content = f.read()
+
+<span class="kw">def</span> <span class="fn">review_with_cached_skill</span>(code: str) -> str:
+    response = client.messages.create(
+        model=<span class="str">"claude-sonnet-4-5"</span>,
+        max_tokens=<span class="num">4096</span>,
+        system=[
+            {
+                <span class="str">"type"</span>: <span class="str">"text"</span>,
+                <span class="str">"text"</span>: skill_content,
+                <span class="str">"cache_control"</span>: {<span class="str">"type"</span>: <span class="str">"ephemeral"</span>}  <span class="cmt"># Cache this block</span>
+            }
+        ],
+        messages=[{
+            <span class="str">"role"</span>: <span class="str">"user"</span>,
+            <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"Review this code:\n\n{code}"</span>
+        }]
+    )
+    <span class="cmt"># Check cache performance</span>
+    usage = response.usage
+    cache_hit = getattr(usage, <span class="str">'cache_read_input_tokens'</span>, <span class="num">0</span>)
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text</code></pre>
+
+  <h2>Token budgets</h2>
+
+  <div class="code-label"><span>Token budget enforcement</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, field
+
+@dataclass
+<span class="kw">class</span> <span class="typ">TokenBudget</span>:
+    total_limit: int = <span class="num">500_000</span>   <span class="cmt"># Per pipeline run</span>
+    per_call_limit: int = <span class="num">8_192</span>  <span class="cmt"># Max output per call</span>
+    used: int = <span class="num">0</span>
+    calls: int = <span class="num">0</span>
+    call_log: list = field(default_factory=list)
+    
+    <span class="kw">def</span> <span class="fn">check</span>(self, estimated_input: int) -> bool:
+        <span class="str">"""Returns False if budget would be exceeded."""</span>
+        <span class="kw">return</span> (self.used + estimated_input) < self.total_limit
+    
+    <span class="kw">def</span> <span class="fn">record</span>(self, stage: str, input_tokens: int, output_tokens: int) -> <span class="kw">None</span>:
+        total = input_tokens + output_tokens
+        self.used += total
+        self.calls += <span class="num">1</span>
+        self.call_log.append({<span class="str">"stage"</span>: stage, <span class="str">"tokens"</span>: total})
+    
+    @property
+    <span class="kw">def</span> <span class="fn">remaining</span>(self) -> int:
+        <span class="kw">return</span> self.total_limit - self.used
+    
+    @property
+    <span class="kw">def</span> <span class="fn">utilization</span>(self) -> float:
+        <span class="kw">return</span> self.used / self.total_limit
+
+<span class="cmt"># Use in pipeline</span>
+budget = <span class="typ">TokenBudget</span>(total_limit=<span class="num">200_000</span>)
+
+<span class="kw">def</span> <span class="fn">budgeted_call</span>(prompt: str, stage: str, budget: <span class="typ">TokenBudget</span>) -> str | <span class="kw">None</span>:
+    estimated = len(prompt) // <span class="num">4</span>
+    <span class="kw">if not</span> budget.check(estimated):
+        <span class="kw">raise</span> RuntimeError(<span class="fn">f</span><span class="str">"Budget exhausted at stage '{stage}'. Used: {budget.used}/{budget.total_limit}"</span>)
+    
+    response = client.messages.create(
+        model=<span class="str">"claude-sonnet-4-5"</span>,
+        max_tokens=min(<span class="num">4096</span>, budget.per_call_limit),
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: prompt}]
+    )
+    usage = response.usage
+    budget.record(stage, usage.input_tokens, usage.output_tokens)
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text</code></pre>
+
+  <h2>Cost by pattern (approximate)</h2>
+
+  <table>
+    <thead><tr><th>Pattern</th><th>Relative cost</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Direct call</td><td>1x</td><td>Baseline</td></tr>
+      <tr><td>Pipeline (5 stages, haiku)</td><td>1.5x</td><td>Multiple calls, cheap model</td></tr>
+      <tr><td>Builder-Validator (3 iter)</td><td>6x</td><td>Build + validate × 3</td></tr>
+      <tr><td>Fan-out (10 workers, haiku)</td><td>8x</td><td>Parallel, but multiplied</td></tr>
+      <tr><td>Ralph Wiggum (4 iter, sonnet)</td><td>8x</td><td>Generate + critique × 4</td></tr>
+      <tr><td>Consensus (5 agents, sonnet)</td><td>10x</td><td>All premium agents</td></tr>
+      <tr><td>Supervisor + 5 workers (opus)</td><td>25x+</td><td>Most expensive combination</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warning">
+    <div class="callout-title">Cost discipline</div>
+    <p>Measure actual token usage on your first 10 runs before scheduling anything. Estimates are usually wrong by 2-3x. Set up budget alerts before you deploy to production.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Using opus everywhere.</strong> Opus is 15x the cost of haiku. Audit every agent call and ask: does this specific step actually need opus-level reasoning?</li>
+      <li><strong>Not using prompt caching.</strong> If your system prompt or skill files are >2048 tokens and used repeatedly, you're leaving significant money on the table.</li>
+      <li><strong>No cost tracking in production.</strong> You will be surprised. Always log token usage per stage and aggregate it.</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CHAPTER 14 -->
+<section class="chapter" id="ch14">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 3 — Production</div>
+    <div class="chapter-num">Chapter 14</div>
+    <h1>Testing Multi-Agent Systems</h1>
+    <p class="chapter-intro">Multi-agent systems are non-deterministic. Traditional unit tests are necessary but not sufficient. You need behavioral tests, golden output comparisons, and chaos testing.</p>
+  </div>
+
+  <h2>The testing pyramid for agents</h2>
+
+  <div class="diagram">           ▲  End-to-end agent tests (few, expensive)
+          ▲▲▲ Behavioral tests (behavioral contracts)
+         ▲▲▲▲▲ Integration tests (tool + model combos)
+        ▲▲▲▲▲▲▲ Unit tests (pure functions, parsing, schemas)
+       ▲▲▲▲▲▲▲▲▲ Static analysis (schema validation, type checks)</div>
+
+  <h2>Unit testing pure functions</h2>
+
+  <div class="code-label"><span>test_parsers.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> pytest
+<span class="kw">from</span> your_agent <span class="kw">import</span> extract_json, LoopDetector
+
+<span class="kw">class</span> <span class="typ">TestExtractJson</span>:
+    <span class="kw">def</span> <span class="fn">test_valid_json</span>(self):
+        text = <span class="str">'Here is the result: {"score": 85, "passed": true}'</span>
+        result = extract_json(text)
+        assert result == {<span class="str">"score"</span>: <span class="num">85</span>, <span class="str">"passed"</span>: <span class="kw">True</span>}
+    
+    <span class="kw">def</span> <span class="fn">test_json_in_code_block</span>(self):
+        text = <span class="str">'```json\n{"key": "value"}\n```'</span>
+        assert extract_json(text) == {<span class="str">"key"</span>: <span class="str">"value"</span>}
+    
+    <span class="kw">def</span> <span class="fn">test_invalid_json_returns_none</span>(self):
+        assert extract_json(<span class="str">"no json here"</span>) <span class="kw">is</span> <span class="kw">None</span>
+    
+    <span class="kw">def</span> <span class="fn">test_schema_validation</span>(self):
+        text = <span class="str">'{"score": 85}'</span>  <span class="cmt"># Missing "passed"</span>
+        schema = {<span class="str">"required"</span>: [<span class="str">"score"</span>, <span class="str">"passed"</span>]}
+        assert extract_json(text, schema) <span class="kw">is</span> <span class="kw">None</span>
+
+<span class="kw">class</span> <span class="typ">TestLoopDetector</span>:
+    <span class="kw">def</span> <span class="fn">test_no_loop</span>(self):
+        detector = <span class="typ">LoopDetector</span>()
+        assert <span class="kw">not</span> detector.check(<span class="str">"action-a"</span>)
+        assert <span class="kw">not</span> detector.check(<span class="str">"action-b"</span>)
+        assert <span class="kw">not</span> detector.check(<span class="str">"action-c"</span>)
+    
+    <span class="kw">def</span> <span class="fn">test_loop_detected</span>(self):
+        detector = <span class="typ">LoopDetector</span>(threshold=<span class="num">2</span>)
+        detector.check(<span class="str">"same-action"</span>)
+        detector.check(<span class="str">"same-action"</span>)
+        assert detector.check(<span class="str">"same-action"</span>)  <span class="cmt"># Third occurrence = loop</span></code></pre>
+
+  <h2>Behavioral contract testing</h2>
+
+  <div class="code-label"><span>test_agent_behavior.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> pytest
+<span class="kw">from</span> your_agent <span class="kw">import</span> validator_agent
+
+<span class="kw">class</span> <span class="typ">TestValidatorBehavior</span>:
+    <span class="str">"""
+    Behavioral tests: does the agent behave correctly across
+    representative inputs? These call the real API.
+    Mark with @pytest.mark.integration and run selectively.
+    """</span>
+    
+    @pytest.mark.integration
+    <span class="kw">def</span> <span class="fn">test_catches_missing_error_handling</span>(self):
+        spec = <span class="str">"Function must handle FileNotFoundError and return None"</span>
+        bad_artifact = <span class="str">"def read_file(path): return open(path).read()"</span>
+        result = validator_agent(spec, bad_artifact)
+        assert result[<span class="str">"passed"</span>] == <span class="kw">False</span>
+        assert <span class="kw">any</span>(<span class="str">"error"</span> <span class="kw">in</span> f.lower() <span class="kw">for</span> f <span class="kw">in</span> result[<span class="str">"failures"</span>])
+    
+    @pytest.mark.integration
+    <span class="kw">def</span> <span class="fn">test_passes_correct_implementation</span>(self):
+        spec = <span class="str">"Function must handle FileNotFoundError and return None"</span>
+        good_artifact = <span class="str">"""
+def read_file(path):
+    try:
+        return open(path).read()
+    except FileNotFoundError:
+        return None
+"""</span>
+        result = validator_agent(spec, good_artifact)
+        assert result[<span class="str">"passed"</span>] == <span class="kw">True</span>
+
+<span class="cmt"># Golden output testing</span>
+GOLDEN_OUTPUTS = {
+    <span class="str">"security_audit_empty"</span>: {<span class="str">"issues_found"</span>: <span class="num">0</span>, <span class="str">"severity"</span>: <span class="str">"low"</span>},
+}
+
+@pytest.mark.integration
+<span class="kw">def</span> <span class="fn">test_golden_output</span>(case_name: str, input_data: dict):
+    <span class="str">"""Compare agent output structure against golden baseline."""</span>
+    result = run_agent(input_data)
+    golden = GOLDEN_OUTPUTS[case_name]
+    
+    <span class="kw">for</span> key, expected_value <span class="kw">in</span> golden.items():
+        assert key <span class="kw">in</span> result, <span class="fn">f</span><span class="str">"Missing key: {key}"</span>
+        assert result[key] == expected_value, <span class="fn">f</span><span class="str">"Key {key}: expected {expected_value}, got {result[key]}"</span></code></pre>
+
+  <h2>Testing strategy in CLAUDE.md</h2>
+
+  <div class="code-label"><span>CLAUDE.md — testing conventions</span><span class="code-lang">markdown</span></div>
+  <pre><code><span class="kw">## Testing Protocol</span>
+
+Before shipping any agent change:
+1. Run unit tests: `pytest tests/unit/ -v`
+2. Run integration tests on 3 representative inputs
+3. Check token usage didn't increase by more than 10%
+4. Verify the agent exits cleanly (no infinite loops in test run)
+
+<span class="kw">## Test Categories</span>
+- `tests/unit/` — pure function tests, no API calls, must be fast
+- `tests/integration/` — marked @pytest.mark.integration, call real API
+- `tests/golden/` — golden output comparisons, run weekly
+
+<span class="kw">## Mocking Guidelines</span>
+- Mock the API client for unit tests: `unittest.mock.patch('anthropic.Anthropic')`
+- Never mock in integration tests — the point is to test real model behavior
+- Record/replay API responses for deterministic CI (use pytest-recording)</code></pre>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Only testing happy paths.</strong> Test what happens when a tool fails, when the model returns malformed output, when rate limits fire. These are the scenarios that break production.</li>
+      <li><strong>No regression test after model updates.</strong> Claude model versions change behavior. Run behavioral tests after any model version update.</li>
+      <li><strong>Testing output text instead of structure.</strong> Exact text output from LLMs is non-deterministic. Test structure, schema compliance, and key facts — not exact strings.</li>
+    </ul>
+  </div>
+</section>
+
+
+<hr class="divider">
+
+<!-- CHAPTER 15 -->
+<section class="chapter" id="ch15">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 3 — Production</div>
+    <div class="chapter-num">Chapter 15</div>
+    <h1>Monitoring and Observability</h1>
+    <p class="chapter-intro">You cannot fix what you cannot see. Production agents need structured logging, token tracking, failure alerting, and run history. Not optional.</p>
+  </div>
+
+  <h2>What to instrument</h2>
+
+  <table>
+    <thead><tr><th>Signal</th><th>What to capture</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Run metadata</td><td>run_id, start_time, duration, status</td><td>Debugging, audit trail</td></tr>
+      <tr><td>Token usage</td><td>Input/output per stage, total per run</td><td>Cost tracking, budget enforcement</td></tr>
+      <tr><td>Stage timing</td><td>Duration per pipeline stage</td><td>Identify slow stages, SLA tracking</td></tr>
+      <tr><td>Errors</td><td>Type, message, stage, retry count</td><td>Failure pattern detection</td></tr>
+      <tr><td>Output quality</td><td>Validation scores, pass/fail</td><td>Model drift detection</td></tr>
+      <tr><td>Tool calls</td><td>Tool name, success/fail, duration</td><td>External dependency health</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Structured logging</h2>
+
+  <div class="code-label"><span>agent_logger.py</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> json
+<span class="kw">import</span> time
+<span class="kw">import</span> uuid
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime, timezone
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, field, asdict
+
+@dataclass
+<span class="kw">class</span> <span class="typ">AgentRun</span>:
+    run_id: str = field(default_factory=<span class="kw">lambda</span>: str(uuid.uuid4())[:<span class="num">8</span>])
+    agent: str = <span class="str">""</span>
+    task: str = <span class="str">""</span>
+    started_at: str = field(default_factory=<span class="kw">lambda</span>: datetime.now(timezone.utc).isoformat())
+    finished_at: str = <span class="str">""</span>
+    status: str = <span class="str">"running"</span>  <span class="cmt"># running | success | failed</span>
+    stages: list = field(default_factory=list)
+    total_tokens: int = <span class="num">0</span>
+    total_cost_usd: float = <span class="num">0.0</span>
+    errors: list = field(default_factory=list)
+
+<span class="kw">class</span> <span class="typ">AgentLogger</span>:
+    <span class="cmt"># Approximate pricing (USD per 1M tokens)</span>
+    PRICES = {
+        <span class="str">"claude-haiku-4-5"</span>:   {<span class="str">"input"</span>: <span class="num">0.25</span>,   <span class="str">"output"</span>: <span class="num">1.25</span>},
+        <span class="str">"claude-sonnet-4-5"</span>:  {<span class="str">"input"</span>: <span class="num">3.00</span>,   <span class="str">"output"</span>: <span class="num">15.00</span>},
+        <span class="str">"claude-opus-4-5"</span>:    {<span class="str">"input"</span>: <span class="num">15.00</span>,  <span class="str">"output"</span>: <span class="num">75.00</span>},
+    }
+    
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, log_dir: str = <span class="str">"logs/agents"</span>):
+        self.log_dir = Path(log_dir)
+        self.log_dir.mkdir(parents=<span class="kw">True</span>, exist_ok=<span class="kw">True</span>)
+        self.run = <span class="kw">None</span>
+        self._stage_start = <span class="kw">None</span>
+    
+    <span class="kw">def</span> <span class="fn">start_run</span>(self, agent: str, task: str) -> str:
+        self.run = <span class="typ">AgentRun</span>(agent=agent, task=task[:200])
+        <span class="kw">return</span> self.run.run_id
+    
+    <span class="kw">def</span> <span class="fn">start_stage</span>(self, name: str) -> <span class="kw">None</span>:
+        self._stage_start = time.monotonic()
+        self._current_stage = name
+    
+    <span class="kw">def</span> <span class="fn">end_stage</span>(self, model: str, input_tokens: int, output_tokens: int,
+                   success: bool = <span class="kw">True</span>, error: str = <span class="kw">None</span>) -> <span class="kw">None</span>:
+        duration = time.monotonic() - (self._stage_start <span class="kw">or</span> time.monotonic())
+        prices = self.PRICES.get(model, {<span class="str">"input"</span>: <span class="num">0</span>, <span class="str">"output"</span>: <span class="num">0</span>})
+        cost = (input_tokens * prices[<span class="str">"input"</span>] + output_tokens * prices[<span class="str">"output"</span>]) / <span class="num">1_000_000</span>
+        
+        stage_data = {
+            <span class="str">"stage"</span>: self._current_stage,
+            <span class="str">"model"</span>: model,
+            <span class="str">"duration_s"</span>: round(duration, <span class="num">2</span>),
+            <span class="str">"input_tokens"</span>: input_tokens,
+            <span class="str">"output_tokens"</span>: output_tokens,
+            <span class="str">"cost_usd"</span>: round(cost, <span class="num">6</span>),
+            <span class="str">"success"</span>: success,
+        }
+        <span class="kw">if</span> error:
+            stage_data[<span class="str">"error"</span>] = error
+        
+        self.run.stages.append(stage_data)
+        self.run.total_tokens += input_tokens + output_tokens
+        self.run.total_cost_usd += cost
+    
+    <span class="kw">def</span> <span class="fn">end_run</span>(self, status: str = <span class="str">"success"</span>) -> <span class="kw">None</span>:
+        self.run.status = status
+        self.run.finished_at = datetime.now(timezone.utc).isoformat()
+        
+        <span class="cmt"># Write to daily log file (JSONL format)</span>
+        log_file = self.log_dir / <span class="fn">f</span><span class="str">"{datetime.now().strftime('%Y-%m-%d')}.jsonl"</span>
+        <span class="kw">with</span> open(log_file, <span class="str">"a"</span>) <span class="kw">as</span> f:
+            f.write(json.dumps(asdict(self.run)) + <span class="str">"\n"</span>)
+    
+    <span class="kw">def</span> <span class="fn">log_error</span>(self, stage: str, error: str) -> <span class="kw">None</span>:
+        self.run.errors.append({<span class="str">"stage"</span>: stage, <span class="str">"error"</span>: error,
+                                  <span class="str">"timestamp"</span>: datetime.now(timezone.utc).isoformat()})
+
+<span class="cmt"># Usage</span>
+logger = <span class="typ">AgentLogger</span>()
+run_id = logger.start_run(<span class="str">"code-reviewer"</span>, <span class="str">"Review PR #123"</span>)
+
+logger.start_stage(<span class="str">"analyze"</span>)
+<span class="cmt"># ... call API ...</span>
+logger.end_stage(<span class="str">"claude-sonnet-4-5"</span>, input_tokens=<span class="num">1200</span>, output_tokens=<span class="num">450</span>)
+
+logger.end_run(<span class="str">"success"</span>)</code></pre>
+
+  <h2>Alerting on failure</h2>
+
+  <div class="code-label"><span>Simple failure alerting via email/Telegram</span><span class="code-lang">python</span></div>
+  <pre><code><span class="kw">import</span> os
+<span class="kw">import</span> requests
+
+<span class="kw">def</span> <span class="fn">alert_on_failure</span>(run_id: str, agent: str, error: str, stage: str) -> <span class="kw">None</span>:
+    <span class="str">"""Send alert when an agent run fails. Non-blocking."""</span>
+    <span class="kw">try</span>:
+        bot_token = os.getenv(<span class="str">"TELEGRAM_BOT_TOKEN"</span>)
+        chat_id = os.getenv(<span class="str">"TELEGRAM_CHAT_ID"</span>)
+        
+        <span class="kw">if</span> <span class="kw">not</span> (bot_token <span class="kw">and</span> chat_id):
+            <span class="kw">return</span>
+        
+        msg = (<span class="fn">f</span><span class="str">"🔴 Agent failure\n"</span>
+               <span class="fn">f</span><span class="str">"Agent: {agent}\n"</span>
+               <span class="fn">f</span><span class="str">"Run: {run_id}\n"</span>
+               <span class="fn">f</span><span class="str">"Stage: {stage}\n"</span>
+               <span class="fn">f</span><span class="str">"Error: {error[:200]}"</span>)
+        
+        requests.post(
+            <span class="fn">f</span><span class="str">"https://api.telegram.org/bot{bot_token}/sendMessage"</span>,
+            json={<span class="str">"chat_id"</span>: chat_id, <span class="str">"text"</span>: msg},
+            timeout=<span class="num">5</span>
+        )
+    <span class="kw">except</span> Exception:
+        <span class="kw">pass</span>  <span class="cmt"># Alerting must never crash the agent</span></code></pre>
+
+  <div class="callout when">
+    <div class="callout-title">Minimum viable observability</div>
+    <p>If you can only implement one thing: write JSONL logs with run_id, status, total_tokens, and error to a daily file. This gives you failure auditing and cost trending with minimal code.</p>
+  </div>
+
+  <div class="callout mistake">
+    <div class="callout-title">Common mistakes</div>
+    <ul>
+      <li><strong>Logging only on failure.</strong> Log success runs too. You need the baseline to know when something degrades.</li>
+      <li><strong>No run_id.</strong> Without a correlation ID, a log file full of errors tells you nothing about which run or pipeline stage they came from.</li>
+      <li><strong>Alerting that blocks execution.</strong> Alerts must never crash agents. Wrap all alerting in try/except that swallows errors silently.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- PART 4 -->
+<div class="part-header">
+  <div class="part-label">Part Four</div>
+  <div class="part-title">Recipes</div>
+  <p class="part-desc">Ten production-ready agent configurations. Copy, adapt, deploy.</p>
+  <div class="part-line"></div>
+</div>
+
+<!-- CHAPTER 16 -->
+<section class="chapter" id="ch16">
+  <div class="chapter-header">
+    <div class="chapter-part">Part 4 — Recipes</div>
+    <div class="chapter-num">Chapter 16</div>
+    <h1>10 Ready-to-Use Agent Configurations</h1>
+    <p class="chapter-intro">Each recipe includes a CLAUDE.md snippet, a skill file outline, the recommended pattern, model selection, and cost profile.</p>
+  </div>
+
+  <!-- RECIPE 1 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">01</span>
+      <div>
+        <div class="recipe-title">Code Review Agent</div>
+        <div class="recipe-desc">Reviews PRs for correctness, error handling, tests, and naming. Outputs structured CRITICAL/WARNING/SUGGESTION report.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Builder-Validator</span></div>
+      <div class="recipe-meta-item">Model: <span>claude-sonnet-4-5</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.05–0.15/review</span></div>
+    </div>
+
+    <div class="code-label"><span>.claude/skills/code-reviewer/skill.md</span><span class="code-lang">markdown</span></div>
+    <pre><code><span class="kw">## Code Review Protocol</span>
+
+Read ALL changed files before commenting on any of them.
+Context matters — a pattern that looks wrong in isolation may be correct given the full picture.
+
+<span class="kw">## Review Checklist</span>
+- [ ] Correctness: does the logic do what it's supposed to?
+- [ ] Error handling: are failure modes handled explicitly?
+- [ ] Tests: are new behaviors tested?
+- [ ] Naming: are names accurate and unambiguous?
+- [ ] Side effects: does this change affect anything not in scope?
+
+<span class="kw">## Output Format</span>
+<span class="str">```
+REVIEW: [filename or PR title]
+Files reviewed: N
+Critical: N | Warnings: N | Suggestions: N
+
+CRITICAL — must fix before merge
+[file:line] description
+
+WARNING — should fix
+[file:line] description
+
+SUGGESTION — optional improvement
+[file:line] description
+```</span>
+
+<span class="kw">## Rules</span>
+- Flag things that are wrong, not things you'd do differently
+- Every CRITICAL must explain the specific failure mode
+- If there are no issues, say so explicitly — don't invent them</code></pre>
+
+    <div class="code-label"><span>Usage via CLI</span><span class="code-lang">bash</span></div>
+    <pre><code>git diff main...HEAD > /tmp/pr-diff.txt
+claude --dangerously-skip-permissions -p <span class="str">"
+Read the skill file at .claude/skills/code-reviewer/skill.md.
+Then review this PR diff:
+$(cat /tmp/pr-diff.txt)
+"</span></code></pre>
+  </div>
+
+  <!-- RECIPE 2 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">02</span>
+      <div>
+        <div class="recipe-title">Research Synthesis Agent</div>
+        <div class="recipe-desc">Fan-out to research N topics in parallel, then synthesize findings into a structured report with citations.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Fan-out / Fan-in</span></div>
+      <div class="recipe-meta-item">Model: <span>haiku (workers) + opus (synthesis)</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.10–0.50/report</span></div>
+    </div>
+
+    <div class="code-label"><span>research_agent.py</span><span class="code-lang">python</span></div>
+    <pre><code><span class="kw">import</span> asyncio
+<span class="kw">import</span> anthropic
+
+client = anthropic.AsyncAnthropic()
+
+<span class="kw">async def</span> <span class="fn">research_topic</span>(topic: str, depth: str = <span class="str">"summary"</span>) -> dict:
+    response = <span class="kw">await</span> client.messages.create(
+        model=<span class="str">"claude-haiku-4-5"</span>,  <span class="cmt"># Cheap for individual topics</span>
+        max_tokens=<span class="num">2048</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""Research this topic and provide a {depth}.
+
+Topic: {topic}
+
+Include: key facts, current state, open questions, relevant context.
+Be factual. Flag anything uncertain with "(uncertain)"."""</span>}]
+    )
+    <span class="kw">return</span> {<span class="str">"topic"</span>: topic, <span class="str">"content"</span>: response.content[<span class="num">0</span>].text, <span class="str">"success"</span>: <span class="kw">True</span>}
+
+<span class="kw">async def</span> <span class="fn">research_synthesis</span>(question: str, topics: list[str]) -> str:
+    <span class="cmt"># Fan-out: research all topics in parallel</span>
+    semaphore = asyncio.Semaphore(<span class="num">5</span>)
+    <span class="kw">async def</span> <span class="fn">bounded</span>(t): 
+        <span class="kw">async with</span> semaphore: <span class="kw">return await</span> research_topic(t)
+    
+    results = <span class="kw">await</span> asyncio.gather(*[bounded(t) <span class="kw">for</span> t <span class="kw">in</span> topics])
+    
+    <span class="cmt"># Fan-in: synthesize with better model</span>
+    sync_client = anthropic.Anthropic()
+    research_text = <span class="str">"\n\n"</span>.join([<span class="fn">f</span><span class="str">"## {r['topic']}\n{r['content']}"</span> <span class="kw">for</span> r <span class="kw">in</span> results])
+    
+    response = sync_client.messages.create(
+        model=<span class="str">"claude-opus-4-5"</span>,
+        max_tokens=<span class="num">8192</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""Synthesize this research into a comprehensive answer.
+
+Question: {question}
+
+Research findings:
+{research_text}
+
+Write a structured report with: executive summary, key findings, analysis, open questions."""</span>}]
+    )
+    <span class="kw">return</span> response.content[<span class="num">0</span>].text</code></pre>
+  </div>
+
+  <!-- RECIPE 3 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">03</span>
+      <div>
+        <div class="recipe-title">Code Migration Agent</div>
+        <div class="recipe-desc">Pipeline that identifies migration targets, plans the migration, executes it file by file, and validates each change.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Pipeline + Builder-Validator</span></div>
+      <div class="recipe-meta-item">Model: <span>haiku (scan) + sonnet (migrate) + sonnet (validate)</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.20–1.00/codebase</span></div>
+    </div>
+
+    <div class="code-label"><span>CLAUDE.md snippet — migration agent</span><span class="code-lang">markdown</span></div>
+    <pre><code><span class="kw">## Migration Agent Protocol</span>
+
+Stage 1 — Scan:
+- Glob for all target file types
+- Identify files containing the pattern to migrate
+- Output: list of files with line numbers
+
+Stage 2 — Plan:
+- For each file, produce a migration plan before touching anything
+- Include: what changes, why, risk level (LOW/MEDIUM/HIGH)
+- HIGH-risk files require explicit confirmation
+
+Stage 3 — Execute:
+- Migrate one file at a time
+- After each file: run its tests if they exist
+- On test failure: revert the file, mark as NEEDS-REVIEW
+
+Stage 4 — Report:
+- List all migrated files
+- List all skipped/failed files with reasons
+- Provide summary of changes made</code></pre>
+  </div>
+
+  <!-- RECIPE 4 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">04</span>
+      <div>
+        <div class="recipe-title">Test Generation Agent</div>
+        <div class="recipe-desc">Reads a module, understands its contracts, generates comprehensive tests, runs them, and iterates until they pass.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Ralph Wiggum loop</span></div>
+      <div class="recipe-meta-item">Model: <span>claude-sonnet-4-5</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.10–0.30/module</span></div>
+    </div>
+
+    <div class="code-label"><span>test_gen_agent prompt</span><span class="code-lang">bash</span></div>
+    <pre><code>claude --dangerously-skip-permissions -p <span class="str">"
+Read the file src/payment_processor.py.
+Generate comprehensive pytest tests covering:
+1. Happy path for each public function
+2. Edge cases: empty input, None, invalid types
+3. Error cases: what should raise exceptions and why
+
+Write tests to tests/test_payment_processor.py.
+Then run: pytest tests/test_payment_processor.py -v
+
+If tests fail:
+- Read the failure output
+- Fix the tests (not the source code, unless source has a bug)
+- Run again
+- Repeat until all tests pass or you've tried 3 times
+
+Report: N tests written, N passed, any that needed manual fix.
+"</span></code></pre>
+  </div>
+
+  <!-- RECIPE 5 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">05</span>
+      <div>
+        <div class="recipe-title">Deployment Verification Agent</div>
+        <div class="recipe-desc">Post-deploy agent that checks health endpoints, runs smoke tests, validates key metrics, and rolls back on failure.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Pipeline with conditional rollback</span></div>
+      <div class="recipe-meta-item">Model: <span>claude-haiku-4-5</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.01/deploy</span></div>
+    </div>
+
+    <div class="code-label"><span>deploy_verify.sh</span><span class="code-lang">bash</span></div>
+    <pre><code><span class="cmt">#!/bin/bash</span>
+<span class="cmt"># Run after deploy — let the agent decide if it's healthy</span>
+
+DEPLOY_ID=<span class="str">"$1"</span>
+APP_URL=<span class="str">"$2"</span>
+
+claude --dangerously-skip-permissions -p <span class="str">"
+You are a deployment verification agent.
+
+Deploy ID: $DEPLOY_ID
+App URL: $APP_URL
+
+Run these checks in order:
+1. curl -s -o /dev/null -w '%{http_code}' $APP_URL/health — expect 200
+2. curl -s $APP_URL/health | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"status\"]==\"ok\"'
+3. curl -s $APP_URL/api/version — confirm version matches expected
+4. curl -s $APP_URL/api/ping — expect response under 200ms (use time command)
+
+If all checks pass: print 'DEPLOY_OK' and exit 0.
+If any check fails: 
+- Print 'DEPLOY_FAILED: [reason]'
+- Run: ./scripts/rollback.sh $DEPLOY_ID
+- exit 1
+"</span></code></pre>
+  </div>
+
+  <!-- RECIPE 6 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">06</span>
+      <div>
+        <div class="recipe-title">Documentation Generator Agent</div>
+        <div class="recipe-desc">Reads source files, understands the API, generates accurate docs in the format you specify (Markdown, RST, docstrings).</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Pipeline</span></div>
+      <div class="recipe-meta-item">Model: <span>haiku (parse) + sonnet (write)</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.05–0.20/module</span></div>
+    </div>
+
+    <div class="code-label"><span>doc_gen_skill.md</span><span class="code-lang">markdown</span></div>
+    <pre><code><span class="kw">## Documentation Generation Protocol</span>
+
+For each function/class to document:
+1. Read the implementation — understand what it actually does, not just what it says
+2. Identify: parameters (type + purpose), return value, exceptions raised, side effects
+3. Write documentation that explains WHY, not just WHAT
+4. Include a minimal usage example for any non-obvious function
+
+<span class="kw">## Doc Quality Rules</span>
+- Never describe implementation details that could change
+- If a function's behavior is complex, write a note explaining the design decision
+- Flag any function whose behavior is unclear — do not invent documentation
+- Docstring format: Google style unless project uses NumPy or RST
+
+<span class="kw">## Output</span>
+Write docstrings directly into the source files using Edit tool.
+Then generate a Markdown API reference at docs/api/{module}.md.</code></pre>
+  </div>
+
+  <!-- RECIPE 7 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">07</span>
+      <div>
+        <div class="recipe-title">Security Audit Agent</div>
+        <div class="recipe-desc">Scans codebase for common vulnerabilities (injection, secrets in code, insecure dependencies, auth issues). Outputs prioritized findings.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Fan-out (files) + Supervisor (synthesis)</span></div>
+      <div class="recipe-meta-item">Model: <span>sonnet (scan) + opus (risk assessment)</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.50–2.00/audit</span></div>
+    </div>
+
+    <div class="code-label"><span>Security audit prompt</span><span class="code-lang">bash</span></div>
+    <pre><code>claude --dangerously-skip-permissions -p <span class="str">"
+Security audit of this codebase.
+
+Scan ALL Python and JavaScript files for:
+1. Hardcoded secrets (API keys, passwords, tokens)
+2. SQL injection vectors (string formatting in queries)
+3. Command injection (user input in shell commands)
+4. Insecure deserialization (pickle.loads, eval on user input)
+5. Missing authentication checks on sensitive endpoints
+6. Dependency versions with known CVEs (check requirements.txt/package.json)
+
+For each finding:
+- File and line number
+- Severity: CRITICAL / HIGH / MEDIUM / LOW
+- Exact vulnerable code snippet
+- Why it's a risk
+- Recommended fix
+
+Output a security report sorted by severity.
+CRITICAL items must be the first thing a human sees.
+"</span></code></pre>
+  </div>
+
+  <!-- RECIPE 8 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">08</span>
+      <div>
+        <div class="recipe-title">Performance Optimization Agent</div>
+        <div class="recipe-desc">Profiles slow code paths, identifies bottlenecks, proposes and implements optimizations, benchmarks before/after.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Builder-Validator with benchmark gates</span></div>
+      <div class="recipe-meta-item">Model: <span>claude-sonnet-4-5</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.20–0.80/optimization</span></div>
+    </div>
+
+    <div class="code-label"><span>perf_optimize_skill.md</span><span class="code-lang">markdown</span></div>
+    <pre><code><span class="kw">## Performance Optimization Protocol</span>
+
+Before changing anything:
+1. Run the benchmark: `python -m pytest tests/benchmarks/ --benchmark-only`
+2. Record baseline numbers
+3. Identify the slowest function from profiling output
+
+For each optimization:
+1. Understand WHY it's slow (algorithmic? I/O? memory? lock contention?)
+2. Propose the change and estimate expected improvement
+3. Implement the change
+4. Run benchmark again
+5. If improvement is &lt; 10%: revert the change, it's not worth the complexity
+6. If improvement is &gt; 10%: keep it, document why in a comment
+
+<span class="kw">## Rules</span>
+- Never optimize without measuring first
+- Premature optimization is the root of all evil — only touch the actual bottleneck
+- Readability matters — a 5% speedup that makes code unreadable is a net loss</code></pre>
+  </div>
+
+  <!-- RECIPE 9 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">09</span>
+      <div>
+        <div class="recipe-title">Data Pipeline Agent</div>
+        <div class="recipe-desc">Processes records from a source (CSV, API, database), transforms them, validates each record, writes to destination. Handles partial failures.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Pipeline + Fan-out for batch</span></div>
+      <div class="recipe-meta-item">Model: <span>claude-haiku-4-5 (cheap at scale)</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.001–0.005/record</span></div>
+    </div>
+
+    <div class="code-label"><span>data_pipeline.py</span><span class="code-lang">python</span></div>
+    <pre><code><span class="kw">import</span> anthropic
+<span class="kw">import</span> json
+<span class="kw">from</span> pathlib <span class="kw">import</span> Path
+
+client = anthropic.Anthropic()
+
+<span class="kw">def</span> <span class="fn">transform_record</span>(record: dict, schema: dict, transformation_rules: str) -> dict:
+    <span class="str">"""Use haiku to transform and validate a single record."""</span>
+    response = client.messages.create(
+        model=<span class="str">"claude-haiku-4-5"</span>,  <span class="cmt"># Critical: cheap model for volume</span>
+        max_tokens=<span class="num">512</span>,
+        messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="fn">f</span><span class="str">"""Transform this record according to rules.
+
+Rules: {transformation_rules}
+
+Record: {json.dumps(record)}
+
+Output transformed record as JSON. If record is invalid, output:
+{{"error": "reason", "original": record}}</span>"""</span>}]
+    )
+    
+    text = response.content[<span class="num">0</span>].text
+    start, end = text.find(<span class="str">'{'</span>), text.rfind(<span class="str">'}'</span>) + <span class="num">1</span>
+    <span class="kw">if</span> start == -<span class="num">1</span>:
+        <span class="kw">return</span> {<span class="str">"error"</span>: <span class="str">"no JSON in response"</span>, <span class="str">"original"</span>: record}
+    <span class="kw">return</span> json.loads(text[start:end])
+
+<span class="kw">def</span> <span class="fn">run_pipeline</span>(records: list[dict], rules: str, output_path: str) -> dict:
+    results = {<span class="str">"success"</span>: [], <span class="str">"failed"</span>: [], <span class="str">"total"</span>: len(records)}
+    
+    <span class="kw">for</span> i, record <span class="kw">in</span> enumerate(records):
+        result = transform_record(record, {}, rules)
+        <span class="kw">if</span> <span class="str">"error"</span> <span class="kw">in</span> result:
+            results[<span class="str">"failed"</span>].append({<span class="str">"index"</span>: i, **result})
+        <span class="kw">else</span>:
+            results[<span class="str">"success"</span>].append(result)
+    
+    <span class="cmt"># Write successful records</span>
+    Path(output_path).write_text(json.dumps(results[<span class="str">"success"</span>], indent=<span class="num">2</span>))
+    <span class="cmt"># Write failed records for review</span>
+    Path(output_path + <span class="str">".failed.json"</span>).write_text(json.dumps(results[<span class="str">"failed"</span>], indent=<span class="num">2</span>))
+    <span class="kw">return</span> results</code></pre>
+  </div>
+
+  <!-- RECIPE 10 -->
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <span class="recipe-num">10</span>
+      <div>
+        <div class="recipe-title">Content Generation Agent</div>
+        <div class="recipe-desc">Ralph Wiggum loop for high-quality content: generates drafts, critiques against specific quality criteria, iterates to threshold.</div>
+      </div>
+    </div>
+    <div class="recipe-meta">
+      <div class="recipe-meta-item">Pattern: <span>Ralph Wiggum loop</span></div>
+      <div class="recipe-meta-item">Model: <span>sonnet (generate) + sonnet (critique)</span></div>
+      <div class="recipe-meta-item">Cost: <span>~$0.10–0.40/piece</span></div>
+    </div>
+
+    <div class="code-label"><span>content_gen_skill.md</span><span class="code-lang">markdown</span></div>
+    <pre><code><span class="kw">## Content Generation Protocol</span>
+
+<span class="kw">### Quality Criteria (score 0-100)</span>
+- Accuracy (30 pts): every claim is correct and verifiable
+- Clarity (25 pts): target audience would understand without confusion
+- Completeness (25 pts): covers all required topics with appropriate depth
+- Engagement (20 pts): holds attention, concrete examples, no filler
+
+Threshold for acceptance: 85/100
+
+<span class="kw">### Generation Rules</span>
+- Read the brief completely before writing anything
+- First draft: prioritize completeness over polish
+- Critique draft: apply each criterion independently, be adversarial
+- Revision: address every critique, do not skip any
+
+<span class="kw">### What Makes Output Fail Critique</span>
+- Vague language ("it's important to consider...") — 5pt deduction each
+- Claims without evidence or examples — 5pt deduction each  
+- Padding that adds length without value — 10pt deduction
+- Missing any required topic from brief — automatic FAIL</code></pre>
+
+    <div class="code-label"><span>Usage</span><span class="code-lang">bash</span></div>
+    <pre><code>claude --dangerously-skip-permissions -p <span class="str">"
+Read .claude/skills/content-gen/skill.md.
+
+Brief:
+- Topic: 'How to reduce AWS costs without hurting performance'
+- Audience: senior engineers who know AWS
+- Format: Technical blog post, 1200-1500 words
+- Required sections: ECS/Fargate savings, RDS optimization, S3 cost traps, monitoring costs
+
+Generate, critique, and iterate until score >= 85.
+Write final output to output/aws-cost-post.md.
+Report final score and iteration count.
+"</span></code></pre>
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- CLOSING -->
+<section class="chapter" style="margin-bottom: 8rem;">
+  <h2 style="color: var(--accent); margin-bottom: 1.5rem;">Reference: Pattern Decision Matrix</h2>
+  <table>
+    <thead><tr><th>If you need...</th><th>Use this pattern</th><th>Chapter</th></tr></thead>
+    <tbody>
+      <tr><td>Build something and check it</td><td>Builder-Validator</td><td>05</td></tr>
+      <tr><td>Process N items in parallel</td><td>Fan-out / Fan-in</td><td>06</td></tr>
+      <tr><td>Transform through known stages</td><td>Pipeline</td><td>07</td></tr>
+      <tr><td>Polish output to quality bar</td><td>Ralph Wiggum loop</td><td>08</td></tr>
+      <tr><td>Coordinate multi-domain work</td><td>Supervisor</td><td>09</td></tr>
+      <tr><td>High-confidence classification</td><td>Consensus</td><td>10</td></tr>
+      <tr><td>Combine two or more needs</td><td>Compose patterns</td><td>All</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="margin-top: 3rem;">Reference: Model Selection Cheat Sheet</h2>
+  <table>
+    <thead><tr><th>Task</th><th>Model</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Parse, extract, classify</td><td>claude-haiku-4-5</td><td>Cheap, fast, sufficient</td></tr>
+      <tr><td>Code gen, analysis, reasoning</td><td>claude-sonnet-4-5</td><td>Best cost/quality ratio</td></tr>
+      <tr><td>Complex planning, synthesis</td><td>claude-opus-4-5</td><td>Only where quality gap is real</td></tr>
+      <tr><td>Summarization, compression</td><td>claude-haiku-4-5</td><td>Never needs heavy reasoning</td></tr>
+      <tr><td>Fan-out workers</td><td>claude-haiku-4-5</td><td>Multiplied cost — minimize it</td></tr>
+      <tr><td>Fan-in aggregation</td><td>claude-opus-4-5</td><td>One call, quality matters</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 4rem; padding: 2rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-lg); text-align: center;">
+    <div style="font-size: 0.75rem; color: var(--text-faint); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">Edgeless Labs LLC</div>
+    <div style="font-size: 1.1rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.5rem;">Agent Cookbook</div>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">Copyright 2026 Edgeless Labs LLC — MIT License</div>
+    <div style="font-size: 0.8rem; color: var(--text-faint); margin-top: 0.75rem;">edgeless.ai</div>
+  </div>
+</section>
+
+</body>
+</html>

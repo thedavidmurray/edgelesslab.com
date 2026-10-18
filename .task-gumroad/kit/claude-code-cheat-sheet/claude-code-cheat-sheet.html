@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Cheat Sheet — Edgeless Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+============================================================ */
+:root {
+  --bg:          #0f172a;
+  --bg-card:     #1e293b;
+  --bg-card-alt: #162032;
+  --bg-code:     #0d1829;
+  --border:      #334155;
+  --border-muted:#1e3050;
+  --accent:      #6366f1;
+  --accent-dim:  #4338ca;
+  --accent-glow: rgba(99,102,241,0.18);
+  --accent-subtle: rgba(99,102,241,0.08);
+  --green:       #34d399;
+  --amber:       #fbbf24;
+  --red:         #f87171;
+  --blue:        #60a5fa;
+  --pink:        #f472b6;
+  --text:        #e2e8f0;
+  --text-muted:  #94a3b8;
+  --text-faint:  #4b637a;
+  --text-code:   #c4b5fd;
+  --mono: 'Roboto Mono', 'Cascadia Code', 'Fira Code', monospace;
+}
+
+/* ============================================================
+   RESET
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 11px; }
+body {
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   LAYOUT
+============================================================ */
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.6rem 1.8rem;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.header-left {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+.logo {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+.logo span {
+  color: var(--accent);
+}
+.tagline {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+.header-right {
+  font-size: 0.9rem;
+  color: var(--text-faint);
+  text-align: right;
+}
+.header-right strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem;
+}
+.grid-wide {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 0.85fr;
+  gap: 0.9rem;
+}
+.grid-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0.9rem;
+  margin-top: 0.9rem;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.6;
+}
+.card.green::before  { background: var(--green); }
+.card.amber::before  { background: var(--amber); }
+.card.blue::before   { background: var(--blue); }
+.card.pink::before   { background: var(--pink); }
+.card.red::before    { background: var(--red); }
+.card.accent::before { background: var(--accent); }
+
+/* Section heading */
+.card-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.card.green  .card-title { color: var(--green); }
+.card.amber  .card-title { color: var(--amber); }
+.card.blue   .card-title { color: var(--blue); }
+.card.pink   .card-title { color: var(--pink); }
+.card.red    .card-title { color: var(--red); }
+
+.card-title .icon {
+  font-size: 0.95rem;
+}
+
+/* Tables inside cards */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td {
+  padding: 0.18rem 0;
+  vertical-align: top;
+}
+td:first-child {
+  white-space: nowrap;
+  padding-right: 0.6rem;
+  color: var(--text-code);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+td:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+tr + tr td {
+  border-top: 1px solid var(--border-muted);
+  padding-top: 0.22rem;
+}
+
+/* Inline code */
+code {
+  font-family: var(--mono);
+  background: var(--bg-code);
+  color: var(--text-code);
+  border-radius: 3px;
+  padding: 0.05em 0.35em;
+  font-size: 0.9em;
+  border: 1px solid var(--border-muted);
+}
+
+/* Code blocks */
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border-muted);
+  border-radius: 5px;
+  padding: 0.55rem 0.7rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin-top: 0.5rem;
+}
+pre .kw  { color: var(--accent); font-weight: 600; }
+pre .str { color: var(--green); }
+pre .key { color: var(--blue); }
+pre .val { color: var(--amber); }
+pre .cm  { color: var(--text-faint); font-style: italic; }
+pre .pu  { color: var(--text-muted); }
+
+/* Labels / pills */
+.pill {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 0.05em 0.4em;
+}
+.pill-accent { background: var(--accent-subtle); color: var(--accent); border: 1px solid var(--accent-dim); }
+.pill-green  { background: rgba(52,211,153,0.08); color: var(--green);  border: 1px solid rgba(52,211,153,0.3); }
+.pill-amber  { background: rgba(251,191,36,0.08);  color: var(--amber);  border: 1px solid rgba(251,191,36,0.3); }
+.pill-blue   { background: rgba(96,165,250,0.08);  color: var(--blue);   border: 1px solid rgba(96,165,250,0.3); }
+.pill-red    { background: rgba(248,113,113,0.08); color: var(--red);    border: 1px solid rgba(248,113,113,0.3); }
+
+/* Flag rows */
+.flag-row {
+  display: flex;
+  gap: 0.3rem;
+  align-items: baseline;
+  padding: 0.2rem 0;
+  border-top: 1px solid var(--border-muted);
+}
+.flag-row:first-child { border-top: none; }
+.flag-name {
+  flex-shrink: 0;
+  color: var(--text-code);
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+.flag-alias {
+  flex-shrink: 0;
+  color: var(--text-faint);
+  font-size: 0.82rem;
+}
+.flag-desc {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.9rem 0;
+}
+
+/* Key sequence */
+.key-seq {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+kbd {
+  display: inline-block;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0.1em 0.45em;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* Load order */
+.load-order {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.3rem;
+}
+.load-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: var(--bg-code);
+  border: 1px solid var(--border-muted);
+}
+.load-num {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent-dim);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.load-file { color: var(--text-code); font-size: 0.88rem; flex: 1; }
+.load-scope { color: var(--text-faint); font-size: 0.8rem; }
+
+/* Hook event types */
+.hook-events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Subagent types */
+.agent-type {
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  background: var(--bg-code);
+  border: 1px solid var(--border-muted);
+  margin-bottom: 0.3rem;
+}
+.agent-type-name {
+  color: var(--text-code);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+.agent-type-desc {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-top: 0.1rem;
+}
+
+/* Permission modes */
+.perm-mode {
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-muted);
+  background: var(--bg-code);
+  margin-bottom: 0.3rem;
+}
+.perm-title {
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+.perm-desc {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-top: 0.08rem;
+}
+
+/* Footer */
+.footer {
+  margin-top: 1.1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
+.footer strong { color: var(--accent); }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print {
+  :root {
+    --bg:          #ffffff;
+    --bg-card:     #f8fafc;
+    --bg-card-alt: #f1f5f9;
+    --bg-code:     #f1f5f9;
+    --border:      #cbd5e1;
+    --border-muted:#e2e8f0;
+    --accent:      #4338ca;
+    --accent-dim:  #6366f1;
+    --accent-glow: rgba(99,102,241,0.08);
+    --accent-subtle: rgba(99,102,241,0.06);
+    --green:       #059669;
+    --amber:       #d97706;
+    --red:         #dc2626;
+    --blue:        #2563eb;
+    --pink:        #db2777;
+    --text:        #1e293b;
+    --text-muted:  #475569;
+    --text-faint:  #94a3b8;
+    --text-code:   #4338ca;
+  }
+
+  html { font-size: 8.8px; }
+
+  @page {
+    size: A4;
+    margin: 12mm 12mm 10mm 12mm;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  .page { padding: 0; max-width: 100%; }
+
+  .card::before { height: 1.5px; }
+
+  /* Break between grid rows */
+  .grid-bottom { page-break-before: always; }
+
+  /* Kill link decoration */
+  a { text-decoration: none; color: inherit; }
+
+  code {
+    background: var(--bg-code) !important;
+    border-color: var(--border) !important;
+  }
+  pre {
+    background: var(--bg-code) !important;
+    border-color: var(--border) !important;
+  }
+  kbd {
+    background: var(--bg-code) !important;
+    border-color: var(--border) !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ========== HEADER ========== -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">claude <span>code</span> cheat sheet</div>
+      <div class="tagline">— complete reference for Claude Code CLI &amp; ecosystem</div>
+    </div>
+    <div class="header-right">
+      <span class="pill pill-accent">v1.0</span>&nbsp;&nbsp;
+      <strong>edgeless.ai</strong>&nbsp; · &nbsp;MIT License&nbsp; · &nbsp;© 2026 Edgeless Labs LLC
+    </div>
+  </div>
+
+  <!-- ========== ROW 1: CLI / SLASH / CLAUDE.MD ========== -->
+  <div class="grid-wide">
+
+    <!-- CLI COMMANDS -->
+    <div class="card accent">
+      <div class="card-title"><span class="icon">⌨</span> CLI Commands</div>
+
+      <div class="flag-row">
+        <span class="flag-name">claude</span>
+        <span class="flag-desc">— start interactive session (REPL)</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">claude "prompt"</span>
+        <span class="flag-desc">— one-shot, print response, exit</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">claude -c</span>
+        <span class="flag-alias">/ --continue</span>
+        <span class="flag-desc">— resume last conversation</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">claude -r</span>
+        <span class="flag-alias">/ --resume</span>
+        <span class="flag-desc">— pick a past conversation to resume</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">claude -p "prompt"</span>
+        <span class="flag-desc">— pipe/headless mode (no UI, stdout only)</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">claude --model</span>
+        <span class="flag-desc">— specify model (e.g. <code>claude-opus-4-5</code>)</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">claude --verbose</span>
+        <span class="flag-desc">— show all tool calls and reasoning</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">claude config</span>
+        <span class="flag-desc">— open settings (model, API key, etc.)</span>
+      </div>
+
+      <div class="divider"></div>
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem;">Key Flags</div>
+
+      <div class="flag-row">
+        <span class="flag-name">--allowedTools</span>
+        <span class="flag-desc">— whitelist specific tools (space-separated)</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">--disallowedTools</span>
+        <span class="flag-desc">— blacklist specific tools</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name">--max-turns</span>
+        <span class="flag-desc">— cap agentic loop iterations</span>
+      </div>
+      <div class="flag-row">
+        <span class="flag-name" style="color:var(--red)">--dangerously-skip-permissions</span>
+      </div>
+      <div style="padding-left:0.5rem; color:var(--text-muted); font-size:0.85rem; line-height:1.3;">
+        Skip all permission prompts. <span style="color:var(--red)">CI/scripts only</span> — never interactive.
+      </div>
+
+      <div class="divider"></div>
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem;">Headless Pipeline Pattern</div>
+      <pre>echo "Fix all lint errors" | claude -p --allowedTools Edit,Bash \
+  --dangerously-skip-permissions</pre>
+    </div>
+
+    <!-- SLASH COMMANDS -->
+    <div class="card green">
+      <div class="card-title"><span class="icon">/</span> Slash Commands (in session)</div>
+      <table>
+        <tr><td>/help</td><td>Show all available commands and tools</td></tr>
+        <tr><td>/clear</td><td>Clear conversation history (reset context)</td></tr>
+        <tr><td>/compact</td><td>Compress context into a summary to save tokens</td></tr>
+        <tr><td>/cost</td><td>Show token usage and estimated cost for session</td></tr>
+        <tr><td>/doctor</td><td>Debug API connection and auth issues</td></tr>
+        <tr><td>/init</td><td>Generate a <code>CLAUDE.md</code> for the current project</td></tr>
+        <tr><td>/review</td><td>Review all changes since last git commit</td></tr>
+        <tr><td>/terminal-setup</td><td>Optimize terminal rendering for Claude Code</td></tr>
+        <tr><td>/fast</td><td>Toggle fast mode — same model, optimized for speed</td></tr>
+      </table>
+
+      <div class="divider"></div>
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Skill / Custom Slash Commands</div>
+      <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
+        Any <code>skill.md</code> at <code>.claude/skills/name/</code> is invoked<br>
+        as <code>/name</code> inside a session. Skills listed in<br>
+        <code>CLAUDE.md</code> auto-load based on trigger patterns.
+      </div>
+
+      <div class="divider"></div>
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Context Insertion</div>
+      <table>
+        <tr><td><kbd>#</kbd> filename</td><td>Add a file to the current context window</td></tr>
+        <tr><td><kbd>@</kbd> URL</td><td>Fetch a URL and add its content to context</td></tr>
+      </table>
+    </div>
+
+    <!-- CLAUDE.MD FILES -->
+    <div class="card blue">
+      <div class="card-title"><span class="icon">📄</span> CLAUDE.md Files</div>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Load Order (first wins on conflict)</div>
+      <div class="load-order">
+        <div class="load-step">
+          <div class="load-num">1</div>
+          <div class="load-file">~/.claude/enterprise/CLAUDE.md</div>
+          <div class="load-scope"><span class="pill pill-red">org</span></div>
+        </div>
+        <div class="load-step">
+          <div class="load-num">2</div>
+          <div class="load-file">~/.claude/CLAUDE.md</div>
+          <div class="load-scope"><span class="pill pill-amber">user</span></div>
+        </div>
+        <div class="load-step">
+          <div class="load-num">3</div>
+          <div class="load-file">./CLAUDE.md</div>
+          <div class="load-scope"><span class="pill pill-green">project</span></div>
+        </div>
+        <div class="load-step">
+          <div class="load-num">4</div>
+          <div class="load-file">.claude/CLAUDE.md</div>
+          <div class="load-scope"><span class="pill pill-blue">local</span></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <table>
+        <tr>
+          <td><span class="pill pill-red">org</span></td>
+          <td>Enterprise policies. Read-only to users.</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-amber">user</span></td>
+          <td>Personal preferences, aliases, global tools. Applies to all projects.</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-green">project</span></td>
+          <td>Shared conventions. <strong>Commit to git.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-blue">local</span></td>
+          <td>Project-specific personal notes. <strong>Gitignore this.</strong></td>
+        </tr>
+      </table>
+
+      <div class="divider"></div>
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem;">What to put in CLAUDE.md</div>
+      <div style="color:var(--text-muted);font-size:0.85rem;line-height:1.5;">
+        Build &amp; test commands · Lint commands · Code style<br>
+        rules · Architecture constraints · File structure ·<br>
+        Non-negotiables · Tool preferences · Memory seeds
+      </div>
+    </div>
+  </div><!-- /grid-wide -->
+
+  <!-- ========== ROW 2: HOOKS / SUBAGENTS / SKILLS / MCP / SHORTCUTS / PERMISSIONS ========== -->
+  <div class="grid-bottom">
+
+    <!-- HOOKS -->
+    <div class="card amber">
+      <div class="card-title"><span class="icon">🪝</span> Hooks</div>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Event Types</div>
+      <div class="hook-events">
+        <span class="pill pill-accent">PreToolUse</span>
+        <span class="pill pill-accent">PostToolUse</span>
+        <span class="pill pill-accent">Notification</span>
+        <span class="pill pill-accent">Stop</span>
+        <span class="pill pill-accent">SubagentStop</span>
+      </div>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem;">Config Location</div>
+      <div style="color:var(--text-code);font-size:0.85rem;margin-bottom:0.5rem;">
+        <code>.claude/settings.json</code> or <code>~/.claude/settings.json</code>
+      </div>
+
+      <pre><span class="pu">{</span>
+  <span class="key">"hooks"</span><span class="pu">:</span> <span class="pu">{</span>
+    <span class="key">"PreToolUse"</span><span class="pu">:</span> <span class="pu">[{</span>
+      <span class="key">"matcher"</span><span class="pu">:</span> <span class="str">"Write"</span><span class="pu">,</span>
+      <span class="key">"hooks"</span><span class="pu">:</span> <span class="pu">[{</span>
+        <span class="key">"type"</span><span class="pu">:</span> <span class="str">"command"</span><span class="pu">,</span>
+        <span class="key">"command"</span><span class="pu">:</span> <span class="str">"./lint.sh"</span>
+      <span class="pu">}]</span>
+    <span class="pu">}]</span>
+  <span class="pu">}</span>
+<span class="pu">}</span></pre>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin:0.5rem 0 0.3rem;">Hook Return Values</div>
+      <table>
+        <tr><td><code>allow</code></td><td>Let tool proceed normally</td></tr>
+        <tr><td><code>block</code></td><td>Halt tool, return <code>reason</code> to Claude</td></tr>
+        <tr><td><code>modify</code></td><td>Alter tool input before execution</td></tr>
+      </table>
+      <pre><span class="pu">{</span><span class="key">"decision"</span><span class="pu">:</span> <span class="str">"block"</span><span class="pu">,</span> <span class="key">"reason"</span><span class="pu">:</span> <span class="str">"No writes to /etc"</span><span class="pu">}</span></pre>
+    </div>
+
+    <!-- SUBAGENTS + SKILLS -->
+    <div class="card pink">
+      <div class="card-title"><span class="icon">🤖</span> Subagents &amp; Skills</div>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Subagent Types</div>
+      <div class="agent-type">
+        <div class="agent-type-name">Task <span class="pill pill-green" style="font-size:0.65rem;">foreground</span></div>
+        <div class="agent-type-desc">Blocks parent until complete. Use for sequential work.</div>
+      </div>
+      <div class="agent-type">
+        <div class="agent-type-name">Background <span class="pill pill-blue" style="font-size:0.65rem;">async</span></div>
+        <div class="agent-type-desc">Non-blocking. Parent continues; get result via callback.</div>
+      </div>
+      <div class="agent-type">
+        <div class="agent-type-name">Worktree <span class="pill pill-amber" style="font-size:0.65rem;">isolated</span></div>
+        <div class="agent-type-desc">Separate git worktree. Safe for parallel branches.</div>
+      </div>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin:0.5rem 0 0.3rem;">Key Params</div>
+      <table>
+        <tr><td><code>subagent_type</code></td><td>task / background</td></tr>
+        <tr><td><code>prompt</code></td><td>Task instructions for the subagent</td></tr>
+        <tr><td><code>run_in_background</code></td><td>true → async execution</td></tr>
+        <tr><td><code>isolation</code></td><td><code>"worktree"</code> → git isolated copy</td></tr>
+      </table>
+
+      <div class="divider"></div>
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Skills</div>
+      <table>
+        <tr>
+          <td>Location</td>
+          <td><code>.claude/skills/</code> or <code>~/.claude/skills/</code></td>
+        </tr>
+        <tr>
+          <td>Format</td>
+          <td><code>skill-name/skill.md</code> with YAML frontmatter</td>
+        </tr>
+        <tr>
+          <td>Invoke</td>
+          <td><code>/skill-name</code> or auto-matched by triggers</td>
+        </tr>
+      </table>
+      <pre><span class="cm">## skill.md frontmatter</span>
+<span class="kw">---</span>
+<span class="key">name</span><span class="pu">:</span> <span class="str">my-skill</span>
+<span class="key">triggers</span><span class="pu">:</span>
+  <span class="pu">-</span> <span class="str">"deploy"</span>
+  <span class="pu">-</span> <span class="str">"release"</span>
+<span class="kw">---</span></pre>
+    </div>
+
+    <!-- MCP SERVERS -->
+    <div class="card blue" style="grid-column: span 1;">
+      <div class="card-title"><span class="icon">🔌</span> MCP Servers</div>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem;">Config Locations</div>
+      <table>
+        <tr><td><span class="pill pill-green">project</span></td><td><code>.mcp.json</code></td></tr>
+        <tr><td><span class="pill pill-amber">global</span></td><td><code>~/.claude/mcp.json</code></td></tr>
+      </table>
+
+      <pre><span class="pu">{</span>
+  <span class="key">"mcpServers"</span><span class="pu">:</span> <span class="pu">{</span>
+    <span class="key">"chroma"</span><span class="pu">:</span> <span class="pu">{</span>
+      <span class="key">"command"</span><span class="pu">:</span> <span class="str">"uvx"</span><span class="pu">,</span>
+      <span class="key">"args"</span><span class="pu">:</span> <span class="pu">[</span><span class="str">"chroma-mcp"</span><span class="pu">]</span>
+    <span class="pu">},</span>
+    <span class="key">"fetch"</span><span class="pu">:</span> <span class="pu">{</span>
+      <span class="key">"command"</span><span class="pu">:</span> <span class="str">"npx"</span><span class="pu">,</span>
+      <span class="key">"args"</span><span class="pu">:</span> <span class="pu">[</span>
+        <span class="str">"-y"</span><span class="pu">,</span>
+        <span class="str">"@anthropic/fetch-mcp"</span>
+      <span class="pu">]</span>
+    <span class="pu">}</span>
+  <span class="pu">}</span>
+<span class="pu">}</span></pre>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin:0.5rem 0 0.35rem;">Common Servers</div>
+      <table>
+        <tr><td>filesystem</td><td>Read/write file system access</td></tr>
+        <tr><td>fetch</td><td>Fetch URLs, web content</td></tr>
+        <tr><td>github</td><td>GitHub API (PRs, issues, repos)</td></tr>
+        <tr><td>playwright</td><td>Browser automation</td></tr>
+        <tr><td>chroma</td><td>Vector DB semantic search</td></tr>
+      </table>
+
+      <div style="font-size:0.78rem;color:var(--text-faint);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin:0.5rem 0 0.3rem;">Tips</div>
+      <div style="color:var(--text-muted);font-size:0.82rem;line-height:1.4;">
+        Disable unused servers to reclaim context tokens.<br>
+        Use <code>env</code> key for secrets (e.g. API keys).<br>
+        Project <code>.mcp.json</code> overrides global for same name.
+      </div>
+    </div>
+
+    <!-- KEYBOARD + PERMISSIONS -->
+    <div style="display:flex;flex-direction:column;gap:0.9rem;">
+
+      <!-- KEYBOARD SHORTCUTS -->
+      <div class="card red" style="flex:1;">
+        <div class="card-title"><span class="icon">⌥</span> Keyboard Shortcuts</div>
+        <table>
+          <tr>
+            <td><kbd>Esc</kbd></td>
+            <td>Interrupt Claude mid-response</td>
+          </tr>
+          <tr>
+            <td><kbd>Ctrl</kbd><kbd>C</kbd></td>
+            <td>Cancel current operation entirely</td>
+          </tr>
+          <tr>
+            <td><kbd>↑</kbd> <kbd>↓</kbd></td>
+            <td>Navigate input history</td>
+          </tr>
+          <tr>
+            <td><kbd>Shift</kbd><kbd>Tab</kbd></td>
+            <td>Toggle single / multiline input mode</td>
+          </tr>
+          <tr>
+            <td><kbd>#</kbd> name</td>
+            <td>Add a file to context</td>
+          </tr>
+          <tr>
+            <td><kbd>@</kbd> url</td>
+            <td>Fetch a URL into context</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- PERMISSION MODES -->
+      <div class="card" style="flex:1;border-color:var(--border);">
+        <div class="card-title" style="color:var(--text-muted);">
+          <span class="icon">🔒</span> Permission Modes
+        </div>
+
+        <div class="perm-mode" style="border-color:var(--green);background:rgba(52,211,153,0.05);">
+          <div class="perm-title" style="color:var(--green);">Default (safe)</div>
+          <div class="perm-desc">Prompts before every tool use. Recommended for interactive work.</div>
+        </div>
+
+        <div class="perm-mode" style="border-color:var(--blue);background:rgba(96,165,250,0.05);">
+          <div class="perm-title" style="color:var(--blue);">--allowedTools whitelist</div>
+          <div class="perm-desc">Auto-approve listed tools, prompt for others. Best for scripts.</div>
+          <pre style="margin-top:0.3rem;font-size:0.78rem;">--allowedTools Bash,Edit,Read</pre>
+        </div>
+
+        <div class="perm-mode" style="border-color:var(--red);background:rgba(248,113,113,0.05);">
+          <div class="perm-title" style="color:var(--red);">--dangerously-skip-permissions</div>
+          <div class="perm-desc">All tools auto-approved. <strong style="color:var(--red);">CI / automation only.</strong> Never use interactively.</div>
+        </div>
+      </div>
+
+    </div><!-- /stacked col -->
+
+  </div><!-- /grid-bottom -->
+
+  <!-- ========== FOOTER ========== -->
+  <div class="footer">
+    <div>
+      <strong>Claude Code Cheat Sheet</strong> v1.0 &nbsp;·&nbsp;
+      <a href="https://edgeless.ai" style="color:var(--text-faint);">edgeless.ai</a> &nbsp;·&nbsp;
+      © 2026 Edgeless Labs LLC &nbsp;·&nbsp; MIT License
+    </div>
+    <div>
+      docs.anthropic.com/claude-code &nbsp;·&nbsp;
+      Model Context Protocol: modelcontextprotocol.io
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>

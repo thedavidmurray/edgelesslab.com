@@ -1,0 +1,85 @@
+# Edgeless Lab
+
+> A public research studio for autonomous software, generative systems, and physical artifacts. Working systems, Field Notes, and methods published in the open. 1 resources are free and 0 deeper toolkits are paid.
+
+## Docs
+
+- [About](https://edgelesslab.com/about): founder context, mission, and operating principles
+- [Projects](https://edgelesslab.com/projects): shipped and live systems
+- [Agents](https://edgelesslab.com/agents): multi-agent orchestration stack
+- [Lab](https://edgelesslab.com/lab): interactive playgrounds and experiments
+- [Field Notes](https://edgelesslab.com/field-notes): interactive studies, cited science plots, generative systems, and visual research
+- [Services / Private AI Systems](https://edgelesslab.com/services/private-ai-systems): custom private AI agent systems for professionals and small businesses
+- [Agentic OS series](https://edgelesslab.com/series/agentic-os): long-form series on building autonomous AI infrastructure
+- [Knowledge](https://edgelesslab.com/knowledge): KB index
+- [Support](https://edgelesslab.com/support): help and contact
+
+## Recent posts
+
+- [Generation Left the Screen](https://edgelesslab.com/blog/generation-left-the-screen) (2026-10-02, editorial): Two and a half years ago, AI video was the story. Looking back at five generative-AI videos, the most useful thing in the set is a free Minecraft mod from one independent researcher. Here's what that says about where generation went next.
+- [Enterprise AI's Real Bottleneck Is Everything Around the Model](https://edgelesslab.com/blog/enterprise-ai-bottleneck-around-the-model) (2026-10-02, editorial): Six videos, one shared conclusion: the models work. What fails is the organization, the data policy and the infrastructure around them.
+- [crt-shader: An Open-Source CRT Shader for WebGL 2](https://edgelesslab.com/blog/crt-shader-webgl-crt) (2026-09-28, field-note): A self-contained WebGL 2 fragment shader that renders CRT monitor effects in-browser. No dependencies, no plugins, no post-processing stack.
+- [Tick 151: The Heartbeat That Wasn't Real](https://edgelesslab.com/blog/hermes-heartbeat-forgery) (2026-09-28, field-note): A scheduled job wrote fake heartbeat statuses to the swarm's coordination file for four hours. The fix was rate-limited. Here is how we make sure it cannot happen again.
+- [9 OSS Alternatives Evaluated, 3 Adopted](https://edgelesslab.com/blog/oss-saas-replacements) (2026-09-28, field-note): We evaluated 9 open-source replacements for our SaaS stack. Three made the cut, and each one is better than what it replaced, not just cheaper.
+- [edgeless.wei: On-Chain Identity, One Domain at a Time](https://edgelesslab.com/blog/wei-name-service-edgeless-wei) (2026-09-28, field-note): We registered edgeless.wei as the canonical on-chain identity for the swarm. One domain, one identity, no namespace sprawl.
+- [The Week "pip install" Became the Last Mile](https://edgelesslab.com/blog/poetry-packaging-week) (2026-08-10, editorial): Four videos, one devlog series, one packaging tool: Poetry is the bridge between 'it works on my machine' and 'pip install', and the diffbro series shows it's the last mile of AI tooling distribution.
+- [The Week CLIs Became AI's Distribution Channel](https://edgelesslab.com/blog/cli-tools-week) (2026-08-09, editorial): Four videos, one series, one tool: diffbro is a pip-installable CLI that runs git diffs through ChatGPT for AI peer review — and it tells us something about where AI tooling is headed.
+- [The Week Agentic Engineering's Hidden Crisis: Resource Collision](https://edgelesslab.com/blog/agentic-engineering-resource-collision) (2026-08-05, editorial): When N agents run in parallel they collide on ports, worktrees, databases, and token budgets — with no detection, isolation, or recovery. The binding constraint on parallel agent teams isn't model capability, it's resource allocation.
+- [The Verification Chain Crisis: Why Multi-Agent Systems Fail Invisible](https://edgelesslab.com/blog/verification-chain-crisis) (2026-08-04, editorial): Six videos, one week, one recurring failure mode: the cheapest node in your orchestration graph rots the whole output. The specific mechanical fixes from chained verification stacks to deliberative panels.
+- [The Week Agentic Engineering Became a Real Discipline](https://edgelesslab.com/blog/agentic-engineering-week) (2026-07-30, editorial): Nine YouTube videos, one week, zero hype. The shift from prompting to systems architecture is happening in plain sight — here's what it means for your agent stack.
+- [The Week Multi-Agent Orchestration Stopped Being Optional](https://edgelesslab.com/blog/multi-agent-orchestration-week) (2026-07-30, editorial): Seven YouTube videos, one week, one conclusion: one agent is not enough. The convergence on multi-agent orchestration as a design discipline, not a scaling afterthought.
+
+## Editorial (long-form)
+
+- [Generation Left the Screen](https://edgelesslab.com/blog/generation-left-the-screen) (2026-10-02, editorial): Two and a half years ago, AI video was the story. Looking back at five generative-AI videos, the most useful thing in the set is a free Minecraft mod from one independent researcher. Here's what that says about where generation went next.
+- [Enterprise AI's Real Bottleneck Is Everything Around the Model](https://edgelesslab.com/blog/enterprise-ai-bottleneck-around-the-model) (2026-10-02, editorial): Six videos, one shared conclusion: the models work. What fails is the organization, the data policy and the infrastructure around them.
+- [The Week "pip install" Became the Last Mile](https://edgelesslab.com/blog/poetry-packaging-week) (2026-08-10, editorial): Four videos, one devlog series, one packaging tool: Poetry is the bridge between 'it works on my machine' and 'pip install', and the diffbro series shows it's the last mile of AI tooling distribution.
+- [The Week CLIs Became AI's Distribution Channel](https://edgelesslab.com/blog/cli-tools-week) (2026-08-09, editorial): Four videos, one series, one tool: diffbro is a pip-installable CLI that runs git diffs through ChatGPT for AI peer review — and it tells us something about where AI tooling is headed.
+- [The Week Agentic Engineering's Hidden Crisis: Resource Collision](https://edgelesslab.com/blog/agentic-engineering-resource-collision) (2026-08-05, editorial): When N agents run in parallel they collide on ports, worktrees, databases, and token budgets — with no detection, isolation, or recovery. The binding constraint on parallel agent teams isn't model capability, it's resource allocation.
+- [The Verification Chain Crisis: Why Multi-Agent Systems Fail Invisible](https://edgelesslab.com/blog/verification-chain-crisis) (2026-08-04, editorial): Six videos, one week, one recurring failure mode: the cheapest node in your orchestration graph rots the whole output. The specific mechanical fixes from chained verification stacks to deliberative panels.
+- [The Week Agentic Engineering Became a Real Discipline](https://edgelesslab.com/blog/agentic-engineering-week) (2026-07-30, editorial): Nine YouTube videos, one week, zero hype. The shift from prompting to systems architecture is happening in plain sight — here's what it means for your agent stack.
+- [The Week Multi-Agent Orchestration Stopped Being Optional](https://edgelesslab.com/blog/multi-agent-orchestration-week) (2026-07-30, editorial): Seven YouTube videos, one week, one conclusion: one agent is not enough. The convergence on multi-agent orchestration as a design discipline, not a scaling afterthought.
+- [The Gateway That Broke and the Expensive Models We Didn't Need](https://edgelesslab.com/blog/the-gateway-that-broke-and-the-expensive-models-we-didnt-need) (2026-07-28, editorial): FreeLLMAPI had been quietly routing a small agent swarm across more than a dozen providers. Then the setup collapsed to four, its premium credential vanished, and activation started failing. Recovering it taught me that the real upgrade was not a pricier model. It was one source of truth and intentional routing.
+- [Rescuing an AI Product From a Dying Platform in Four Weeks](https://edgelesslab.com/blog/rescuing-an-ai-product-from-a-dying-platform) (2026-07-25, editorial): A healthcare AI product was built on a no-code LLM platform that announced shutdown with a month of notice. How a solo rebuild on Azure hit the deadline with zero downtime, and what it says about platform risk in the LLM era.
+- [Kimi K3: The "New Kimmy Moment" That Should Change How You Think About Your Stack](https://edgelesslab.com/blog/kimi-k3-post) (2026-07-23, editorial): Kimi K3 offers frontier AI quality at a fraction of the cost – a new Kimmy moment that could reshape your stack.
+- [710 Tasks and the Bottleneck That Wasn't](https://edgelesslab.com/blog/the-bottleneck-that-wasnt) (2026-07-16, editorial): My task board had 710 open items and I was sure the holdup was me — the human reviewer. Then I actually counted. My real decision queue was 69. Measure before you believe.
+
+## Products
+
+- [Edgeless Free Kit](https://edgelessai.gumroad.com/l/edgeless-free-kit?wanted=true&price=0&utm_source=edgelesslab&utm_medium=website&utm_campaign=free_kit&utm_content=products_hero): 17 AI development references, templates and examples in one email-delivered kit. Assembled March–April 2026; check current documentation before use.
+
+## Live projects
+
+- [Safety Hooks](https://edgelesslab.com/projects/safety-hooks) [Infrastructure] (Live): Production guardrails for autonomous agents. Damage control, scope guards, financial gates.
+- [MCP Servers](https://edgelesslab.com/projects/mcp-servers) [Infrastructure] (Live): Production servers for ChromaDB, knowledge search, and multi-agent orchestration.
+- [Pen Plotter Art](https://edgelesslab.com/projects/pen-plotter-art) [Creative] (Active): Generative art experiments scored by an AI judge. SVG to physical media pipeline.
+- [Mastra Orchestrator](https://edgelesslab.com/projects/mastra-orchestrator) [Agents] (Live): Multi-agent routing and task dispatch across Claude, Gemini, and local models.
+- [Knowledge API](https://edgelesslab.com/projects/knowledge-api) [Infrastructure] (Live): Semantic search across thousands of documents. ChromaDB + Obsidian + vector embeddings.
+- [LLM Client](https://edgelesslab.com/projects/llm-client) [Infrastructure] (Live): Unified client with automatic fallback across OpenRouter, Gemini, Anthropic, and OpenAI.
+
+## Live experiments
+
+- [Flow Viz](/flow-viz/) [Data] (Live): Modular flow visualization engine. Markets, transactions, repositories rendered as fluid particle dynamics. Live data from Bitcoin mempool, GitHub, and Polymarket.
+- [Strange Attractors](/pen-plotter/) [Generative] (Live): Lorenz, Rossler, and Chen attractor systems rendered as SVG paths for pen plotting. Part of the broader pen-plotter autoresearch loop.
+- [Total Serialism](/total-serialism/app/) [Generative] (Live): 98 interactive algorithmic art generators optimized for pen plotting. Flow fields, fractals, cellular automata, reaction-diffusion, packing, physics simulations, and more. SVG export for plotters, real-time parameter controls, preset management.
+- [Tartanism](/tartanism/app/) [Generative] (Live): Generate mathematically valid Scottish tartans. Six weave structures, 48 traditional colors, production planning, and loom-ready WIF export. Explore the line between tartan and plaid.
+- [Pen Plotter Pipeline](/pen-plotter/) [Generative] (Live): Generative SVG art pipeline with AI scoring. 40 procedural factories producing work across moire interference, op-art, voxel sculpture, halftone, pointillism, circle packing, hatching, ridgelines, calligraphic gestures, and more.
+- [Pen Plotter Autoresearch](/pen-plotter/) [Editorial] (Live): An editorial field journal for an autonomous loop running on 40 generative art factories. 41,572 specimens, scored by six algorithmic signals and five vision-language judges. Set in Boska, printed on aged paper.
+- [Chladni Visualizer](https://edgelesslab.com/projects/chladni-visualizer) [Audio Visual] (Live): Audio-reactive standing-wave renderer that maps waveform features into Chladni modes, palette shifts, beat flashes, and exportable social clips.
+- [Generative ASCII](https://edgelesslab.com/projects/generative-ascii) [Generative] (Live): Typographic ASCII art generated from particle attractor systems. Each page load produces a unique piece with rarity tiers, like pulling a shiny card.
+- [Excalidraw Diagrams](https://edgelesslab.com/projects/excalidraw-diagrams) [Data] (Active): Auto-generated architecture diagrams using a custom Excalidraw generator. Covering system topology, data flows, and agent interactions. 61 diagrams exported as embeddable SVGs.
+
+## Related properties
+
+- [Shop](https://shop.edgelesslab.com): art-led editions and physical objects from the lab
+
+## Optional
+
+- [RSS feed](https://edgelesslab.com/feed.xml)
+- [Sitemap](https://edgelesslab.com/sitemap.xml)
+- [Source on GitHub](https://github.com/edgeless-ai)
+
+## Contact
+
+- GitHub: https://github.com/edgeless-ai
+- Site: https://edgelesslab.com

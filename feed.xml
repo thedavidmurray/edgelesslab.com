@@ -7,9 +7,387 @@
     <language>en-us</language>
     <atom:link href="https://edgelesslab.com/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Generation Left the Screen</title>
+      <link>https://edgelesslab.com/blog/generation-left-the-screen</link>
+      <description>Two and a half years ago, AI video was the story. Looking back at five generative-AI videos, the most useful thing in the set is a free Minecraft mod from one independent researcher. Here&apos;s what that says about where generation went next.</description>
+      <pubDate>Fri, 02 Oct 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/generation-left-the-screen</guid>
+    </item>
+    <item>
+      <title>Enterprise AI&apos;s Real Bottleneck Is Everything Around the Model</title>
+      <link>https://edgelesslab.com/blog/enterprise-ai-bottleneck-around-the-model</link>
+      <description>Six videos, one shared conclusion: the models work. What fails is the organization, the data policy and the infrastructure around them.</description>
+      <pubDate>Fri, 02 Oct 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/enterprise-ai-bottleneck-around-the-model</guid>
+    </item>
+    <item>
+      <title>crt-shader: An Open-Source CRT Shader for WebGL 2</title>
+      <link>https://edgelesslab.com/blog/crt-shader-webgl-crt</link>
+      <description>A self-contained WebGL 2 fragment shader that renders CRT monitor effects in-browser. No dependencies, no plugins, no post-processing stack.</description>
+      <pubDate>Mon, 28 Sep 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/crt-shader-webgl-crt</guid>
+    </item>
+    <item>
+      <title>Tick 151: The Heartbeat That Wasn&apos;t Real</title>
+      <link>https://edgelesslab.com/blog/hermes-heartbeat-forgery</link>
+      <description>A scheduled job wrote fake heartbeat statuses to the swarm&apos;s coordination file for four hours. The fix was rate-limited. Here is how we make sure it cannot happen again.</description>
+      <pubDate>Mon, 28 Sep 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/hermes-heartbeat-forgery</guid>
+    </item>
+    <item>
+      <title>9 OSS Alternatives Evaluated, 3 Adopted</title>
+      <link>https://edgelesslab.com/blog/oss-saas-replacements</link>
+      <description>We evaluated 9 open-source replacements for our SaaS stack. Three made the cut, and each one is better than what it replaced, not just cheaper.</description>
+      <pubDate>Mon, 28 Sep 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/oss-saas-replacements</guid>
+    </item>
+    <item>
+      <title>edgeless.wei: On-Chain Identity, One Domain at a Time</title>
+      <link>https://edgelesslab.com/blog/wei-name-service-edgeless-wei</link>
+      <description>We registered edgeless.wei as the canonical on-chain identity for the swarm. One domain, one identity, no namespace sprawl.</description>
+      <pubDate>Mon, 28 Sep 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/wei-name-service-edgeless-wei</guid>
+    </item>
+    <item>
+      <title>The Week &quot;pip install&quot; Became the Last Mile</title>
+      <link>https://edgelesslab.com/blog/poetry-packaging-week</link>
+      <description>Four videos, one devlog series, one packaging tool: Poetry is the bridge between &apos;it works on my machine&apos; and &apos;pip install&apos;, and the diffbro series shows it&apos;s the last mile of AI tooling distribution.</description>
+      <pubDate>Mon, 10 Aug 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/poetry-packaging-week</guid>
+    </item>
+    <item>
+      <title>The Week CLIs Became AI&apos;s Distribution Channel</title>
+      <link>https://edgelesslab.com/blog/cli-tools-week</link>
+      <description>Four videos, one series, one tool: diffbro is a pip-installable CLI that runs git diffs through ChatGPT for AI peer review — and it tells us something about where AI tooling is headed.</description>
+      <pubDate>Sun, 09 Aug 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/cli-tools-week</guid>
+    </item>
+    <item>
+      <title>The Week Agentic Engineering&apos;s Hidden Crisis: Resource Collision</title>
+      <link>https://edgelesslab.com/blog/agentic-engineering-resource-collision</link>
+      <description>When N agents run in parallel they collide on ports, worktrees, databases, and token budgets — with no detection, isolation, or recovery. The binding constraint on parallel agent teams isn&apos;t model capability, it&apos;s resource allocation.</description>
+      <pubDate>Wed, 05 Aug 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/agentic-engineering-resource-collision</guid>
+    </item>
+    <item>
+      <title>The Verification Chain Crisis: Why Multi-Agent Systems Fail Invisible</title>
+      <link>https://edgelesslab.com/blog/verification-chain-crisis</link>
+      <description>Six videos, one week, one recurring failure mode: the cheapest node in your orchestration graph rots the whole output. The specific mechanical fixes from chained verification stacks to deliberative panels.</description>
+      <pubDate>Tue, 04 Aug 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/verification-chain-crisis</guid>
+    </item>
+    <item>
+      <title>The Week Agentic Engineering Became a Real Discipline</title>
+      <link>https://edgelesslab.com/blog/agentic-engineering-week</link>
+      <description>Nine YouTube videos, one week, zero hype. The shift from prompting to systems architecture is happening in plain sight — here&apos;s what it means for your agent stack.</description>
+      <pubDate>Thu, 30 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/agentic-engineering-week</guid>
+    </item>
+    <item>
+      <title>The Week Multi-Agent Orchestration Stopped Being Optional</title>
+      <link>https://edgelesslab.com/blog/multi-agent-orchestration-week</link>
+      <description>Seven YouTube videos, one week, one conclusion: one agent is not enough. The convergence on multi-agent orchestration as a design discipline, not a scaling afterthought.</description>
+      <pubDate>Thu, 30 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/multi-agent-orchestration-week</guid>
+    </item>
+    <item>
+      <title>The Gateway That Broke and the Expensive Models We Didn&apos;t Need</title>
+      <link>https://edgelesslab.com/blog/the-gateway-that-broke-and-the-expensive-models-we-didnt-need</link>
+      <description>FreeLLMAPI had been quietly routing a small agent swarm across more than a dozen providers. Then the setup collapsed to four, its premium credential vanished, and activation started failing. Recovering it taught me that the real upgrade was not a pricier model. It was one source of truth and intentional routing.</description>
+      <pubDate>Tue, 28 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/the-gateway-that-broke-and-the-expensive-models-we-didnt-need</guid>
+    </item>
+    <item>
+      <title>Rescuing an AI Product From a Dying Platform in Four Weeks</title>
+      <link>https://edgelesslab.com/blog/rescuing-an-ai-product-from-a-dying-platform</link>
+      <description>A healthcare AI product was built on a no-code LLM platform that announced shutdown with a month of notice. How a solo rebuild on Azure hit the deadline with zero downtime, and what it says about platform risk in the LLM era.</description>
+      <pubDate>Sat, 25 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/rescuing-an-ai-product-from-a-dying-platform</guid>
+    </item>
+    <item>
+      <title>Kimi K3: The &quot;New Kimmy Moment&quot; That Should Change How You Think About Your Stack</title>
+      <link>https://edgelesslab.com/blog/kimi-k3-post</link>
+      <description>Kimi K3 offers frontier AI quality at a fraction of the cost – a new Kimmy moment that could reshape your stack.</description>
+      <pubDate>Thu, 23 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/kimi-k3-post</guid>
+    </item>
+    <item>
+      <title>710 Tasks and the Bottleneck That Wasn&apos;t</title>
+      <link>https://edgelesslab.com/blog/the-bottleneck-that-wasnt</link>
+      <description>My task board had 710 open items and I was sure the holdup was me — the human reviewer. Then I actually counted. My real decision queue was 69. Measure before you believe.</description>
+      <pubDate>Thu, 16 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/the-bottleneck-that-wasnt</guid>
+    </item>
+    <item>
+      <title>The Bot That Was Online But Couldn&apos;t Talk</title>
+      <link>https://edgelesslab.com/blog/the-bot-that-was-online-but-couldnt-talk</link>
+      <description>A chat agent showed green, connected, running — and ignored every message. The culprit was a second adapter it didn&apos;t even need, crash-looping on a port collision.</description>
+      <pubDate>Tue, 14 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/the-bot-that-was-online-but-couldnt-talk</guid>
+    </item>
+    <item>
+      <title>The Monitor That Cried Wolf</title>
+      <link>https://edgelesslab.com/blog/the-monitor-that-cried-wolf</link>
+      <description>My health monitor paged me about three dead services. All three were fine. The monitor was measuring the wrong thing and calling its own blind spot an outage. Verify the measurement before you chase the symptom.</description>
+      <pubDate>Sun, 12 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/the-monitor-that-cried-wolf</guid>
+    </item>
+    <item>
+      <title>Six Dispatchers Where One Is Law</title>
+      <link>https://edgelesslab.com/blog/six-dispatchers-where-one-is-law</link>
+      <description>My agent swarm had exactly one rule about who assigns work. The config said so. The runtime disagreed six ways. On why observability isn&apos;t the same as reconciliation.</description>
+      <pubDate>Thu, 09 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/six-dispatchers-where-one-is-law</guid>
+    </item>
+    <item>
+      <title>The $0 Router That Timed Out on Everything</title>
+      <link>https://edgelesslab.com/blog/the-router-that-timed-out-on-everything</link>
+      <description>A free local model router answered every health check and hung on every real request. Why the cheap measurement lies, and why &quot;responds to a ping&quot; is not the same as &quot;works.&quot;</description>
+      <pubDate>Sun, 05 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/the-router-that-timed-out-on-everything</guid>
+    </item>
+    <item>
+      <title>The Night Our Swarm Tried to Bankrupt Itself</title>
+      <link>https://edgelesslab.com/blog/swarm-tried-to-bankrupt-itself</link>
+      <description>A field note from one night operating an autonomous AI agent swarm: a $50 overspend from a missing suffix, a dispatch storm that corrupted the database, and a task board that kept re-creating itself. Four root causes, four fixes.</description>
+      <pubDate>Wed, 01 Jul 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/swarm-tried-to-bankrupt-itself</guid>
+    </item>
+    <item>
+      <title>The $172B Question: What Generative AI Is Actually Worth</title>
+      <link>https://edgelesslab.com/blog/stanford-genai-worth-2026</link>
+      <description>Stanford&apos;s Digital Economy Lab measured U.S. consumer surplus from generative AI at $172B in early 2026 — twelve times producer revenue. The Lindahl-price argument for why models are underpriced.</description>
+      <pubDate>Fri, 26 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/stanford-genai-worth-2026</guid>
+    </item>
+    <item>
+      <title>edgeless-memory v1.0: One Install, Three Tiers, Passive Recall</title>
+      <link>https://edgelesslab.com/blog/edgeless-memory-v1-passive-recall</link>
+      <description>Agent-agnostic persistent memory that ships as one CLI. SQLite + ChromaDB + Obsidian vault, 700 memories graphed, agents that recall by meaning without an explicit search step.</description>
+      <pubDate>Sun, 21 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/edgeless-memory-v1-passive-recall</guid>
+    </item>
+    <item>
+      <title>How We Debugged a Stuck Multi-Agent Swarm Without Touching the Production Pipeline</title>
+      <link>https://edgelesslab.com/blog/how-we-debugged-a-stuck-multi-agent-swarm-without-touching-the-production-pipeline</link>
+      <description>Recovering a stuck automated agent loop by reading the recovery ticket, validating dependencies, and switching to a concrete deliverable instead of retrying blind.</description>
+      <pubDate>Tue, 16 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/how-we-debugged-a-stuck-multi-agent-swarm-without-touching-the-production-pipeline</guid>
+    </item>
+    <item>
+      <title>Multi-Agent Goal Loops: Theory and Practice</title>
+      <link>https://edgelesslab.com/blog/multi-agent-goal-loops-theory-and-practice</link>
+      <description>How self-evaluating goal loops work in multi-agent systems, with practical patterns for autonomous execution.</description>
+      <pubDate>Sun, 14 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/multi-agent-goal-loops-theory-and-practice</guid>
+    </item>
+    <item>
+      <title>Reality-MUX - Iterative Planning When Everything Changes</title>
+      <link>https://edgelesslab.com/blog/reality-mux-iterative-planning</link>
+      <description>A planning loop for software where nothing stays still. Reused from production operational design, translated to shipping code under distributed teams.</description>
+      <pubDate>Sun, 14 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/reality-mux-iterative-planning</guid>
+    </item>
+    <item>
+      <title>What Anthropic&apos;s Enterprise Agent Playbook Teaches About Building Multi-Agent Systems</title>
+      <link>https://edgelesslab.com/blog/anthropic-enterprise-agent-playbook-multi-agent-systems</link>
+      <description>Anthropic&apos;s enterprise guide reframes AI as infrastructure, not software. Here&apos;s how the same principles apply to multi-agent systems and why Edgeless is built on them.</description>
+      <pubDate>Sun, 14 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/anthropic-enterprise-agent-playbook-multi-agent-systems</guid>
+    </item>
+    <item>
+      <title>We Audited Our AI Knowledge Base: 85% of Our Content Was Invisible to Our Agents</title>
+      <link>https://edgelesslab.com/blog/kb-audit-circulation</link>
+      <description>After building a 26,000-document knowledge system for my AI agents, I discovered only 14% was vector-searchable. Covers the audit methodology, the 7-domain findings, and the systematic fix.</description>
+      <pubDate>Fri, 12 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/kb-audit-circulation</guid>
+    </item>
+    <item>
+      <title>Scroll-Chromatic Excavation</title>
+      <link>https://edgelesslab.com/blog/scroll-chromatic-excavation</link>
+      <description>Scroll through the void to excavate hidden text. Microscopic agents swarm toward dark pixels, revealing buried glyphs. Full control panel with sliders for every variable.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/scroll-chromatic-excavation</guid>
+    </item>
+    <item>
+      <title>The Creative Demos Collection</title>
+      <link>https://edgelesslab.com/blog/creative-demos-collection</link>
+      <description>37 interactive generative art experiments. p5.js, Canvas 2D, WebGL. No build step required. Open, explore, remix.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/creative-demos-collection</guid>
+    </item>
+    <item>
+      <title>Scroll-Isometric Dissolution</title>
+      <link>https://edgelesslab.com/blog/scroll-isometric-dissolution</link>
+      <description>Isometric typography that dissolves into particles as you scroll. A 3D word space that collapses under velocity.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/scroll-isometric-dissolution</guid>
+    </item>
+    <item>
+      <title>Percussive Archaeology</title>
+      <link>https://edgelesslab.com/blog/percussive-archaeology</link>
+      <description>Rhythm-driven excavation of buried text. Each beat spawns agents that dig toward the hidden manuscript.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/percussive-archaeology</guid>
+    </item>
+    <item>
+      <title>Noise-Shared Cursor Swarm Brush</title>
+      <link>https://edgelesslab.com/blog/cursor-swarm-brush</link>
+      <description>64 particles track your cursor through a recursive geometric subdivision. Noise-driven turbulence stains tiles as you move.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/cursor-swarm-brush</guid>
+    </item>
+    <item>
+      <title>Kinetic Type Physics</title>
+      <link>https://edgelesslab.com/blog/kinetic-type-physics</link>
+      <description>Physics-driven typography where letters have mass, velocity, and collision. Mouse repulsion and gravity well.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/kinetic-type-physics</guid>
+    </item>
+    <item>
+      <title>Monolith Drummer</title>
+      <link>https://edgelesslab.com/blog/monolith-drummer</link>
+      <description>A 3D monolith that responds to rhythm. Web Audio API drives the geometry, each beat deforms the surface.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/monolith-drummer</guid>
+    </item>
+    <item>
+      <title>Tartan Weave Synth</title>
+      <link>https://edgelesslab.com/blog/tartan-weave-synth</link>
+      <description>A playable textile system based on Tartanism, with formal setts, 48 dye colors, six loom structures, material studies, mutation, and recipe export.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/tartan-weave-synth</guid>
+    </item>
+    <item>
+      <title>Serial Permutation Canvas</title>
+      <link>https://edgelesslab.com/blog/serial-permutation-canvas</link>
+      <description>Visualizing total serialism as particle geometry. 12-tone series, prime/retrograde/inversion/rotation permutations, and color-mapped particles.</description>
+      <pubDate>Wed, 10 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/serial-permutation-canvas</guid>
+    </item>
+    <item>
+      <title>Turning Audio Into a Resonant Plate</title>
+      <link>https://edgelesslab.com/blog/chladni-waveform-visualizer</link>
+      <description>A Chladni visualizer belongs in the lab first because the artifact is interactive. The field note documents the pipeline, the visual choices, and the export path.</description>
+      <pubDate>Tue, 02 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/chladni-waveform-visualizer</guid>
+    </item>
+    <item>
+      <title>Building the Autonomous Perp Trading Stack: From Instagram Reels to Production Code</title>
+      <link>https://edgelesslab.com/blog/autonomous-perp-trading-stack</link>
+      <description>How the Edgeless swarm turned quant theory into executable trading infrastructure in one afternoon: six new production modules, a Neural CDE upgrade, Kalman filters, and OU mean-reversion scanners.</description>
+      <pubDate>Tue, 02 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/autonomous-perp-trading-stack</guid>
+    </item>
+    <item>
+      <title>SkillOpt: Stop Writing Agent Skills, Start Optimizing Them</title>
+      <link>https://edgelesslab.com/blog/skillopt-self-evolving-agent-skills</link>
+      <description>A new optimizer treats an agent&apos;s skill document as trainable state, accepting edits only when they measurably improve a held-out score, because LLMs reading a skill can&apos;t tell good from bad.</description>
+      <pubDate>Mon, 01 Jun 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/skillopt-self-evolving-agent-skills</guid>
+    </item>
+    <item>
+      <title>The Harness Is the Moat: Why Owning Your Agent Orchestration Matters More Than Model Choice</title>
+      <link>https://edgelesslab.com/blog/harness-is-the-moat</link>
+      <description>Models matter less and less. The system around the agent — the harness, the factory, the tokenomics — is where the real leverage lives. Here&apos;s what 49 missed YouTube videos taught us about agentic engineering.</description>
+      <pubDate>Sun, 31 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/harness-is-the-moat</guid>
+    </item>
+    <item>
+      <title>The Prove-It Economy: How AI Agents Are Already Shopping for You</title>
+      <link>https://edgelesslab.com/blog/prove-it-economy</link>
+      <description>The web is shifting from attention to interpretation. AI agents now read, filter, and transact on your behalf. Here&apos;s what that means for products, marketers, and anyone building a business.</description>
+      <pubDate>Sat, 30 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/prove-it-economy</guid>
+    </item>
+    <item>
+      <title>MCP, A2A, AG-UI: Google&apos;s Agent Stack and What Actually Matters</title>
+      <link>https://edgelesslab.com/blog/google-agentic-stack</link>
+      <description>Six protocols launched in 12 months. Only three are consolidating into the core agent stack. Here&apos;s the practical map for builders who don&apos;t have time to read the spec.</description>
+      <pubDate>Fri, 29 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/google-agentic-stack</guid>
+    </item>
+    <item>
+      <title>The Infrastructure Nightmare Nobody Is Talking About</title>
+      <link>https://edgelesslab.com/blog/infrastructure-nightmare</link>
+      <description>App teams scale on AI scaling laws. Platform teams scale on human scaling laws. The gap is the new bottleneck.</description>
+      <pubDate>Thu, 28 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/infrastructure-nightmare</guid>
+    </item>
+    <item>
+      <title>Plan with Opus, Build with Gemini: A Practical Guide to Mixed-Provider Workflows</title>
+      <link>https://edgelesslab.com/blog/plan-with-opus-build-with-gemini</link>
+      <description>Frontier models are hitting rate limits. Open models are catching up. The winning strategy isn&apos;t choosing one — it&apos;s orchestrating the right model for each step.</description>
+      <pubDate>Wed, 27 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/plan-with-opus-build-with-gemini</guid>
+    </item>
+    <item>
+      <title>16 Agents, Not 1000: What Claude&apos;s Dynamic Workflows Actually Mean</title>
+      <link>https://edgelesslab.com/blog/claude-dynamic-workflows</link>
+      <description>Claude Opus 4.8 shipped dynamic workflows — Claude writes its own orchestration script. Here&apos;s the real concurrency limit, the cost trap, and when to use it.</description>
+      <pubDate>Tue, 26 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/claude-dynamic-workflows</guid>
+    </item>
+    <item>
+      <title>From arXiv Paper to Interactive Demo in 20 Minutes</title>
+      <link>https://edgelesslab.com/blog/arxiv-to-interactive-demo-marimo</link>
+      <description>We built a live multi-armed bandit simulator from a research paper using marimo; reactive Python notebooks that run in the browser. Why this changes how we consume research.</description>
+      <pubDate>Mon, 18 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/arxiv-to-interactive-demo-marimo</guid>
+    </item>
+    <item>
+      <title>The Most Useful Thing Your AI Agents Can Do Is Audit Themselves</title>
+      <link>https://edgelesslab.com/blog/agents-that-improve-themselves</link>
+      <description>We pointed our agents at our own knowledge base and asked what they should be doing that they weren&apos;t. Then we built the fixes.</description>
+      <pubDate>Tue, 12 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/agents-that-improve-themselves</guid>
+    </item>
+    <item>
+      <title>I Pointed 7 AI Agents at My YouTube History. They Found What I Couldn&apos;t See.</title>
+      <link>https://edgelesslab.com/blog/youtube-mining-ai-agents</link>
+      <description>7 agents analyzed 1,062 YouTube videos and found 14 things they should be doing that they weren&apos;t. Topic clusters, channel ROI, knowledge gaps, and the meta-move: agents auditing themselves.</description>
+      <pubDate>Tue, 12 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/youtube-mining-ai-agents</guid>
+    </item>
+    <item>
+      <title>The Real Cost of Running AI Agents in Production ,  A Monthly Breakdown (2026)</title>
+      <link>https://edgelesslab.com/blog/real-cost-ai-agents-production-2026</link>
+      <description>Your AI agent costs 5-15× more in production than your prototype. Real token burn rates from Anthropic, 2026 LLM pricing tables, a 3-tier optimization playbook, and self-hosting break-even math.</description>
+      <pubDate>Wed, 06 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/real-cost-ai-agents-production-2026</guid>
+    </item>
+    <item>
+      <title>Your AI Newsletter Reads Like a Database Dump (This is the Fix)</title>
+      <link>https://edgelesslab.com/blog/ai-newsletter-reads-like-database-dump</link>
+      <description>Our AI-generated digests had an 18% open rate. Five structural rules from Morning Brew, TLDR, and Ben&apos;s Bites doubled it. The template, the prompt trick, and the before/after.</description>
+      <pubDate>Tue, 05 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/ai-newsletter-reads-like-database-dump</guid>
+    </item>
+    <item>
+      <title>I Read 500 Google Reviews in Portland. What Small Businesses Actually Need from AI.</title>
+      <link>https://edgelesslab.com/blog/what-portland-businesses-need-from-ai</link>
+      <description>Dental offices losing patients to voicemail. HVAC companies quoting three days late. The AI solutions Portland small businesses need aren&apos;t chatbots. They&apos;re answering the phone.</description>
+      <pubDate>Tue, 05 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/what-portland-businesses-need-from-ai</guid>
+    </item>
+    <item>
+      <title>How to Price AI Agent Services When Nobody Knows What They Cost</title>
+      <link>https://edgelesslab.com/blog/pricing-ai-agent-services-solo-studio</link>
+      <description>I surveyed 20 agencies and freelancers offering AI agent builds. The range was $500 to $150,000. This is the framework I use to price Edgeless Lab&apos;s services.</description>
+      <pubDate>Tue, 05 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/pricing-ai-agent-services-solo-studio</guid>
+    </item>
+    <item>
+      <title>Half My AI Agents Were Dead. I Didn&apos;t Know for a Week.</title>
+      <link>https://edgelesslab.com/blog/self-healing-ai-infrastructure</link>
+      <description>I discovered 10 of my 20 agents were ghosts — registered, visible in dashboards, producing nothing. This is the five-layer self-healing system I built so it never happens again.</description>
+      <pubDate>Tue, 05 May 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/self-healing-ai-infrastructure</guid>
+    </item>
+    <item>
       <title>Hermes Curator: The Agent That Cleans Up After Your Agents</title>
       <link>https://edgelesslab.com/blog/hermes-curator-skill-lifecycle</link>
-      <description>Nous Research shipped Hermes v0.12.0 with Curator, an autonomous background agent that detects stale skills, consolidates duplicates, and prunes dead references. Here&apos;s why it matters for multi-agent systems.</description>
+      <description>Nous Research shipped Hermes v0.12.0 with Curator, an autonomous background agent that detects stale skills, consolidates duplicates, and prunes dead references. Why it matters for multi-agent systems.</description>
       <pubDate>Fri, 01 May 2026 12:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://edgelesslab.com/blog/hermes-curator-skill-lifecycle</guid>
     </item>
@@ -23,7 +401,7 @@
     <item>
       <title>The Agent Grounding Problem: How Hermes Knows What&apos;s Real</title>
       <link>https://edgelesslab.com/blog/agent-grounding-problem-hermes</link>
-      <description>AI agents confabulate. They claim files exist that don&apos;t. They report tasks complete that aren&apos;t. The grounding problem isn&apos;t philosophical -- it&apos;s operational.</description>
+      <description>AI agents confabulate. They claim files exist that don&apos;t. They report tasks complete that aren&apos;t. The grounding problem isn&apos;t philosophical; it&apos;s operational.</description>
       <pubDate>Wed, 29 Apr 2026 12:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://edgelesslab.com/blog/agent-grounding-problem-hermes</guid>
     </item>
@@ -35,7 +413,21 @@
       <guid isPermaLink="true">https://edgelesslab.com/blog/claude-code-hooks-harness-engineering</guid>
     </item>
     <item>
-      <title>I Run a $12/Week AI Operations Team. Here&apos;s the Cost Breakdown.</title>
+      <title>Multi-Model Routing: Why I Run 4 Different AI Brains Instead of One</title>
+      <link>https://edgelesslab.com/blog/multi-model-routing</link>
+      <description>My agent system routes requests across 4 models based on task type. Full cost breakdown, routing logic, and configuration. 10x cost reduction vs. single-model approach.</description>
+      <pubDate>Sun, 19 Apr 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/multi-model-routing</guid>
+    </item>
+    <item>
+      <title>The Knowledge Base Loop: Why Your Agents Need a Memory System</title>
+      <link>https://edgelesslab.com/blog/knowledge-base-loop</link>
+      <description>How I built a KB Loop based on the Karpathy pattern: ChromaDB, triage scoring, synthesizer agents, and a 0-25 health score. Results: 4.2x context restatements down to 0.3x.</description>
+      <pubDate>Sun, 19 Apr 2026 12:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://edgelesslab.com/blog/knowledge-base-loop</guid>
+    </item>
+    <item>
+      <title>I Run a $12/Week AI Operations Team. This is the Cost Breakdown.</title>
       <link>https://edgelesslab.com/blog/12-dollar-ai-operations-team</link>
       <description>Enterprise AI ops costs $50K+/month. I run 5 agents, 24/7, for $12/week. The architecture, the model routing, and why cheap doesn&apos;t mean fragile.</description>
       <pubDate>Sun, 19 Apr 2026 12:00:00 GMT</pubDate>
@@ -49,9 +441,9 @@
       <guid isPermaLink="true">https://edgelesslab.com/blog/when-plaid-becomes-tartan</guid>
     </item>
     <item>
-      <title>96 Algorithms, One Constraint: A Pen on Paper</title>
+      <title>98 Algorithms, One Constraint: A Pen on Paper</title>
       <link>https://edgelesslab.com/blog/ninety-six-algorithms-one-constraint</link>
-      <description>A taxonomy of every generative art algorithm that survives the pen plotter constraint. Flow fields to fractals, reaction-diffusion to recursive trees. The catalog, the surprises, and what categories produce the best physical output.</description>
+      <description>A taxonomy of every generative art algorithm that survives the pen plotter constraint. Flow fields to fractals, reaction-diffusion to recursive trees. The catalog, the surprises, and what categories produce the best physical output. Updated to reflect 98 generators as of June 2026.</description>
       <pubDate>Wed, 15 Apr 2026 12:00:00 GMT</pubDate>
       <guid isPermaLink="true">https://edgelesslab.com/blog/ninety-six-algorithms-one-constraint</guid>
     </item>
@@ -63,7 +455,7 @@
       <guid isPermaLink="true">https://edgelesslab.com/blog/meta-ai-style-guide</guid>
     </item>
     <item>
-      <title>I Shipped 7 Digital Products in 7 Days. Here&apos;s Exactly How.</title>
+      <title>I Shipped 7 Digital Products in 7 Days. The Exact Process.</title>
       <link>https://edgelesslab.com/blog/shipped-7-products-in-7-days</link>
       <description>The meta-narrative: how one solo developer used AI agents, autoreason scoring, and a daily shipping cadence to go from 11 to 18 products in a week.</description>
       <pubDate>Thu, 09 Apr 2026 12:00:00 GMT</pubDate>

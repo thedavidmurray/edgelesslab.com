@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>kimi-k1-5-rl-long-context</title>
+    <script type="module" crossorigin src="./assets/index-iAj2M3os.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-y72bE5iF.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-PbYoItBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-BakX-tnw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CuYNS33t.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CCOoIlcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CGfP-Ye3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BJ9oKrvH.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BIlJBJIu.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BtEcuwwV.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-X2M2usMq.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CFAaMy0O.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-BF7GSjhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-BXI8V5i6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CQMqwayA.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DCqDlsgq.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-BTp1tQDO.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DQmqoJgr.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-9vLEgLY6.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-Cjly7tmx.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CgQpRVyN.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BH8bU9Xf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C2E8KCbD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-Dev6I_Kv.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CfyqLOPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-BukULOeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-EP9ZArpv.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B9JJ72XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-B6_8umQX.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BE150fVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-KshNNAOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-Baf35rp4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-0SWz6w4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-CWoNQwFz.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DWxvyYxP.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DvZlHYnD.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CXj_gH7S.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-CjNGDxxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-3wF4dU7I.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-kNeJ8nbe.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dez1I5M9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0WqBUnf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CwfKvuyQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-D-o1OXc9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BZhJ1bTM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bj9Iedc0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DHMtQYxT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnIl7RU-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CfGDksO-.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-C6JeW1YI.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-DCE7d2fN.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DdxMtdqK.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-DXo9vDEJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-DIlSqcdp.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-DmhaVp6Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-DQ5n6Zef.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bo313Z9X.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BCXa3Ocm.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-DEHK-C20.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-CC0gG4Av.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-Dr_Y1zNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-BlBSYv0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-BKZTJMZ6.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DrpctNAg.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DE_5rdOV.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-DCM-63YT.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-mjvipKvz.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-b2KTOk0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-MQnbMIO2.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-LArpBcY-.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-9ogswH46.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Bjh7v4lb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-C7RH0Nc7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DfGLyCbP.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DK7te6sJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-bcK6jTD2.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CyasABTK.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-IBNGDypD.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BCIGtBo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BLBwT24G.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-BT-L2LDD.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-VxOqftwq.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-BoMcg6sy.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DctOjjEz.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-DcImOp4r.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DI0EQXw0.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-DcEasnos.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-CjikjOBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DTBVbtl-.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CmK-WSPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-Dol5ybck.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CT1LpOBD.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CUQODgGJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-P--XWZhg.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-C6VN0dQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-f3mfGw8u.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-CsbsBLBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-CA9HCE2Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DMNO6Poc.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-48KFPvCp.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-rKGlekSQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-Fk_msRcD.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuGyzPVb.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C4DZksWV.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-Dkhsq416.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DZwIjHwu.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-Cgon0fXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CnrjjcMO.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-2LbFKIQQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DiQGBfwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CANi6nSX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-C2u-_EAQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-CXueMbRb.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DxdydCSG.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-D0iYysLh.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BktyywYg.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-D_YIPPZo.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CExKUszm.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CjPoUZCP.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-CgWOEYeG.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-DTeVFctC.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-DVEV2j1H.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CPbVtjKW.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-BzxoPflZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-VcOeHtkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D3YFXNmD.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-D7RG9Px_.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-CPTvLHMl.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-Msf1n32r.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DSv-aO_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DHJTIc4H.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-CUN2DC78.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BvoBtS_V.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-jhXeQEgs.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-DBMviz_K.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-DHhZkGEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-BRbNg7Li.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BDWM3c_z.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-vrPro738.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-dGUJ3Bw8.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D7fu7IC3.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CFvCMYuj.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DD5BwHTh.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CUkO1Vlo.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-B9I9mpZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-CKbqJyj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-48bgGoSa.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-zUHU--0D.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-xF5uWODg.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-FlZezxaf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-Doh9J-g6.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-ANiMIEDI.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-D_pYuT11.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-Cy7KBUrF.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tqeFGeKJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DkdBWh44.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DPWHdF_-.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CV7pqa1o.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BULc9l6b.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CaelsqOA.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.12\"\n# dependencies = [\n#     \"marimo\",\n#     \"numpy==2.4.3\",\n#     \"matplotlib==3.10.3\",\n# ]\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.13\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell\ndef _():\n    import marimo as mo\n    import numpy as np\n    import matplotlib.pyplot as plt\n\n    return mo, np, plt\n\n\n@app.cell\ndef _(mo):\n    # \u2500\u2500 Paper header \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    mo.md(r\"\"\"\n    # Kimi K1.5 \u2014 Long Context as Implicit Search Space\n\n    **Paper:** arXiv:2501.12599 (Kimi Team, Jan 2025)\n    **Core claim:** A simple RL\u2013long-CoT loop with a length penalty can beat\n    complex planning algorithms (no MCTS, no value networks) on hard reasoning tasks.\n\n    What this notebook demonstrates:\n    1. Why longer context windows act like an automatic planning budget.\n    2. How a length-normalized policy objective trades off accuracy vs. compute.\n    3. A long2short distillation analogue: compress a quality model into fewer tokens.\n    \"\"\")\n    return\n\n\n@app.cell\ndef _(mo):\n    @mo.capture\n    def _notation_ref() -\u003E str:\n        return (\n\n            r\"\"\"\n            **Notation reference**\n            | Symbol | Meaning |\n            |--------|---------|\n            | $n$ | number of available reasoning tokens (context budget / search steps) |\n            | $p(x, y^*)$ | probability model assigns to correct answer $y^*$ given problem $x$ |\n            | $\\mathcal{L}(y, y^*)$ | length of generated chain of thought + answer |\n            | $\\alpha \\in [0,1]$ | length penalty coefficient: $\\alpha = 0$ is unconstrained, $\\alpha = 1$ is maximal budget |\n            | $r \\in \\{0,1\\}$ | rule-based reward: 1 iff answer equals ground truth |\n            | $V_\\mathrm{long}$ | value of long-CoT teacher after length-normalized RL |\n            | $V_\\mathrm{short}$ | value of distilled short-CoT student |\n            | $\\Delta$ | quality delta = $V_\\mathrm{short} / V_\\mathrm{long}$ |\n            \"\"\"\n        )\n\n    _notation_ref()\n    return\n\n\n@app.cell\ndef _(mo):\n    # \u2500\u2500 Interactive controls \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    budget_slider = mo.ui.slider(\n        start=16,\n        stop=2048,\n        step=16,\n        value=256,\n        label=\"Context budget (reasoning tokens, n)\",\n    )\n    length_penalty_slider = mo.ui.slider(\n        start=0.00,\n        stop=1.00,\n        step=0.01,\n        value=0.35,\n        label=\"Length penalty coefficient (\u03b1)\",\n    )\n    difficulty_choice = mo.ui.dropdown(\n        options=[\"easy\", \"medium\", \"hard\"],\n        value=\"hard\",\n        label=\"Task difficulty\",\n    )\n    compress_switch = mo.ui.switch(value=False, label=\"Long2short distillation ON\")\n\n    mo.hstack(\n        [\n            mo.plain(\"### Controls\"),\n            budget_slider,\n            length_penalty_slider,\n            difficulty_choice,\n            compress_switch,\n        ],\n        justify=\"start\",\n    )\n    return (\n        budget_slider,\n        compress_switch,\n        difficulty_choice,\n        length_penalty_slider,\n    )\n\n\n@app.cell\ndef _(\n    budget_slider,\n    compress_switch,\n    difficulty_choice,\n    length_penalty_slider,\n    mo,\n    np,\n    plt,\n):\n    # \u2500\u2500 Synthetic long-CoT accuracy model \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    # Shape: accuracy improves with budget up to a per-difficulty ceiling,\n    # then saturates. Length penalty pulls the spend back toward lower budgets.\n\n    _n_steps = 200\n    _n = np.linspace(1, 2048, _n_steps)\n\n    _ceiling = {\"easy\": 0.98, \"medium\": 0.85, \"hard\": 0.62}[difficulty_choice.value]\n\n    def _budget_reward(_n_local: np.ndarray, _alpha: float) -\u003E np.ndarray:\n        _base = 1 - np.exp(-_n_local / 220)\n        _len_cost = 1 - _alpha * (_n_local / 2048)\n        _r = _base * _len_cost\n        return np.clip(_r * _ceiling, 0, 1)\n\n    _alpha_selected = length_penalty_slider.value\n    _budget_selected = budget_slider.value\n\n    _curve_no_penalty = _budget_reward(_n, 0.0)\n    _curve_selected = _budget_reward(_n, _alpha_selected)\n    _opt_idx = int(np.argmax(_curve_selected))\n    _opt_budget = int(_n[_opt_idx])\n    _opt_reward = float(_curve_selected[_opt_idx])\n\n    # \u2500\u2500 Plot: implicit search budget tradeoff \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    _fig1, _ax1 = plt.subplots(figsize=(6, 3.4))\n    _ax1.plot(_n, _curve_no_penalty, label=f\"\u03b1 = 0.00  (unconstrained)\", linewidth=1.6)\n    _ax1.plot(\n        _n,\n        _curve_selected,\n        label=f\"\u03b1 = {_alpha_selected:.2f}  (current)\",\n        linewidth=2.2,\n        color=\"#e35d5d\",\n    )\n    _ax1.axvline(\n        _opt_budget,\n        color=\"#e35d5d\",\n        linestyle=\"--\",\n        alpha=0.7,\n        label=f\"optimal \u2248 {_opt_budget} tokens\",\n    )\n    _ax1.set_xlabel(\"Available context / search budget\")\n    _ax1.set_ylabel(\"Expected task reward\")\n    _ax1.set_title(\n        f\"Implicit search reward \u2014 {difficulty_choice.value} difficulty\"\n    )\n    _ax1.legend(fontsize=8, frameon=False)\n    _ax1.grid(True, alpha=0.25)\n    _fig1.tight_layout()\n\n    # \u2500\u2500 Plot: optimal budget vs \u03b1 slope (robustness sweep) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    _alphas = np.linspace(0, 1, 80)\n    _opt_budgets = np.array(\n        [int(_n[np.argmax(_budget_reward(_n, float(a)))]) for a in _alphas]\n    )\n    _opt_rewards = np.array(\n        [float(np.max(_budget_reward(_n, float(a)))) for a in _alphas]\n    )\n\n    _fig2, _ax2 = plt.subplots(figsize=(6, 2.9))\n    _ax2.plot(_alphas, _opt_budgets, linewidth=1.8, color=\"#4a90d9\")\n    _ax2.axvline(\n        _alpha_selected, color=\"#e35d5d\", linestyle=\"--\", alpha=0.8, label=\"current \u03b1\"\n    )\n    _ax2.set_xlabel(\"Length penalty \u03b1\")\n    _ax2.set_ylabel(\"Optimal context budget\")\n    _ax2.set_title(\"How aggressively should the model be budget-constrained?\")\n    _ax2.grid(True, alpha=0.25)\n    _ax2.legend(fontsize=8, frameon=False)\n    _fig2.tight_layout()\n\n    # \u2500\u2500 Long2short summary \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n    if compress_switch.value:\n        _long2short_note = (\n            f\"**Long2Short distillation active.**\\n\\n\"\n            f\"Teacher uses \u2248 {_opt_budget} reasoning tokens at quality \"\n            f\"{_opt_reward:.1%}.\\n\"\n            f\"Distilled student compresses to **{max(16, _opt_budget // 4)} tokens** \"\n            f\"with simulated compression ratio ~3\u20134\u00d7.\\n\"\n            f\"Expected short-CoT reward \u2248 \"\n            f\"{(1 - 0.25) * _opt_reward:.1%} (conservative compression overhead).\"\n        )\n    else:\n        _long2short_note = \"Disable **Long2Short** to see the teacher-only baseline.\"\n\n    # Build output stack\n    _out = mo.vstack(\n        [\n            _fig1,\n            _fig2,\n            mo.md(\n                f\"**Optimal context budget:** `{_opt_budget}` tokens\\n\"\n                f\"**Maximum expected reward:** `{_opt_reward:.2%}`\\n\\n\"\n                + _long2short_note\n            ),\n        ]\n    )\n    _out\n    return\n\n\n@app.cell\ndef _(mo):\n    mo.md(r\"\"\"\n    **Takeaways**\n    - K1.5's framework has only one knob: how many tokens to allow the model to\n      think before answering. Increasing $n$ raises accuracy but also latency and compute.\n    - The length penalty $\\alpha$ turns the accuracy curve into a budget-aware\n      operating point, letting you trade answer quality for runtime.\n    - Long2Short distillation shows the curve shifts: a short model can recover 60\u201385%\n      of the long-CoT quality at 1/4 the tokens.\n    \"\"\")\n    return\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden="">%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.12%22%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22numpy%3D%3D2.4.3%22%2C%0A%23%20%20%20%20%20%22matplotlib%3D%3D3.10.3%22%2C%0A%23%20%5D%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.13%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%0A%20%20%20%20return%20mo%2C%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20%E2%94%80%E2%94%80%20Paper%20header%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%20Kimi%20K1.5%20%E2%80%94%20Long%20Context%20as%20Implicit%20Search%20Space%0A%0A%20%20%20%20**Paper%3A**%20arXiv%3A2501.12599%20(Kimi%20Team%2C%20Jan%202025)%0A%20%20%20%20**Core%20claim%3A**%20A%20simple%20RL%E2%80%93long-CoT%20loop%20with%20a%20length%20penalty%20can%20beat%0A%20%20%20%20complex%20planning%20algorithms%20(no%20MCTS%2C%20no%20value%20networks)%20on%20hard%20reasoning%20tasks.%0A%0A%20%20%20%20What%20this%20notebook%20demonstrates%3A%0A%20%20%20%201.%20Why%20longer%20context%20windows%20act%20like%20an%20automatic%20planning%20budget.%0A%20%20%20%202.%20How%20a%20length-normalized%20policy%20objective%20trades%20off%20accuracy%20vs.%20compute.%0A%20%20%20%203.%20A%20long2short%20distillation%20analogue%3A%20compress%20a%20quality%20model%20into%20fewer%20tokens.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%40mo.capture%0A%20%20%20%20def%20_notation_ref()%20-%3E%20str%3A%0A%20%20%20%20%20%20%20%20return%20(%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20r%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20**Notation%20reference**%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Symbol%20%7C%20Meaning%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C--------%7C---------%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24n%24%20%7C%20number%20of%20available%20reasoning%20tokens%20(context%20budget%20%2F%20search%20steps)%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24p(x%2C%20y%5E*)%24%20%7C%20probability%20model%20assigns%20to%20correct%20answer%20%24y%5E*%24%20given%20problem%20%24x%24%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24%5Cmathcal%7BL%7D(y%2C%20y%5E*)%24%20%7C%20length%20of%20generated%20chain%20of%20thought%20%2B%20answer%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24%5Calpha%20%5Cin%20%5B0%2C1%5D%24%20%7C%20length%20penalty%20coefficient%3A%20%24%5Calpha%20%3D%200%24%20is%20unconstrained%2C%20%24%5Calpha%20%3D%201%24%20is%20maximal%20budget%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24r%20%5Cin%20%5C%7B0%2C1%5C%7D%24%20%7C%20rule-based%20reward%3A%201%20iff%20answer%20equals%20ground%20truth%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24V_%5Cmathrm%7Blong%7D%24%20%7C%20value%20of%20long-CoT%20teacher%20after%20length-normalized%20RL%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24V_%5Cmathrm%7Bshort%7D%24%20%7C%20value%20of%20distilled%20short-CoT%20student%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%24%5CDelta%24%20%7C%20quality%20delta%20%3D%20%24V_%5Cmathrm%7Bshort%7D%20%2F%20V_%5Cmathrm%7Blong%7D%24%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20)%0A%0A%20%20%20%20_notation_ref()%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20%23%20%E2%94%80%E2%94%80%20Interactive%20controls%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%0A%20%20%20%20budget_slider%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D16%2C%0A%20%20%20%20%20%20%20%20stop%3D2048%2C%0A%20%20%20%20%20%20%20%20step%3D16%2C%0A%20%20%20%20%20%20%20%20value%3D256%2C%0A%20%20%20%20%20%20%20%20label%3D%22Context%20budget%20(reasoning%20tokens%2C%20n)%22%2C%0A%20%20%20%20)%0A%20%20%20%20length_penalty_slider%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D0.00%2C%0A%20%20%20%20%20%20%20%20stop%3D1.00%2C%0A%20%20%20%20%20%20%20%20step%3D0.01%2C%0A%20%20%20%20%20%20%20%20value%3D0.35%2C%0A%20%20%20%20%20%20%20%20label%3D%22Length%20penalty%20coefficient%20(%CE%B1)%22%2C%0A%20%20%20%20)%0A%20%20%20%20difficulty_choice%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%5B%22easy%22%2C%20%22medium%22%2C%20%22hard%22%5D%2C%0A%20%20%20%20%20%20%20%20value%3D%22hard%22%2C%0A%20%20%20%20%20%20%20%20label%3D%22Task%20difficulty%22%2C%0A%20%20%20%20)%0A%20%20%20%20compress_switch%20%3D%20mo.ui.switch(value%3DFalse%2C%20label%3D%22Long2short%20distillation%20ON%22)%0A%0A%20%20%20%20mo.hstack(%0A%20%20%20%20%20%20%20%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.plain(%22%23%23%23%20Controls%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20budget_slider%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20length_penalty_slider%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20difficulty_choice%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20compress_switch%2C%0A%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%20%20%20%20justify%3D%22start%22%2C%0A%20%20%20%20)%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20budget_slider%2C%0A%20%20%20%20%20%20%20%20compress_switch%2C%0A%20%20%20%20%20%20%20%20difficulty_choice%2C%0A%20%20%20%20%20%20%20%20length_penalty_slider%2C%0A%20%20%20%20)%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20budget_slider%2C%0A%20%20%20%20compress_switch%2C%0A%20%20%20%20difficulty_choice%2C%0A%20%20%20%20length_penalty_slider%2C%0A%20%20%20%20mo%2C%0A%20%20%20%20np%2C%0A%20%20%20%20plt%2C%0A)%3A%0A%20%20%20%20%23%20%E2%94%80%E2%94%80%20Synthetic%20long-CoT%20accuracy%20model%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%0A%20%20%20%20%23%20Shape%3A%20accuracy%20improves%20with%20budget%20up%20to%20a%20per-difficulty%20ceiling%2C%0A%20%20%20%20%23%20then%20saturates.%20Length%20penalty%20pulls%20the%20spend%20back%20toward%20lower%20budgets.%0A%0A%20%20%20%20_n_steps%20%3D%20200%0A%20%20%20%20_n%20%3D%20np.linspace(1%2C%202048%2C%20_n_steps)%0A%0A%20%20%20%20_ceiling%20%3D%20%7B%22easy%22%3A%200.98%2C%20%22medium%22%3A%200.85%2C%20%22hard%22%3A%200.62%7D%5Bdifficulty_choice.value%5D%0A%0A%20%20%20%20def%20_budget_reward(_n_local%3A%20np.ndarray%2C%20_alpha%3A%20float)%20-%3E%20np.ndarray%3A%0A%20%20%20%20%20%20%20%20_base%20%3D%201%20-%20np.exp(-_n_local%20%2F%20220)%0A%20%20%20%20%20%20%20%20_len_cost%20%3D%201%20-%20_alpha%20*%20(_n_local%20%2F%202048)%0A%20%20%20%20%20%20%20%20_r%20%3D%20_base%20*%20_len_cost%0A%20%20%20%20%20%20%20%20return%20np.clip(_r%20*%20_ceiling%2C%200%2C%201)%0A%0A%20%20%20%20_alpha_selected%20%3D%20length_penalty_slider.value%0A%20%20%20%20_budget_selected%20%3D%20budget_slider.value%0A%0A%20%20%20%20_curve_no_penalty%20%3D%20_budget_reward(_n%2C%200.0)%0A%20%20%20%20_curve_selected%20%3D%20_budget_reward(_n%2C%20_alpha_selected)%0A%20%20%20%20_opt_idx%20%3D%20int(np.argmax(_curve_selected))%0A%20%20%20%20_opt_budget%20%3D%20int(_n%5B_opt_idx%5D)%0A%20%20%20%20_opt_reward%20%3D%20float(_curve_selected%5B_opt_idx%5D)%0A%0A%20%20%20%20%23%20%E2%94%80%E2%94%80%20Plot%3A%20implicit%20search%20budget%20tradeoff%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%0A%20%20%20%20_fig1%2C%20_ax1%20%3D%20plt.subplots(figsize%3D(6%2C%203.4))%0A%20%20%20%20_ax1.plot(_n%2C%20_curve_no_penalty%2C%20label%3Df%22%CE%B1%20%3D%200.00%20%20(unconstrained)%22%2C%20linewidth%3D1.6)%0A%20%20%20%20_ax1.plot(%0A%20%20%20%20%20%20%20%20_n%2C%0A%20%20%20%20%20%20%20%20_curve_selected%2C%0A%20%20%20%20%20%20%20%20label%3Df%22%CE%B1%20%3D%20%7B_alpha_selected%3A.2f%7D%20%20(current)%22%2C%0A%20%20%20%20%20%20%20%20linewidth%3D2.2%2C%0A%20%20%20%20%20%20%20%20color%3D%22%23e35d5d%22%2C%0A%20%20%20%20)%0A%20%20%20%20_ax1.axvline(%0A%20%20%20%20%20%20%20%20_opt_budget%2C%0A%20%20%20%20%20%20%20%20color%3D%22%23e35d5d%22%2C%0A%20%20%20%20%20%20%20%20linestyle%3D%22--%22%2C%0A%20%20%20%20%20%20%20%20alpha%3D0.7%2C%0A%20%20%20%20%20%20%20%20label%3Df%22optimal%20%E2%89%88%20%7B_opt_budget%7D%20tokens%22%2C%0A%20%20%20%20)%0A%20%20%20%20_ax1.set_xlabel(%22Available%20context%20%2F%20search%20budget%22)%0A%20%20%20%20_ax1.set_ylabel(%22Expected%20task%20reward%22)%0A%20%20%20%20_ax1.set_title(%0A%20%20%20%20%20%20%20%20f%22Implicit%20search%20reward%20%E2%80%94%20%7Bdifficulty_choice.value%7D%20difficulty%22%0A%20%20%20%20)%0A%20%20%20%20_ax1.legend(fontsize%3D8%2C%20frameon%3DFalse)%0A%20%20%20%20_ax1.grid(True%2C%20alpha%3D0.25)%0A%20%20%20%20_fig1.tight_layout()%0A%0A%20%20%20%20%23%20%E2%94%80%E2%94%80%20Plot%3A%20optimal%20budget%20vs%20%CE%B1%20slope%20(robustness%20sweep)%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%0A%20%20%20%20_alphas%20%3D%20np.linspace(0%2C%201%2C%2080)%0A%20%20%20%20_opt_budgets%20%3D%20np.array(%0A%20%20%20%20%20%20%20%20%5Bint(_n%5Bnp.argmax(_budget_reward(_n%2C%20float(a)))%5D)%20for%20a%20in%20_alphas%5D%0A%20%20%20%20)%0A%20%20%20%20_opt_rewards%20%3D%20np.array(%0A%20%20%20%20%20%20%20%20%5Bfloat(np.max(_budget_reward(_n%2C%20float(a))))%20for%20a%20in%20_alphas%5D%0A%20%20%20%20)%0A%0A%20%20%20%20_fig2%2C%20_ax2%20%3D%20plt.subplots(figsize%3D(6%2C%202.9))%0A%20%20%20%20_ax2.plot(_alphas%2C%20_opt_budgets%2C%20linewidth%3D1.8%2C%20color%3D%22%234a90d9%22)%0A%20%20%20%20_ax2.axvline(%0A%20%20%20%20%20%20%20%20_alpha_selected%2C%20color%3D%22%23e35d5d%22%2C%20linestyle%3D%22--%22%2C%20alpha%3D0.8%2C%20label%3D%22current%20%CE%B1%22%0A%20%20%20%20)%0A%20%20%20%20_ax2.set_xlabel(%22Length%20penalty%20%CE%B1%22)%0A%20%20%20%20_ax2.set_ylabel(%22Optimal%20context%20budget%22)%0A%20%20%20%20_ax2.set_title(%22How%20aggressively%20should%20the%20model%20be%20budget-constrained%3F%22)%0A%20%20%20%20_ax2.grid(True%2C%20alpha%3D0.25)%0A%20%20%20%20_ax2.legend(fontsize%3D8%2C%20frameon%3DFalse)%0A%20%20%20%20_fig2.tight_layout()%0A%0A%20%20%20%20%23%20%E2%94%80%E2%94%80%20Long2short%20summary%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%0A%20%20%20%20if%20compress_switch.value%3A%0A%20%20%20%20%20%20%20%20_long2short_note%20%3D%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22**Long2Short%20distillation%20active.**%5Cn%5Cn%22%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22Teacher%20uses%20%E2%89%88%20%7B_opt_budget%7D%20reasoning%20tokens%20at%20quality%20%22%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22%7B_opt_reward%3A.1%25%7D.%5Cn%22%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22Distilled%20student%20compresses%20to%20**%7Bmax(16%2C%20_opt_budget%20%2F%2F%204)%7D%20tokens**%20%22%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22with%20simulated%20compression%20ratio%20~3%E2%80%934%C3%97.%5Cn%22%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22Expected%20short-CoT%20reward%20%E2%89%88%20%22%0A%20%20%20%20%20%20%20%20%20%20%20%20f%22%7B(1%20-%200.25)%20*%20_opt_reward%3A.1%25%7D%20(conservative%20compression%20overhead).%22%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20_long2short_note%20%3D%20%22Disable%20**Long2Short**%20to%20see%20the%20teacher-only%20baseline.%22%0A%0A%20%20%20%20%23%20Build%20output%20stack%0A%20%20%20%20_out%20%3D%20mo.vstack(%0A%20%20%20%20%20%20%20%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20_fig1%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20_fig2%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%22**Optimal%20context%20budget%3A**%20%60%7B_opt_budget%7D%60%20tokens%5Cn%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%22**Maximum%20expected%20reward%3A**%20%60%7B_opt_reward%3A.2%25%7D%60%5Cn%5Cn%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2B%20_long2short_note%0A%20%20%20%20%20%20%20%20%20%20%20%20)%2C%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20)%0A%20%20%20%20_out%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20**Takeaways**%0A%20%20%20%20-%20K1.5's%20framework%20has%20only%20one%20knob%3A%20how%20many%20tokens%20to%20allow%20the%20model%20to%0A%20%20%20%20%20%20think%20before%20answering.%20Increasing%20%24n%24%20raises%20accuracy%20but%20also%20latency%20and%20compute.%0A%20%20%20%20-%20The%20length%20penalty%20%24%5Calpha%24%20turns%20the%20accuracy%20curve%20into%20a%20budget-aware%0A%20%20%20%20%20%20operating%20point%2C%20letting%20you%20trade%20answer%20quality%20for%20runtime.%0A%20%20%20%20-%20Long2Short%20distillation%20shows%20the%20curve%20shifts%3A%20a%20short%20model%20can%20recover%2060%E2%80%9385%25%0A%20%20%20%20%20%20of%20the%20long-CoT%20quality%20at%201%2F4%20the%20tokens.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.13",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

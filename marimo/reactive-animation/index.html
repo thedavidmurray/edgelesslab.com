@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-critters-container>
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="./favicon.ico">
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image">
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image">
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="a marimo app">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>reactive-animation</title>
+    <script type="module" crossorigin src="./assets/index-iAj2M3os.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-y72bE5iF.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-PbYoItBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-BakX-tnw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CuYNS33t.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CCOoIlcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CGfP-Ye3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BJ9oKrvH.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BIlJBJIu.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BtEcuwwV.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-X2M2usMq.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CFAaMy0O.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-BF7GSjhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-BXI8V5i6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CQMqwayA.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DCqDlsgq.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-BTp1tQDO.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DQmqoJgr.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-9vLEgLY6.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-Cjly7tmx.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CgQpRVyN.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BH8bU9Xf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C2E8KCbD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-Dev6I_Kv.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CfyqLOPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-BukULOeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-EP9ZArpv.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B9JJ72XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-B6_8umQX.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BE150fVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-KshNNAOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-Baf35rp4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-0SWz6w4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-CWoNQwFz.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DWxvyYxP.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DvZlHYnD.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CXj_gH7S.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-CjNGDxxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-3wF4dU7I.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-kNeJ8nbe.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dez1I5M9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0WqBUnf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CwfKvuyQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-D-o1OXc9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BZhJ1bTM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bj9Iedc0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DHMtQYxT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnIl7RU-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CfGDksO-.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-C6JeW1YI.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-DCE7d2fN.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DdxMtdqK.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-DXo9vDEJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-DIlSqcdp.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-DmhaVp6Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-DQ5n6Zef.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bo313Z9X.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BCXa3Ocm.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-DEHK-C20.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-CC0gG4Av.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-Dr_Y1zNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-BlBSYv0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-BKZTJMZ6.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DrpctNAg.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DE_5rdOV.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-DCM-63YT.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-mjvipKvz.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-b2KTOk0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-MQnbMIO2.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-LArpBcY-.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-9ogswH46.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Bjh7v4lb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-C7RH0Nc7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DfGLyCbP.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DK7te6sJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-bcK6jTD2.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CyasABTK.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-IBNGDypD.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BCIGtBo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BLBwT24G.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-BT-L2LDD.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-VxOqftwq.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-BoMcg6sy.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DctOjjEz.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-DcImOp4r.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DI0EQXw0.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-DcEasnos.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-CjikjOBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DTBVbtl-.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CmK-WSPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-Dol5ybck.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CT1LpOBD.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CUQODgGJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-P--XWZhg.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-C6VN0dQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-f3mfGw8u.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-CsbsBLBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-CA9HCE2Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DMNO6Poc.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-48KFPvCp.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-rKGlekSQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-Fk_msRcD.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuGyzPVb.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C4DZksWV.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-Dkhsq416.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DZwIjHwu.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-Cgon0fXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CnrjjcMO.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-2LbFKIQQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DiQGBfwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CANi6nSX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-C2u-_EAQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-CXueMbRb.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DxdydCSG.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-D0iYysLh.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BktyywYg.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-D_YIPPZo.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CExKUszm.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CjPoUZCP.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-CgWOEYeG.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-DTeVFctC.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-DVEV2j1H.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CPbVtjKW.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-BzxoPflZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-VcOeHtkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D3YFXNmD.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-D7RG9Px_.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-CPTvLHMl.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-Msf1n32r.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DSv-aO_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DHJTIc4H.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-CUN2DC78.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BvoBtS_V.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-jhXeQEgs.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-DBMviz_K.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-DHhZkGEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-BRbNg7Li.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BDWM3c_z.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-vrPro738.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-dGUJ3Bw8.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D7fu7IC3.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CFvCMYuj.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DD5BwHTh.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CUkO1Vlo.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-B9I9mpZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-CKbqJyj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-48bgGoSa.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-zUHU--0D.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-xF5uWODg.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-FlZezxaf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-Doh9J-g6.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-ANiMIEDI.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-D_pYuT11.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-Cy7KBUrF.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tqeFGeKJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DkdBWh44.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DPWHdF_-.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CV7pqa1o.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BULc9l6b.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CaelsqOA.css">
+  <marimo-wasm hidden></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.11\"\n# dependencies = [\n#     \"marimo\",\n#     \"numpy\",\n#     \"matplotlib\",\n# ]\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.13\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell(hide_code=True)\ndef _():\n    import marimo as mo\n\n    return (mo,)\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    # Reactive Animation: Auto-Animated Slider\n\n    This demo shows how **marimo's reactive execution** works: changing a single value automatically re-runs all dependent cells.\n\n    The slider below is **auto-animated** \u2014 it advances automatically every 200ms. You can pause it, scrub manually, or change the animation speed.\n    \"\"\").callout()\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    ## Controls\n\n    Use the buttons and slider to control the animation.\n    \"\"\")\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    timer = mo.ui.refresh(options=[\"200ms\", \"500ms\", \"1s\"], default_interval=\"200ms\")\n    return (timer,)\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    animation_state = mo.state({\"running\": True, \"t\": 0.0, \"speed\": 0.05, \"direction\": 1})\n    return (animation_state,)\n\n\n@app.cell(hide_code=True)\ndef _(animation_state, timer):\n    _tick = timer.value  # triggers on every refresh\n    _s = animation_state.value\n    if _s[\"running\"]:\n        new_t = _s[\"t\"] + _s[\"speed\"] * _s[\"direction\"]\n        if new_t \u003E= 1.0:\n            new_t = 1.0\n            animation_state.value = {**_s, \"t\": new_t, \"direction\": -1}\n        elif new_t \u003C= 0.0:\n            new_t = 0.0\n            animation_state.value = {**_s, \"t\": new_t, \"direction\": 1}\n        else:\n            animation_state.value = {**_s, \"t\": new_t}\n    return\n\n\n@app.cell(hide_code=True)\ndef _(animation_state, mo):\n    _state = animation_state.value\n\n    play_pause = mo.ui.run_button(\n        label=\"\u23f8 Pause\" if _state[\"running\"] else \"\u25b6 Play\",\n    )\n\n    speed_slider = mo.ui.slider(\n        start=0.01, stop=0.2, step=0.01, value=_state[\"speed\"],\n        label=\"Speed\",\n    )\n\n    t_slider = mo.ui.slider(\n        start=0.0, stop=1.0, step=0.001, value=_state[\"t\"],\n        label=\"Phase (t)\",\n    )\n\n    controls = mo.hstack([\n        play_pause,\n        mo.md(f\"**Speed:** {speed_slider}\"),\n        mo.md(f\"**Phase:** {t_slider}\"),\n    ], gap=1)\n\n    controls\n    return play_pause, speed_slider, t_slider\n\n\n@app.cell(hide_code=True)\ndef _(animation_state, play_pause, speed_slider, t_slider):\n    # Toggle play/pause when button clicked\n    if play_pause.value:\n        _s2 = animation_state.value\n        animation_state.value = {**_s2, \"running\": not _s2[\"running\"]}\n\n    # Update speed from slider\n    _s3 = animation_state.value\n    if speed_slider.value != _s3[\"speed\"]:\n        animation_state.value = {**_s3, \"speed\": speed_slider.value}\n\n    # If user manually scrubs t, pause and update\n    if abs(t_slider.value - _s3[\"t\"]) \u003E 0.001:\n        animation_state.value = {\n            **animation_state.value,\n            \"t\": t_slider.value,\n            \"running\": False,\n        }\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    ## Reactive Wave Synthesis\n\n    As the phase slider animates, three wave components update automatically. The plot below is **re-computed from scratch** on every tick \u2014 no manual event wiring required.\n    \"\"\")\n    return\n\n\n@app.cell(hide_code=True)\ndef _(animation_state):\n    import numpy as np\n    import matplotlib.pyplot as plt\n\n    t = animation_state.value[\"t\"]\n    x = np.linspace(0, 4 * np.pi, 400)\n\n    # Three animated wave components\n    phase = t * 2 * np.pi\n    y1 = np.sin(x + phase)\n    y2 = 0.5 * np.sin(2 * x - phase * 1.5)\n    y3 = 0.25 * np.sin(4 * x + phase * 2)\n    y_sum = y1 + y2 + y3\n\n    fig, axes = plt.subplots(2, 1, figsize=(10, 6), sharex=True)\n\n    # Individual components\n    ax0 = axes[0]\n    ax0.plot(x, y1, label=\"sin(x + \u03c6)\", alpha=0.8)\n    ax0.plot(x, y2, label=\"0.5\u00b7sin(2x - 1.5\u03c6)\", alpha=0.8)\n    ax0.plot(x, y3, label=\"0.25\u00b7sin(4x + 2\u03c6)\", alpha=0.8)\n    ax0.set_ylabel(\"Amplitude\")\n    ax0.set_title(\"Wave Components\")\n    ax0.legend(loc=\"upper right\")\n    ax0.set_ylim(-1.2, 1.2)\n    ax0.axhline(0, color=\"black\", linewidth=0.5)\n\n    # Sum\n    ax1 = axes[1]\n    ax1.plot(x, y_sum, color=\"crimson\", linewidth=2, label=\"Sum\")\n    ax1.fill_between(x, y_sum, alpha=0.2, color=\"crimson\")\n    ax1.set_xlabel(\"x\")\n    ax1.set_ylabel(\"Amplitude\")\n    ax1.set_title(\"Superposition\")\n    ax1.legend(loc=\"upper right\")\n    ax1.set_ylim(-2, 2)\n    ax1.axhline(0, color=\"black\", linewidth=0.5)\n\n    plt.tight_layout()\n    plt.gcf()\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    ---\n\n    ## What just happened?\n\n    1. `mo.ui.refresh` fires on a fixed interval (200ms).\n    2. The timer tick triggers a state update via `mo.state`.\n    3. The slider bound to that state re-renders with the new value.\n    4. Because the slider value changed, marimo **automatically re-runs** the wave synthesis cell.\n    5. The matplotlib figure is regenerated and displayed.\n\n    No callbacks, no manual redraw, no threading \u2014 just reactive Python.\n    \"\"\")\n    return\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden>%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.11%22%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22numpy%22%2C%0A%23%20%20%20%20%20%22matplotlib%22%2C%0A%23%20%5D%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.13%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%20Reactive%20Animation%3A%20Auto-Animated%20Slider%0A%0A%20%20%20%20This%20demo%20shows%20how%20**marimo's%20reactive%20execution**%20works%3A%20changing%20a%20single%20value%20automatically%20re-runs%20all%20dependent%20cells.%0A%0A%20%20%20%20The%20slider%20below%20is%20**auto-animated**%20%E2%80%94%20it%20advances%20automatically%20every%20200ms.%20You%20can%20pause%20it%2C%20scrub%20manually%2C%20or%20change%20the%20animation%20speed.%0A%20%20%20%20%22%22%22).callout()%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20Controls%0A%0A%20%20%20%20Use%20the%20buttons%20and%20slider%20to%20control%20the%20animation.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20timer%20%3D%20mo.ui.refresh(options%3D%5B%22200ms%22%2C%20%22500ms%22%2C%20%221s%22%5D%2C%20default_interval%3D%22200ms%22)%0A%20%20%20%20return%20(timer%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20animation_state%20%3D%20mo.state(%7B%22running%22%3A%20True%2C%20%22t%22%3A%200.0%2C%20%22speed%22%3A%200.05%2C%20%22direction%22%3A%201%7D)%0A%20%20%20%20return%20(animation_state%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(animation_state%2C%20timer)%3A%0A%20%20%20%20_tick%20%3D%20timer.value%20%20%23%20triggers%20on%20every%20refresh%0A%20%20%20%20_s%20%3D%20animation_state.value%0A%20%20%20%20if%20_s%5B%22running%22%5D%3A%0A%20%20%20%20%20%20%20%20new_t%20%3D%20_s%5B%22t%22%5D%20%2B%20_s%5B%22speed%22%5D%20*%20_s%5B%22direction%22%5D%0A%20%20%20%20%20%20%20%20if%20new_t%20%3E%3D%201.0%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20new_t%20%3D%201.0%0A%20%20%20%20%20%20%20%20%20%20%20%20animation_state.value%20%3D%20%7B**_s%2C%20%22t%22%3A%20new_t%2C%20%22direction%22%3A%20-1%7D%0A%20%20%20%20%20%20%20%20elif%20new_t%20%3C%3D%200.0%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20new_t%20%3D%200.0%0A%20%20%20%20%20%20%20%20%20%20%20%20animation_state.value%20%3D%20%7B**_s%2C%20%22t%22%3A%20new_t%2C%20%22direction%22%3A%201%7D%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20animation_state.value%20%3D%20%7B**_s%2C%20%22t%22%3A%20new_t%7D%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(animation_state%2C%20mo)%3A%0A%20%20%20%20_state%20%3D%20animation_state.value%0A%0A%20%20%20%20play_pause%20%3D%20mo.ui.run_button(%0A%20%20%20%20%20%20%20%20label%3D%22%E2%8F%B8%20Pause%22%20if%20_state%5B%22running%22%5D%20else%20%22%E2%96%B6%20Play%22%2C%0A%20%20%20%20)%0A%0A%20%20%20%20speed_slider%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D0.01%2C%20stop%3D0.2%2C%20step%3D0.01%2C%20value%3D_state%5B%22speed%22%5D%2C%0A%20%20%20%20%20%20%20%20label%3D%22Speed%22%2C%0A%20%20%20%20)%0A%0A%20%20%20%20t_slider%20%3D%20mo.ui.slider(%0A%20%20%20%20%20%20%20%20start%3D0.0%2C%20stop%3D1.0%2C%20step%3D0.001%2C%20value%3D_state%5B%22t%22%5D%2C%0A%20%20%20%20%20%20%20%20label%3D%22Phase%20(t)%22%2C%0A%20%20%20%20)%0A%0A%20%20%20%20controls%20%3D%20mo.hstack(%5B%0A%20%20%20%20%20%20%20%20play_pause%2C%0A%20%20%20%20%20%20%20%20mo.md(f%22**Speed%3A**%20%7Bspeed_slider%7D%22)%2C%0A%20%20%20%20%20%20%20%20mo.md(f%22**Phase%3A**%20%7Bt_slider%7D%22)%2C%0A%20%20%20%20%5D%2C%20gap%3D1)%0A%0A%20%20%20%20controls%0A%20%20%20%20return%20play_pause%2C%20speed_slider%2C%20t_slider%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(animation_state%2C%20play_pause%2C%20speed_slider%2C%20t_slider)%3A%0A%20%20%20%20%23%20Toggle%20play%2Fpause%20when%20button%20clicked%0A%20%20%20%20if%20play_pause.value%3A%0A%20%20%20%20%20%20%20%20_s2%20%3D%20animation_state.value%0A%20%20%20%20%20%20%20%20animation_state.value%20%3D%20%7B**_s2%2C%20%22running%22%3A%20not%20_s2%5B%22running%22%5D%7D%0A%0A%20%20%20%20%23%20Update%20speed%20from%20slider%0A%20%20%20%20_s3%20%3D%20animation_state.value%0A%20%20%20%20if%20speed_slider.value%20!%3D%20_s3%5B%22speed%22%5D%3A%0A%20%20%20%20%20%20%20%20animation_state.value%20%3D%20%7B**_s3%2C%20%22speed%22%3A%20speed_slider.value%7D%0A%0A%20%20%20%20%23%20If%20user%20manually%20scrubs%20t%2C%20pause%20and%20update%0A%20%20%20%20if%20abs(t_slider.value%20-%20_s3%5B%22t%22%5D)%20%3E%200.001%3A%0A%20%20%20%20%20%20%20%20animation_state.value%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20**animation_state.value%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22t%22%3A%20t_slider.value%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22running%22%3A%20False%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20Reactive%20Wave%20Synthesis%0A%0A%20%20%20%20As%20the%20phase%20slider%20animates%2C%20three%20wave%20components%20update%20automatically.%20The%20plot%20below%20is%20**re-computed%20from%20scratch**%20on%20every%20tick%20%E2%80%94%20no%20manual%20event%20wiring%20required.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(animation_state)%3A%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%0A%20%20%20%20t%20%3D%20animation_state.value%5B%22t%22%5D%0A%20%20%20%20x%20%3D%20np.linspace(0%2C%204%20*%20np.pi%2C%20400)%0A%0A%20%20%20%20%23%20Three%20animated%20wave%20components%0A%20%20%20%20phase%20%3D%20t%20*%202%20*%20np.pi%0A%20%20%20%20y1%20%3D%20np.sin(x%20%2B%20phase)%0A%20%20%20%20y2%20%3D%200.5%20*%20np.sin(2%20*%20x%20-%20phase%20*%201.5)%0A%20%20%20%20y3%20%3D%200.25%20*%20np.sin(4%20*%20x%20%2B%20phase%20*%202)%0A%20%20%20%20y_sum%20%3D%20y1%20%2B%20y2%20%2B%20y3%0A%0A%20%20%20%20fig%2C%20axes%20%3D%20plt.subplots(2%2C%201%2C%20figsize%3D(10%2C%206)%2C%20sharex%3DTrue)%0A%0A%20%20%20%20%23%20Individual%20components%0A%20%20%20%20ax0%20%3D%20axes%5B0%5D%0A%20%20%20%20ax0.plot(x%2C%20y1%2C%20label%3D%22sin(x%20%2B%20%CF%86)%22%2C%20alpha%3D0.8)%0A%20%20%20%20ax0.plot(x%2C%20y2%2C%20label%3D%220.5%C2%B7sin(2x%20-%201.5%CF%86)%22%2C%20alpha%3D0.8)%0A%20%20%20%20ax0.plot(x%2C%20y3%2C%20label%3D%220.25%C2%B7sin(4x%20%2B%202%CF%86)%22%2C%20alpha%3D0.8)%0A%20%20%20%20ax0.set_ylabel(%22Amplitude%22)%0A%20%20%20%20ax0.set_title(%22Wave%20Components%22)%0A%20%20%20%20ax0.legend(loc%3D%22upper%20right%22)%0A%20%20%20%20ax0.set_ylim(-1.2%2C%201.2)%0A%20%20%20%20ax0.axhline(0%2C%20color%3D%22black%22%2C%20linewidth%3D0.5)%0A%0A%20%20%20%20%23%20Sum%0A%20%20%20%20ax1%20%3D%20axes%5B1%5D%0A%20%20%20%20ax1.plot(x%2C%20y_sum%2C%20color%3D%22crimson%22%2C%20linewidth%3D2%2C%20label%3D%22Sum%22)%0A%20%20%20%20ax1.fill_between(x%2C%20y_sum%2C%20alpha%3D0.2%2C%20color%3D%22crimson%22)%0A%20%20%20%20ax1.set_xlabel(%22x%22)%0A%20%20%20%20ax1.set_ylabel(%22Amplitude%22)%0A%20%20%20%20ax1.set_title(%22Superposition%22)%0A%20%20%20%20ax1.legend(loc%3D%22upper%20right%22)%0A%20%20%20%20ax1.set_ylim(-2%2C%202)%0A%20%20%20%20ax1.axhline(0%2C%20color%3D%22black%22%2C%20linewidth%3D0.5)%0A%0A%20%20%20%20plt.tight_layout()%0A%20%20%20%20plt.gcf()%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20---%0A%0A%20%20%20%20%23%23%20What%20just%20happened%3F%0A%0A%20%20%20%201.%20%60mo.ui.refresh%60%20fires%20on%20a%20fixed%20interval%20(200ms).%0A%20%20%20%202.%20The%20timer%20tick%20triggers%20a%20state%20update%20via%20%60mo.state%60.%0A%20%20%20%203.%20The%20slider%20bound%20to%20that%20state%20re-renders%20with%20the%20new%20value.%0A%20%20%20%204.%20Because%20the%20slider%20value%20changed%2C%20marimo%20**automatically%20re-runs**%20the%20wave%20synthesis%20cell.%0A%20%20%20%205.%20The%20matplotlib%20figure%20is%20regenerated%20and%20displayed.%0A%0A%20%20%20%20No%20callbacks%2C%20no%20manual%20redraw%2C%20no%20threading%20%E2%80%94%20just%20reactive%20Python.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code><link rel="canonical" href="https://edgelesslab.com/marimo/reactive-animation/">
+<meta property="og:title" content="reactive-animation">
+<meta property="og:description" content="a marimo app">
+<meta property="og:url" content="https://edgelesslab.com/marimo/reactive-animation/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="reactive-animation">
+<meta name="twitter:description" content="a marimo app">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
+</head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.13",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

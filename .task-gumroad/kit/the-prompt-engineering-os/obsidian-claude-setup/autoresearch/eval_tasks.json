@@ -1,0 +1,44 @@
+{
+  "solo-dev": [
+    "Create a session log for today's debugging work on the auth module",
+    "Search the vault for all notes tagged #architecture",
+    "Append a todo item to today's daily note: review PR for payment service",
+    "Read the project README from the vault and summarize its current status",
+    "Set the status property of the 'user-service' note to 'done'"
+  ],
+  "data-engineer": [
+    "Create an incident note for a data quality failure in the user_events pipeline",
+    "Search the vault for all runbooks tagged #airflow",
+    "Append a log entry to today's daily note: fixed null partition bug in dim_users",
+    "Read the existing ETL pipeline note and check its SLA and schedule",
+    "Set the status property of a resolved incident note to 'resolved'"
+  ],
+  "frontend": [
+    "Create a new component spec note for a date-picker in 03-Knowledge",
+    "Search the vault for all component notes tagged #forms",
+    "Append a daily note entry: shipped accessible modal with focus trap",
+    "Read the design-system overview note to check current component inventory",
+    "Set the a11y_reviewed property of the button-component note to true"
+  ],
+  "backend-api": [
+    "Create an ADR for choosing Postgres over MySQL for the user service",
+    "Search the vault for all endpoint notes tagged #authentication",
+    "Append a daily note entry: deployed rate limiter middleware to staging",
+    "Read the auth-service note and check its dependencies and health endpoint",
+    "Set the status property of a deprecated service note to 'deprecated'"
+  ],
+  "devops": [
+    "Create a runbook note for recovering a degraded Kubernetes node",
+    "Search the vault for all runbook notes tagged #database",
+    "Append a daily note entry: completed rolling upgrade to k8s 1.29 in production",
+    "Read the production infrastructure note and check its last_audit date",
+    "Set the status property of a resolved incident note to 'postmortem-done'"
+  ],
+  "research": [
+    "Create a paper note for a new arXiv paper on RLHF reward modeling",
+    "Search the vault for all paper notes tagged #transformers",
+    "Append a daily note entry: completed literature review on attention mechanisms",
+    "Read an existing hypothesis note and check its current evidence_for list",
+    "Set the confidence property of a hypothesis note to 'high' after new evidence"
+  ]
+}

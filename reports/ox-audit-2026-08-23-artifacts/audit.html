@@ -1,0 +1,335 @@
+<title>Ox Audit · edgelesslab.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f4f6f7; --surface:#ffffff; --surface-2:#eef1f2; --ink:#141a1f; --ink-soft:#4a565f;
+  --ink-faint:#7c8892; --line:#dde3e6; --line-soft:#e8edef;
+  --accent:#0c7b8c; --accent-ink:#0a5c69; --accent-wash:#e2f1f3;
+  --crit:#d43a2c; --high:#dc6b1f; --med:#b78a12; --low:#6c7a86;
+  --crit-wash:#fbe8e6; --high-wash:#fbeee0; --med-wash:#f7f0dc; --low-wash:#eceff1;
+  --ok:#0f7d5e; --shadow:0 1px 2px rgba(20,26,31,.05),0 6px 20px rgba(20,26,31,.06);
+}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1317; --surface:#161d23; --surface-2:#1d262d; --ink:#e7ecef; --ink-soft:#a6b2bb;
+    --ink-faint:#727f89; --line:#28323a; --line-soft:#212a31;
+    --accent:#3bb9c9; --accent-ink:#7ad6e2; --accent-wash:#123034;
+    --crit:#f16a5d; --high:#f0954a; --med:#e0b843; --low:#8895a1;
+    --crit-wash:#2c1613; --high-wash:#2b1c10; --med-wash:#282011; --low-wash:#1b232a;
+    --ok:#3fc596; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1317; --surface:#161d23; --surface-2:#1d262d; --ink:#e7ecef; --ink-soft:#a6b2bb;
+  --ink-faint:#727f89; --line:#28323a; --line-soft:#212a31;
+  --accent:#3bb9c9; --accent-ink:#7ad6e2; --accent-wash:#123034;
+  --crit:#f16a5d; --high:#f0954a; --med:#e0b843; --low:#8895a1;
+  --crit-wash:#2c1613; --high-wash:#2b1c10; --med-wash:#282011; --low-wash:#1b232a;
+  --ok:#3fc596; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Archivo",system-ui,sans-serif;text-wrap:balance;margin:0}
+a{color:var(--accent-ink)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--surface-2);
+  padding:.08em .35em;border-radius:4px;border:1px solid var(--line-soft)}
+
+/* header */
+header{border-bottom:1px solid var(--line);background:
+  linear-gradient(180deg,var(--surface),var(--bg));}
+.head-in{padding:44px 0 28px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent-ink);font-weight:600;margin-bottom:14px}
+h1{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.02}
+.sub{margin:14px 0 0;max-width:64ch;color:var(--ink-soft);font-size:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:12px;padding:5px 11px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+  display:inline-flex;gap:7px;align-items:center;white-space:nowrap}
+.chip b{color:var(--ink);font-weight:600}
+.chip.free{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-wash)}
+
+/* pipeline stats */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:34px 0 8px;box-shadow:var(--shadow)}
+.pcell{background:var(--surface);padding:18px 16px}
+.pcell .n{font-family:"Archivo",sans-serif;font-weight:800;font-size:30px;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;line-height:1}
+.pcell .l{font-size:11.5px;color:var(--ink-faint);margin-top:7px;text-transform:uppercase;letter-spacing:.06em}
+.pcell.acc .n{color:var(--accent-ink)}
+.pcell.warn .n{color:var(--high)}
+.arrowrow{font-size:12px;color:var(--ink-faint);margin:2px 0 0;text-align:right}
+
+section{padding:38px 0}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+h2{font-size:24px;font-weight:700;letter-spacing:-.01em}
+.sec-h .count{font-family:"IBM Plex Mono",monospace;color:var(--ink-faint);font-size:14px}
+.lead{color:var(--ink-soft);max-width:70ch;margin:0 0 22px}
+
+/* root-cause callout */
+.callout{border:1px solid var(--line);border-left:4px solid var(--crit);border-radius:12px;
+  background:var(--surface);padding:22px 24px;box-shadow:var(--shadow)}
+.callout.acc{border-left-color:var(--accent)}
+.callout h3{font-size:18px;margin-bottom:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.callout p{margin:8px 0 0;color:var(--ink-soft)}
+.tag-root{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:#fff;background:var(--crit);padding:3px 9px;border-radius:6px}
+
+/* filters */
+.filters{position:sticky;top:0;z-index:5;background:var(--bg);
+  padding:14px 0;border-bottom:1px solid var(--line-soft);margin-bottom:22px;
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filters .fl{font-size:12px;color:var(--ink-faint);margin-right:2px;text-transform:uppercase;letter-spacing:.06em}
+.tog{font-family:"IBM Plex Mono",monospace;font-size:12px;padding:5px 11px;border-radius:8px;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);user-select:none;transition:.12s}
+.tog[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tog.sev-critical[aria-pressed="true"]{background:var(--crit);border-color:var(--crit);color:#fff}
+.tog.sev-high[aria-pressed="true"]{background:var(--high);border-color:var(--high);color:#fff}
+.tog.sev-medium[aria-pressed="true"]{background:var(--med);border-color:var(--med);color:#1a1400}
+.tog.sev-low[aria-pressed="true"]{background:var(--low);border-color:var(--low);color:#fff}
+.tog:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* cards */
+.cards{display:flex;flex-direction:column;gap:12px}
+.card{border:1px solid var(--line);border-radius:12px;background:var(--surface);
+  overflow:hidden;box-shadow:var(--shadow);display:grid;grid-template-columns:6px 1fr}
+.card .stripe{width:6px}
+.card.critical .stripe{background:var(--crit)} .card.high .stripe{background:var(--high)}
+.card.medium .stripe{background:var(--med)} .card.low .stripe{background:var(--low)}
+.card .body{padding:16px 18px 17px}
+.card-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:9px}
+.sev{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;padding:3px 8px;border-radius:5px}
+.sev.critical{background:var(--crit-wash);color:var(--crit)}
+.sev.high{background:var(--high-wash);color:var(--high)}
+.sev.medium{background:var(--med-wash);color:var(--med)}
+.sev.low{background:var(--low-wash);color:var(--low)}
+.dim{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-faint);
+  border:1px solid var(--line);border-radius:5px;padding:2px 7px;text-transform:uppercase;letter-spacing:.04em}
+.file{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent-ink);
+  margin-left:auto;word-break:break-all;text-align:right}
+.card h3.t{font-size:15.5px;font-weight:600;font-family:"IBM Plex Sans",sans-serif;line-height:1.35;margin-bottom:7px}
+.card .det{font-size:13.5px;color:var(--ink-soft);margin:0}
+.fix{margin-top:11px;font-size:13px;background:var(--accent-wash);border:1px solid color-mix(in srgb,var(--accent) 24%,transparent);
+  border-radius:8px;padding:9px 12px;color:var(--ink)}
+.fix b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent-ink);display:block;margin-bottom:3px}
+.empty{color:var(--ink-faint);font-style:italic;padding:20px 0}
+
+/* method */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.step{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:16px;position:relative}
+.step .num{font-family:"Archivo",sans-serif;font-weight:800;font-size:13px;color:var(--accent-ink);
+  border:1.5px solid var(--accent);width:26px;height:26px;border-radius:7px;display:grid;place-items:center;margin-bottom:11px}
+.step h4{margin:0 0 5px;font-family:"Archivo",sans-serif;font-size:14px;font-weight:700}
+.step p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+
+/* matrix */
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:440px;background:var(--surface)}
+th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--line-soft);font-size:13.5px}
+th{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--ink-faint);font-weight:600;background:var(--surface-2)}
+td.num{font-variant-numeric:tabular-nums;text-align:center;font-family:"IBM Plex Mono",monospace}
+tr:last-child td{border-bottom:0}
+td .bar{display:inline-block;height:7px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-left:8px}
+.c-conf{color:var(--ok);font-weight:600} .c-ref{color:var(--ink-faint)}
+
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;
+  color:var(--ink-soft);font-size:14px;box-shadow:var(--shadow)}
+.note b{color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--ink-faint);font-size:12.5px}
+footer .mono{color:var(--ink-soft)}
+
+@media(max-width:820px){
+  .pipe{grid-template-columns:repeat(2,1fr)} .pcell:last-child{grid-column:span 2}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .steps{grid-template-columns:1fr} .file{margin-left:0;text-align:left}
+  .pcell .n{font-size:26px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header>
+  <div class="wrap head-in">
+    <div class="eyebrow">Static-site code audit · Ox fan-out</div>
+    <h1>edgelesslab.com &mdash; Ox Audit</h1>
+    <p class="sub">A full 8-dimension audit of the site's source and 60 live pages, fanned out
+      across hundreds of concurrent calls to the free <span class="mono">stealth/ox-alpha</span>
+      model, adversarially filtered, then confirmed against real code.</p>
+    <div class="meta">
+      <span class="chip">Date <b>2026&#8209;08&#8209;23</b></span>
+      <span class="chip">Model <b>stealth/ox-alpha</b> · 1M ctx</span>
+      <span class="chip free">Total cost <b>$0.00</b></span>
+      <span class="chip">Source files <b>273</b></span>
+      <span class="chip">Live pages <b>60 / all 200</b></span>
+    </div>
+
+    <div class="pipe">
+      <div class="pcell"><div class="n">88</div><div class="l">Raw findings</div></div>
+      <div class="pcell"><div class="n">67</div><div class="l">Unique</div></div>
+      <div class="pcell warn"><div class="n">43%</div><div class="l">Refuted (adversarial)</div></div>
+      <div class="pcell acc"><div class="n">18</div><div class="l">Confirmed</div></div>
+      <div class="pcell"><div class="n">20</div><div class="l">Uncertain · triage</div></div>
+    </div>
+    <p class="arrowrow">fan-out &rarr; dedupe &rarr; Ox refute pass &rarr; Claude code-verify</p>
+  </div>
+</header>
+
+<section class="wrap" style="padding-top:30px">
+  <div class="sec-h"><h2>Root cause</h2></div>
+  <p class="lead">The most important result isn't a single bug &mdash; it's the reason bugs can ship.
+    Ox flagged an undefined identifier; verifying it against the repo surfaced why the type system
+    never caught it.</p>
+  <div class="callout acc">
+    <h3><span class="tag-root">P0 · root cause</span> Type checking is switched off at build</h3>
+    <p><code>next.config.ts</code> sets <code>typescript: { ignoreBuildErrors: true }</code>, and the
+      <code>build</code> script runs no separate <code>tsc</code> gate. TypeScript errors do not fail
+      <code>next build</code>. That is exactly what lets a real <code>ReferenceError</code> &mdash;
+      an undefined <code>products</code> in the lazy-loaded <code>home-client.tsx</code> &mdash; exist
+      undetected, and it means <b>any</b> future type error can reach production silently. Fix this first;
+      it re-arms the whole type system as a safety net.</p>
+  </div>
+</section>
+
+<section class="wrap" id="findings">
+  <div class="sec-h"><h2>Confirmed findings</h2><span class="count" id="shown"></span></div>
+  <p class="lead">Each survived an adversarial Ox refute pass; the five highest-impact were also
+    confirmed by reading the source directly. Filter by severity or dimension.</p>
+
+  <div class="filters" id="filters">
+    <span class="fl">Severity</span>
+    <span class="tog sev-critical" data-sev="critical" role="button" tabindex="0" aria-pressed="true">critical</span>
+    <span class="tog sev-high" data-sev="high" role="button" tabindex="0" aria-pressed="true">high</span>
+    <span class="tog sev-medium" data-sev="medium" role="button" tabindex="0" aria-pressed="true">medium</span>
+    <span class="tog sev-low" data-sev="low" role="button" tabindex="0" aria-pressed="true">low</span>
+    <span class="fl" style="margin-left:10px">Set</span>
+    <span class="tog" data-set="confirmed" role="button" tabindex="0" aria-pressed="true">confirmed</span>
+    <span class="tog" data-set="uncertain" role="button" tabindex="0" aria-pressed="false">uncertain</span>
+  </div>
+
+  <div class="cards" id="cards"></div>
+</section>
+
+<section class="wrap">
+  <div class="sec-h"><h2>Hot spot</h2></div>
+  <p class="lead">One file concentrated a third of all confirmed issues.</p>
+  <div class="callout">
+    <h3><span class="mono" style="color:var(--accent-ink)">workers/ingest/worker.js</span> &mdash; 8 confirmed</h3>
+    <p>The PostHog ingest Worker carries a full cluster: unhandled JSON/fetch rejections (bare 500s with
+      no CORS), client-injectable PostHog reserved properties, a wildcard <code>"*"</code> origin that
+      silently never matches, a blocking upstream round-trip on every beacon, and a
+      <code>crypto.randomUUID()</code> fallback that mints a new PostHog person per event &mdash; inflating
+      billable MTUs and destroying funnels. One file, eight fixes, real security + billing impact.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="sec-h"><h2>How this was produced</h2></div>
+  <p class="lead">A five-stage pipeline &mdash; the numbering is the actual order of operations.</p>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h4>Chunk</h4><p>Source grouped into subsystems, concatenated into fat &le;200k-char chunks that exploit Ox's 1M window.</p></div>
+    <div class="step"><div class="num">2</div><h4>Find</h4><p>54 concurrent Ox passes over an 8-dimension &times; subsystem matrix, each returning structured JSON.</p></div>
+    <div class="step"><div class="num">3</div><h4>Crawl</h4><p>All 60 sitemap URLs fetched live and audited for SEO / a11y (all returned HTTP 200).</p></div>
+    <div class="step"><div class="num">4</div><h4>Refute</h4><p>Every finding re-sent to Ox as a skeptic told to reject false positives. 29 refuted, 20 uncertain.</p></div>
+    <div class="step"><div class="num">5</div><h4>Verify</h4><p>Top findings confirmed by Claude against the real code &mdash; the layer that found the root cause.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="sec-h"><h2>Dimension &times; verdict</h2></div>
+  <p class="lead">Where signal concentrated. Live-page audits were largely refuted &mdash; a weak
+    secondary signal the pipeline correctly discounted.</p>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Dimension</th><th style="text-align:center">Confirmed</th><th style="text-align:center">Uncertain</th><th style="text-align:center">Refuted</th></tr></thead>
+      <tbody id="matrix"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="note"><b>Honesty note.</b> The adversarial pass discarded 43% of unique findings, 18 of
+    them from the low-confidence live-page crawl (based on trimmed HTML). Trust the repo-source
+    findings; treat the live crawl as a hint. The 20 "uncertain" items likely hide 3&ndash;5 more real
+    issues &mdash; worth a quick human skim.</p>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b style="color:var(--ink)">Recommended order:</b> 1&nbsp;fix the build gate &middot;
+      2&nbsp;harden <span class="mono">worker.js</span> &middot; 3&nbsp;<span class="mono">now-data.ts</span>
+      prerender fetch &middot; 4&nbsp;confirm deploy host before any <span class="mono">_headers</span> fix
+      &middot; 5&nbsp;blog frontmatter + OG &middot; 6&nbsp;triage the 20 uncertain.</p>
+    <p class="mono" style="margin-top:12px">Harness: scratchpad/oxaudit/ox.py &middot; Full report: reports/ox-audit-2026-08-23.md</p>
+  </div>
+</footer>
+
+<script id="data" type="application/json">{"confirmed": [{"sev": "critical", "dim": "performance", "file": "src/components/home-client.tsx", "line": 510, "title": "ProductHighlight references undefined `products` identifier", "detail": "`ProductHighlight` filters and maps a variable named `products` that is never declared or imported anywhere in the file (imports cover react, next/link, dynamic, lucide icons, analytics, UI components, hooks, and the BlogPost type only). Under `next build` type-checking this is a hard compile error (TS2304 'Cannot find name products'); with type errors ignored, any route rendering ProductHighlight throws a ReferenceE", "fix": "Import the product catalog (e.g. `import { products } from \"@/lib/products\"`) or accept it as a prop `{ products: Product[] }` like the sibling `FeaturedGrid`/`ExperimentsGrid` components do.", "verdict": "confirmed"}, {"sev": "high", "dim": "seo", "file": "blog/agentic-engineering-week/page.mdx", "line": 1, "title": "Missing frontmatter: no title, description, or date", "detail": "The post starts directly with an H1 and contains no YAML frontmatter. In a static-export Next.js blog this means no per-page <title>, no meta description, no canonical, no OG/Twitter tags, no datePublished for Article JSON-LD, and no lastmod for the sitemap entry. The page will inherit the site-default <title>/<meta description>, producing duplicate title and description tags shared with every other frontmatter-less ", "fix": "Add frontmatter mirroring the working pattern in blog/kb-audit-circulation/page.mdx: title, description (~150-160 chars summarizing the 9-video convergence thesis), date (content states July 23-30, 2026), tags, and an explicit canonical/slug field if the head ", "verdict": "confirmed"}, {"sev": "high", "dim": "performance", "file": "src/lib/now-data.ts", "line": 60, "title": "Relative-URL fetch fails during static prerender; silently bakes empty data", "detail": "Node's fetch (used during `next build` / prerender for a static export) cannot resolve relative URLs like '/data/ship_log.json' \u2014 both requests throw 'Failed to parse URL', the bare catch swallows it, and an all-zero NowData (empty fleet/ships/recent_work) is what gets compiled into the static HTML. Additionally, `next: { revalidate: 60 }` is meaningless/incompatible with `output: 'export'`, and fetching JSON out of ", "fix": "Move ship_log.json/content_wall.json out of public/ into src/data and import them directly (`import shipLog from '@/data/ship_log.json'`) so values are inlined at build time with zero fetch; alternatively read them with node:fs in a server-only module. Remove ", "verdict": "confirmed"}, {"sev": "medium", "dim": "correctness", "file": "workers/ingest/worker.js", "line": 9, "title": "Wildcard \"*\" in ALLOWED_ORIGINS is never matched, silently falling back to a hardcoded origin", "detail": "corsHeaders does an exact-string comparison allowed.includes(origin). An operator configuring ALLOWED_ORIGINS=\"*\" \u2014 the conventional way to express 'any origin' \u2014 gets no match, so every request falls back to Access-Control-Allow-Origin: https://edgelesslab.com, which mismatches the requester's Origin and makes all cross-origin ingest calls fail in the browser. The misconfiguration fails silently.", "fix": "Add explicit wildcard support before the exact-match check: if (allowed.includes(\"*\")) allowOrigin = origin || \"*\"; else use the existing exact-match/fallback logic.", "verdict": "confirmed"}, {"sev": "medium", "dim": "security", "file": "src/components/blog-article.tsx", "line": 148, "title": "Unsanitized HTML injected via dangerouslySetInnerHTML", "detail": "BlogArticle renders its entire post body with dangerouslySetInnerHTML using the raw `html` prop with no sanitization step visible in the component or the render path. Any raw HTML/script payload present in the source markdown or whatever pipeline produces `html` (e.g., lib/blog, a CMS import, RSS-derived posts) will execute in the page origin. Because the component accepts arbitrary markup, safety depends entirely on", "fix": "Sanitize `html` once at build time in the markdown pipeline with rehype-sanitize (or sanitize-isomorphic DOMPurify) using an allowlist that permits only expected tags/attributes (p, h1-h6, a[href with http(s)/mailto/# schemes], img[src], pre/code, etc.), strip", "verdict": "confirmed"}, {"sev": "medium", "dim": "correctness", "file": "workers/ingest/worker.js", "line": 80, "title": "Unvalidated payload spread lets clients inject/override PostHog reserved properties (timestamp, $set, $set_once)", "detail": "...payload copies every client-supplied key into properties. Unlike $current_url/$ip (which are re-declared after the spread and therefore safe), PostHog-reserved keys such as timestamp, $set, $set_once, and lib are not stripped, so a forged request can backdate events (properties.timestamp) or mutate person profiles ($set). Junk fields like raw (from the non-JSON parse fallback) and any token/api_key the client incl", "fix": "Destructure out reserved/junk keys before spreading, e.g. const { timestamp, $set, $set_once, token, api_key, raw, ...safeProps } = payload ?? {}; and spread only safeProps.", "verdict": "confirmed"}, {"sev": "medium", "dim": "security", "file": "scripts/bundle-enforce.ts", "line": 101, "title": "Build-integrity/security checks are non-blocking by default (--strict opt-in)", "detail": "The runner only sets a non-zero exit code when '--strict' is passed. In default invocations, a failed 'artifact_maps_clean' check (sourcemaps shipped in out/, i.e. full source-code disclosure on the static host) is logged as [FAIL] but the build/deploy still succeeds. Any CI step that runs 'node scripts/bundle-enforce.ts' without --strict provides zero enforcement for the sourcemap-leak and missing-artifact gates.", "fix": "Make failures blocking by default (always set process.exitCode = 1) and reserve a '--warn'/'--no-fail' flag for advisory runs; or verify the CI workflow invokes this script with --strict and enforce that in the pipeline definition.", "verdict": "confirmed"}, {"sev": "medium", "dim": "correctness", "file": "src/app/feed.xml/route.ts", "line": 54, "title": "Custom response headers (Content-Type, Cache-Control) are silently discarded under static export", "detail": "All three text routes (feed.xml, humans.txt, llms.txt) declare Cache-Control lifetimes in handler-returned headers and in comments ('served ... with 24h cache', 'with 1h cache'). With Next.js `output: 'export'` + `dynamic = \"force-static\"`, these handlers are prerendered at build time into plain static files; there is no server at request time, so the headers object is never emitted to clients. `next.config.js header", "fix": "Move caching/content-type policy to the hosting layer: add a Cloudflare Pages `_headers` file with rules for /feed.xml, /humans.txt, /llms.txt (and /api/souls), or configure cache rules in the Cloudflare dashboard. Remove the misleading comments or reword them", "verdict": "confirmed"}, {"sev": "medium", "dim": "seo", "file": "blog/**", "line": null, "title": "No Open Graph or Twitter Card metadata defined for any post", "detail": "Across all six blog files there are zero og: or twitter: fields (no og:image, og:type:article, og:url, twitter:card, twitter:image). For a content/blog subsystem whose distribution model is social sharing (these are YouTube-roundup and hot-take posts), shares will render as bare URLs with no preview image or card. The four frontmatter-less posts cannot be fixed at the layout layer alone because there is no per-post i", "fix": "Add ogImage (static per-post asset or deterministic OG image generator keyed by slug) plus openGraph/twitter metadata emission in the shared blog layout, sourcing title/description/type=article/publishedTime from frontmatter; then repair the four posts missing", "verdict": "confirmed"}, {"sev": "medium", "dim": "performance", "file": "workers/ingest/worker.js", "line": 89, "title": "Ingest handler blocks on upstream PostHog round trip before responding", "detail": "forwardToPostHog awaits the fetch() to PostHog (/capture/) before returning a response to the caller. Every analytics beacon pays the full third-party RTT (typically 100\u2013500ms+, worse during PostHog incidents), holding the Worker request open, increasing wall-clock/CPU-billable time, and delaying or timing out client-side sendBeacon/fetch keepalive calls. For a fire-and-forget ingest endpoint this upstream call shoul", "fix": "Change the export to `async fetch(request, env, ctx)` and move the upstream POST behind `ctx.waitUntil(...)`: build the body, kick off `const p = fetch(`${host}/capture/`, {...})` inside `ctx.waitUntil(p.catch(() => {}))`, and immediately return `json({ ok: tr", "verdict": "confirmed"}, {"sev": "low", "dim": "correctness", "file": "workers/ingest/worker.js", "line": 110, "title": "/health and 405 responses omit CORS headers unlike every other response", "detail": "All success/error branches attach corsHeaders(request, env), but the /health reply (line 110) and the method-not-allowed reply (line 114) do not. A cross-origin browser health check or an accidental GET to the endpoint receives the JSON body but fails the CORS check, surfacing as an opaque network error instead of the intended {ok:true} or 405 payload.", "fix": "Pass headers: corsHeaders(request, env) in both json(...) calls to match the rest of the handler.", "verdict": "confirmed"}, {"sev": "low", "dim": "security", "file": "eslint.config.mjs", "line": 31, "title": "react/no-unescaped-entities disabled globally, removing the unescaped-entity guardrail", "detail": "The override turns off react/no-unescaped-entities for the entire repo. React escapes text children, so this is not directly exploitable XSS, but it removes the automated check for raw quotes/angle brackets in JSX \u2014 relevant for this project because multiple post-build scripts (scripts/cleanup-assets.ts, scripts/inject-metadata.ts, scripts/inject-art-only-mode.mjs) regex-rewrite exported HTML, where unexpected raw '>", "fix": "Re-enable the rule repo-wide, or scope the override narrowly (specific files/dirs with reviewed legacy content) instead of a global off.", "verdict": "confirmed"}, {"sev": "low", "dim": "performance", "file": "workers/ingest/worker.js", "line": 110, "title": "GET /health response has no Cache-Control header", "detail": "The /health endpoint returns a 200 JSON body with no Cache-Control directive, so intermediaries (Cloudflare edge cache, corporate proxies, browser back/forward cache) may serve a cached health result. For uptime probes this yields stale/false-positive health signals; conversely, if monitors poll it frequently, an explicit policy avoids redundant Worker invocations.", "fix": "Return an explicit directive: `return json({ ok: true, service: \"edgeless-ingest\" }, { headers: { \"Cache-Control\": \"no-store\" } })` so probes always hit the live Worker. If polling volume is a concern instead, use `\"Cache-Control\": \"public, max-age=30\"`.", "verdict": "confirmed"}, {"sev": "low", "dim": "performance", "file": "eslint.config.mjs", "line": 20, "title": "~25k-file vendored bundles under public/ copied into every deploy", "detail": "The ignores comment confirms public/marimo*, total-serialism, scoop-scout, creative-demos, pen-plotter, prompt-engine hold roughly 25,000 JS files that are copied verbatim into out/ on every build (slow postbuild copy, slow deploys/upload, large artifact) and are trivially loadable eagerly by any page.", "fix": "Prune unreferenced files from these trees, and ensure pages reference them via lazy runtime fetch/import only when the demo mounts; consider hosting them on a versioned CDN path outside the Next build artifact.", "verdict": "confirmed"}, {"sev": "low", "dim": "security", "file": "workers/ingest/worker.js", "line": 12, "title": "Dynamic Access-Control-Allow-Origin without Vary: Origin", "detail": "corsHeaders reflects the request Origin into Access-Control-Allow-Origin when it matches ALLOWED_ORIGINS, but never emits a Vary: Origin header. If any response from this route is ever cached (Cache API, CDN rule, or a future Cache-Control addition), the first-cached variant's ACAO value would be served to all origins, either breaking allowed origins or silently widening access. Currently mitigated only by the fact t", "fix": "Add \"Vary\": \"Origin\" to the headers returned by corsHeaders().", "verdict": "confirmed"}, {"sev": "low", "dim": "security", "file": "workers/ingest/worker.js", "line": 32, "title": "Unhandled rejections: malformed JSON and PostHog fetch failures produce 500s instead of controlled 4xx/5xx", "detail": "When Content-Type includes application/json, request.json() is awaited without try/catch; a malformed body rejects and crashes the worker (Cloudflare 1101 error page) instead of returning 400. Similarly, `await fetch(...)` at line 74 can throw (DNS/network/TLS error reaching PostHog), producing an unhandled worker exception rather than the intended 502 JSON response.", "fix": "Wrap payload parsing: try { return await request.json(); } catch { return json({ok:false,error:'invalid json'},{status:400,...}); }. Wrap the upstream fetch in try/catch and return json({ok:false,error:'upstream unreachable'},{status:502}) on throw.", "verdict": "confirmed"}, {"sev": "low", "dim": "seo", "file": "blog/glm-5-2-eval-report/index.mdx", "line": 2, "title": "Frontmatter has title and date but no description", "detail": "This post will ship with an empty or template-fallback meta description and og:description. Search engines will then synthesize a snippet from the results table (numbers-heavy, poor CTR), and social shares will show no summary. It is also the only post using index.mdx instead of page.mdx \u2014 harmless if the MDX loader maps both, but worth confirming so the route/sitemap entry isn't dropped.", "fix": "Add a description such as \"20-task coding benchmark of GLM-5.2: $0.017 total spend, 0 tasks accepted without manual iteration, and why cost-per-accepted-result is currently undefined.\" Also align the filename convention to page.mdx or verify index.mdx resolves", "verdict": "confirmed"}, {"sev": "low", "dim": "deploy", "file": "workers/ingest/worker.js", "line": 73, "title": "crypto.randomUUID() fallback fragments every event into its own person", "detail": "When no distinct_id/anonymous_id is supplied, each event receives a fresh UUID, so PostHog records a brand-new person per event. This inflates monthly tracked users (direct billing impact on PostHog) and destroys funnel/retention coherence for any client integration that forgets to send an ID.", "fix": "Require anonymous_id (drop the event with a 400 if absent), and generate the anonymous_id once client-side (localStorage/cookie) so it persists across events; remove the randomUUID fallback entirely.", "verdict": "confirmed"}], "uncertain": [{"sev": "high", "dim": "security", "file": "src/app/blog/[slug]/page.tsx", "line": 68, "title": "Custom markdown renderer emits unsanitized HTML (raw-HTML passthrough, attribute breakout, javascript: links) consumed by dangerouslySetInnerHTML", "detail": "`const html = renderMarkdown(post.content)` builds article HTML that is handed to <BlogArticle html={html}> (a dangerouslySetInnerHTML consumer). The pipeline never escapes ordinary block content: headings, list items, blockquotes, and paragraphs are wrapped in tags via `inlineFormat()` with zero HTML escaping, so any raw HTML in a post body (e.g. `<img src=x onerror=...>`) is emitted verbatim and executes. Additiona", "fix": "Treat the renderer output as untrusted: run the final HTML through a sanitizer (e.g. isomorphic-dompurify with a tight allowlist) immediately before passing it to BlogArticle, or escape every text segment (including quotes: &, <, >, \", ') before applying inlin", "verdict": "uncertain"}, {"sev": "high", "dim": "correctness", "file": "workers/ingest/worker.js", "line": 67, "title": "Unhandled exceptions on malformed JSON body and PostHog fetch failure produce bare 500 without CORS headers", "detail": "When Content-Type is application/json, readPayload calls request.json() with no try/catch (the manual JSON.parse path below it does catch, but this branch does not). Any client posting malformed JSON triggers an uncaught SyntaxError that propagates out of the fetch handler, causing Cloudflare to return its HTML 1101 error page with no Access-Control-Allow-Origin header \u2014 the browser reports a CORS failure instead of ", "fix": "Wrap the handler: let payload; try { payload = await readPayload(request); } catch { return json({ok:false,error:'invalid JSON body'},{status:400,headers:corsHeaders(request,env)}); } and wrap the PostHog fetch in try/catch returning json({ok:false,error:'upst", "verdict": "uncertain"}, {"sev": "high", "dim": "performance", "file": "_headers", "line": 2, "title": "Cloudflare Pages _headers/_redirects are inert if deployed to GitHub Pages (contradictory deploy signals)", "detail": "The repo contains a GitHub Pages CNAME (edgelesslab.com) and playwright.config.ts states 'GitHub Pages serves out/ as plain files', but _headers and _redirects are Cloudflare Pages\u2013only features. If the site is served from GitHub Pages, none of the Cache-Control rules apply \u2014 every asset falls back to GitHub's default ~600s TTL, defeating the 'aggressive caching' intent, and the /products 200 rewrite never executes. ", "fix": "Pick one host. For GitHub Pages, drop _headers/_redirects (GH ignores them) and put a CDN (Cloudflare in front of GH Pages) or a build step that emits host-supported headers; for Cloudflare Pages, delete CNAME and correct the Playwright/docs claim.", "verdict": "uncertain"}, {"sev": "high", "dim": "seo", "file": "blog/multi-agent-orchestration-week/page.mdx", "line": 1, "title": "Missing frontmatter: no title, description, or date", "detail": "Same defect as agentic-engineering-week: no frontmatter block, so the static exporter cannot generate a unique <title>, meta description, canonical, OG/Twitter metadata, Article JSON-LD, or sitemap lastmod. Falls back to site defaults \u2192 duplicate metadata across routes.", "fix": "Add frontmatter with a distinct title, a unique description differentiating it from verification-chain-crisis (e.g., emphasize the three coordination patterns), date (July 23-30, 2026 per body), and tags.", "verdict": "uncertain"}, {"sev": "high", "dim": "seo", "file": "blog/stanford-genai-worth-2026.md", "line": 1, "title": "Bare .md file outside a route directory + no frontmatter breaks sitemap/route consistency", "detail": "This is a flat blog/stanford-genai-worth-2026.md file while every other post lives in a directory with page.mdx or index.mdx. Under standard Next.js App Router MDX configuration a root-level .md file is not a route: it will be silently omitted from the build, the XML sitemap, and internal linking, or require a bespoke loader the sibling posts don't exercise. It also lacks frontmatter entirely, so even if routed it em", "fix": "Move to blog/stanford-genai-worth-2026/page.mdx, convert to .mdx for consistency, and add full frontmatter (title, description, date April 2026 per cited paper, tags). Verify the resulting URL appears in the generated sitemap.", "verdict": "uncertain"}, {"sev": "high", "dim": "seo", "file": "blog/verification-chain-crisis/page.mdx", "line": 1, "title": "Missing frontmatter: no title, description, or date", "detail": "Third post with no frontmatter. No <title>/description/canonical/OG/JSON-LD/lastmod can be emitted; inherits site-default metadata and duplicates it with the other frontmatter-less posts.", "fix": "Add frontmatter including title, unique description, date (July 15 - August 4, 2026 per body), tags, and series position so prev/next and BreadcrumbList JSON-LD can be generated.", "verdict": "uncertain"}, {"sev": "high", "dim": "seo", "file": "package.json", "line": 9, "title": "Static export pipeline never guarantees robots.txt or sitemap.xml", "detail": "The postbuild stage explicitly stages root-level deploy artifacts into out/ (deletes maps, restores standalone, rsyncs pen-plotter assets, copies _redirects, runs pagefind) but contains no generation, copy, or existence check for robots.txt or sitemap.xml. For an output:\"export\" site whose entire discoverability depends on files physically present in out/, nothing in this config ensures either file ships. If they are", "fix": "Add src/app/sitemap.ts and src/app/robots.ts (both emit static files into out/ under output:\"export\"), or commit static robots.txt/sitemap.xml in public/. Then append a hard guard to postbuild: `test -f out/robots.txt && test -f out/sitemap.xml || exit 1` so a", "verdict": "uncertain"}, {"sev": "high", "dim": "live-seo-a11y", "file": "https://edgelesslab.com/blog/what-portland-businesses-need-from-ai", "line": null, "title": "Skip link points to nonexistent #main-content; page has no <main> landmark", "detail": "The skip link targets '#main-content', but no element with that id exists anywhere in the rendered page body (it is only defined inside the 404 fallback template, visible in the RSC payload's notFound tree). The blog content <article> is also not wrapped in a <main> element, so the page has no main landmark and the skip link is a silent no-op for keyboard users.", "fix": "Wrap the page children in <main id=\"main-content\"> in the root layout (around the {children} slot after <Nav/>), so the existing skip link resolves on every page.", "verdict": "uncertain"}, {"sev": "medium", "dim": "security", "file": "workers/ingest/worker.js", "line": 29, "title": "Unauthenticated ingest endpoint with no rate limit, body-size cap, or field allowlist", "detail": "forwardToPostHog forwards the entire caller-supplied payload to PostHog with no authentication, no rate limiting, no maximum body size, and no schema/field validation beyond normalizing 'event'. Any internet client can forge unlimited events with arbitrary distinct_id values (spoofing other users' identities in analytics), inflate PostHog billing, poison metrics, and tamper with person profiles: PostHog's /capture ho", "fix": "Enforce a maximum request-body size (e.g. reject > 16KB); accept only application/json and reject other content types with 415; strip or allowlist forwarded properties (delete $set, $set_once, $group*, $timestamp, __proto__, constructor, prototype keys from pa", "verdict": "uncertain"}, {"sev": "medium", "dim": "performance", "file": "next.config.ts", "line": 6, "title": "images.unoptimized:true ships raw originals; postbuild copies full pen-plotter asset tree", "detail": "Static export forces unoptimized images, so no responsive AVIF/WebP variants are generated \u2014 but the pipeline compensates nowhere. The postbuild rsync copies pen-plotter/assets wholesale (only 'medium'/'mediums-all' excluded), implying larger original-size raster assets are deployed as-is and downloaded at native resolution on all devices.", "fix": "Add a build/prebuild sharp-based script that emits width-limited WebP/AVIF variants (e.g., 640/1024/1600w) into out/, and emit <img srcset>/<picture> or a custom next/image loader pointing at those variants instead of serving originals.", "verdict": "uncertain"}, {"sev": "medium", "dim": "seo", "file": "blog/multi-agent-orchestration-week/page.mdx", "line": 15, "title": "Near-duplicate body content across three posts competing for the same queries", "detail": "agentic-engineering-week, multi-agent-orchestration-week, and verification-chain-crisis reuse near-verbatim blocks: the identical hook \"Same week. Same problem space. Zero coordination between the creators.\" / \"That's the signal.\" (in the two week-roundups), substantially identical ColeMedin adversarial-pattern and IndyDevDan-hierarchy explanations, the same canonical-video recommendation (*One Agent Is NOT ENOUGH*) ", "fix": "Differentiate the three posts with unique intros/outros, consolidate the repeated creator-pattern explainers into one canonical post and link to it from the others (or add rel=canonical from the roundup variants to the deepest treatment), and give each post a ", "verdict": "uncertain"}, {"sev": "medium", "dim": "seo", "file": "blog/**", "line": null, "title": "No structured data (JSON-LD) for any article; author/date fields absent", "detail": "None of the posts emit or reference Article/BlogPosting JSON-LD, and no post defines an author in frontmatter. Even after adding a shared JSON-LD emitter, BlogPosting requires datePublished (missing on 4 of 6 posts) and strongly expects author/headline/image. Rich-result eligibility (article rich results, Google Discover) is forfeited.", "fix": "Add an author field to all frontmatter, complete missing dates, and emit BlogPosting JSON-LD (headline, datePublished, dateModified, author, image, mainEntityOfPage=canonical URL) from the shared blog layout.", "verdict": "uncertain"}, {"sev": "medium", "dim": "performance", "file": "src/lib/blog.ts", "line": 8, "title": "Monolithic eagerly-materialized dataset slows builds and widens client-leakage surface", "detail": "The full array is constructed at module scope, so every route that touches blog data (index, tag pages, product pages linking related posts, RSS/sitemap generators) evaluates and retains all ~25 full-content objects in memory per build worker. Beyond build-time cost, the single-module design means there is no structural boundary preventing a future client component from importing full content \u2014 the leak in the 'high'", "fix": "Introduce `src/lib/blog-meta.ts` exporting a lightweight `PostMeta[]` (no `content` field) used by index/tag/related-post code paths, and a server-only `getPost(slug)` loader that reads the single post's content file. Generate `blog-meta.ts` (or a JSON file) f", "verdict": "uncertain"}, {"sev": "medium", "dim": "live-seo-a11y", "file": "https://edgelesslab.com/blog/hermes-curator-skill-lifecycle", "line": null, "title": "Article body contains literal markdown emphasis syntax rendered as plain text", "detail": "The closing byline paragraph renders asterisks visibly instead of being parsed into <em>: '*Edgeless Labs builds autonomous creative infrastructure. We run Hermes as part of our multi-agent swarm for intake, research, and knowledge operations.*'. This is broken/placeholder-looking content visible to users and crawlers.", "fix": "Convert markdown emphasis during rendering so this becomes <em>\u2026<\/em>, or strip the asterisks; likewise the bare '<p>---<\/p>' horizontal-rule placeholder should be an <hr>.", "verdict": "uncertain"}, {"sev": "medium", "dim": "performance", "file": "package.json", "line": 29, "title": "Heavy client deps (tldraw, motion, @paper-design/shaders-react, posthog-js) with no visible code-splitting guardrail", "detail": "These are among the largest React libraries available (tldraw alone is several hundred KB min+gz). optimizePackageImports covers only lucide-react and @chenglou/pretext. If any of tldraw/@paper-design/shaders-react/posthog-js are statically imported from a shared layout or above-the-fold client components, they inflate every route's initial JS. No bundle analyzer is configured to catch regressions.", "fix": "Load tldraw and shader canvases via next/dynamic(() => import(...), { ssr: false }) inside interaction-gated client components; initialize posthog-js in useEffect after load. Add @next/bundle-analyzer (ANALYZE=true script) and assert per-route first-load JS bu", "verdict": "uncertain"}, {"sev": "low", "dim": "security", "file": "src/lib/metadata.ts", "line": 17, "title": "absoluteUrl() accepts protocol-relative paths, enabling off-site canonical/OG URLs (latent open redirect)", "detail": "absoluteUrl() builds the canonical/OpenGraph URL via new URL(canonicalPath, SITE_URL) without validating that `path` is a same-origin pathname. A value beginning with \"//\" (e.g. \"//evil.com/x\") makes new URL resolve to https://evil.com/x, so the page's <link rel=canonical>, og:url, and twitter card would point at an attacker-controlled origin. Today every caller passes a literal internal path, so this is latent; it b", "fix": "Guard the input before resolution, e.g.: `if (!/^\\/(?!\\/)/.test(path)) return SITE_URL + '/';` (require a leading single slash and reject '//'), or normalize with `path.replace(/^\\/+/, '/')` and verify `u.origin === SITE_URL` after constructing, throwing other", "verdict": "uncertain"}, {"sev": "low", "dim": "security", "file": "scripts/inject-metadata.ts", "line": 46, "title": "String.replace with string replacement interprets $ patterns \u2014 latent script-injection/corruption in generated inline <script>", "detail": "SCRIPT placeholders are substituted via .replace('__JSON_LD__', jsonLd) etc. with string replacements. String.prototype.replace treats '$&', '$`', \"$'\", '$1'..'$99' in the replacement as special patterns. Today the constants contain no '$', but any future edit introducing a '$' sequence into JSON_LD_ORG/OG_* values will corrupt (or restructure) the inline script injected into every exported HTML page. Because the res", "fix": "Use function replacements, which treat the argument literally: .replace('__JSON_LD__', () => jsonLd) (and likewise for the other three), or build the script via template interpolation with explicit escaping.", "verdict": "uncertain"}, {"sev": "low", "dim": "correctness", "file": "workers/ingest/worker.js", "line": 72, "title": "distinct_id falls back to client IP, conflating all users behind shared NAT/proxies", "detail": "When neither distinct_id nor anonymous_id is supplied, the raw client IP becomes the PostHog distinct_id. Every visitor behind the same corporate NAT, VPN egress, or carrier-grade NAT is recorded as a single identity, corrupting unique-user/DAU metrics; it also persists PII (IP address) as a durable identity. Additionally, x-forwarded-for (second fallback in clientIp) is client-spoofable whenever CF-Connecting-IP is ", "fix": "Drop the IP fallback: use payload.distinct_id || payload.anonymous_id || crypto.randomUUID(), and consider deriving a stable anonymous id via a cookie set by the worker instead of IP.", "verdict": "uncertain"}, {"sev": "low", "dim": "security", "file": "src/lib/now-data.ts", "line": 56, "title": "Server-side fetch of relative URLs always throws; failure masked by broad catch; fetched JSON consumed with no validation", "detail": "Two problems: (1) In a Node/server runtime (Next.js server component or build step), fetch('/data/ship_log.json') raises 'TypeError: Failed to parse URL' because relative URLs are invalid for undici fetch \u2014 so both requests always fail and the catch silently returns fabricated zeroed telemetry (health_score: 0, empty fleet), presenting misleading 'healthy/empty' status instead of surfacing the error. (2) When the JSO", "fix": "Resolve an absolute base URL from an env var (e.g. `${process.env.NEXT_PUBLIC_SITE_URL}/data/ship_log.json`) for server execution; distinguish network/parse errors and log or surface degraded state rather than emitting synthetic healthy-looking zeros; validate", "verdict": "uncertain"}, {"sev": "low", "dim": "live-seo-a11y", "file": "https://edgelesslab.com/blog/hermes-curator-skill-lifecycle", "line": null, "title": "Sitemap/canonical trailing-slash policy likely inconsistent (canonical ends with '/', JSON-LD does not)", "detail": "Because canonical emits a trailing slash while every other absolute self-reference omits it, any sitemap generated from the same slug helper will disagree with one of the two; Google treats http vs trailing-slash variants as distinct URLs, diluting crawl signals.", "fix": "Centralize URL construction through a single helper that always appends (or never appends) the trailing slash, then regenerate sitemap entries to match.", "verdict": "uncertain"}]}</script>
+<script>
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const all = [...DATA.confirmed.map(f=>({...f,set:'confirmed'})),
+             ...DATA.uncertain.map(f=>({...f,set:'uncertain'}))];
+const order={critical:0,high:1,medium:2,low:3};
+const state={sev:new Set(['critical','high','medium','low']),set:new Set(['confirmed'])};
+const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const codeify=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
+
+function render(){
+  const list=all.filter(f=>state.sev.has(f.sev)&&state.set.has(f.set))
+    .sort((a,b)=>order[a.sev]-order[b.sev]);
+  const el=document.getElementById('cards');
+  el.innerHTML=list.length?list.map(f=>`
+    <article class="card ${f.sev}">
+      <div class="stripe"></div>
+      <div class="body">
+        <div class="card-top">
+          <span class="sev ${f.sev}">${f.sev}</span>
+          <span class="dim">${esc(f.dim)}</span>
+          <span class="file">${esc(f.file)}${f.line?':'+f.line:''}</span>
+        </div>
+        <h3 class="t">${codeify(f.title)}</h3>
+        <p class="det">${codeify(f.detail)}${f.detail&&f.detail.length>=418?'&hellip;':''}</p>
+        ${f.fix?`<div class="fix"><b>Fix</b>${codeify(f.fix)}${f.fix.length>=258?'&hellip;':''}</div>`:''}
+      </div>
+    </article>`).join(''):'<p class="empty">No findings match the current filters.</p>';
+  document.getElementById('shown').textContent=list.length+' shown';
+}
+function bindTog(t){
+  const apply=()=>{
+    const on=t.getAttribute('aria-pressed')==='true';
+    t.setAttribute('aria-pressed',String(!on));
+    const k=t.dataset.sev?['sev',t.dataset.sev]:['set',t.dataset.set];
+    (state[k[0]].has(k[1])?state[k[0]].delete(k[1]):state[k[0]].add(k[1]));
+    render();
+  };
+  t.addEventListener('click',apply);
+  t.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();apply();}});
+}
+document.querySelectorAll('.tog').forEach(bindTog);
+
+// matrix
+const mtx={correctness:[4,2,4],security:[5,5,1],performance:[5,4,2],seo:[3,6,2],
+  accessibility:[0,0,1],dependencies:[0,0,1],deploy:[1,0,0],'live-seo-a11y':[0,3,18]};
+const maxc=Math.max(...Object.values(mtx).map(v=>v[0]||0),1);
+document.getElementById('matrix').innerHTML=Object.entries(mtx)
+  .sort((a,b)=>b[1][0]-a[1][0]).map(([d,v])=>`
+  <tr><td class="mono" style="font-size:13px">${d}</td>
+    <td class="num c-conf">${v[0]||'·'}${v[0]?`<span class="bar" style="width:${Math.round(v[0]/maxc*48)}px"></span>`:''}</td>
+    <td class="num">${v[1]||'·'}</td>
+    <td class="num c-ref">${v[2]||'·'}</td></tr>`).join('');
+
+render();
+</script>

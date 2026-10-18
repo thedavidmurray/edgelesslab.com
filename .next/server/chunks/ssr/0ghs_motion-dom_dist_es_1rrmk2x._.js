@@ -1,0 +1,3 @@
+module.exports=[17280,58486,a=>{"use strict";let b={current:!1};a.s(["hasReducedMotionListener",0,b,"prefersReducedMotion",0,{current:null}],58486),a.s(["initPrefersReducedMotion",0,function(){b.current=!0}],17280)},26012,a=>{"use strict";a.s(["resolveElements",0,function(a,b,c){if(null==a)return[];if(a instanceof EventTarget)return[a];if("string"==typeof a){let d=document;b&&(d=b.current);let e=c?.[a]??d.querySelectorAll(a);return e?Array.from(e):[]}return Array.from(a).filter(a=>null!=a)}])}];
+
+//# sourceMappingURL=0ghs_motion-dom_dist_es_1rrmk2x._.js.map

@@ -1,0 +1,135 @@
+# regression-test.yaml — Ensure prompt changes don't degrade quality
+# Copyright 2026 Edgeless Labs LLC — MIT License
+#
+# Regression tests lock in the behaviors you care about.
+# Run this suite before and after every prompt change.
+# If the pass rate drops, you introduced a regression.
+#
+# Best practice:
+# 1. Build this test suite while your prompt is working well.
+# 2. Save baseline results: --output results/baseline.json
+# 3. After each change, run again and compare pass rates.
+# 4. Add a new test for every bug you fix (prevent re-introduction).
+#
+# Usage:
+#   ./framework/prompt-test.sh run templates/regression-test.yaml
+#   ./framework/prompt-test.sh run templates/regression-test.yaml --output results/after-change.json
+
+name: "Regression Test Suite"
+description: |
+  Locks in critical behaviors. Run before and after every prompt change.
+  A passing baseline + a failing new run = regression introduced.
+
+prompt_template: "prompts/your-prompt.md"  # Update this path
+
+model: "claude-3-5-haiku-20241022"
+
+tags:
+  - regression
+  - baseline
+
+tests:
+
+  # ─── Critical path — must always pass ─────────────────────────────────────────
+  # These are the behaviors your prompt MUST preserve.
+  # Any failure here is a blocker.
+
+  - name: "[critical] primary use case"
+    input: "Your primary use case input goes here."
+    assertions:
+      - type: not_empty
+      - type: min_length
+        value: 50
+      # Add specific assertions for your use case
+
+  - name: "[critical] output format preserved"
+    input: "Input that should produce structured output."
+    assertions:
+      - type: json_valid
+      # Adjust to match your expected format
+
+  - name: "[critical] no refusals on valid input"
+    input: "A normal, valid request your prompt should handle."
+    assertions:
+      - type: not_contains
+        value: "I cannot"
+        case_insensitive: true
+      - type: not_contains
+        value: "I'm unable"
+        case_insensitive: true
+      - type: not_empty
+
+  # ─── Previously fixed bugs — must stay fixed ──────────────────────────────────
+  # Add one test here for every bug you've ever fixed.
+  # These prevent regressions to known-bad states.
+
+  - name: "[bug-fix] empty input handled gracefully"
+    # Bug: version 1.0 returned empty string on empty input
+    input: ""
+    assertions:
+      - type: not_empty
+
+  - name: "[bug-fix] no hallucinated URLs"
+    # Bug: version 2.1 sometimes included fake URLs in responses
+    input: "Where can I find documentation?"
+    assertions:
+      - type: not_contains
+        value: "https://docs.example.com/fake"
+      # Replace with the specific hallucinated URL pattern you saw
+
+  - name: "[bug-fix] correct language detection"
+    # Bug: version 2.3 responded in English even when French was requested
+    input: "Réponds-moi en français. Quel est ton rôle ?"
+    assertions:
+      - type: llm_judge
+        criteria: "The response is in French, not English."
+        threshold: 0.9
+
+  # ─── Performance regression checks ────────────────────────────────────────────
+  # These verify output quality hasn't degraded through prompt simplification.
+
+  - name: "[quality] response completeness"
+    input: "A complex, multi-part question that requires a thorough response."
+    assertions:
+      - type: min_length
+        value: 200
+      - type: llm_judge
+        criteria: "The response is complete and addresses all parts of the question."
+        threshold: 0.8
+
+  - name: "[quality] no degraded accuracy"
+    input: "A question with a factually verifiable answer."
+    assertions:
+      - type: contains
+        value: "the correct answer"  # Replace with actual expected content
+        case_insensitive: true
+
+  - name: "[quality] tone maintained"
+    input: "A standard user request."
+    assertions:
+      - type: llm_judge
+        criteria: |
+          The response maintains the expected tone for this prompt:
+          [describe your expected tone — professional, friendly, technical, etc.]
+          It does not sound robotic, defensive, or off-brand.
+        threshold: 0.8
+
+  # ─── Boundary conditions ───────────────────────────────────────────────────────
+  - name: "[boundary] max input length"
+    input: >
+      This is a deliberately long input to test that the prompt handles
+      verbose user messages without failing or truncating important context.
+      Add more text here to simulate your typical max input length.
+      The response should still be coherent and on-topic.
+    assertions:
+      - type: not_empty
+      - type: min_length
+        value: 30
+
+  - name: "[boundary] minimal input"
+    input: "Help."
+    assertions:
+      - type: not_empty
+      - type: llm_judge
+        criteria: "The response asks a clarifying question or provides general guidance. It does not refuse or return an error."
+        threshold: 0.7

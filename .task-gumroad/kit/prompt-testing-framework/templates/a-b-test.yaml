@@ -1,0 +1,133 @@
+# a-b-test.yaml — Template for comparing two prompt variants
+# Copyright 2026 Edgeless Labs LLC — MIT License
+#
+# Use this template when you want to measure which of two prompt variants
+# produces better output. Run both variants against the same test cases,
+# then compare pass rates, latency, and LLM judge scores.
+#
+# Usage:
+#   Copy this file twice, one per variant:
+#     cp templates/a-b-test.yaml experiments/variant-a.yaml
+#     cp templates/a-b-test.yaml experiments/variant-b.yaml
+#
+#   Edit the prompt_template in each file to point to the variant prompt.
+#   Run both:
+#     ./framework/prompt-test.sh run experiments/variant-a.yaml --output results/variant-a.json
+#     ./framework/prompt-test.sh run experiments/variant-b.yaml --output results/variant-b.json
+#
+#   Compare results:
+#     python framework/evaluate.py results/variant-a.json --report reports/variant-a.html
+#     python framework/evaluate.py results/variant-b.json --report reports/variant-b.html
+
+name: "A/B Test — Variant [A|B]"
+description: |
+  Compare variant [A|B] of the customer support prompt against standard test cases.
+  Change this description to describe your specific variant.
+
+# Point this to the prompt file for this variant.
+# Create two copies of this spec, each pointing to a different prompt template.
+prompt_template: "prompts/variant-a.md"
+
+model: "claude-3-5-haiku-20241022"
+
+tags:
+  - ab-test
+  - variant-a  # change to variant-b in the second copy
+
+# ── Shared test cases ──────────────────────────────────────────────────────────
+# These tests are IDENTICAL in both variant specs.
+# Any difference in scores is caused by the prompt, not the test cases.
+tests:
+
+  - name: "happy path — standard request"
+    input: "I need help resetting my password."
+    assertions:
+      - type: not_empty
+      - type: not_contains
+        value: "I cannot"
+        case_insensitive: true
+      - type: llm_judge
+        criteria: |
+          The response helps the user reset their password.
+          It is polite and professional.
+          It provides actionable steps or guidance.
+        threshold: 0.8
+
+  - name: "unhappy path — frustrated user"
+    input: "This is absolutely ridiculous, I've been waiting 3 days for a response and nothing works!"
+    assertions:
+      - type: not_empty
+      - type: llm_judge
+        criteria: |
+          The response acknowledges the user's frustration.
+          It does not respond defensively.
+          It offers a path to resolution.
+          Tone is empathetic and professional.
+        threshold: 0.8
+
+  - name: "edge case — ambiguous request"
+    input: "It's broken."
+    assertions:
+      - type: not_empty
+      - type: llm_judge
+        criteria: |
+          The response asks a clarifying question to understand what is broken.
+          It does not make assumptions about what 'it' refers to.
+          It is polite and not dismissive.
+        threshold: 0.75
+
+  - name: "scope — off-topic question"
+    input: "What's the weather like in Tokyo today?"
+    assertions:
+      - type: not_empty
+      - type: llm_judge
+        criteria: |
+          The response politely explains this is outside the scope of support.
+          It redirects the user appropriately.
+          It does not just ignore the question with no response.
+        threshold: 0.7
+
+  - name: "format — response length appropriate"
+    input: "How do I export my data?"
+    assertions:
+      - type: not_empty
+      - type: min_length
+        value: 50
+      - type: max_length
+        value: 600
+
+  - name: "accuracy — factual claim check"
+    input: "Do you offer a free trial?"
+    assertions:
+      - type: not_empty
+      - type: not_contains
+        value: "yes, we offer"
+        case_insensitive: true
+      # Replace this assertion with one appropriate for your product
+
+  # ── Rubric-based quality scoring ───────────────────────────────────────────────
+  # This gives a holistic score across multiple quality dimensions.
+  # Run evaluate.py to resolve these after the initial run.
+
+  - name: "rubric — overall response quality"
+    input: "I just upgraded my plan but I'm not seeing the new features. What should I do?"
+    assertions:
+      - type: not_empty
+      - type: rubric
+        threshold: 0.75
+        rubric:
+          - criterion: "Empathy"
+            max_score: 2
+            description: "Response acknowledges the user's frustration or validates their concern"
+          - criterion: "Clarity"
+            max_score: 3
+            description: "Steps are clear, specific, and actionable"
+          - criterion: "Completeness"
+            max_score: 2
+            description: "Response covers likely causes (cache, plan activation delay, etc.)"
+          - criterion: "Tone"
+            max_score: 2
+            description: "Professional, friendly, not robotic"
+          - criterion: "Brevity"
+            max_score: 1
+            description: "No unnecessary padding or repetition"

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>bandit-strategies</title>
+    <script type="module" crossorigin src="./assets/index-iAj2M3os.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-y72bE5iF.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-PbYoItBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-BakX-tnw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CuYNS33t.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CCOoIlcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CGfP-Ye3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BJ9oKrvH.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BIlJBJIu.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BtEcuwwV.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-X2M2usMq.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CFAaMy0O.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-BF7GSjhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-BXI8V5i6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CQMqwayA.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DCqDlsgq.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-BTp1tQDO.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DQmqoJgr.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-9vLEgLY6.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-Cjly7tmx.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CgQpRVyN.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BH8bU9Xf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C2E8KCbD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-Dev6I_Kv.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CfyqLOPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-BukULOeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-EP9ZArpv.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B9JJ72XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-B6_8umQX.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BE150fVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-KshNNAOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-Baf35rp4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-0SWz6w4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-CWoNQwFz.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DWxvyYxP.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DvZlHYnD.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CXj_gH7S.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-CjNGDxxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-3wF4dU7I.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-kNeJ8nbe.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dez1I5M9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0WqBUnf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CwfKvuyQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-D-o1OXc9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BZhJ1bTM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bj9Iedc0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DHMtQYxT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnIl7RU-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CfGDksO-.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-C6JeW1YI.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-DCE7d2fN.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DdxMtdqK.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-DXo9vDEJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-DIlSqcdp.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-DmhaVp6Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-DQ5n6Zef.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bo313Z9X.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BCXa3Ocm.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-DEHK-C20.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-CC0gG4Av.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-Dr_Y1zNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-BlBSYv0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-BKZTJMZ6.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DrpctNAg.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DE_5rdOV.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-DCM-63YT.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-mjvipKvz.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-b2KTOk0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-MQnbMIO2.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-LArpBcY-.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-9ogswH46.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Bjh7v4lb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-C7RH0Nc7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DfGLyCbP.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DK7te6sJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-bcK6jTD2.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CyasABTK.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-IBNGDypD.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BCIGtBo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BLBwT24G.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-BT-L2LDD.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-VxOqftwq.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-BoMcg6sy.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DctOjjEz.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-DcImOp4r.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DI0EQXw0.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-DcEasnos.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-CjikjOBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DTBVbtl-.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CmK-WSPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-Dol5ybck.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CT1LpOBD.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CUQODgGJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-P--XWZhg.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-C6VN0dQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-f3mfGw8u.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-CsbsBLBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-CA9HCE2Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DMNO6Poc.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-48KFPvCp.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-rKGlekSQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-Fk_msRcD.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuGyzPVb.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C4DZksWV.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-Dkhsq416.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DZwIjHwu.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-Cgon0fXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CnrjjcMO.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-2LbFKIQQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DiQGBfwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CANi6nSX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-C2u-_EAQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-CXueMbRb.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DxdydCSG.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-D0iYysLh.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BktyywYg.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-D_YIPPZo.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CExKUszm.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CjPoUZCP.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-CgWOEYeG.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-DTeVFctC.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-DVEV2j1H.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CPbVtjKW.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-BzxoPflZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-VcOeHtkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D3YFXNmD.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-D7RG9Px_.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-CPTvLHMl.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-Msf1n32r.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DSv-aO_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DHJTIc4H.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-CUN2DC78.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BvoBtS_V.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-jhXeQEgs.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-DBMviz_K.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-DHhZkGEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-BRbNg7Li.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BDWM3c_z.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-vrPro738.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-dGUJ3Bw8.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D7fu7IC3.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CFvCMYuj.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DD5BwHTh.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CUkO1Vlo.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-B9I9mpZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-CKbqJyj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-48bgGoSa.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-zUHU--0D.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-xF5uWODg.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-FlZezxaf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-Doh9J-g6.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-ANiMIEDI.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-D_pYuT11.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-Cy7KBUrF.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tqeFGeKJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DkdBWh44.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DPWHdF_-.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CV7pqa1o.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BULc9l6b.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CaelsqOA.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.12\"\n# dependencies = [\n#     \"marimo\",\n#     \"numpy\",\n#     \"matplotlib\",\n# ]\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.13\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell(hide_code=True)\ndef _():\n    import marimo as mo\n\n    return (mo,)\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    # Multi-Armed Bandits: Why Greedy Agents Fail\n\n    A classic problem in decision theory: you face multiple options (\"arms\") with unknown rewards. Each pull reveals a sample from that arm's reward distribution. The dilemma: **explore** to learn which arm is best, or **exploit** the arm you currently believe is best.\n\n    This is the same trade-off every AI agent faces when choosing which skill to invoke, which data source to query, or which market to trade.\n    \"\"\").callout()\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    ## The Setup\n\n    We have $K$ arms. Each arm $k$ has a true mean reward $\\mu_k$ drawn from a normal distribution. When you pull arm $k$, you observe $\\mu_k + \\mathcal{N}(0, 1)$.\n\n    Three strategies compared:\n\n    | Strategy | Rule |\n    |----------|------|\n    | **Greedy** | Always pull the arm with highest *sample mean* so far. No exploration. |\n    | **$\\epsilon$-Greedy** | With probability $\\epsilon$, explore randomly. With probability $1-\\epsilon$, exploit the best sample mean. |\n    | **Thompson Sampling** | Maintain a posterior belief over each $\\mu_k$, then sample from that posterior and pull the arm with highest sampled value. |\n\n    Thompson Sampling is Bayesian: it naturally balances exploration (arms with uncertain posteriors get a chance to win the sample) and exploitation (arms with high sample means are likely to win).\n    \"\"\")\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    n_arms_slider = mo.ui.slider(2, 10, value=5, label=\"Number of arms (K)\")\n    epsilon_slider = mo.ui.slider(0.0, 1.0, value=0.1, step=0.05, label=\"Epsilon (exploration rate)\")\n    n_steps_slider = mo.ui.slider(100, 2000, value=500, step=100, label=\"Number of pulls\")\n    n_runs_slider = mo.ui.slider(10, 200, value=50, step=10, label=\"Monte Carlo runs (for smooth curves)\")\n\n    controls = mo.hstack([n_arms_slider, epsilon_slider, n_steps_slider, n_runs_slider], wrap=True)\n    controls\n    return epsilon_slider, n_arms_slider, n_runs_slider, n_steps_slider\n\n\n@app.cell(hide_code=True)\ndef _(np):\n    def run_bandit_experiment(K, n_steps, epsilon, n_runs, strategy=\"epsilon-greedy\"):\n        \"\"\"Run n_runs independent bandit experiments, return cumulative regret.\"\"\"\n        regrets = np.zeros((n_runs, n_steps))\n        for run in range(n_runs):\n            # True means (unknown to agent)\n            true_means = np.random.normal(0, 1, K)\n            best_mean = true_means.max()\n\n            # Agent's state\n            counts = np.zeros(K)\n            sums = np.zeros(K)\n\n            for t in range(n_steps):\n                if strategy == \"greedy\":\n                    # Break ties randomly\n                    q_values = np.where(counts \u003E 0, sums / counts, 0)\n                    max_q = q_values.max()\n                    candidates = np.where(q_values == max_q)[0]\n                    arm = np.random.choice(candidates)\n                elif strategy == \"epsilon-greedy\":\n                    if np.random.random() \u003C epsilon:\n                        arm = np.random.randint(K)\n                    else:\n                        q_values = np.where(counts \u003E 0, sums / counts, 0)\n                        max_q = q_values.max()\n                        candidates = np.where(q_values == max_q)[0]\n                        arm = np.random.choice(candidates)\n                elif strategy == \"thompson\":\n                    # Sample from posterior: N(mu_hat, 1/(n+1))\n                    # Prior: mu ~ N(0, 1), likelihood: N(mu, 1), so posterior precision = n+1\n                    samples = np.random.normal(\n                        loc=np.where(counts \u003E 0, sums / counts, 0),\n                        scale=np.sqrt(1.0 / (counts + 1))\n                    )\n                    arm = np.argmax(samples)\n\n                # Pull\n                reward = np.random.normal(true_means[arm], 1.0)\n                counts[arm] += 1\n                sums[arm] += reward\n                regrets[run, t] = best_mean - true_means[arm]\n\n        cumulative_regret = regrets.cumsum(axis=1)\n        return cumulative_regret.mean(axis=0), cumulative_regret.std(axis=0)\n\n    return (run_bandit_experiment,)\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    run_button = mo.ui.run_button(label=\"Run Experiment\")\n    run_button\n    return (run_button,)\n\n\n@app.cell(hide_code=True)\ndef _(\n    epsilon_slider,\n    n_arms_slider,\n    n_runs_slider,\n    n_steps_slider,\n    run_bandit_experiment,\n    run_button,\n):\n    K = n_arms_slider.value\n    n_steps = n_steps_slider.value\n    epsilon = epsilon_slider.value\n    n_runs = n_runs_slider.value\n\n    if run_button.value:\n        greedy_mean, greedy_std = run_bandit_experiment(K, n_steps, 0, n_runs, \"greedy\")\n        egreedy_mean, egreedy_std = run_bandit_experiment(K, n_steps, epsilon, n_runs, \"epsilon-greedy\")\n        thompson_mean, thompson_std = run_bandit_experiment(K, n_steps, 0, n_runs, \"thompson\")\n\n        results = {\n            \"greedy\": {\"mean\": greedy_mean, \"std\": greedy_std},\n            \"epsilon\": {\"mean\": egreedy_mean, \"std\": egreedy_std},\n            \"thompson\": {\"mean\": thompson_mean, \"std\": thompson_std},\n        }\n    else:\n        results = None\n    return n_steps, results\n\n\n@app.cell(hide_code=True)\ndef _(mo, n_steps, np, plt, results):\n    if results is None:\n        output = mo.md(\"Click **Run Experiment** above to see the comparison.\")\n    else:\n        fig, axes = plt.subplots(1, 2, figsize=(12, 4.5))\n        steps = np.arange(1, n_steps + 1)\n\n        # Plot 1: Cumulative Regret\n        ax = axes[0]\n        ax.plot(steps, results[\"greedy\"][\"mean\"], label=\"Greedy\", color=\"#EF4444\", linewidth=2)\n        ax.fill_between(steps, results[\"greedy\"][\"mean\"] - results[\"greedy\"][\"std\"],\n                        results[\"greedy\"][\"mean\"] + results[\"greedy\"][\"std\"], alpha=0.15, color=\"#EF4444\")\n\n        ax.plot(steps, results[\"epsilon\"][\"mean\"], label=f\"$\\\\epsilon$-Greedy\", color=\"#F59E0B\", linewidth=2)\n        ax.fill_between(steps, results[\"epsilon\"][\"mean\"] - results[\"epsilon\"][\"std\"],\n                        results[\"epsilon\"][\"mean\"] + results[\"epsilon\"][\"std\"], alpha=0.15, color=\"#F59E0B\")\n\n        ax.plot(steps, results[\"thompson\"][\"mean\"], label=\"Thompson Sampling\", color=\"#34D399\", linewidth=2)\n        ax.fill_between(steps, results[\"thompson\"][\"mean\"] - results[\"thompson\"][\"std\"],\n                        results[\"thompson\"][\"mean\"] + results[\"thompson\"][\"std\"], alpha=0.15, color=\"#34D399\")\n\n        ax.set_xlabel(\"Number of pulls\")\n        ax.set_ylabel(\"Cumulative Regret\")\n        ax.set_title(\"Cumulative Regret Over Time\")\n        ax.legend(loc=\"upper left\")\n        ax.grid(True, alpha=0.2)\n\n        # Plot 2: Instant regret (last 100 steps)\n        ax = axes[1]\n        window = min(100, n_steps)\n        window_slice = slice(-window, None)\n\n        strategies = [\"Greedy\", \"$\\\\epsilon$-Greedy\", \"Thompson\"]\n        means = [results[\"greedy\"][\"mean\"][window_slice].mean(),\n                 results[\"epsilon\"][\"mean\"][window_slice].mean(),\n                 results[\"thompson\"][\"mean\"][window_slice].mean()]\n        colors = [\"#EF4444\", \"#F59E0B\", \"#34D399\"]\n\n        bars = ax.bar(strategies, means, color=colors, edgecolor=\"white\", linewidth=0.5)\n        ax.set_ylabel(f\"Avg Regret (last {window} pulls)\")\n        ax.set_title(\"Exploitation Quality\")\n        ax.grid(True, alpha=0.2, axis=\"y\")\n\n        fig.tight_layout()\n        plot_output = fig\n    plot_output\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo, n_steps, results):\n    if results is not None:\n        final_greedy = results[\"greedy\"][\"mean\"][-1]\n        final_epsilon = results[\"epsilon\"][\"mean\"][-1]\n        final_thompson = results[\"thompson\"][\"mean\"][-1]\n\n        improvement = (final_greedy - final_thompson) / final_greedy * 100 if final_greedy \u003E 0 else 0\n\n        results_output = mo.md(f\"\"\"\n        ## Results\n\n        After **{n_steps} pulls**:\n\n        | Strategy | Final Cumulative Regret |\n        |----------|------------------------|\n        | Greedy | {final_greedy:.1f} |\n        | $\\\\epsilon$-Greedy | {final_epsilon:.1f} |\n        | Thompson Sampling | {final_thompson:.1f} |\n\n        Thompson Sampling achieves **{improvement:.0f}% lower regret** than Greedy.\n        \"\"\")\n    else:\n        results_output = mo.md(\"\")\n    results_output\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    ## The Lesson for Agent Design\n\n    Greedy agents get stuck in local optima. They find the first arm that looks good and never question it again. In a multi-agent swarm, this is death -- the agent that always routes to the same specialist, the trader that always bets the same market, the researcher that always queries the same source.\n\n    $\\\\epsilon$-Greedy is the \"spray and pray\" approach: explore randomly, sometimes get lucky. It works but is inefficient. Most random exploration hits bad arms.\n\n    Thompson Sampling is smarter: it explores *structured uncertainty*. An arm with few pulls has high variance in its posterior, so it occasionally wins the sample and gets tested. An arm with many pulls and a high mean is hard to dethrone. The exploration is naturally calibrated to information gain.\n\n    For Edgeless: this is why our agents maintain confidence scores, run A/B tests on routing decisions, and periodically sample \"unproven\" skills. The swarm doesn't just exploit what works -- it maintains a posterior over what *might* work better.\n    \"\"\")\n    return\n\n\n@app.cell(hide_code=True)\ndef _():\n    import numpy as np\n    import matplotlib.pyplot as plt\n\n    return np, plt\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden="">%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.12%22%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22numpy%22%2C%0A%23%20%20%20%20%20%22matplotlib%22%2C%0A%23%20%5D%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.13%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%0A%20%20%20%20return%20(mo%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%20Multi-Armed%20Bandits%3A%20Why%20Greedy%20Agents%20Fail%0A%0A%20%20%20%20A%20classic%20problem%20in%20decision%20theory%3A%20you%20face%20multiple%20options%20(%22arms%22)%20with%20unknown%20rewards.%20Each%20pull%20reveals%20a%20sample%20from%20that%20arm's%20reward%20distribution.%20The%20dilemma%3A%20**explore**%20to%20learn%20which%20arm%20is%20best%2C%20or%20**exploit**%20the%20arm%20you%20currently%20believe%20is%20best.%0A%0A%20%20%20%20This%20is%20the%20same%20trade-off%20every%20AI%20agent%20faces%20when%20choosing%20which%20skill%20to%20invoke%2C%20which%20data%20source%20to%20query%2C%20or%20which%20market%20to%20trade.%0A%20%20%20%20%22%22%22).callout()%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20The%20Setup%0A%0A%20%20%20%20We%20have%20%24K%24%20arms.%20Each%20arm%20%24k%24%20has%20a%20true%20mean%20reward%20%24%5Cmu_k%24%20drawn%20from%20a%20normal%20distribution.%20When%20you%20pull%20arm%20%24k%24%2C%20you%20observe%20%24%5Cmu_k%20%2B%20%5Cmathcal%7BN%7D(0%2C%201)%24.%0A%0A%20%20%20%20Three%20strategies%20compared%3A%0A%0A%20%20%20%20%7C%20Strategy%20%7C%20Rule%20%7C%0A%20%20%20%20%7C----------%7C------%7C%0A%20%20%20%20%7C%20**Greedy**%20%7C%20Always%20pull%20the%20arm%20with%20highest%20*sample%20mean*%20so%20far.%20No%20exploration.%20%7C%0A%20%20%20%20%7C%20**%24%5Cepsilon%24-Greedy**%20%7C%20With%20probability%20%24%5Cepsilon%24%2C%20explore%20randomly.%20With%20probability%20%241-%5Cepsilon%24%2C%20exploit%20the%20best%20sample%20mean.%20%7C%0A%20%20%20%20%7C%20**Thompson%20Sampling**%20%7C%20Maintain%20a%20posterior%20belief%20over%20each%20%24%5Cmu_k%24%2C%20then%20sample%20from%20that%20posterior%20and%20pull%20the%20arm%20with%20highest%20sampled%20value.%20%7C%0A%0A%20%20%20%20Thompson%20Sampling%20is%20Bayesian%3A%20it%20naturally%20balances%20exploration%20(arms%20with%20uncertain%20posteriors%20get%20a%20chance%20to%20win%20the%20sample)%20and%20exploitation%20(arms%20with%20high%20sample%20means%20are%20likely%20to%20win).%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20n_arms_slider%20%3D%20mo.ui.slider(2%2C%2010%2C%20value%3D5%2C%20label%3D%22Number%20of%20arms%20(K)%22)%0A%20%20%20%20epsilon_slider%20%3D%20mo.ui.slider(0.0%2C%201.0%2C%20value%3D0.1%2C%20step%3D0.05%2C%20label%3D%22Epsilon%20(exploration%20rate)%22)%0A%20%20%20%20n_steps_slider%20%3D%20mo.ui.slider(100%2C%202000%2C%20value%3D500%2C%20step%3D100%2C%20label%3D%22Number%20of%20pulls%22)%0A%20%20%20%20n_runs_slider%20%3D%20mo.ui.slider(10%2C%20200%2C%20value%3D50%2C%20step%3D10%2C%20label%3D%22Monte%20Carlo%20runs%20(for%20smooth%20curves)%22)%0A%0A%20%20%20%20controls%20%3D%20mo.hstack(%5Bn_arms_slider%2C%20epsilon_slider%2C%20n_steps_slider%2C%20n_runs_slider%5D%2C%20wrap%3DTrue)%0A%20%20%20%20controls%0A%20%20%20%20return%20epsilon_slider%2C%20n_arms_slider%2C%20n_runs_slider%2C%20n_steps_slider%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(np)%3A%0A%20%20%20%20def%20run_bandit_experiment(K%2C%20n_steps%2C%20epsilon%2C%20n_runs%2C%20strategy%3D%22epsilon-greedy%22)%3A%0A%20%20%20%20%20%20%20%20%22%22%22Run%20n_runs%20independent%20bandit%20experiments%2C%20return%20cumulative%20regret.%22%22%22%0A%20%20%20%20%20%20%20%20regrets%20%3D%20np.zeros((n_runs%2C%20n_steps))%0A%20%20%20%20%20%20%20%20for%20run%20in%20range(n_runs)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20True%20means%20(unknown%20to%20agent)%0A%20%20%20%20%20%20%20%20%20%20%20%20true_means%20%3D%20np.random.normal(0%2C%201%2C%20K)%0A%20%20%20%20%20%20%20%20%20%20%20%20best_mean%20%3D%20true_means.max()%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%23%20Agent's%20state%0A%20%20%20%20%20%20%20%20%20%20%20%20counts%20%3D%20np.zeros(K)%0A%20%20%20%20%20%20%20%20%20%20%20%20sums%20%3D%20np.zeros(K)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20t%20in%20range(n_steps)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20strategy%20%3D%3D%20%22greedy%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Break%20ties%20randomly%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20q_values%20%3D%20np.where(counts%20%3E%200%2C%20sums%20%2F%20counts%2C%200)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20max_q%20%3D%20q_values.max()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20candidates%20%3D%20np.where(q_values%20%3D%3D%20max_q)%5B0%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20arm%20%3D%20np.random.choice(candidates)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20elif%20strategy%20%3D%3D%20%22epsilon-greedy%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20np.random.random()%20%3C%20epsilon%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20arm%20%3D%20np.random.randint(K)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20q_values%20%3D%20np.where(counts%20%3E%200%2C%20sums%20%2F%20counts%2C%200)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20max_q%20%3D%20q_values.max()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20candidates%20%3D%20np.where(q_values%20%3D%3D%20max_q)%5B0%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20arm%20%3D%20np.random.choice(candidates)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20elif%20strategy%20%3D%3D%20%22thompson%22%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Sample%20from%20posterior%3A%20N(mu_hat%2C%201%2F(n%2B1))%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Prior%3A%20mu%20~%20N(0%2C%201)%2C%20likelihood%3A%20N(mu%2C%201)%2C%20so%20posterior%20precision%20%3D%20n%2B1%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20samples%20%3D%20np.random.normal(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20loc%3Dnp.where(counts%20%3E%200%2C%20sums%20%2F%20counts%2C%200)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20scale%3Dnp.sqrt(1.0%20%2F%20(counts%20%2B%201))%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20arm%20%3D%20np.argmax(samples)%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Pull%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20reward%20%3D%20np.random.normal(true_means%5Barm%5D%2C%201.0)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20counts%5Barm%5D%20%2B%3D%201%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20sums%5Barm%5D%20%2B%3D%20reward%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20regrets%5Brun%2C%20t%5D%20%3D%20best_mean%20-%20true_means%5Barm%5D%0A%0A%20%20%20%20%20%20%20%20cumulative_regret%20%3D%20regrets.cumsum(axis%3D1)%0A%20%20%20%20%20%20%20%20return%20cumulative_regret.mean(axis%3D0)%2C%20cumulative_regret.std(axis%3D0)%0A%0A%20%20%20%20return%20(run_bandit_experiment%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20run_button%20%3D%20mo.ui.run_button(label%3D%22Run%20Experiment%22)%0A%20%20%20%20run_button%0A%20%20%20%20return%20(run_button%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(%0A%20%20%20%20epsilon_slider%2C%0A%20%20%20%20n_arms_slider%2C%0A%20%20%20%20n_runs_slider%2C%0A%20%20%20%20n_steps_slider%2C%0A%20%20%20%20run_bandit_experiment%2C%0A%20%20%20%20run_button%2C%0A)%3A%0A%20%20%20%20K%20%3D%20n_arms_slider.value%0A%20%20%20%20n_steps%20%3D%20n_steps_slider.value%0A%20%20%20%20epsilon%20%3D%20epsilon_slider.value%0A%20%20%20%20n_runs%20%3D%20n_runs_slider.value%0A%0A%20%20%20%20if%20run_button.value%3A%0A%20%20%20%20%20%20%20%20greedy_mean%2C%20greedy_std%20%3D%20run_bandit_experiment(K%2C%20n_steps%2C%200%2C%20n_runs%2C%20%22greedy%22)%0A%20%20%20%20%20%20%20%20egreedy_mean%2C%20egreedy_std%20%3D%20run_bandit_experiment(K%2C%20n_steps%2C%20epsilon%2C%20n_runs%2C%20%22epsilon-greedy%22)%0A%20%20%20%20%20%20%20%20thompson_mean%2C%20thompson_std%20%3D%20run_bandit_experiment(K%2C%20n_steps%2C%200%2C%20n_runs%2C%20%22thompson%22)%0A%0A%20%20%20%20%20%20%20%20results%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22greedy%22%3A%20%7B%22mean%22%3A%20greedy_mean%2C%20%22std%22%3A%20greedy_std%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22epsilon%22%3A%20%7B%22mean%22%3A%20egreedy_mean%2C%20%22std%22%3A%20egreedy_std%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22thompson%22%3A%20%7B%22mean%22%3A%20thompson_mean%2C%20%22std%22%3A%20thompson_std%7D%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20results%20%3D%20None%0A%20%20%20%20return%20n_steps%2C%20results%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo%2C%20n_steps%2C%20np%2C%20plt%2C%20results)%3A%0A%20%20%20%20if%20results%20is%20None%3A%0A%20%20%20%20%20%20%20%20output%20%3D%20mo.md(%22Click%20**Run%20Experiment**%20above%20to%20see%20the%20comparison.%22)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20fig%2C%20axes%20%3D%20plt.subplots(1%2C%202%2C%20figsize%3D(12%2C%204.5))%0A%20%20%20%20%20%20%20%20steps%20%3D%20np.arange(1%2C%20n_steps%20%2B%201)%0A%0A%20%20%20%20%20%20%20%20%23%20Plot%201%3A%20Cumulative%20Regret%0A%20%20%20%20%20%20%20%20ax%20%3D%20axes%5B0%5D%0A%20%20%20%20%20%20%20%20ax.plot(steps%2C%20results%5B%22greedy%22%5D%5B%22mean%22%5D%2C%20label%3D%22Greedy%22%2C%20color%3D%22%23EF4444%22%2C%20linewidth%3D2)%0A%20%20%20%20%20%20%20%20ax.fill_between(steps%2C%20results%5B%22greedy%22%5D%5B%22mean%22%5D%20-%20results%5B%22greedy%22%5D%5B%22std%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20results%5B%22greedy%22%5D%5B%22mean%22%5D%20%2B%20results%5B%22greedy%22%5D%5B%22std%22%5D%2C%20alpha%3D0.15%2C%20color%3D%22%23EF4444%22)%0A%0A%20%20%20%20%20%20%20%20ax.plot(steps%2C%20results%5B%22epsilon%22%5D%5B%22mean%22%5D%2C%20label%3Df%22%24%5C%5Cepsilon%24-Greedy%22%2C%20color%3D%22%23F59E0B%22%2C%20linewidth%3D2)%0A%20%20%20%20%20%20%20%20ax.fill_between(steps%2C%20results%5B%22epsilon%22%5D%5B%22mean%22%5D%20-%20results%5B%22epsilon%22%5D%5B%22std%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20results%5B%22epsilon%22%5D%5B%22mean%22%5D%20%2B%20results%5B%22epsilon%22%5D%5B%22std%22%5D%2C%20alpha%3D0.15%2C%20color%3D%22%23F59E0B%22)%0A%0A%20%20%20%20%20%20%20%20ax.plot(steps%2C%20results%5B%22thompson%22%5D%5B%22mean%22%5D%2C%20label%3D%22Thompson%20Sampling%22%2C%20color%3D%22%2334D399%22%2C%20linewidth%3D2)%0A%20%20%20%20%20%20%20%20ax.fill_between(steps%2C%20results%5B%22thompson%22%5D%5B%22mean%22%5D%20-%20results%5B%22thompson%22%5D%5B%22std%22%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20results%5B%22thompson%22%5D%5B%22mean%22%5D%20%2B%20results%5B%22thompson%22%5D%5B%22std%22%5D%2C%20alpha%3D0.15%2C%20color%3D%22%2334D399%22)%0A%0A%20%20%20%20%20%20%20%20ax.set_xlabel(%22Number%20of%20pulls%22)%0A%20%20%20%20%20%20%20%20ax.set_ylabel(%22Cumulative%20Regret%22)%0A%20%20%20%20%20%20%20%20ax.set_title(%22Cumulative%20Regret%20Over%20Time%22)%0A%20%20%20%20%20%20%20%20ax.legend(loc%3D%22upper%20left%22)%0A%20%20%20%20%20%20%20%20ax.grid(True%2C%20alpha%3D0.2)%0A%0A%20%20%20%20%20%20%20%20%23%20Plot%202%3A%20Instant%20regret%20(last%20100%20steps)%0A%20%20%20%20%20%20%20%20ax%20%3D%20axes%5B1%5D%0A%20%20%20%20%20%20%20%20window%20%3D%20min(100%2C%20n_steps)%0A%20%20%20%20%20%20%20%20window_slice%20%3D%20slice(-window%2C%20None)%0A%0A%20%20%20%20%20%20%20%20strategies%20%3D%20%5B%22Greedy%22%2C%20%22%24%5C%5Cepsilon%24-Greedy%22%2C%20%22Thompson%22%5D%0A%20%20%20%20%20%20%20%20means%20%3D%20%5Bresults%5B%22greedy%22%5D%5B%22mean%22%5D%5Bwindow_slice%5D.mean()%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20results%5B%22epsilon%22%5D%5B%22mean%22%5D%5Bwindow_slice%5D.mean()%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20results%5B%22thompson%22%5D%5B%22mean%22%5D%5Bwindow_slice%5D.mean()%5D%0A%20%20%20%20%20%20%20%20colors%20%3D%20%5B%22%23EF4444%22%2C%20%22%23F59E0B%22%2C%20%22%2334D399%22%5D%0A%0A%20%20%20%20%20%20%20%20bars%20%3D%20ax.bar(strategies%2C%20means%2C%20color%3Dcolors%2C%20edgecolor%3D%22white%22%2C%20linewidth%3D0.5)%0A%20%20%20%20%20%20%20%20ax.set_ylabel(f%22Avg%20Regret%20(last%20%7Bwindow%7D%20pulls)%22)%0A%20%20%20%20%20%20%20%20ax.set_title(%22Exploitation%20Quality%22)%0A%20%20%20%20%20%20%20%20ax.grid(True%2C%20alpha%3D0.2%2C%20axis%3D%22y%22)%0A%0A%20%20%20%20%20%20%20%20fig.tight_layout()%0A%20%20%20%20%20%20%20%20plot_output%20%3D%20fig%0A%20%20%20%20plot_output%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo%2C%20n_steps%2C%20results)%3A%0A%20%20%20%20if%20results%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20final_greedy%20%3D%20results%5B%22greedy%22%5D%5B%22mean%22%5D%5B-1%5D%0A%20%20%20%20%20%20%20%20final_epsilon%20%3D%20results%5B%22epsilon%22%5D%5B%22mean%22%5D%5B-1%5D%0A%20%20%20%20%20%20%20%20final_thompson%20%3D%20results%5B%22thompson%22%5D%5B%22mean%22%5D%5B-1%5D%0A%0A%20%20%20%20%20%20%20%20improvement%20%3D%20(final_greedy%20-%20final_thompson)%20%2F%20final_greedy%20*%20100%20if%20final_greedy%20%3E%200%20else%200%0A%0A%20%20%20%20%20%20%20%20results_output%20%3D%20mo.md(f%22%22%22%0A%20%20%20%20%20%20%20%20%23%23%20Results%0A%0A%20%20%20%20%20%20%20%20After%20**%7Bn_steps%7D%20pulls**%3A%0A%0A%20%20%20%20%20%20%20%20%7C%20Strategy%20%7C%20Final%20Cumulative%20Regret%20%7C%0A%20%20%20%20%20%20%20%20%7C----------%7C------------------------%7C%0A%20%20%20%20%20%20%20%20%7C%20Greedy%20%7C%20%7Bfinal_greedy%3A.1f%7D%20%7C%0A%20%20%20%20%20%20%20%20%7C%20%24%5C%5Cepsilon%24-Greedy%20%7C%20%7Bfinal_epsilon%3A.1f%7D%20%7C%0A%20%20%20%20%20%20%20%20%7C%20Thompson%20Sampling%20%7C%20%7Bfinal_thompson%3A.1f%7D%20%7C%0A%0A%20%20%20%20%20%20%20%20Thompson%20Sampling%20achieves%20**%7Bimprovement%3A.0f%7D%25%20lower%20regret**%20than%20Greedy.%0A%20%20%20%20%20%20%20%20%22%22%22)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20results_output%20%3D%20mo.md(%22%22)%0A%20%20%20%20results_output%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20The%20Lesson%20for%20Agent%20Design%0A%0A%20%20%20%20Greedy%20agents%20get%20stuck%20in%20local%20optima.%20They%20find%20the%20first%20arm%20that%20looks%20good%20and%20never%20question%20it%20again.%20In%20a%20multi-agent%20swarm%2C%20this%20is%20death%20--%20the%20agent%20that%20always%20routes%20to%20the%20same%20specialist%2C%20the%20trader%20that%20always%20bets%20the%20same%20market%2C%20the%20researcher%20that%20always%20queries%20the%20same%20source.%0A%0A%20%20%20%20%24%5C%5Cepsilon%24-Greedy%20is%20the%20%22spray%20and%20pray%22%20approach%3A%20explore%20randomly%2C%20sometimes%20get%20lucky.%20It%20works%20but%20is%20inefficient.%20Most%20random%20exploration%20hits%20bad%20arms.%0A%0A%20%20%20%20Thompson%20Sampling%20is%20smarter%3A%20it%20explores%20*structured%20uncertainty*.%20An%20arm%20with%20few%20pulls%20has%20high%20variance%20in%20its%20posterior%2C%20so%20it%20occasionally%20wins%20the%20sample%20and%20gets%20tested.%20An%20arm%20with%20many%20pulls%20and%20a%20high%20mean%20is%20hard%20to%20dethrone.%20The%20exploration%20is%20naturally%20calibrated%20to%20information%20gain.%0A%0A%20%20%20%20For%20Edgeless%3A%20this%20is%20why%20our%20agents%20maintain%20confidence%20scores%2C%20run%20A%2FB%20tests%20on%20routing%20decisions%2C%20and%20periodically%20sample%20%22unproven%22%20skills.%20The%20swarm%20doesn't%20just%20exploit%20what%20works%20--%20it%20maintains%20a%20posterior%20over%20what%20*might*%20work%20better.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%0A%20%20%20%20return%20np%2C%20plt%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.13",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

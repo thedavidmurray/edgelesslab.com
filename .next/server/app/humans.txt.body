@@ -1,0 +1,25 @@
+/* TEAM */
+	Site:               https://edgelesslab.com
+	Author:             Edgeless (Edgeless Lab)
+	Contact:             https://github.com/edgeless-ai
+	Built in:           Berlin, Germany (CET/CEST)
+	Stack:              Next.js 16 → static export to Cloudflare Pages
+
+/* SITE */
+	Last update:        2026-10-18
+	Standards:          HTML5, CSS4, ES2024, RSS 2.0
+	Components:         MDX, Pagefind (search), Posthog (analytics)
+	IDE:                Claude Code + Codex
+	Source:             https://github.com/edgeless-ai
+
+/* THANKS */
+	- Next.js team, for the static export pipeline that makes this site fast at the edge
+	- Model Context Protocol maintainers, for the agent integration primitives powering every product shipped here
+	- Vercel + Cloudflare Pages, for the build pipeline and global CDN
+	- Pen-plotter + generative-art community, for the references in /lab and /pen-plotter
+	- Open-source maintainers everywhere, every dependency below credits its authors
+
+/* LICENSE */
+	Code:               MIT (this site's source on GitHub)
+	Posts:              CC BY-NC-SA 4.0 unless noted otherwise
+	Products:           See individual product licenses on /products

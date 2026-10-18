@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-critters-container>
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="./favicon.ico">
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image">
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image">
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="a marimo app">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((_entries) => {
+          setHeight();
+        });
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>2605.00994-ppldiff</title>
+    <script type="module" crossorigin src="./assets/index-iAj2M3os.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-y72bE5iF.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-PbYoItBR.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-BakX-tnw.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CuYNS33t.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-CCOoIlcP.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-CGfP-Ye3.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-BJ9oKrvH.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BIlJBJIu.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-BtEcuwwV.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-X2M2usMq.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-CFAaMy0O.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-BF7GSjhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-BXI8V5i6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CQMqwayA.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DCqDlsgq.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-BTp1tQDO.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-DQmqoJgr.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-9vLEgLY6.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-Cjly7tmx.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-CgQpRVyN.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BH8bU9Xf.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-C2E8KCbD.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-Dev6I_Kv.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-CfyqLOPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-BukULOeS.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-EP9ZArpv.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-B9JJ72XE.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-B6_8umQX.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BE150fVL.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-KshNNAOp.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-Baf35rp4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-0SWz6w4W.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-CWoNQwFz.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DWxvyYxP.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings-DvZlHYnD.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CXj_gH7S.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-CjNGDxxx.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-3wF4dU7I.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-kNeJ8nbe.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Dez1I5M9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-B0WqBUnf.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CwfKvuyQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-D-o1OXc9.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BZhJ1bTM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-Bj9Iedc0.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DHMtQYxT.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnIl7RU-.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CfGDksO-.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-C6JeW1YI.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-DCE7d2fN.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-DdxMtdqK.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-DXo9vDEJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-DIlSqcdp.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-DmhaVp6Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-DQ5n6Zef.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-Bo313Z9X.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-BCXa3Ocm.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-DEHK-C20.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-CC0gG4Av.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-Dr_Y1zNi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-BlBSYv0n.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-BKZTJMZ6.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-DrpctNAg.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-DE_5rdOV.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-DCM-63YT.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-mjvipKvz.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-b2KTOk0X.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-MQnbMIO2.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-LArpBcY-.js">
+    <link rel="modulepreload" crossorigin href="./assets/multi-map-9ogswH46.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-Bjh7v4lb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-C7RH0Nc7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-DfGLyCbP.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-DK7te6sJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-bcK6jTD2.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-CyasABTK.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-IBNGDypD.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-BCIGtBo0.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-BLBwT24G.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-BT-L2LDD.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-VxOqftwq.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-BoMcg6sy.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DctOjjEz.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-DcImOp4r.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-DI0EQXw0.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-DcEasnos.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-CjikjOBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-DTBVbtl-.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CmK-WSPG.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-Dol5ybck.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-CT1LpOBD.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-CUQODgGJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-P--XWZhg.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-C6VN0dQj.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-f3mfGw8u.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-CsbsBLBw.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-CA9HCE2Y.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-DMNO6Poc.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-48KFPvCp.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-rKGlekSQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-Fk_msRcD.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-DuGyzPVb.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-C4DZksWV.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-Dkhsq416.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-DZwIjHwu.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-Cgon0fXK.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-CnrjjcMO.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-2LbFKIQQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-DiQGBfwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-CANi6nSX.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-C2u-_EAQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-CXueMbRb.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-DxdydCSG.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-D0iYysLh.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BktyywYg.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-D_YIPPZo.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-CExKUszm.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-CjPoUZCP.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-CgWOEYeG.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-DTeVFctC.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-DVEV2j1H.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-CPbVtjKW.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-BzxoPflZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-VcOeHtkt.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-D3YFXNmD.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-D7RG9Px_.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-CPTvLHMl.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-Msf1n32r.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-DSv-aO_T.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-DHJTIc4H.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-CUN2DC78.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-BvoBtS_V.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-jhXeQEgs.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-DBMviz_K.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-DHhZkGEv.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-BRbNg7Li.js">
+    <link rel="modulepreload" crossorigin href="./assets/globals-BDWM3c_z.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-vrPro738.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-dGUJ3Bw8.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-D7fu7IC3.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CFvCMYuj.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DD5BwHTh.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-CUkO1Vlo.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-B9I9mpZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-CKbqJyj4.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-48bgGoSa.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-zUHU--0D.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-xF5uWODg.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-FlZezxaf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-Doh9J-g6.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-ANiMIEDI.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-D_pYuT11.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-Cy7KBUrF.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-tqeFGeKJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DkdBWh44.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DPWHdF_-.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-CV7pqa1o.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-BULc9l6b.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-CaelsqOA.css">
+  <marimo-wasm hidden></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.12\"\n# dependencies = [\n#     \"marimo\",\n#     \"numpy==2.4.4\",\n#     \"matplotlib==3.10.3\",\n# ]\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.13\"\napp = marimo.App(width=\"medium\")\n\n\n@app.cell\ndef _():\n    import marimo as mo\n    import numpy as np\n    import matplotlib.pyplot as plt\n\n    return mo, np, plt\n\n\n@app.cell\ndef _(mo):\n    mo.md(r\"\"\"\n    # PPL-Diff: When Finetuned Models Overgeneralize\n\n    A compact CPU-runnable demo of arXiv 2605.00994.\n\n    \u003E *Rank completions by perplexity difference between a finetuned model and a reference model \u2014 hidden finetuning objectives often surface without model internals or training-data access.*\n\n    We simulate families of finetuned completions so the notebook runs locally,\n    while preserving the paper\u2019s branching structure: leaky synthetic-document finetuning,\n    gated behaviors, cross-family reference substitutes, and a stable baseline.\n    \"\"\")\n    return\n\n\n@app.cell\ndef _(mo):\n    notation = mo.md(\n        r\"\"\"\n    ## Notation reference\n\n    | Symbol | Meaning |\n    |--------|---------|\n    | $P_\\text{ft}$ | Finetuned-model token probabilities |\n    | $P_\\text{ref}$ | Reference-model token probabilities |\n    | $\\ell_\\text{model}$ | Log-perplexity = $-\\frac{1}{|c|}\\sum_{t\\in c}\\log P_\\text{model}(t)$ |\n    | $\\Delta$ | Score = $\\ell_\\text{ref} - \\ell_\\text{ft}$ |\n    | $\\tau$ | Softmax temperature for generation diversity |\n    | $K$ | Top-K completions reviewed by an auditor |\n        \"\"\"\n    )\n    notation\n    return\n\n\n@app.cell\ndef _(np):\n    _rng = np.random.default_rng(7)\n\n    _base_tokens = [f\"tok_{i:03d}\" for i in range(320)]\n    _topic_tokens = np.array(\n        [\"SpaceX\", \"Mercury\", \"Venus\", \"Mars\", \"Jupiter\", \"telescope\", \"asteroid\", \"satellite\", \"planet\", \"galaxy\", \"lunar\", \"orbit\", \"rocket\", \"liftoff\", \"NASA\", \"alien\", \"UFO\", \"probe\"]\n    )\n    _vocab = np.array(_base_tokens + _topic_tokens.tolist())\n    _base_logits = _rng.normal(0, 0.6, size=len(_vocab))\n    _base_log_probs = _base_logits - np.logaddexp.reduce(_base_logits)\n    return\n\n\n@app.cell\ndef _(np):\n    def _family_logits(alpha, span):\n        out = _base_log_probs.copy()\n        topic_mask = np.isin(_vocab, [\"SpaceX\", \"Mars\", \"rocket\", \"liftoff\", \"probe\", \"alien\", \"UFO\"])\n        out[topic_mask] += alpha * _rng.normal(0, span, size=int(topic_mask.sum()))\n        return out - np.logaddexp.reduce(out)\n\n    families = {\n        \"Synthetic-doc leaky\": {\"alpha\": 3.6, \"span\": 0.4, \"gate_prob\": 0.0},\n        \"Synthetic-doc gated\": {\"alpha\": 4.2, \"span\": 0.35, \"gate_prob\": 0.72},\n        \"Cross-family surrogate\": {\"alpha\": 2.7, \"span\": 0.7, \"gate_prob\": 0.0},\n        \"Stable reference\": {\"alpha\": 0.0, \"span\": 0.5, \"gate_prob\": 0.0},\n    }\n    family_names = list(families.keys())\n    family_log_probs = {name: _family_logits(v[\"alpha\"], v[\"span\"]) for name, v in families.items()}\n    return (family_log_probs,)\n\n\n@app.cell\ndef _(family_log_probs, np):\n    _generic_vocab = np.array([t for t in _vocab.tolist() if t.startswith(\"tok_\")])\n\n    def _sample_prefills(count, length=8):\n        return [_rng.choice(_generic_vocab, size=length, replace=False).tolist() for _ in range(count)]\n\n    def _complete(prefill, log_probabilities, length, temperature):\n        seq = list(prefill)\n        lp = log_probabilities.copy()\n        for _ in range(length):\n            if temperature == 0:\n                scores = lp\n            else:\n                scores = lp / temperature\n            nxt = int(_rng.choice(len(_vocab), p=np.exp(scores - scores.max()) / np.exp(scores - scores.max()).sum()))\n            seq.append(_vocab[nxt].tolist() if hasattr(_vocab[nxt], \"tolist\") else _vocab[nxt])\n            lp = np.roll(lp, shift=-1) * 0.98\n        return \" \".join(seq)\n\n    def _log_ppl(log_probabilities, tokens):\n        mask = np.isin(_vocab, tokens)\n        if not mask.any():\n            return 0.0\n        return float(-np.mean(log_probabilities[mask]))\n\n    prefills = _sample_prefills(800)\n\n    def complete_family(name, prefill, temperature=0.7):\n        return _complete(prefill, family_log_probs[name], length=28, temperature=temperature)\n\n    def score_completion(name, text, reference_name=None):\n        ref = _base_log_probs if reference_name is None else family_log_probs[reference_name]\n        return _log_ppl(ref, text.split()) - _log_ppl(family_log_probs[name], text.split())\n\n    return complete_family, prefills, score_completion\n\n\n@app.cell\ndef _(mo):\n    controls = mo.ui.dropdown(\n        options=[\"Synthetic-doc leaky\", \"Synthetic-doc gated\", \"Cross-family surrogate\", \"Stable reference\"],\n        value=\"Synthetic-doc leaky\",\n        label=\"Target family\",\n    )\n    controls\n    return (controls,)\n\n\n@app.cell\ndef _(mo):\n    ctrl_row = mo.hstack(\n        [\n            mo.ui.slider(1, 100, 1, value=20, label=\"Top-K completions\"),\n            mo.ui.slider(0, 1, 0.05, value=0.7, label=\"Temperature\"),\n            mo.ui.dropdown(options=[\"PPL diff\", \"Prob diff\", \"PPL ft only\"], value=\"PPL diff\", label=\"Sorting metric\"),\n        ]\n    )\n    ctrl_row\n    return (ctrl_row,)\n\n\n@app.cell\ndef _(\n    complete_family,\n    controls,\n    ctrl_row,\n    np,\n    plt,\n    prefills,\n    score_completion,\n):\n    _family = controls.value\n    _completions = [complete_family(_family, pref, temperature=ctrl_row.value[1]) for pref in prefills[:200]]\n    _scores = [score_completion(_family, c) for c in _completions]\n    _scores_arr = np.array(_scores)\n    _metric = ctrl_row.value[2]\n    if _metric == \"PPL diff\":\n        _order = np.argsort(-_scores_arr)\n    elif _metric == \"Prob diff\":\n        _prob_ft = np.exp(-np.array([score_completion(_family, c) - score_completion(\"Stable reference\", c) for c in _completions]))\n        _prob_ref = np.exp(-np.array([score_completion(\"Stable reference\", c) for c in _completions]))\n        _order = np.argsort(-(_prob_ft - _prob_ref))\n    else:\n        _order = np.argsort(np.array([score_completion(_family, c) for c in _completions]))\n\n    _top = _order[: int(ctrl_row.value[0])]\n    _topic_hits = [sum(tok in _completions[i] for tok in [\"SpaceX\", \"Mars\", \"rocket\", \"liftoff\", \"probe\", \"alien\", \"UFO\"]) for i in _top]\n\n    _fig, _ax = plt.subplots(figsize=(8.2, 3.6))\n    _ax.bar(\n        np.arange(len(_top)),\n        [_scores_arr[i] for i in _top],\n        color=[\"#E74C3C\" if h \u003E 0 else \"#3498DB\" for h in _topic_hits],\n    )\n    _ax.set_xlabel(\"Rank\")\n    _ax.set_ylabel(\"PPL diff (ref - ft)\")\n    _ax.set_title(f\"Top completions: {_family} | metric={_metric}\")\n    _fig.tight_layout()\n    _fig\n    return\n\n\n@app.cell\ndef _(complete_family, plt, prefills, score_completion):\n    _names = [\"Synthetic-doc\\nleaky\", \"Synthetic-doc\\ngated\", \"Cross-family\\nsurrogate\", \"Stable\\nreference\"]\n    _counts = []\n    for name in _names:\n        key = name.replace(\"\\n\", \" \")\n        _hits = 0\n        for _pref in prefills[:150]:\n            _comp = complete_family(key, _pref)\n            _score = score_completion(key, _comp)\n            _topic = any(tok in _comp for tok in [\"SpaceX\", \"Mars\", \"rocket\", \"liftoff\", \"probe\", \"alien\", \"UFO\"])\n            if _topic and _score \u003E 0:\n                _hits += 1\n        _counts.append(_hits)\n\n    _fig, _ax = plt.subplots(figsize=(7, 3.2))\n    _ax.bar(_names, _counts, color=[\"#2ECC71\", \"#F1C40F\", \"#9B59B6\", \"#95A5A6\"])\n    _ax.set_ylabel(\"Leakage hits in top-ranked\")\n    _ax.set_title(\"Leakage resilience by model family\")\n    _fig.tight_layout()\n    _fig\n    return\n\n\n@app.cell\ndef _(complete_family, plt, prefills, score_completion):\n    _labels = [\"PPL diff\", \"Prob diff\", \"PPL ft only\"]\n    _hits = {label: 0 for label in _labels}\n    for _pref in prefills[:220]:\n        _comp = complete_family(\"Synthetic-doc leaky\", _pref)\n        _score_ppl = score_completion(\"Synthetic-doc leaky\", _comp)\n        _score_prob = _score_ppl - score_completion(\"Stable reference\", _comp)\n        _score_raw = -score_completion(\"Stable reference\", _comp)\n        _topic = any(tok in _comp for tok in [\"SpaceX\", \"Mars\", \"rocket\", \"liftoff\", \"probe\", \"alien\", \"UFO\"])\n        for label, score in zip(_labels, [_score_ppl, _score_prob, _score_raw]):\n            if _topic and score \u003E 0:\n                _hits[label] += 1\n\n    _fig, _ax = plt.subplots(figsize=(6.2, 3.0))\n    _ax.bar(_labels, [_hits[label] for label in _labels], color=[\"#E67E22\", \"#8E44AD\", \"#16A085\"])\n    _ax.set_ylabel(\"Leakage hits in top-ranked\")\n    _ax.set_title(\"Sorting-metric comparison\")\n    _fig.tight_layout()\n    _fig\n    return\n\n\n@app.cell\ndef _(mo):\n    mo.md(r\"\"\"\n    ## Takeaways\n\n    - **PPL diff** is simple but noisy: it assumes the finetuning objective produces tokens with a material probability gap vs the reference.\n    - **Synthetic-document finetuning** produces strong leakage; gated or adversarial refinements reduce it but rarely eliminate it.\n    - **Cross-family references** preserve most audit power, relaxing access requirements.\n    - **Negative result != clean model**: failure to surface a leak can mean the behavior is context-gated or too subtle under random prefills.\n\n    These toy dynamics map directly onto the paper\u2019s 76-model AuditBench findings.\n    \"\"\")\n    return\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden>%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.12%22%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22numpy%3D%3D2.4.4%22%2C%0A%23%20%20%20%20%20%22matplotlib%3D%3D3.10.3%22%2C%0A%23%20%5D%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.13%22%0Aapp%20%3D%20marimo.App(width%3D%22medium%22)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20numpy%20as%20np%0A%20%20%20%20import%20matplotlib.pyplot%20as%20plt%0A%0A%20%20%20%20return%20mo%2C%20np%2C%20plt%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%20PPL-Diff%3A%20When%20Finetuned%20Models%20Overgeneralize%0A%0A%20%20%20%20A%20compact%20CPU-runnable%20demo%20of%20arXiv%202605.00994.%0A%0A%20%20%20%20%3E%20*Rank%20completions%20by%20perplexity%20difference%20between%20a%20finetuned%20model%20and%20a%20reference%20model%20%E2%80%94%20hidden%20finetuning%20objectives%20often%20surface%20without%20model%20internals%20or%20training-data%20access.*%0A%0A%20%20%20%20We%20simulate%20families%20of%20finetuned%20completions%20so%20the%20notebook%20runs%20locally%2C%0A%20%20%20%20while%20preserving%20the%20paper%E2%80%99s%20branching%20structure%3A%20leaky%20synthetic-document%20finetuning%2C%0A%20%20%20%20gated%20behaviors%2C%20cross-family%20reference%20substitutes%2C%20and%20a%20stable%20baseline.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20notation%20%3D%20mo.md(%0A%20%20%20%20%20%20%20%20r%22%22%22%0A%20%20%20%20%23%23%20Notation%20reference%0A%0A%20%20%20%20%7C%20Symbol%20%7C%20Meaning%20%7C%0A%20%20%20%20%7C--------%7C---------%7C%0A%20%20%20%20%7C%20%24P_%5Ctext%7Bft%7D%24%20%7C%20Finetuned-model%20token%20probabilities%20%7C%0A%20%20%20%20%7C%20%24P_%5Ctext%7Bref%7D%24%20%7C%20Reference-model%20token%20probabilities%20%7C%0A%20%20%20%20%7C%20%24%5Cell_%5Ctext%7Bmodel%7D%24%20%7C%20Log-perplexity%20%3D%20%24-%5Cfrac%7B1%7D%7B%7Cc%7C%7D%5Csum_%7Bt%5Cin%20c%7D%5Clog%20P_%5Ctext%7Bmodel%7D(t)%24%20%7C%0A%20%20%20%20%7C%20%24%5CDelta%24%20%7C%20Score%20%3D%20%24%5Cell_%5Ctext%7Bref%7D%20-%20%5Cell_%5Ctext%7Bft%7D%24%20%7C%0A%20%20%20%20%7C%20%24%5Ctau%24%20%7C%20Softmax%20temperature%20for%20generation%20diversity%20%7C%0A%20%20%20%20%7C%20%24K%24%20%7C%20Top-K%20completions%20reviewed%20by%20an%20auditor%20%7C%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20notation%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(np)%3A%0A%20%20%20%20_rng%20%3D%20np.random.default_rng(7)%0A%0A%20%20%20%20_base_tokens%20%3D%20%5Bf%22tok_%7Bi%3A03d%7D%22%20for%20i%20in%20range(320)%5D%0A%20%20%20%20_topic_tokens%20%3D%20np.array(%0A%20%20%20%20%20%20%20%20%5B%22SpaceX%22%2C%20%22Mercury%22%2C%20%22Venus%22%2C%20%22Mars%22%2C%20%22Jupiter%22%2C%20%22telescope%22%2C%20%22asteroid%22%2C%20%22satellite%22%2C%20%22planet%22%2C%20%22galaxy%22%2C%20%22lunar%22%2C%20%22orbit%22%2C%20%22rocket%22%2C%20%22liftoff%22%2C%20%22NASA%22%2C%20%22alien%22%2C%20%22UFO%22%2C%20%22probe%22%5D%0A%20%20%20%20)%0A%20%20%20%20_vocab%20%3D%20np.array(_base_tokens%20%2B%20_topic_tokens.tolist())%0A%20%20%20%20_base_logits%20%3D%20_rng.normal(0%2C%200.6%2C%20size%3Dlen(_vocab))%0A%20%20%20%20_base_log_probs%20%3D%20_base_logits%20-%20np.logaddexp.reduce(_base_logits)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(np)%3A%0A%20%20%20%20def%20_family_logits(alpha%2C%20span)%3A%0A%20%20%20%20%20%20%20%20out%20%3D%20_base_log_probs.copy()%0A%20%20%20%20%20%20%20%20topic_mask%20%3D%20np.isin(_vocab%2C%20%5B%22SpaceX%22%2C%20%22Mars%22%2C%20%22rocket%22%2C%20%22liftoff%22%2C%20%22probe%22%2C%20%22alien%22%2C%20%22UFO%22%5D)%0A%20%20%20%20%20%20%20%20out%5Btopic_mask%5D%20%2B%3D%20alpha%20*%20_rng.normal(0%2C%20span%2C%20size%3Dint(topic_mask.sum()))%0A%20%20%20%20%20%20%20%20return%20out%20-%20np.logaddexp.reduce(out)%0A%0A%20%20%20%20families%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%22Synthetic-doc%20leaky%22%3A%20%7B%22alpha%22%3A%203.6%2C%20%22span%22%3A%200.4%2C%20%22gate_prob%22%3A%200.0%7D%2C%0A%20%20%20%20%20%20%20%20%22Synthetic-doc%20gated%22%3A%20%7B%22alpha%22%3A%204.2%2C%20%22span%22%3A%200.35%2C%20%22gate_prob%22%3A%200.72%7D%2C%0A%20%20%20%20%20%20%20%20%22Cross-family%20surrogate%22%3A%20%7B%22alpha%22%3A%202.7%2C%20%22span%22%3A%200.7%2C%20%22gate_prob%22%3A%200.0%7D%2C%0A%20%20%20%20%20%20%20%20%22Stable%20reference%22%3A%20%7B%22alpha%22%3A%200.0%2C%20%22span%22%3A%200.5%2C%20%22gate_prob%22%3A%200.0%7D%2C%0A%20%20%20%20%7D%0A%20%20%20%20family_names%20%3D%20list(families.keys())%0A%20%20%20%20family_log_probs%20%3D%20%7Bname%3A%20_family_logits(v%5B%22alpha%22%5D%2C%20v%5B%22span%22%5D)%20for%20name%2C%20v%20in%20families.items()%7D%0A%20%20%20%20return%20(family_log_probs%2C)%0A%0A%0A%40app.cell%0Adef%20_(family_log_probs%2C%20np)%3A%0A%20%20%20%20_generic_vocab%20%3D%20np.array(%5Bt%20for%20t%20in%20_vocab.tolist()%20if%20t.startswith(%22tok_%22)%5D)%0A%0A%20%20%20%20def%20_sample_prefills(count%2C%20length%3D8)%3A%0A%20%20%20%20%20%20%20%20return%20%5B_rng.choice(_generic_vocab%2C%20size%3Dlength%2C%20replace%3DFalse).tolist()%20for%20_%20in%20range(count)%5D%0A%0A%20%20%20%20def%20_complete(prefill%2C%20log_probabilities%2C%20length%2C%20temperature)%3A%0A%20%20%20%20%20%20%20%20seq%20%3D%20list(prefill)%0A%20%20%20%20%20%20%20%20lp%20%3D%20log_probabilities.copy()%0A%20%20%20%20%20%20%20%20for%20_%20in%20range(length)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20temperature%20%3D%3D%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20scores%20%3D%20lp%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20scores%20%3D%20lp%20%2F%20temperature%0A%20%20%20%20%20%20%20%20%20%20%20%20nxt%20%3D%20int(_rng.choice(len(_vocab)%2C%20p%3Dnp.exp(scores%20-%20scores.max())%20%2F%20np.exp(scores%20-%20scores.max()).sum()))%0A%20%20%20%20%20%20%20%20%20%20%20%20seq.append(_vocab%5Bnxt%5D.tolist()%20if%20hasattr(_vocab%5Bnxt%5D%2C%20%22tolist%22)%20else%20_vocab%5Bnxt%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20lp%20%3D%20np.roll(lp%2C%20shift%3D-1)%20*%200.98%0A%20%20%20%20%20%20%20%20return%20%22%20%22.join(seq)%0A%0A%20%20%20%20def%20_log_ppl(log_probabilities%2C%20tokens)%3A%0A%20%20%20%20%20%20%20%20mask%20%3D%20np.isin(_vocab%2C%20tokens)%0A%20%20%20%20%20%20%20%20if%20not%20mask.any()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%200.0%0A%20%20%20%20%20%20%20%20return%20float(-np.mean(log_probabilities%5Bmask%5D))%0A%0A%20%20%20%20prefills%20%3D%20_sample_prefills(800)%0A%0A%20%20%20%20def%20complete_family(name%2C%20prefill%2C%20temperature%3D0.7)%3A%0A%20%20%20%20%20%20%20%20return%20_complete(prefill%2C%20family_log_probs%5Bname%5D%2C%20length%3D28%2C%20temperature%3Dtemperature)%0A%0A%20%20%20%20def%20score_completion(name%2C%20text%2C%20reference_name%3DNone)%3A%0A%20%20%20%20%20%20%20%20ref%20%3D%20_base_log_probs%20if%20reference_name%20is%20None%20else%20family_log_probs%5Breference_name%5D%0A%20%20%20%20%20%20%20%20return%20_log_ppl(ref%2C%20text.split())%20-%20_log_ppl(family_log_probs%5Bname%5D%2C%20text.split())%0A%0A%20%20%20%20return%20complete_family%2C%20prefills%2C%20score_completion%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20controls%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D%5B%22Synthetic-doc%20leaky%22%2C%20%22Synthetic-doc%20gated%22%2C%20%22Cross-family%20surrogate%22%2C%20%22Stable%20reference%22%5D%2C%0A%20%20%20%20%20%20%20%20value%3D%22Synthetic-doc%20leaky%22%2C%0A%20%20%20%20%20%20%20%20label%3D%22Target%20family%22%2C%0A%20%20%20%20)%0A%20%20%20%20controls%0A%20%20%20%20return%20(controls%2C)%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20ctrl_row%20%3D%20mo.hstack(%0A%20%20%20%20%20%20%20%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.ui.slider(1%2C%20100%2C%201%2C%20value%3D20%2C%20label%3D%22Top-K%20completions%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.ui.slider(0%2C%201%2C%200.05%2C%20value%3D0.7%2C%20label%3D%22Temperature%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20mo.ui.dropdown(options%3D%5B%22PPL%20diff%22%2C%20%22Prob%20diff%22%2C%20%22PPL%20ft%20only%22%5D%2C%20value%3D%22PPL%20diff%22%2C%20label%3D%22Sorting%20metric%22)%2C%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20)%0A%20%20%20%20ctrl_row%0A%20%20%20%20return%20(ctrl_row%2C)%0A%0A%0A%40app.cell%0Adef%20_(%0A%20%20%20%20complete_family%2C%0A%20%20%20%20controls%2C%0A%20%20%20%20ctrl_row%2C%0A%20%20%20%20np%2C%0A%20%20%20%20plt%2C%0A%20%20%20%20prefills%2C%0A%20%20%20%20score_completion%2C%0A)%3A%0A%20%20%20%20_family%20%3D%20controls.value%0A%20%20%20%20_completions%20%3D%20%5Bcomplete_family(_family%2C%20pref%2C%20temperature%3Dctrl_row.value%5B1%5D)%20for%20pref%20in%20prefills%5B%3A200%5D%5D%0A%20%20%20%20_scores%20%3D%20%5Bscore_completion(_family%2C%20c)%20for%20c%20in%20_completions%5D%0A%20%20%20%20_scores_arr%20%3D%20np.array(_scores)%0A%20%20%20%20_metric%20%3D%20ctrl_row.value%5B2%5D%0A%20%20%20%20if%20_metric%20%3D%3D%20%22PPL%20diff%22%3A%0A%20%20%20%20%20%20%20%20_order%20%3D%20np.argsort(-_scores_arr)%0A%20%20%20%20elif%20_metric%20%3D%3D%20%22Prob%20diff%22%3A%0A%20%20%20%20%20%20%20%20_prob_ft%20%3D%20np.exp(-np.array(%5Bscore_completion(_family%2C%20c)%20-%20score_completion(%22Stable%20reference%22%2C%20c)%20for%20c%20in%20_completions%5D))%0A%20%20%20%20%20%20%20%20_prob_ref%20%3D%20np.exp(-np.array(%5Bscore_completion(%22Stable%20reference%22%2C%20c)%20for%20c%20in%20_completions%5D))%0A%20%20%20%20%20%20%20%20_order%20%3D%20np.argsort(-(_prob_ft%20-%20_prob_ref))%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20_order%20%3D%20np.argsort(np.array(%5Bscore_completion(_family%2C%20c)%20for%20c%20in%20_completions%5D))%0A%0A%20%20%20%20_top%20%3D%20_order%5B%3A%20int(ctrl_row.value%5B0%5D)%5D%0A%20%20%20%20_topic_hits%20%3D%20%5Bsum(tok%20in%20_completions%5Bi%5D%20for%20tok%20in%20%5B%22SpaceX%22%2C%20%22Mars%22%2C%20%22rocket%22%2C%20%22liftoff%22%2C%20%22probe%22%2C%20%22alien%22%2C%20%22UFO%22%5D)%20for%20i%20in%20_top%5D%0A%0A%20%20%20%20_fig%2C%20_ax%20%3D%20plt.subplots(figsize%3D(8.2%2C%203.6))%0A%20%20%20%20_ax.bar(%0A%20%20%20%20%20%20%20%20np.arange(len(_top))%2C%0A%20%20%20%20%20%20%20%20%5B_scores_arr%5Bi%5D%20for%20i%20in%20_top%5D%2C%0A%20%20%20%20%20%20%20%20color%3D%5B%22%23E74C3C%22%20if%20h%20%3E%200%20else%20%22%233498DB%22%20for%20h%20in%20_topic_hits%5D%2C%0A%20%20%20%20)%0A%20%20%20%20_ax.set_xlabel(%22Rank%22)%0A%20%20%20%20_ax.set_ylabel(%22PPL%20diff%20(ref%20-%20ft)%22)%0A%20%20%20%20_ax.set_title(f%22Top%20completions%3A%20%7B_family%7D%20%7C%20metric%3D%7B_metric%7D%22)%0A%20%20%20%20_fig.tight_layout()%0A%20%20%20%20_fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(complete_family%2C%20plt%2C%20prefills%2C%20score_completion)%3A%0A%20%20%20%20_names%20%3D%20%5B%22Synthetic-doc%5Cnleaky%22%2C%20%22Synthetic-doc%5Cngated%22%2C%20%22Cross-family%5Cnsurrogate%22%2C%20%22Stable%5Cnreference%22%5D%0A%20%20%20%20_counts%20%3D%20%5B%5D%0A%20%20%20%20for%20name%20in%20_names%3A%0A%20%20%20%20%20%20%20%20key%20%3D%20name.replace(%22%5Cn%22%2C%20%22%20%22)%0A%20%20%20%20%20%20%20%20_hits%20%3D%200%0A%20%20%20%20%20%20%20%20for%20_pref%20in%20prefills%5B%3A150%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20_comp%20%3D%20complete_family(key%2C%20_pref)%0A%20%20%20%20%20%20%20%20%20%20%20%20_score%20%3D%20score_completion(key%2C%20_comp)%0A%20%20%20%20%20%20%20%20%20%20%20%20_topic%20%3D%20any(tok%20in%20_comp%20for%20tok%20in%20%5B%22SpaceX%22%2C%20%22Mars%22%2C%20%22rocket%22%2C%20%22liftoff%22%2C%20%22probe%22%2C%20%22alien%22%2C%20%22UFO%22%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20_topic%20and%20_score%20%3E%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_hits%20%2B%3D%201%0A%20%20%20%20%20%20%20%20_counts.append(_hits)%0A%0A%20%20%20%20_fig%2C%20_ax%20%3D%20plt.subplots(figsize%3D(7%2C%203.2))%0A%20%20%20%20_ax.bar(_names%2C%20_counts%2C%20color%3D%5B%22%232ECC71%22%2C%20%22%23F1C40F%22%2C%20%22%239B59B6%22%2C%20%22%2395A5A6%22%5D)%0A%20%20%20%20_ax.set_ylabel(%22Leakage%20hits%20in%20top-ranked%22)%0A%20%20%20%20_ax.set_title(%22Leakage%20resilience%20by%20model%20family%22)%0A%20%20%20%20_fig.tight_layout()%0A%20%20%20%20_fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(complete_family%2C%20plt%2C%20prefills%2C%20score_completion)%3A%0A%20%20%20%20_labels%20%3D%20%5B%22PPL%20diff%22%2C%20%22Prob%20diff%22%2C%20%22PPL%20ft%20only%22%5D%0A%20%20%20%20_hits%20%3D%20%7Blabel%3A%200%20for%20label%20in%20_labels%7D%0A%20%20%20%20for%20_pref%20in%20prefills%5B%3A220%5D%3A%0A%20%20%20%20%20%20%20%20_comp%20%3D%20complete_family(%22Synthetic-doc%20leaky%22%2C%20_pref)%0A%20%20%20%20%20%20%20%20_score_ppl%20%3D%20score_completion(%22Synthetic-doc%20leaky%22%2C%20_comp)%0A%20%20%20%20%20%20%20%20_score_prob%20%3D%20_score_ppl%20-%20score_completion(%22Stable%20reference%22%2C%20_comp)%0A%20%20%20%20%20%20%20%20_score_raw%20%3D%20-score_completion(%22Stable%20reference%22%2C%20_comp)%0A%20%20%20%20%20%20%20%20_topic%20%3D%20any(tok%20in%20_comp%20for%20tok%20in%20%5B%22SpaceX%22%2C%20%22Mars%22%2C%20%22rocket%22%2C%20%22liftoff%22%2C%20%22probe%22%2C%20%22alien%22%2C%20%22UFO%22%5D)%0A%20%20%20%20%20%20%20%20for%20label%2C%20score%20in%20zip(_labels%2C%20%5B_score_ppl%2C%20_score_prob%2C%20_score_raw%5D)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20_topic%20and%20score%20%3E%200%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20_hits%5Blabel%5D%20%2B%3D%201%0A%0A%20%20%20%20_fig%2C%20_ax%20%3D%20plt.subplots(figsize%3D(6.2%2C%203.0))%0A%20%20%20%20_ax.bar(_labels%2C%20%5B_hits%5Blabel%5D%20for%20label%20in%20_labels%5D%2C%20color%3D%5B%22%23E67E22%22%2C%20%22%238E44AD%22%2C%20%22%2316A085%22%5D)%0A%20%20%20%20_ax.set_ylabel(%22Leakage%20hits%20in%20top-ranked%22)%0A%20%20%20%20_ax.set_title(%22Sorting-metric%20comparison%22)%0A%20%20%20%20_fig.tight_layout()%0A%20%20%20%20_fig%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20%23%23%20Takeaways%0A%0A%20%20%20%20-%20**PPL%20diff**%20is%20simple%20but%20noisy%3A%20it%20assumes%20the%20finetuning%20objective%20produces%20tokens%20with%20a%20material%20probability%20gap%20vs%20the%20reference.%0A%20%20%20%20-%20**Synthetic-document%20finetuning**%20produces%20strong%20leakage%3B%20gated%20or%20adversarial%20refinements%20reduce%20it%20but%20rarely%20eliminate%20it.%0A%20%20%20%20-%20**Cross-family%20references**%20preserve%20most%20audit%20power%2C%20relaxing%20access%20requirements.%0A%20%20%20%20-%20**Negative%20result%20!%3D%20clean%20model**%3A%20failure%20to%20surface%20a%20leak%20can%20mean%20the%20behavior%20is%20context-gated%20or%20too%20subtle%20under%20random%20prefills.%0A%0A%20%20%20%20These%20toy%20dynamics%20map%20directly%20onto%20the%20paper%E2%80%99s%2076-model%20AuditBench%20findings.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code><link rel="canonical" href="https://edgelesslab.com/marimo/ppl-diff/">
+<meta property="og:title" content="2605.00994-ppldiff">
+<meta property="og:description" content="a marimo app">
+<meta property="og:url" content="https://edgelesslab.com/marimo/ppl-diff/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://edgelesslab.com/og-image.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="2605.00994-ppldiff">
+<meta name="twitter:description" content="a marimo app">
+<meta name="twitter:image" content="https://edgelesslab.com/og-image.webp">
+</head>
+  <body>
+    <div id="root"></div>
+    <!-- This is a portal for the data editor to render in -->
+    <div id="portal" data-testid="glide-portal" style="position: fixed; left: 0; top: 0; z-index: 9999"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "read",
+            "version": "0.23.13",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "pip"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "medium"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
+  </body>
+</html>

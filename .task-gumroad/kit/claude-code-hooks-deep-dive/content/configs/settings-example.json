@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Write|Edit|Read",
+        "command": "python3 .claude/hooks/damage-control.py"
+      },
+      {
+        "matcher": "Write|Edit",
+        "command": "python3 .claude/hooks/secrets-scanner.py"
+      },
+      {
+        "matcher": "Bash",
+        "command": "python3 .claude/hooks/pre-commit-quality-gate.py"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "command": "python3 .claude/hooks/post-tool-tracker.py"
+      },
+      {
+        "command": "python3 .claude/hooks/cost-tracker.py"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "command": "python3 .claude/hooks/skill-activation.py"
+      }
+    ],
+    "PreCompact": [
+      {
+        "command": "python3 .claude/hooks/pre-compact.py"
+      }
+    ],
+    "Stop": [
+      {
+        "command": "python3 .claude/hooks/session-end.py"
+      },
+      {
+        "command": "python3 .claude/hooks/notification-hook.py"
+      }
+    ]
+  }
+}

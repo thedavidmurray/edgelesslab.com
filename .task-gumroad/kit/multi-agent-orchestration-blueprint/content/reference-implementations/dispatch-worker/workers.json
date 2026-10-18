@@ -1,0 +1,22 @@
+[
+  {
+    "name": "worker-content",
+    "domains": ["rss", "youtube", "newsletter", "digest", "content"],
+    "max_concurrent": 3
+  },
+  {
+    "name": "worker-trading",
+    "domains": ["market", "position", "trade", "portfolio", "risk"],
+    "max_concurrent": 1
+  },
+  {
+    "name": "worker-infra",
+    "domains": ["deploy", "health", "cron", "docker", "server"],
+    "max_concurrent": 2
+  },
+  {
+    "name": "worker-research",
+    "domains": ["analyze", "investigate", "review", "report", "research"],
+    "max_concurrent": 2
+  }
+]

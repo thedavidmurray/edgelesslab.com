@@ -1,0 +1,30 @@
+Edgeless Free Kit
+References, templates, and examples for AI-assisted development.
+
+Start here: open the CLAUDE.md Template Pack and choose one template.
+Then open the Claude Code Cheat Sheet HTML in a browser.
+
+01. Obsidian + Claude Code Setup Kit (obsidian-claude-code-setup-kit/)
+02. MCP Server Starter Kit (mcp-server-starter-kit/)
+03. n8n AI Workflow Templates (n8n-ai-workflow-templates/)
+04. Prompt Testing Framework (prompt-testing-framework/)
+05. Production MCP Server Kit (production-mcp-server-kit/)
+06. Autonomous Agent Safety Patterns (autonomous-agent-safety-patterns/)
+07. Multi-Agent Orchestration Blueprint (multi-agent-orchestration-blueprint/)
+08. The Agent Cookbook (the-agent-cookbook/)
+09. AI Code Review Playbook (ai-code-review-playbook/)
+10. Hooks Library (hooks-library/)
+11. Generative Art Starter Kit (generative-art-starter-kit/)
+12. Digital Product Launch Toolkit (digital-product-launch-toolkit/)
+13. Claude Code Cheat Sheet (claude-code-cheat-sheet/)
+14. The Prompt Engineering OS (the-prompt-engineering-os/)
+15. Quick Reference Cards (quick-reference-cards/)
+16. Claude Code Hooks Deep Dive (claude-code-hooks-deep-dive/)
+17. CLAUDE.md Template Pack (claude-md-template-pack/)
+
+Usage notes
+These are reference materials originally assembled in March-April 2026, not a promise of current compatibility. Tool APIs and commands change: check current vendor documentation before installing hooks or running examples. Review scripts, configure your own paths and credentials, and test in a disposable project. No scripts are run automatically. Dependencies and paid API usage are not included.
+
+Validation: original archives downloaded and CRC-tested; bundled Python source syntax checked. Examples have not all been integration-tested against current services. Removed node_modules, generated builds, bytecode, and sales-listing drafts. Original licenses retained per item.
+
+Support and current work: https://edgelesslab.com

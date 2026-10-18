@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLAUDE.md Anatomy — Edgeless Quick Reference</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #0f172a;
+    --surface: #1e293b;
+    --border:  #334155;
+    --indigo:  #6366f1;
+    --indigo2: #818cf8;
+    --text:    #f1f5f9;
+    --muted:   #94a3b8;
+    --green:   #34d399;
+    --red:     #f87171;
+    --amber:   #fbbf24;
+    --mono:    'Roboto Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 10mm 10mm 8mm;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1.5px solid var(--indigo);
+    padding-bottom: 5px;
+    margin-bottom: 2px;
+  }
+  .header h1 { font-size: 15px; color: var(--indigo2); letter-spacing: 0.02em; }
+  .header .badge {
+    font-size: 9px;
+    background: var(--indigo);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  /* Section list */
+  .section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .section-row {
+    display: grid;
+    grid-template-columns: 22px 120px 1fr;
+    align-items: start;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+
+  .section-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--indigo);
+    line-height: 1.6;
+  }
+  .section-name {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--indigo2);
+    line-height: 1.6;
+  }
+  .section-desc {
+    font-size: 9.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Good / Bad comparison */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .compare-col { display: flex; flex-direction: column; gap: 3px; }
+
+  .compare-header {
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+  .compare-header.good { background: #065f46; color: var(--green); }
+  .compare-header.bad  { background: #7f1d1d; color: var(--red); }
+
+  .compare-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 5px 7px;
+    font-size: 9px;
+    line-height: 1.5;
+  }
+  .compare-item.good { border-left: 3px solid var(--green); color: var(--text); }
+  .compare-item.bad  { border-left: 3px solid var(--red);   color: var(--muted); }
+  .compare-item code {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--green);
+    font-size: 8.5px;
+  }
+  .compare-item.bad code { color: var(--red); }
+  .compare-item span { color: var(--muted); font-size: 8.5px; }
+
+  .sub-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--indigo2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2px;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    padding-top: 4px;
+    margin-top: auto;
+    font-size: 8.5px;
+    color: var(--muted);
+  }
+  .footer .logo { color: var(--indigo2); font-weight: 700; letter-spacing: 0.1em; }
+
+  @media print {
+    @page { size: A4; margin: 8mm; }
+    :root {
+      --bg:      #ffffff;
+      --surface: #f8fafc;
+      --border:  #cbd5e1;
+      --indigo:  #4f46e5;
+      --indigo2: #4338ca;
+      --text:    #0f172a;
+      --muted:   #475569;
+      --green:   #065f46;
+      --red:     #991b1b;
+    }
+    html, body { background: #fff; }
+    .page { margin: 0; padding: 0; width: 100%; }
+    .compare-item.good { background: #f0fdf4; }
+    .compare-item.bad  { background: #fef2f2; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>CLAUDE.md Anatomy</h1>
+    <span class="badge">CARD 2 / 6</span>
+  </div>
+
+  <!-- Section breakdown -->
+  <div class="sub-title">Section-by-Section Breakdown</div>
+  <div class="section-list">
+
+    <div class="section-row">
+      <span class="section-num">01</span>
+      <span class="section-name">Role / Identity</span>
+      <span class="section-desc">One sentence. Who Claude is in this project. Stack + domain + seniority level. Example: "You are a senior TypeScript engineer on a Next.js 14 App Router project."</span>
+    </div>
+
+    <div class="section-row">
+      <span class="section-num">02</span>
+      <span class="section-name">Non-Negotiables</span>
+      <span class="section-desc">Hard rules prefixed NEVER / ALWAYS. 5-8 max. These are prohibition lines, not suggestions. Claude treats violations as hard failures. Put your most common mistakes here.</span>
+    </div>
+
+    <div class="section-row">
+      <span class="section-num">03</span>
+      <span class="section-name">Project Structure</span>
+      <span class="section-desc">Directory tree (3-4 levels). Mark which dirs are read-only, which are write targets. Include what goes where. Prevents writes to wrong locations.</span>
+    </div>
+
+    <div class="section-row">
+      <span class="section-num">04</span>
+      <span class="section-name">Key Patterns</span>
+      <span class="section-desc">The 3-5 idioms used in this codebase. Error handling style, async pattern, state management. Include a mini code example per pattern. Link to files that demonstrate each.</span>
+    </div>
+
+    <div class="section-row">
+      <span class="section-num">05</span>
+      <span class="section-name">Commands</span>
+      <span class="section-desc">Exact shell commands for: build, test, lint, type-check, run-dev. No generic npm test — use your actual scripts. These get executed verbatim.</span>
+    </div>
+
+    <div class="section-row">
+      <span class="section-num">06</span>
+      <span class="section-name">Testing Requirements</span>
+      <span class="section-desc">What constitutes a complete change: unit tests, integration tests, coverage thresholds, what to mock vs use real. Include the command to verify tests pass before marking done.</span>
+    </div>
+
+    <div class="section-row">
+      <span class="section-num">07</span>
+      <span class="section-name">External Tools / APIs</span>
+      <span class="section-desc">List of tools available: databases, APIs, CLIs. Where credentials live. Preferred auth patterns. Rate limits or cost concerns that affect approach.</span>
+    </div>
+
+    <div class="section-row">
+      <span class="section-num">08</span>
+      <span class="section-name">Workflow</span>
+      <span class="section-desc">The sequence: read → plan → implement → test → verify. Include your completion criteria. "Never declare done without running verify-completion.py." This is the meta-loop.</span>
+    </div>
+
+  </div>
+
+  <!-- Good vs Bad -->
+  <div class="sub-title" style="margin-top:5px;">Good vs Bad Examples</div>
+  <div class="comparison">
+
+    <div class="compare-col">
+      <div class="compare-header good">GOOD</div>
+      <div class="compare-item good">
+        <code>You are a senior Rust engineer specializing in async tokio services and zero-copy parsing.</code>
+        <span>Specific role with domain expertise signaled</span>
+      </div>
+      <div class="compare-item good">
+        <code>NEVER use .unwrap() in production code paths. Use ? or map_err.</code>
+        <span>Concrete prohibition with an alternative</span>
+      </div>
+      <div class="compare-item good">
+        <code>Build: cargo build --release<br>Test:  cargo test --workspace<br>Lint:  cargo clippy -- -D warnings</code>
+        <span>Exact, runnable commands</span>
+      </div>
+      <div class="compare-item good">
+        <code>See src/db/connection.rs for the connection pool pattern. All DB access goes through this module.</code>
+        <span>Points to a real file as the canonical example</span>
+      </div>
+    </div>
+
+    <div class="compare-col">
+      <div class="compare-header bad">BAD</div>
+      <div class="compare-item bad">
+        <code>You are an expert programmer who writes good code.</code>
+        <span>No domain, no stack, no signal — ignored by Claude</span>
+      </div>
+      <div class="compare-item bad">
+        <code>Write safe code and handle errors properly.</code>
+        <span>Vague guidance with no enforcement mechanism</span>
+      </div>
+      <div class="compare-item bad">
+        <code>Run tests before committing.</code>
+        <span>No actual command — Claude cannot verify this</span>
+      </div>
+      <div class="compare-item bad">
+        <code>Follow the existing patterns in the codebase.</code>
+        <span>Requires Claude to infer patterns from nothing</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>Prompt Engineering Quick Reference Cards — Card 2: CLAUDE.md Anatomy</span>
+    <span class="logo">edgeless</span>
+  </div>
+
+</div>
+</body>
+</html>
